@@ -1,13 +1,13 @@
 # File Manifest (`CAPTW/pub053-jmse-boiler-leak-warning`)
 
 - **Indexed files** (excluding self-referencing `docs/FILE_MANIFEST.*`): **272**
-- **Total indexed size**: **4,461,285 bytes**
+- **Total indexed size**: **4,461,344 bytes**
 
 ## Summary by Top-Level Directory
 | Top-Level | File Count | Bytes |
 |---|---:|---:|
 | `(root)` | 8 | 17,233 |
-| `code` | 6 | 52,396 |
+| `code` | 6 | 52,455 |
 | `data` | 11 | 40,349 |
 | `docs` | 7 | 63,517 |
 | `figures` | 16 | 2,942,821 |
@@ -25,7 +25,7 @@
 | `code/_common.py` | 9389 | `1d76b7be65d4b999cd26e34eb1801d7afd346b3979efc593269aa9883097e1da` |
 | `code/make_figures_r2.py` | 8115 | `ca35b4825e093da001ea26b5638b955725778b7a39d8256be0246ff0a424d7ef` |
 | `code/README.md` | 1905 | `c9610fa1e8a3ce206eca7fa637affeab4340e06e36718061f627afdd3778c053` |
-| `code/reproduce_analysis.py` | 15220 | `5e1e1a2bd80b527b65a2d0272ed4e2d7e316e1ea83eba6dbbd8723344fc8d663` |
+| `code/reproduce_analysis.py` | 15279 | `9752676cf6f69852f60c23659099e9b26ed8c11827f919cbbc6dd8f1c61a3344` |
 | `code/test_analysis.py` | 7245 | `047cf7fff44edd529cea10113f5bfda7170a58c66d9766923e6b1db567cb0e40` |
 | `code/verify_features.py` | 10522 | `fb4a79a28c3fb8746c1ed97c7abcb0263d324bb2dd357eceed36b96ee88427c1` |
 | `data/block_design.json` | 6525 | `8faa6038f01bc6a500912cf05be7e9335f3c81b83a568a7ef57400652ed344fd` |

@@ -1,7 +1,7 @@
 {
   "repository": "CAPTW/pub053-jmse-boiler-leak-warning",
   "total_files_excluding_self_manifest": 272,
-  "total_bytes_excluding_self_manifest": 4461285,
+  "total_bytes_excluding_self_manifest": 4461344,
   "summary_by_top_level": {
     "(root)": {
       "files": 8,
@@ -9,7 +9,7 @@
     },
     "code": {
       "files": 6,
-      "bytes": 52396
+      "bytes": 52455
     },
     "data": {
       "files": 11,
@@ -77,8 +77,8 @@
     },
     {
       "path": "code/reproduce_analysis.py",
-      "bytes": 15220,
-      "sha256": "5e1e1a2bd80b527b65a2d0272ed4e2d7e316e1ea83eba6dbbd8723344fc8d663",
+      "bytes": 15279,
+      "sha256": "9752676cf6f69852f60c23659099e9b26ed8c11827f919cbbc6dd8f1c61a3344",
       "top_dir": "code"
     },
     {

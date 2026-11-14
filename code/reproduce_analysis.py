@@ -234,16 +234,17 @@ def build_cutoff_summary(cutoff_rows: list[dict]) -> list[dict]:
     for lvl in ("0.7", "0.75", "0.8"):
         for method in METHODS_ORDER:
             sub = [r for r in cutoff_rows if str(r["level_cutoff_m"]) == lvl and r["method"] == method and r["strict_lead_s"] != ""]
-            vals_min = [float(r["strict_lead_s"]) / 60.0 for r in sub]
+            vals_s = [float(r["strict_lead_s"]) for r in sub]
+            med_s = statistics.median(vals_s)
+            med_s_fmt = int(med_s) if (len(vals_s) % 2 == 1 and med_s.is_integer()) else float(med_s)
             summary_rows.append(
                 {
                     "level_cutoff_m": lvl,
                     "method": method,
-                    "n_observed": len(vals_min),
-                    "median_strict_lead_min": statistics.median(vals_min),
-                    "min_strict_lead_min": min(vals_min),
-                    "max_strict_lead_min": max(vals_min),
-                    "all_positive": str(all(v > 0 for v in vals_min)),
+                    "n_observed": len(vals_s),
+                    "n_positive": sum(1 for v in vals_s if v > 0.0),
+                    "median_strict_lead_s": med_s_fmt,
+                    "median_strict_lead_min": med_s / 60.0,
                 }
             )
     return summary_rows
