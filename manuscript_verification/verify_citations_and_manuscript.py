@@ -127,6 +127,10 @@ def run_checks(orig_docx: Path, rev_docx: Path, rev_pdf: Path, dyn_log: Path, re
     assert "prior_draft_review_ce0e9a0e" in full_text
     assert "current_manuscript_verification" in full_text
     assert "reconstructed_inputs" in full_text
+    assert "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" in full_text
+    assert "v1.0.0-pub053-r2" in full_text
+    assert "to be confirmed by the authors" not in full_text
+    assert "Claude Code" in full_text and "PR_BODY.md" in full_text
     assert "boiler_pdm_sim" in full_text and "ab4" in full_text
     assert "Firstname Lastname 2,*" in full_text
     assert "[0, 1]" in full_text and "[−1, 1]" in full_text and "[0, 0.999]" in full_text

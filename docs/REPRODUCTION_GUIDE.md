@@ -42,3 +42,7 @@ When `observable_baseline_study_20260915T215200Z_be142b32.zip` (`source_copy/`, 
 python -B manuscript_verification/check_cutoff_leads.py /path/to/PUB053_Manuscript_Package_R2.zip ./out_cutoff
 python -B manuscript_verification/check_delay_window.py /path/to/PUB053_Manuscript_Package_R2.zip ./delay_window_check.csv
 ```
+
+## Verified Fresh-Clone Run Record
+- Tested on a fresh clone of `https://github.com/CAPTW/pub053-jmse-boiler-leak-warning.git` (commit `31636c66bf664512795ce20ee886a0631de04a92`) inside an isolated `Python 3.12.13` virtual environment built from `requirements-lock.txt`.
+- Verified exit code `0` for `code/test_analysis.py`, `code/verify_features.py --out results_reproduced`, `code/reproduce_analysis.py --out results_reproduced`, `code/make_figures_r2.py --results results_reproduced --out figures_reproduced`, `manuscript_verification/verify_tables_from_archived_results.py`, and core/contract `pytest` suites, with `results/` and `figures/` bit-for-bit unmodified (`docs/execution_logs/fresh_clone_reproduction_log.json`).

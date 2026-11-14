@@ -1,7 +1,7 @@
 {
   "repository": "CAPTW/pub053-jmse-boiler-leak-warning",
-  "total_files_excluding_self_manifest": 272,
-  "total_bytes_excluding_self_manifest": 4461344,
+  "total_files_excluding_self_manifest": 275,
+  "total_bytes_excluding_self_manifest": 4486378,
   "summary_by_top_level": {
     "(root)": {
       "files": 8,
@@ -16,16 +16,16 @@
       "bytes": 40349
     },
     "docs": {
-      "files": 7,
-      "bytes": 63517
+      "files": 8,
+      "bytes": 82130
     },
     "figures": {
       "files": 16,
       "bytes": 2942821
     },
     "manuscript_verification": {
-      "files": 19,
-      "bytes": 413892
+      "files": 20,
+      "bytes": 418522
     },
     "references": {
       "files": 6,
@@ -36,8 +36,8 @@
       "bytes": 33625
     },
     "results_archived": {
-      "files": 30,
-      "bytes": 130139
+      "files": 31,
+      "bytes": 131930
     },
     "simulator_source": {
       "files": 156,
@@ -166,6 +166,12 @@
       "top_dir": "docs"
     },
     {
+      "path": "docs/execution_logs/fresh_clone_reproduction_log.json",
+      "bytes": 18032,
+      "sha256": "6971cb6dee07575d0ffb716f3f5defe214a4a0e06b060cefacd31e01b2eeeba6",
+      "top_dir": "docs"
+    },
+    {
       "path": "docs/execution_logs/pytest_ab4_core_log.txt",
       "bytes": 8001,
       "sha256": "efcd14eb25937be58c48c8098ac661dc1ed6aaa9fe3d1c6c95b49e767219bd14",
@@ -173,8 +179,8 @@
     },
     {
       "path": "docs/execution_logs/pytest_ab4_integration_log.txt",
-      "bytes": 19920,
-      "sha256": "1ee9e32bad63b2d3f2d8f7c6955c466dc3141ac5c236483c9c60f1e67d0b340e",
+      "bytes": 19769,
+      "sha256": "b2c8eef4b97847eefe8b59c478553dec3ce726c1ac1518f3b21ba50d536d0ae0",
       "top_dir": "docs"
     },
     {
@@ -191,8 +197,8 @@
     },
     {
       "path": "docs/REPRODUCTION_GUIDE.md",
-      "bytes": 4562,
-      "sha256": "b6585a44bcc701a27552070c24beee8d438ad4957c7ed32a2bc982d1ce8e3a11",
+      "bytes": 5294,
+      "sha256": "b5e33b18c61a13aba80ec1f058f881b5f916e0cbcb0c2a522c9bf6045e425ab0",
       "top_dir": "docs"
     },
     {
@@ -376,6 +382,12 @@
       "top_dir": "manuscript_verification"
     },
     {
+      "path": "manuscript_verification/LATEST_MANUSCRIPT_VERIFICATION_REPORT.md",
+      "bytes": 3866,
+      "sha256": "a3aaf9bf9a23905846da2971bfba50c24121827481e672a32a5f4fe1305cffb0",
+      "top_dir": "manuscript_verification"
+    },
+    {
       "path": "manuscript_verification/MANUSCRIPT_ARTIFACT_MAP.md",
       "bytes": 8946,
       "sha256": "7b11680e27a10112ebd4bf9478bc5e6de9575d2da893e5f83ae63e42e489ea3a",
@@ -401,14 +413,14 @@
     },
     {
       "path": "manuscript_verification/verify_citations_and_manuscript.py",
-      "bytes": 10750,
-      "sha256": "bb974c138577792e4ebf522314895ce8f72128934d9e09d6355de44119f38287",
+      "bytes": 11009,
+      "sha256": "1fbcb9bfd42f3cd310fe9b7ebf8bbd4571e88c612f36ed9ffc910ae335e2c81d",
       "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/verify_revised_manuscript.py",
-      "bytes": 14284,
-      "sha256": "ebda4418aed10d84a8b37c8de3e521c2ac589345b50c1e115dc6208396bfd9bd",
+      "bytes": 14789,
+      "sha256": "2e5134b4ef12272d41cf24e0f1005b6cec5354d50f7348b4e3a079bf3d686868",
       "top_dir": "manuscript_verification"
     },
     {
@@ -568,9 +580,15 @@
       "top_dir": "results_archived"
     },
     {
+      "path": "results_archived/current_manuscript_verification/current_citations_and_manuscript_report.json",
+      "bytes": 1009,
+      "sha256": "7bea559e1e61a538db30e257ce3c17f637d0630a296db76f87077dd3244e06ee",
+      "top_dir": "results_archived"
+    },
+    {
       "path": "results_archived/current_manuscript_verification/current_docx_verification_report.json",
-      "bytes": 1435,
-      "sha256": "f6d9dc5391df9611a2cefacfaf5e5114d7803fc56cd4580699edc002586408aa",
+      "bytes": 1652,
+      "sha256": "51323ffc0cbda235599fb13b1b5f7e432fc3c15d852e50ce3afd4719ae91c98b",
       "top_dir": "results_archived"
     },
     {
@@ -581,8 +599,8 @@
     },
     {
       "path": "results_archived/current_manuscript_verification/README.md",
-      "bytes": 580,
-      "sha256": "7d5c502aadce10d31e02bb2e134102d501f8decb00c66a1ea21d7965051816a1",
+      "bytes": 1145,
+      "sha256": "47d9d4706227e020ba349053deb0fca316409b538ddecd79793835dd8aa4abcb",
       "top_dir": "results_archived"
     },
     {

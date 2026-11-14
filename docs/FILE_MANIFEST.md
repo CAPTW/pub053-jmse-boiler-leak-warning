@@ -1,7 +1,7 @@
 # File Manifest (`CAPTW/pub053-jmse-boiler-leak-warning`)
 
-- **Indexed files** (excluding self-referencing `docs/FILE_MANIFEST.*`): **272**
-- **Total indexed size**: **4,461,344 bytes**
+- **Indexed files** (excluding self-referencing `docs/FILE_MANIFEST.*`): **275**
+- **Total indexed size**: **4,486,378 bytes**
 
 ## Summary by Top-Level Directory
 | Top-Level | File Count | Bytes |
@@ -9,12 +9,12 @@
 | `(root)` | 8 | 17,233 |
 | `code` | 6 | 52,455 |
 | `data` | 11 | 40,349 |
-| `docs` | 7 | 63,517 |
+| `docs` | 8 | 82,130 |
 | `figures` | 16 | 2,942,821 |
-| `manuscript_verification` | 19 | 413,892 |
+| `manuscript_verification` | 20 | 418,522 |
 | `references` | 6 | 85,559 |
 | `results` | 13 | 33,625 |
-| `results_archived` | 30 | 130,139 |
+| `results_archived` | 31 | 131,930 |
 | `simulator_source` | 156 | 681,754 |
 
 ## Complete File Inventory
@@ -40,11 +40,12 @@
 | `data/reconstructed_inputs/README.md` | 1362 | `ade8a4eb649a8d53f419af2e71051898b7f2dbf61baf7bdd4a2fa5b8d270ca35` |
 | `data/reconstructed_inputs/threshold_candidates_table5_reconstructed.json` | 3954 | `e891f197c77f78b22e59bfa72b66b4b9764971f18380d9e0e553ff62ac120017` |
 | `docs/AI_USAGE_AUDIT.md` | 4897 | `b4fe6cf832cbce75272c3dae18bf32bc96e76f7511394136a2a88e45e7152229` |
+| `docs/execution_logs/fresh_clone_reproduction_log.json` | 18032 | `6971cb6dee07575d0ffb716f3f5defe214a4a0e06b060cefacd31e01b2eeeba6` |
 | `docs/execution_logs/pytest_ab4_core_log.txt` | 8001 | `efcd14eb25937be58c48c8098ac661dc1ed6aaa9fe3d1c6c95b49e767219bd14` |
-| `docs/execution_logs/pytest_ab4_integration_log.txt` | 19920 | `1ee9e32bad63b2d3f2d8f7c6955c466dc3141ac5c236483c9c60f1e67d0b340e` |
+| `docs/execution_logs/pytest_ab4_integration_log.txt` | 19769 | `b2c8eef4b97847eefe8b59c478553dec3ce726c1ac1518f3b21ba50d536d0ae0` |
 | `docs/execution_logs/verify_citations_and_manuscript_log.json` | 897 | `9a15aab02baba71e7e6d0607244b6def302dcd3f9850df99b57ab7bf2459beab` |
 | `docs/execution_logs/verify_tables_from_archived_results_log.json` | 2407 | `82e255422b8eca55cf275e66e5401179206556a37ca3ef79c8f93c162f3166e4` |
-| `docs/REPRODUCTION_GUIDE.md` | 4562 | `b6585a44bcc701a27552070c24beee8d438ad4957c7ed32a2bc982d1ce8e3a11` |
+| `docs/REPRODUCTION_GUIDE.md` | 5294 | `b5e33b18c61a13aba80ec1f058f881b5f916e0cbcb0c2a522c9bf6045e425ab0` |
 | `docs/SOURCE_PROVENANCE.md` | 22833 | `edc3cf2229a409e0da297337849940a81b0aa9d55e449807326dff96e0796dfc` |
 | `environment.yml` | 152 | `4204c43c19a7d80d1de94099a205915601549f3917c006eef9b740dc0d93a5a6` |
 | `figures/fig1_normal_overview.png` | 1034473 | `7ecb3a6c9027701f0ea668e9ac918a738e9521fdb8498f2cd5a4ed3ef51b9bd0` |
@@ -75,12 +76,13 @@
 | `manuscript_verification/combine_normal_figs.py` | 489 | `111fff0b68f151afba7f621f54b3dcd2499ac16de70c0c3c660be40b98875329` |
 | `manuscript_verification/create_automated_citation_docx.py` | 23900 | `f2f5a3b0e4e460510b032f447c131451bcc38efb7cfb34dd8a8392efba358b0a` |
 | `manuscript_verification/independent_numeric_review.py` | 7071 | `0ffa624462f91cdd0549437c4404f1a09261a09bde99ad6f0b4247d16719da30` |
+| `manuscript_verification/LATEST_MANUSCRIPT_VERIFICATION_REPORT.md` | 3866 | `a3aaf9bf9a23905846da2971bfba50c24121827481e672a32a5f4fe1305cffb0` |
 | `manuscript_verification/MANUSCRIPT_ARTIFACT_MAP.md` | 8946 | `7b11680e27a10112ebd4bf9478bc5e6de9575d2da893e5f83ae63e42e489ea3a` |
 | `manuscript_verification/r2_text_archive/PUB053_Manuscript_R2.txt` | 24451 | `37da49229bd6f7b33d68a449314af00b55117afb221a017fd22e43be783f62cb` |
 | `manuscript_verification/r2_text_archive/PUB053_Supplement_R2.txt` | 33851 | `ec391194b1bab8de4f4432cb5593a76209b4ee95b0d5f2e079140aebe3320dc1` |
 | `manuscript_verification/sync_citations_and_references.py` | 15274 | `54b0aa8ea7169a98c2555273f7f57fe1738ccd1548e226ee1a443843c624ed19` |
-| `manuscript_verification/verify_citations_and_manuscript.py` | 10750 | `bb974c138577792e4ebf522314895ce8f72128934d9e09d6355de44119f38287` |
-| `manuscript_verification/verify_revised_manuscript.py` | 14284 | `ebda4418aed10d84a8b37c8de3e521c2ac589345b50c1e115dc6208396bfd9bd` |
+| `manuscript_verification/verify_citations_and_manuscript.py` | 11009 | `1fbcb9bfd42f3cd310fe9b7ebf8bbd4571e88c612f36ed9ffc910ae335e2c81d` |
+| `manuscript_verification/verify_revised_manuscript.py` | 14789 | `2e5134b4ef12272d41cf24e0f1005b6cec5354d50f7348b4e3a079bf3d686868` |
 | `manuscript_verification/verify_tables_from_archived_results.py` | 12311 | `971ae1e88abc061f38a215b0cdb77cc7e10015bd1d09c4b16762f7fa3fa23534` |
 | `manuscript_verification/word_update_export_and_test.py` | 30229 | `65d859985b28390c592f38eea9d534b16cc60da4dcfd335f67b7ab51ad20a838` |
 | `pyproject.toml` | 805 | `fcb8ac40c3ea785d892b0ddd4d6ac8b9711f2c876a99cdad864f14326f169b8c` |
@@ -107,9 +109,10 @@
 | `results/tables_and_rounding_summary.json` | 349 | `f6e40318018949cab3fedae6d841252ff7894609ca39dff6280e69ffc442d489` |
 | `results_archived/component_crossing_timing.csv` | 799 | `f07a8968f43070f6605a98ac218bb14006c9472baf4d3610e3bffa2756390f8d` |
 | `results_archived/current_manuscript_verification/citation_editing_and_reordering_test_log.json` | 28481 | `36dd6d33847fdddb88e97907a7b154178c26387e4be90c34c783f07ce39b9db7` |
-| `results_archived/current_manuscript_verification/current_docx_verification_report.json` | 1435 | `f6d9dc5391df9611a2cefacfaf5e5114d7803fc56cd4580699edc002586408aa` |
+| `results_archived/current_manuscript_verification/current_citations_and_manuscript_report.json` | 1009 | `7bea559e1e61a538db30e257ce3c17f637d0630a296db76f87077dd3244e06ee` |
+| `results_archived/current_manuscript_verification/current_docx_verification_report.json` | 1652 | `51323ffc0cbda235599fb13b1b5f7e432fc3c15d852e50ce3afd4719ae91c98b` |
 | `results_archived/current_manuscript_verification/current_manuscript_table_checks.csv` | 5272 | `8e3efd7d4eac65c0ec5c85bd77afda76b6a1cd96e72fbbf8258e0706afbaa875` |
-| `results_archived/current_manuscript_verification/README.md` | 580 | `7d5c502aadce10d31e02bb2e134102d501f8decb00c66a1ea21d7965051816a1` |
+| `results_archived/current_manuscript_verification/README.md` | 1145 | `47d9d4706227e020ba349053deb0fca316409b538ddecd79793835dd8aa4abcb` |
 | `results_archived/cutoff_leads_by_block.csv` | 4289 | `9775c720ea592140ca5a5fa399c74966f32db1021feecc3a41d0707d1d692371` |
 | `results_archived/cutoff_leads_summary.csv` | 526 | `c1a1c6e243002ff847df15612b57f781bd69e926cb53190496a0c4dba5612149` |
 | `results_archived/delay_window_check.csv` | 1991 | `10ec4d9b852ee43fbacef0e145911a1dd7491265fa39c2a361d1705a6d34d989` |

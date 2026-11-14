@@ -1,8 +1,8 @@
 {
   "target_docx": "JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.docx",
-  "docx_sha256": "393368eea5c8ec0eaa4acc49d704c463a367cdbd4523d304759366c3ed70c092",
+  "docx_sha256": "81d1e24f97c44b25f1a34c5197fb0d12ad6a0fb5582fcfec758aca4eec0c595d",
   "target_pdf": "JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.pdf",
-  "pdf_sha256": "9c808f300b47c7447d0236bef0013ce3c103cf8f7fe4c61f400e353c67707149",
+  "pdf_sha256": "7797b66183acfbc405810731f037a6d8bfef7aea3df971e340d4d3a086cd1409",
   "office_cached_pages": 8,
   "pdf_pages": 26,
   "pdf_field_errors": 0,
@@ -34,6 +34,11 @@
     "no_unverified_ai_models": true,
     "r2_did_not_generate_trajectories": true,
     "has_provenance_separated_data_availability": true,
+    "has_live_public_github_url": true,
+    "has_release_tag": true,
+    "no_pending_confirmation_placeholder": true,
+    "has_claude_code_pr_footer_disclosure": true,
+    "has_corrected_archive_separation": true,
     "no_half_open_clamps": true
   },
   "all_passed": true

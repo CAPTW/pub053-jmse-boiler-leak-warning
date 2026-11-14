@@ -230,6 +230,11 @@ def verify_all(
             and "current_manuscript_verification" in full_text
             and "reconstructed_inputs" in full_text
         ),
+        "has_live_public_github_url": "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" in full_text,
+        "has_release_tag": "v1.0.0-pub053-r2" in full_text,
+        "no_pending_confirmation_placeholder": "to be confirmed by the authors" not in full_text,
+        "has_claude_code_pr_footer_disclosure": "Claude Code" in full_text and "PR_BODY.md" in full_text,
+        "has_corrected_archive_separation": "PUB053_Manuscript_Package_R2.zip" in full_text and "source_copy/" in full_text,
         "no_half_open_clamps": "[0, 1)" not in full_text and "[−1, 1)" not in full_text and "[0, 0.999)" not in full_text,
     }
 
@@ -260,9 +265,9 @@ def verify_all(
     total_matched = sum(1 for r in check_rows if r["match"])
 
     report = {
-        "target_docx": str(docx_path),
+        "target_docx": docx_path.name,
         "docx_sha256": hashlib.sha256(docx_path.read_bytes()).hexdigest(),
-        "target_pdf": str(pdf_path),
+        "target_pdf": pdf_path.name,
         "pdf_sha256": hashlib.sha256(pdf_path.read_bytes()).hexdigest() if pdf_path.exists() else None,
         "office_cached_pages": office_pages,
         "pdf_pages": pdf_pages,

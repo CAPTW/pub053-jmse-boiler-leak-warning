@@ -248,7 +248,7 @@ tmp_path = WindowsPath('C:/Users/Public/Documents/ESTsoft/CreatorTemp/pytest-of-
     
 >       assert proc.returncode == 1
 E       assert 2 == 1
-E        +  where 2 = CompletedProcess(args=['C:\\Users\\IDEAL\\.gemini\\antigravity\\scratch\\isolated_test_venv\\Scripts\\python.exe', 'scripts/check_dataset_governance.py', '--dataset', 'C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\pytest-of-<USER>\\pytest-301\\test_governance_policy_enforce0\\dataset.parquet', '--policy', 'C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\pytest-of-<USER>\\pytest-301\\test_governance_policy_enforce0\\policy.yaml'], returncode=2, stdout='', stderr="C:\\Users\\IDEAL\\anaconda3\\python.exe: can't open file 'C:\\\\Users\\\\IDEAL\\\\.gemini\\\\antigravity\\\\scratch\\\\pub053-jmse-boiler-leak-warning\\\\simulator_source\\\\scripts\\\\check_dataset_governance.py': [Errno 2] No such file or directory\n").returncode
+E        +  where 2 = CompletedProcess(args=['<TEST_VENV>\\Scripts\\python.exe', 'scripts/check_dataset_governance.py', '--dataset', 'C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\pytest-of-<USER>\\pytest-301\\test_governance_policy_enforce0\\dataset.parquet', '--policy', 'C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\pytest-of-<USER>\\pytest-301\\test_governance_policy_enforce0\\policy.yaml'], returncode=2, stdout='', stderr="<BASE_PYTHON>\\python.exe: can't open file '<REPO_ROOT>\\\\simulator_source\\\\scripts\\\\check_dataset_governance.py': [Errno 2] No such file or directory\n").returncode
 
 tests\test_governance_policy_contracts.py:91: AssertionError
 __________________ test_workspace_compatibility_paths_exist ___________________
