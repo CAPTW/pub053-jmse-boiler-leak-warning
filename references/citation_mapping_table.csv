@@ -1,0 +1,27 @@
+﻿group_id,para_idx,section,bracket_text,expanded_refs,expanded_count,linked_bookmarks,context_snippet
+1,10,1. Introduction,"[1,2]","1,2",2,Ref01;Ref02,"tion, and machinery-space services [1,2], alongside broader steam-plant hea"
+2,10,1. Introduction,"[3,4]","3,4",2,Ref03;Ref04,"changers and auxiliary power loops [3,4]. In marine drum-boiler operation, "
+3,10,1. Introduction,"[2,5–8]","2,5,6,7,8",5,Ref02;Ref05;Ref06;Ref07;Ref08," that motivate early fault warning [2,5–8]."
+4,11,1. Introduction,[5–8],"5,6,7,8",4,Ref05;Ref06;Ref07;Ref08,ctive closed-loop feedback control [5–8]. Physical drum boilers exhibit pro
+5,11,1. Introduction,"[5,6]","5,6",2,Ref05;Ref06,", and natural circulation coupling [5,6]. To stabilize operation under fluc"
+6,11,1. Introduction,[6–8],"6,7,8",3,Ref06;Ref07;Ref08, relative to measured steam output [6–8]. From a fault-diagnosis perspectiv
+7,11,1. Introduction,[9–14],"9,10,11,12,13,14",6,Ref09;Ref10;Ref11;Ref12;Ref13;Ref14,c closed-loop fault-masking effect [9–14]: as a leak begins to drain liquid 
+8,11,1. Introduction,"[13,14]","13,14",2,Ref13;Ref14,"water actuator or inventory margin [13,14]."
+9,12,1. Introduction,[15],15,1,Ref15,ion-heat-flux-based expert systems [15] and four-element acoustic arrays f
+10,12,1. Introduction,[16],16,1,Ref16,"s for hyperbolic leak localization [16]; however, these methods require de"
+11,12,1. Introduction,"[17,18]","17,18",2,Ref17;Ref18,"ard plant measurements, Sun et al. [17,18] formulated a steam-drum mass balan"
+12,12,1. Introduction,[19],19,1,Ref19,"tationary load changes, Sun et al. [19] subsequently introduced a dynamic "
+13,12,1. Introduction,[20],20,1,Ref20,(PCA) monitoring scheme. Yu et al. [20] applied multivariate PCA with expo
+14,12,1. Introduction,[21],21,1,Ref21," recently, Swiercz and Mroczkowska [21] evaluated multiway PCA on boiler p"
+15,12,1. Introduction,[22],22,1,Ref22,"leak case studies, Indrawan et al. [22] evaluated multivariate data-analyt"
+16,12,1. Introduction,[23],23,1,Ref23," subcritical boiler, Panday et al. [23] developed feedwater-to-steam flow-"
+17,12,1. Introduction,[24],24,1,Ref24,"able thresholds, and Widodo et al. [24] investigated support vector machin"
+18,13,1. Introduction,"[17,20,22,23]","17,20,22,23",4,Ref17;Ref20;Ref22;Ref23,"established in prior plant studies [17,20,22,23]. However, when an anomaly detector"
+19,14,1. Introduction,[6],6,1,Ref06,cal formulation of Åström and Bell [6]. Rather than proposing a universal
+20,14,1. Introduction,"[20,22–24]","20,22,23,24",4,Ref20;Ref22;Ref23;Ref24,"plicating the plant validations of [20,22–24], or claiming field-validated progn"
+21,17,2.1. Auxiliary-Boiler Plant Model and Physical Leak Coupling,[6],6,1,Ref06,ation framework of Åström and Bell [6] to an MGO-fired auxiliary water-tu
+22,17,2.1. Auxiliary-Boiler Plant Model and Physical Leak Coupling,[6],6,1,Ref06,hed Åström–Bell power-boiler model [6] does not transfer automatically to
+23,18,2.1. Auxiliary-Boiler Plant Model and Physical Leak Coupling,"[25,26]","25,26",2,Ref25;Ref26,"rial Formulation 1997 (IAPWS-IF97) [25,26]. The global stored fluid mass M an"
+24,41,2.3. Detector Pipelines and Score Standardization,[27],27,1,Ref27,y weighted moving averages (EWMAs) [27] of observed drum water level and p
+25,45,2.3. Detector Pipelines and Score Standardization,[26],26,1,Ref26,–30 bar) generated from IAPWS-IF97 [26]. Unlike the true global fluid mass
+26,93,4.1. Control Compensation and Component Attribution Mechanisms,"[9,13,14]","9,13,14",3,Ref09;Ref13;Ref14,"ibution in a regulated drum boiler [9,13,14]. As tube leakage withdraws pressur"

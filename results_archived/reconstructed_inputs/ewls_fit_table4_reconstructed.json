@@ -1,0 +1,66 @@
+{
+  "source": "Reconstructed from archived full-precision OLS fit cross-checks (tables_3_4_5_7_crosscheck.csv, original results/independent_fit.json on external workstation)",
+  "fit_sample_n": 40804,
+  "parameters": [
+    {
+      "parameter": "a0",
+      "full_precision_value": 0.010782964417111532,
+      "manuscript_crosscheck_value": 0.0107829644171,
+      "verification_kind": "archived fit cross-check"
+    },
+    {
+      "parameter": "a1",
+      "full_precision_value": -0.008107788224736541,
+      "manuscript_crosscheck_value": -0.00810778822474,
+      "verification_kind": "archived fit cross-check"
+    },
+    {
+      "parameter": "a2",
+      "full_precision_value": 1.6319838763551455,
+      "manuscript_crosscheck_value": 1.63198387636,
+      "verification_kind": "archived fit cross-check"
+    },
+    {
+      "parameter": "b0",
+      "full_precision_value": -0.403728207266868,
+      "manuscript_crosscheck_value": -0.403728207267,
+      "verification_kind": "archived fit cross-check"
+    },
+    {
+      "parameter": "b1",
+      "full_precision_value": 0.6176879377417606,
+      "manuscript_crosscheck_value": 0.617687937742,
+      "verification_kind": "archived fit cross-check"
+    },
+    {
+      "parameter": "σF",
+      "full_precision_value": 0.06421007023390213,
+      "manuscript_crosscheck_value": 0.0642100702339,
+      "verification_kind": "archived fit cross-check"
+    },
+    {
+      "parameter": "σD",
+      "full_precision_value": 0.05726131029384739,
+      "manuscript_crosscheck_value": 0.0572613102938,
+      "verification_kind": "archived fit cross-check"
+    },
+    {
+      "parameter": "σl",
+      "full_precision_value": 0.0069298701734583764,
+      "manuscript_crosscheck_value": 0.00692987017346,
+      "verification_kind": "archived fit cross-check"
+    },
+    {
+      "parameter": "σp",
+      "full_precision_value": 0.001253156580275631,
+      "manuscript_crosscheck_value": 0.00125315658028,
+      "verification_kind": "archived fit cross-check"
+    },
+    {
+      "parameter": "Fit sample N",
+      "full_precision_value": 40804.0,
+      "manuscript_crosscheck_value": 40804.0,
+      "verification_kind": "archived fit cross-check"
+    }
+  ]
+}

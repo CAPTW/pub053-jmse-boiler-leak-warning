@@ -1,0 +1,344 @@
+{
+  "revised_docx": ".\\JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.docx",
+  "revised_pdf": ".\\JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.pdf",
+  "pdf_page_count": 26,
+  "baseline_ref_field_count": 44,
+  "ref_field_count": 44,
+  "ref_field_errors": [],
+  "sdt_controls_count": 26,
+  "sdt_expanded_ref_ids_count": 54,
+  "all_44_fields_shifted_plus_1": true,
+  "scenario_1_insert_before_ref1": {
+    "passed": true,
+    "field_count": 44,
+    "errors": [],
+    "before_snippets": {
+      "machinery-space services": "Auxiliary steam boilers are essential service units aboard commercial seagoing vessels, supplying saturated steam for fuel heating, cargo and tank heating, fresh-water generation, and machinery-space services [1,2], alongside broader steam-plant heat exchangers and auxiliary power loops [3,4]. In marine drum-boiler operation, incipient waterwall or riser tube leakage withdraws pressurized saturated liquid and liquid enthalpy from the natural-circulation loop; if uncompensated or allowed to progress until feedwater replenishment capacity is exhausted, the resulting inventory loss leads to water-level depression and pressure-part overheating hazards that motivate early fault warning [2,5–8].",
+      "fault-masking effect": "Early detection of boiler tube leakage from standard process instrumentation is complicated by two-phase drum-riser-downcomer thermohydraulics and active closed-loop feedback control [5–8]. Physical drum boilers exhibit pronounced non-minimum-phase shrink-and-swell behavior driven by subsurface steam void dynamics, thermal capacitance in the drum and riser metal, and natural circulation coupling [5,6]. To stabilize operation under fluctuating shipboard or industrial steam loads, drum boilers employ pressure proportional–integral (PI) controllers acting on fuel firing rate together with three-element cascade controllers that regulate apparent drum water level by trimming feedwater flow relative to measured steam output [6–8]. From a fault-diagnosis perspective, this regulatory architecture creates a classic closed-loop fault-masking effect [9–14]: as a leak begins to drain liquid inventory and saturated-liquid enthalpy, the pressure controller increases firing request and the level/flow cascade increases feedwater valve command to maintain regulated drum pressure and apparent water level near their setpoints. Consequently, univariate alarms on regulated state variables may remain silent until the leak rate approaches the available feedwater actuator or inventory margin [13,14].",
+      "Åström and Bell": "This article addresses that question through a controlled numerical investigation using a four-state saturated-steam auxiliary-boiler simulation (ab4) inspired by the physical formulation of Åström and Bell [6]. Rather than proposing a universal fault-classification architecture, replicating the plant validations of [20,22–24], or claiming field-validated prognostic accuracy, this study provides a transparent episode-level comparison across 12 paired normal and fault operating blocks (four development blocks and eight evaluation blocks, comprising 24 six-hour episodes and 259,224 correlated time-series samples at 2 s resolution). Specifically, the contributions of this work are threefold: (i) we document the implemented four-state plant dynamics, pressure-dependent line hydraulics, three-element cascade control loop, protection policy, and four causal monitoring pipelines (State (B0), Flow only, Demand only, and Combined (B1)); (ii) we quantify both exogenous post-onset detection delays and strict lead times prior to a retrospective functional degradation criterion across the eight evaluation blocks; and (iii) we perform a post-hoc component attribution and threshold-persistence analysis that explains why the composite score's upper development-normal tail coincides with the demand component while identifying lower-load scenarios where separately calibrated flow residuals confirm earlier.",
+      "IAPWS-IF97": "Let VT = Vd + Vr + Vdc denote the total pressurized water-steam volume of the drum (Vd), risers (Vr), and downcomer (Vdc), so that total vapor volume is Vs = VT − Vw. Saturated liquid and vapor densities (ρw, ρs), specific enthalpies (hw, hs), latent heat of vaporization (hfg = hs − hw), and saturation temperature Tsat(p) are evaluated along the saturation curve using the International Association for the Properties of Water and Steam Industrial Formulation 1997 (IAPWS-IF97) [25,26]. The global stored fluid mass M and total internal energy U (including the lumped thermal capacitance Cm of the pressure-part metal in thermal equilibrium at Tsat) are expressed as:",
+      "moving averages (EWMAs)": "1. State Baseline (State (B0)): The baseline detector tracks exponentially weighted moving averages (EWMAs) [27] of observed drum water level and pressure deviations from their setpoints, dl(t) = lobs(t) − 0.85 m and dp(t) = pobs(t) − 7.0 bar. Using a 120 s smoothing time constant on the 2 s grid, the recursive smoothing weight is a = 1 − exp(−2/120). Each EWMA initializes at the first available observation and updates on valid samples according to e(t) = e(t − 2) + a[d(t) − e(t − 2)], with standardized two-sided score:"
+    },
+    "after_insertion_snippets": {
+      "machinery-space services": "Auxiliary steam boilers are essential service units aboard commercial seagoing vessels, supplying saturated steam for fuel heating, cargo and tank heating, fresh-water generation, and machinery-space services [2,3], alongside broader steam-plant heat exchangers and auxiliary power loops [4,5]. In marine drum-boiler operation, incipient waterwall or riser tube leakage withdraws pressurized saturated liquid and liquid enthalpy from the natural-circulation loop; if uncompensated or allowed to progress until feedwater replenishment capacity is exhausted, the resulting inventory loss leads to water-level depression and pressure-part overheating hazards that motivate early fault warning [3,6–9].",
+      "fault-masking effect": "Early detection of boiler tube leakage from standard process instrumentation is complicated by two-phase drum-riser-downcomer thermohydraulics and active closed-loop feedback control [6–9]. Physical drum boilers exhibit pronounced non-minimum-phase shrink-and-swell behavior driven by subsurface steam void dynamics, thermal capacitance in the drum and riser metal, and natural circulation coupling [6,7]. To stabilize operation under fluctuating shipboard or industrial steam loads, drum boilers employ pressure proportional–integral (PI) controllers acting on fuel firing rate together with three-element cascade controllers that regulate apparent drum water level by trimming feedwater flow relative to measured steam output [7–9]. From a fault-diagnosis perspective, this regulatory architecture creates a classic closed-loop fault-masking effect [10–15]: as a leak begins to drain liquid inventory and saturated-liquid enthalpy, the pressure controller increases firing request and the level/flow cascade increases feedwater valve command to maintain regulated drum pressure and apparent water level near their setpoints. Consequently, univariate alarms on regulated state variables may remain silent until the leak rate approaches the available feedwater actuator or inventory margin [14,15].",
+      "Åström and Bell": "This article addresses that question through a controlled numerical investigation using a four-state saturated-steam auxiliary-boiler simulation (ab4) inspired by the physical formulation of Åström and Bell [7]. Rather than proposing a universal fault-classification architecture, replicating the plant validations of [21,23–25], or claiming field-validated prognostic accuracy, this study provides a transparent episode-level comparison across 12 paired normal and fault operating blocks (four development blocks and eight evaluation blocks, comprising 24 six-hour episodes and 259,224 correlated time-series samples at 2 s resolution). Specifically, the contributions of this work are threefold: (i) we document the implemented four-state plant dynamics, pressure-dependent line hydraulics, three-element cascade control loop, protection policy, and four causal monitoring pipelines (State (B0), Flow only, Demand only, and Combined (B1)); (ii) we quantify both exogenous post-onset detection delays and strict lead times prior to a retrospective functional degradation criterion across the eight evaluation blocks; and (iii) we perform a post-hoc component attribution and threshold-persistence analysis that explains why the composite score's upper development-normal tail coincides with the demand component while identifying lower-load scenarios where separately calibrated flow residuals confirm earlier.",
+      "IAPWS-IF97": "Let VT = Vd + Vr + Vdc denote the total pressurized water-steam volume of the drum (Vd), risers (Vr), and downcomer (Vdc), so that total vapor volume is Vs = VT − Vw. Saturated liquid and vapor densities (ρw, ρs), specific enthalpies (hw, hs), latent heat of vaporization (hfg = hs − hw), and saturation temperature Tsat(p) are evaluated along the saturation curve using the International Association for the Properties of Water and Steam Industrial Formulation 1997 (IAPWS-IF97) [26,27]. The global stored fluid mass M and total internal energy U (including the lumped thermal capacitance Cm of the pressure-part metal in thermal equilibrium at Tsat) are expressed as:",
+      "moving averages (EWMAs)": "1. State Baseline (State (B0)): The baseline detector tracks exponentially weighted moving averages (EWMAs) [28] of observed drum water level and pressure deviations from their setpoints, dl(t) = lobs(t) − 0.85 m and dp(t) = pobs(t) − 7.0 bar. Using a 120 s smoothing time constant on the 2 s grid, the recursive smoothing weight is a = 1 − exp(−2/120). Each EWMA initializes at the first available observation and updates on valid samples according to e(t) = e(t − 2) + a[d(t) − e(t − 2)], with standardized two-sided score:"
+    },
+    "sample_shifts": [
+      {
+        "code": "REF Ref01 \\n \\t \\h",
+        "before": "1",
+        "after": "2"
+      },
+      {
+        "code": "REF Ref02 \\n \\t \\h",
+        "before": "2",
+        "after": "3"
+      },
+      {
+        "code": "REF Ref03 \\n \\t \\h",
+        "before": "3",
+        "after": "4"
+      },
+      {
+        "code": "REF Ref04 \\n \\t \\h",
+        "before": "4",
+        "after": "5"
+      },
+      {
+        "code": "REF Ref02 \\n \\t \\h",
+        "before": "2",
+        "after": "3"
+      },
+      {
+        "code": "REF Ref05 \\n \\t \\h",
+        "before": "5",
+        "after": "6"
+      },
+      {
+        "code": "REF Ref08 \\n \\t \\h",
+        "before": "8",
+        "after": "9"
+      },
+      {
+        "code": "REF Ref05 \\n \\t \\h",
+        "before": "5",
+        "after": "6"
+      }
+    ]
+  },
+  "scenario_2_move_interior_ref06_to_27_no_reorder": {
+    "passed": true,
+    "field_count_after_range_split": 47,
+    "errors": [],
+    "preserved_group_refs_check": {
+      "G03": {
+        "refs": [
+          "Ref02",
+          "Ref05",
+          "Ref06",
+          "Ref07",
+          "Ref08"
+        ],
+        "word_display": "[2,5–7,27]"
+      },
+      "G04": {
+        "refs": [
+          "Ref05",
+          "Ref06",
+          "Ref07",
+          "Ref08"
+        ],
+        "word_display": "[5–7,27]"
+      },
+      "G05": {
+        "refs": [
+          "Ref05",
+          "Ref06"
+        ],
+        "word_display": "[5,27]"
+      },
+      "G06": {
+        "refs": [
+          "Ref06",
+          "Ref07",
+          "Ref08"
+        ],
+        "word_display": "[6,7,27]"
+      },
+      "G07": {
+        "refs": [
+          "Ref09",
+          "Ref10",
+          "Ref11",
+          "Ref12",
+          "Ref13",
+          "Ref14"
+        ],
+        "word_display": "[8–13]"
+      },
+      "G19": {
+        "refs": [
+          "Ref06"
+        ],
+        "word_display": "[27]"
+      },
+      "G21": {
+        "refs": [
+          "Ref06"
+        ],
+        "word_display": "[27]"
+      },
+      "G22": {
+        "refs": [
+          "Ref06"
+        ],
+        "word_display": "[27]"
+      },
+      "G23": {
+        "refs": [
+          "Ref25",
+          "Ref26"
+        ],
+        "word_display": "[24,25]"
+      },
+      "G24": {
+        "refs": [
+          "Ref27"
+        ],
+        "word_display": "[26]"
+      }
+    }
+  },
+  "scenario_3_move_g23_early_and_reorder_refs": {
+    "passed": true,
+    "field_count": 44,
+    "errors": [],
+    "first_citation_order_matches_references": true,
+    "new_top5_references": [
+      {
+        "pos": 1,
+        "bookmark": "Ref01",
+        "snippet": "Tajiri, T. Auxiliary Boiler—Aalborg Industries' Marine Boiler. J. Jpn. Inst"
+      },
+      {
+        "pos": 2,
+        "bookmark": "Ref02",
+        "snippet": "Kim, M.-H.; So, M.-O.; Jung, B.-G. Development of the simulator for marine "
+      },
+      {
+        "pos": 3,
+        "bookmark": "Ref25",
+        "snippet": "Wagner, W.; Cooper, J.R.; Dittmann, A.; Kijima, J.; Kretzschmar, H.-J.; Kru"
+      },
+      {
+        "pos": 4,
+        "bookmark": "Ref26",
+        "snippet": "International Association for the Properties of Water and Steam (IAPWS). Re"
+      },
+      {
+        "pos": 5,
+        "bookmark": "Ref03",
+        "snippet": "Orović, J.; Mrzljak, V.; Poljak, I. Efficiency and Losses Analysis of Steam"
+      },
+      {
+        "pos": 6,
+        "bookmark": "Ref04",
+        "snippet": "Poljak, I. Marine Power Systems. J. Mar. Sci. Eng. 2022, 10, 195. https://d"
+      }
+    ],
+    "recomputed_group_displays": {
+      "G01": {
+        "refs": [
+          "Ref01",
+          "Ref02"
+        ],
+        "word_display": "[1,2]"
+      },
+      "G23": {
+        "refs": [
+          "Ref25",
+          "Ref26"
+        ],
+        "word_display": "[3,4]"
+      },
+      "G02": {
+        "refs": [
+          "Ref03",
+          "Ref04"
+        ],
+        "word_display": "[5,6]"
+      },
+      "G03": {
+        "refs": [
+          "Ref02",
+          "Ref05",
+          "Ref06",
+          "Ref07",
+          "Ref08"
+        ],
+        "word_display": "[2,7–10]"
+      },
+      "G04": {
+        "refs": [
+          "Ref05",
+          "Ref06",
+          "Ref07",
+          "Ref08"
+        ],
+        "word_display": "[7–10]"
+      },
+      "G07": {
+        "refs": [
+          "Ref09",
+          "Ref10",
+          "Ref11",
+          "Ref12",
+          "Ref13",
+          "Ref14"
+        ],
+        "word_display": "[11–16]"
+      },
+      "G25": {
+        "refs": [
+          "Ref26"
+        ],
+        "word_display": "[4]"
+      },
+      "G24": {
+        "refs": [
+          "Ref27"
+        ],
+        "word_display": "[27]"
+      }
+    }
+  },
+  "before_snippets": {
+    "machinery-space services": "Auxiliary steam boilers are essential service units aboard commercial seagoing vessels, supplying saturated steam for fuel heating, cargo and tank heating, fresh-water generation, and machinery-space services [1,2], alongside broader steam-plant heat exchangers and auxiliary power loops [3,4]. In marine drum-boiler operation, incipient waterwall or riser tube leakage withdraws pressurized saturated liquid and liquid enthalpy from the natural-circulation loop; if uncompensated or allowed to progress until feedwater replenishment capacity is exhausted, the resulting inventory loss leads to water-level depression and pressure-part overheating hazards that motivate early fault warning [2,5–8].",
+    "fault-masking effect": "Early detection of boiler tube leakage from standard process instrumentation is complicated by two-phase drum-riser-downcomer thermohydraulics and active closed-loop feedback control [5–8]. Physical drum boilers exhibit pronounced non-minimum-phase shrink-and-swell behavior driven by subsurface steam void dynamics, thermal capacitance in the drum and riser metal, and natural circulation coupling [5,6]. To stabilize operation under fluctuating shipboard or industrial steam loads, drum boilers employ pressure proportional–integral (PI) controllers acting on fuel firing rate together with three-element cascade controllers that regulate apparent drum water level by trimming feedwater flow relative to measured steam output [6–8]. From a fault-diagnosis perspective, this regulatory architecture creates a classic closed-loop fault-masking effect [9–14]: as a leak begins to drain liquid inventory and saturated-liquid enthalpy, the pressure controller increases firing request and the level/flow cascade increases feedwater valve command to maintain regulated drum pressure and apparent water level near their setpoints. Consequently, univariate alarms on regulated state variables may remain silent until the leak rate approaches the available feedwater actuator or inventory margin [13,14].",
+    "Åström and Bell": "This article addresses that question through a controlled numerical investigation using a four-state saturated-steam auxiliary-boiler simulation (ab4) inspired by the physical formulation of Åström and Bell [6]. Rather than proposing a universal fault-classification architecture, replicating the plant validations of [20,22–24], or claiming field-validated prognostic accuracy, this study provides a transparent episode-level comparison across 12 paired normal and fault operating blocks (four development blocks and eight evaluation blocks, comprising 24 six-hour episodes and 259,224 correlated time-series samples at 2 s resolution). Specifically, the contributions of this work are threefold: (i) we document the implemented four-state plant dynamics, pressure-dependent line hydraulics, three-element cascade control loop, protection policy, and four causal monitoring pipelines (State (B0), Flow only, Demand only, and Combined (B1)); (ii) we quantify both exogenous post-onset detection delays and strict lead times prior to a retrospective functional degradation criterion across the eight evaluation blocks; and (iii) we perform a post-hoc component attribution and threshold-persistence analysis that explains why the composite score's upper development-normal tail coincides with the demand component while identifying lower-load scenarios where separately calibrated flow residuals confirm earlier.",
+    "IAPWS-IF97": "Let VT = Vd + Vr + Vdc denote the total pressurized water-steam volume of the drum (Vd), risers (Vr), and downcomer (Vdc), so that total vapor volume is Vs = VT − Vw. Saturated liquid and vapor densities (ρw, ρs), specific enthalpies (hw, hs), latent heat of vaporization (hfg = hs − hw), and saturation temperature Tsat(p) are evaluated along the saturation curve using the International Association for the Properties of Water and Steam Industrial Formulation 1997 (IAPWS-IF97) [25,26]. The global stored fluid mass M and total internal energy U (including the lumped thermal capacitance Cm of the pressure-part metal in thermal equilibrium at Tsat) are expressed as:",
+    "moving averages (EWMAs)": "1. State Baseline (State (B0)): The baseline detector tracks exponentially weighted moving averages (EWMAs) [27] of observed drum water level and pressure deviations from their setpoints, dl(t) = lobs(t) − 0.85 m and dp(t) = pobs(t) − 7.0 bar. Using a 120 s smoothing time constant on the 2 s grid, the recursive smoothing weight is a = 1 − exp(−2/120). Each EWMA initializes at the first available observation and updates on valid samples according to e(t) = e(t − 2) + a[d(t) − e(t − 2)], with standardized two-sided score:"
+  },
+  "after_insertion_snippets": {
+    "machinery-space services": "Auxiliary steam boilers are essential service units aboard commercial seagoing vessels, supplying saturated steam for fuel heating, cargo and tank heating, fresh-water generation, and machinery-space services [2,3], alongside broader steam-plant heat exchangers and auxiliary power loops [4,5]. In marine drum-boiler operation, incipient waterwall or riser tube leakage withdraws pressurized saturated liquid and liquid enthalpy from the natural-circulation loop; if uncompensated or allowed to progress until feedwater replenishment capacity is exhausted, the resulting inventory loss leads to water-level depression and pressure-part overheating hazards that motivate early fault warning [3,6–9].",
+    "fault-masking effect": "Early detection of boiler tube leakage from standard process instrumentation is complicated by two-phase drum-riser-downcomer thermohydraulics and active closed-loop feedback control [6–9]. Physical drum boilers exhibit pronounced non-minimum-phase shrink-and-swell behavior driven by subsurface steam void dynamics, thermal capacitance in the drum and riser metal, and natural circulation coupling [6,7]. To stabilize operation under fluctuating shipboard or industrial steam loads, drum boilers employ pressure proportional–integral (PI) controllers acting on fuel firing rate together with three-element cascade controllers that regulate apparent drum water level by trimming feedwater flow relative to measured steam output [7–9]. From a fault-diagnosis perspective, this regulatory architecture creates a classic closed-loop fault-masking effect [10–15]: as a leak begins to drain liquid inventory and saturated-liquid enthalpy, the pressure controller increases firing request and the level/flow cascade increases feedwater valve command to maintain regulated drum pressure and apparent water level near their setpoints. Consequently, univariate alarms on regulated state variables may remain silent until the leak rate approaches the available feedwater actuator or inventory margin [14,15].",
+    "Åström and Bell": "This article addresses that question through a controlled numerical investigation using a four-state saturated-steam auxiliary-boiler simulation (ab4) inspired by the physical formulation of Åström and Bell [7]. Rather than proposing a universal fault-classification architecture, replicating the plant validations of [21,23–25], or claiming field-validated prognostic accuracy, this study provides a transparent episode-level comparison across 12 paired normal and fault operating blocks (four development blocks and eight evaluation blocks, comprising 24 six-hour episodes and 259,224 correlated time-series samples at 2 s resolution). Specifically, the contributions of this work are threefold: (i) we document the implemented four-state plant dynamics, pressure-dependent line hydraulics, three-element cascade control loop, protection policy, and four causal monitoring pipelines (State (B0), Flow only, Demand only, and Combined (B1)); (ii) we quantify both exogenous post-onset detection delays and strict lead times prior to a retrospective functional degradation criterion across the eight evaluation blocks; and (iii) we perform a post-hoc component attribution and threshold-persistence analysis that explains why the composite score's upper development-normal tail coincides with the demand component while identifying lower-load scenarios where separately calibrated flow residuals confirm earlier.",
+    "IAPWS-IF97": "Let VT = Vd + Vr + Vdc denote the total pressurized water-steam volume of the drum (Vd), risers (Vr), and downcomer (Vdc), so that total vapor volume is Vs = VT − Vw. Saturated liquid and vapor densities (ρw, ρs), specific enthalpies (hw, hs), latent heat of vaporization (hfg = hs − hw), and saturation temperature Tsat(p) are evaluated along the saturation curve using the International Association for the Properties of Water and Steam Industrial Formulation 1997 (IAPWS-IF97) [26,27]. The global stored fluid mass M and total internal energy U (including the lumped thermal capacitance Cm of the pressure-part metal in thermal equilibrium at Tsat) are expressed as:",
+    "moving averages (EWMAs)": "1. State Baseline (State (B0)): The baseline detector tracks exponentially weighted moving averages (EWMAs) [28] of observed drum water level and pressure deviations from their setpoints, dl(t) = lobs(t) − 0.85 m and dp(t) = pobs(t) − 7.0 bar. Using a 120 s smoothing time constant on the 2 s grid, the recursive smoothing weight is a = 1 − exp(−2/120). Each EWMA initializes at the first available observation and updates on valid samples according to e(t) = e(t − 2) + a[d(t) − e(t − 2)], with standardized two-sided score:"
+  },
+  "sample_field_shifts": [
+    {
+      "code": "REF Ref01 \\n \\t \\h",
+      "before": "1",
+      "after": "2"
+    },
+    {
+      "code": "REF Ref02 \\n \\t \\h",
+      "before": "2",
+      "after": "3"
+    },
+    {
+      "code": "REF Ref03 \\n \\t \\h",
+      "before": "3",
+      "after": "4"
+    },
+    {
+      "code": "REF Ref04 \\n \\t \\h",
+      "before": "4",
+      "after": "5"
+    },
+    {
+      "code": "REF Ref02 \\n \\t \\h",
+      "before": "2",
+      "after": "3"
+    },
+    {
+      "code": "REF Ref05 \\n \\t \\h",
+      "before": "5",
+      "after": "6"
+    },
+    {
+      "code": "REF Ref08 \\n \\t \\h",
+      "before": "8",
+      "after": "9"
+    },
+    {
+      "code": "REF Ref05 \\n \\t \\h",
+      "before": "5",
+      "after": "6"
+    },
+    {
+      "code": "REF Ref08 \\n \\t \\h",
+      "before": "8",
+      "after": "9"
+    },
+    {
+      "code": "REF Ref05 \\n \\t \\h",
+      "before": "5",
+      "after": "6"
+    },
+    {
+      "code": "REF Ref06 \\n \\t \\h",
+      "before": "6",
+      "after": "7"
+    },
+    {
+      "code": "REF Ref06 \\n \\t \\h",
+      "before": "6",
+      "after": "7"
+    },
+    {
+      "code": "REF Ref13 \\n \\t \\h",
+      "before": "13",
+      "after": "14"
+    },
+    {
+      "code": "REF Ref14 \\n \\t \\h",
+      "before": "14",
+      "after": "15"
+    }
+  ]
+}

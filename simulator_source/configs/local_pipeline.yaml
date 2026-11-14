@@ -1,0 +1,169 @@
+sim:
+  dt: 0.5
+  horizon_s: 900
+  solver: "euler"
+  seed: 42
+  format: "parquet"
+
+boiler:
+  geometry:
+    drum_radius_m: 0.8
+    drum_length_m: 6.0
+  nominal:
+    pressure_bar: 10.0
+    steam_flow_kg_s: 2.0
+    feedwater_mass_kg: 600.0
+    level_fraction: 0.55
+  parameters:
+    UA:
+      economizer: 1.2e5
+      evaporator: 2.5e5
+      superheater: 8.0e4
+    Cv:
+      steam_valve: 1.0
+      feedwater_valve: 1.0
+    combustion:
+      eta: 0.90
+      qmax_MW: 10.0
+    steam_discharge_pressure_bar: 1.0
+    losses:
+      wall_loss_W: 50000.0
+    dynamics:
+      pressure_gain: 0.002
+      pressure_mass_gain: 0.0006
+      circum_mass_gain: 0.6
+      circum_tau_s: 20.0
+      shrink_gain: 0.10
+      shrink_tau_s: 14.0
+      shrink_swell_gain: 0.035
+      wall_tau_K: 15.0
+    limits:
+      mdot_fw_max_kg_s: 6.0
+      mdot_s_nom_kg_s: 2.0
+
+control:
+  drum_level_pid:
+    kp: 0.9
+    ki: 0.03
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    setpoint_level_m: 3.3
+    out_feedforward: 0.55
+    antiwindup_gain: 1.0
+    max_step_rate_per_s: 0.9
+  pressure_pid:
+    kp: 0.75
+    ki: 0.022
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    setpoint_pressure_bar: 10.0
+    antiwindup_gain: 1.0
+    max_step_rate_per_s: 1.0
+
+scenario:
+  type: "load_follow"
+  seed: 11
+  load_follow:
+    base: 0.6
+    noise_std: 0.03
+    ramp_limit_per_min: 0.015
+
+fault_instances:
+  - configs/faults/fouling.yaml
+  - configs/faults/tube_leak.yaml
+  - configs/faults/valve_stiction.yaml
+  - configs/faults/sensor_drift.yaml
+  - configs/faults/burner_deg.yaml
+  - configs/faults/pump_wear.yaml
+
+sensors:
+  drum_pressure:
+    noise_std: 0.02
+    bias: 0.0
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+    spike_p: 0.0002
+    spike_std: 0.15
+  drum_level:
+    noise_std: 0.005
+    drift_per_hour: 0.0002
+    dropout_p: 0.0003
+    nominal_pressure_bar: 10.0
+    reference_leg_height_m: 6.0
+    reference_leg_temp_C: 60.0
+    reference_leg_temp_shift_C: 0.0
+    wet_leg_density_scale: 1.0
+    impulse_line_plugging: 0.0
+    bad_calibration_bias_m: 0.0
+  steam_flow:
+    noise_std: 0.01
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+  drum_temp_sh:
+    noise_std: 1.5
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+
+identifiability:
+  enabled: true
+  freeze_level_chain: true
+  freeze_sensor_channels:
+    - "drum_level"
+  lock_randomization_keys:
+    - "feedwater_max"
+  randomization_groups:
+    thermal_efficiency:
+      - "UA_evap"
+      - "combustion_eta"
+
+randomization:
+  enable: false
+  drift_std_pct:
+    UA_evap: 0.03
+    combustion_eta: 0.02
+    feedwater_max: 0.04
+
+validation:
+  schema_strict: false
+  dae:
+    enabled: false
+    residual_tol: 1e-9
+    min_feasible_ratio: 0.95
+    max_residual_ratio: 1.05
+    max_gap_negative: 1e-12
+
+calibration:
+  enabled: true
+  mode: probe
+  use_observations: true
+  pilot_horizon_s: 300
+  warmup_fraction: 0.25
+  max_pressure_bias: 2.0
+  max_level_bias: 1.2
+  ignore_faults: true
+  disable_randomization: true
+
+governance:
+  inline_gate: true
+  policy_path: "configs/governance_policy.yaml"
+  approved_by: "local-operator"
+  approved_at: "2026-03-08T10:00:00Z"
+  approval_status: "approved"
+  classification: "internal"
+  retention_days: 365
+
+performance:
+  enabled: true
+  collect_memory: false
+  log_path: "outputs/local_pipeline.perf.jsonl"
+  bottleneck:
+    enabled: false
+    baseline_log_path: "outputs/baseline_perf.jsonl"
+    throughput_min_ratio: 0.90
+    stage_share_ratio_max: 1.35
+    fail_on_regression: false
+
+validation_battery:
+  enabled: false

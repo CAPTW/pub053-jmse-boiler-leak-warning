@@ -1,0 +1,15 @@
+{
+  "table_rows_checked": 50,
+  "matched": 50,
+  "rounding_corrections": {
+    "difference_of_delay_medians_min": 51.33333333333334,
+    "display_to_1dp": 51.3,
+    "max_demand_and_combined_delay_min": 115.53333333333333,
+    "display_max_to_1dp": 115.5
+  },
+  "endpoint_sensitivity_observed_count": {
+    "0.7": 5,
+    "0.75": 7,
+    "0.8": 8
+  }
+}

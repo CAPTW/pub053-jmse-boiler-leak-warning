@@ -1,0 +1,889 @@
+[
+  {
+    "id": "Tajiri2009",
+    "citation-label": "1",
+    "type": "article-journal",
+    "title": "Auxiliary Boiler—Aalborg Industries' Marine Boiler",
+    "issued": {
+      "date-parts": [
+        [
+          2009
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Tajiri",
+        "given": "T."
+      }
+    ],
+    "container-title": "J. Jpn. Inst. Mar. Eng.",
+    "volume": "44",
+    "page": "358-360",
+    "DOI": "10.5988/jime.44.358",
+    "URL": "https://doi.org/10.5988/jime.44.358"
+  },
+  {
+    "id": "Kim2013",
+    "citation-label": "2",
+    "type": "article-journal",
+    "title": "Development of the simulator for marine auxiliary boiler system",
+    "issued": {
+      "date-parts": [
+        [
+          2013
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Kim",
+        "given": "M.-H."
+      },
+      {
+        "family": "So",
+        "given": "M.-O."
+      },
+      {
+        "family": "Jung",
+        "given": "B.-G."
+      }
+    ],
+    "container-title": "J. Korean Soc. Mar. Eng.",
+    "volume": "37",
+    "page": "236-241",
+    "DOI": "10.5916/jkosme.2013.37.2.236",
+    "URL": "https://doi.org/10.5916/jkosme.2013.37.2.236"
+  },
+  {
+    "id": "Orovic2018",
+    "citation-label": "3",
+    "type": "article-journal",
+    "title": "Efficiency and Losses Analysis of Steam Air Heater from Marine Steam Propulsion Plant",
+    "issued": {
+      "date-parts": [
+        [
+          2018
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Orović",
+        "given": "J."
+      },
+      {
+        "family": "Mrzljak",
+        "given": "V."
+      },
+      {
+        "family": "Poljak",
+        "given": "I."
+      }
+    ],
+    "container-title": "Energies",
+    "volume": "11",
+    "page": "3019",
+    "DOI": "10.3390/en11113019",
+    "URL": "https://doi.org/10.3390/en11113019"
+  },
+  {
+    "id": "Poljak2022",
+    "citation-label": "4",
+    "type": "article-journal",
+    "title": "Marine Power Systems",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Poljak",
+        "given": "I."
+      }
+    ],
+    "container-title": "J. Mar. Sci. Eng.",
+    "volume": "10",
+    "page": "195",
+    "DOI": "10.3390/jmse10020195",
+    "URL": "https://doi.org/10.3390/jmse10020195"
+  },
+  {
+    "id": "Adam1999",
+    "citation-label": "5",
+    "type": "article-journal",
+    "title": "Dynamic simulation of large boilers with natural recirculation",
+    "issued": {
+      "date-parts": [
+        [
+          1999
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Adam",
+        "given": "E.J."
+      },
+      {
+        "family": "Marchetti",
+        "given": "J.L."
+      }
+    ],
+    "container-title": "Comput. Chem. Eng.",
+    "volume": "23",
+    "page": "1031-1040",
+    "DOI": "10.1016/S0098-1354(99)00269-0",
+    "URL": "https://doi.org/10.1016/S0098-1354(99)00269-0"
+  },
+  {
+    "id": "Astrom2000",
+    "citation-label": "6",
+    "type": "article-journal",
+    "title": "Drum-boiler dynamics",
+    "issued": {
+      "date-parts": [
+        [
+          2000
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Åström",
+        "given": "K.J."
+      },
+      {
+        "family": "Bell",
+        "given": "R.D."
+      }
+    ],
+    "container-title": "Automatica",
+    "volume": "36",
+    "page": "363-378",
+    "DOI": "10.1016/S0005-1098(99)00171-5",
+    "URL": "https://doi.org/10.1016/S0005-1098(99)00171-5"
+  },
+  {
+    "id": "Hong2012",
+    "citation-label": "7",
+    "type": "article-journal",
+    "title": "Full-scale Mathematical Model and Simulation of Marine Natural Recirculation Drum-boiler",
+    "issued": {
+      "date-parts": [
+        [
+          2012
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Hong",
+        "given": "T."
+      },
+      {
+        "family": "Ni",
+        "given": "H."
+      },
+      {
+        "family": "Cheng",
+        "given": "G."
+      }
+    ],
+    "container-title": "Procedia Eng.",
+    "volume": "31",
+    "page": "834-843",
+    "DOI": "10.1016/j.proeng.2012.01.1109",
+    "URL": "https://doi.org/10.1016/j.proeng.2012.01.1109"
+  },
+  {
+    "id": "RomeroAnton2018",
+    "citation-label": "8",
+    "type": "article-journal",
+    "title": "Improvement of auxiliary BI-DRUM boiler operation by dynamic simulation",
+    "issued": {
+      "date-parts": [
+        [
+          2018
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Romero-Anton",
+        "given": "N."
+      },
+      {
+        "family": "Martin-Escudero",
+        "given": "K."
+      },
+      {
+        "family": "Portillo-Valdés",
+        "given": "L.A."
+      },
+      {
+        "family": "Gómez-Elvira",
+        "given": "I."
+      },
+      {
+        "family": "Salazar-Herran",
+        "given": "E."
+      }
+    ],
+    "container-title": "Energy",
+    "volume": "148",
+    "page": "676-686",
+    "DOI": "10.1016/j.energy.2018.01.160",
+    "URL": "https://doi.org/10.1016/j.energy.2018.01.160"
+  },
+  {
+    "id": "Isermann2005",
+    "citation-label": "9",
+    "type": "article-journal",
+    "title": "Model-based fault-detection and diagnosis – status and applications",
+    "issued": {
+      "date-parts": [
+        [
+          2005
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Isermann",
+        "given": "R."
+      }
+    ],
+    "container-title": "Annu. Rev. Control",
+    "volume": "29",
+    "page": "71-85",
+    "DOI": "10.1016/j.arcontrol.2004.12.002",
+    "URL": "https://doi.org/10.1016/j.arcontrol.2004.12.002"
+  },
+  {
+    "id": "Venkatasubramanian2003a",
+    "citation-label": "10",
+    "type": "article-journal",
+    "title": "A review of process fault detection and diagnosis: Part I: Quantitative model-based methods",
+    "issued": {
+      "date-parts": [
+        [
+          2003
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Venkatasubramanian",
+        "given": "V."
+      },
+      {
+        "family": "Rengaswamy",
+        "given": "R."
+      },
+      {
+        "family": "Yin",
+        "given": "K."
+      },
+      {
+        "family": "Kavuri",
+        "given": "S.N."
+      }
+    ],
+    "container-title": "Comput. Chem. Eng.",
+    "volume": "27",
+    "page": "293-311",
+    "DOI": "10.1016/S0098-1354(02)00160-6",
+    "URL": "https://doi.org/10.1016/S0098-1354(02)00160-6"
+  },
+  {
+    "id": "Venkatasubramanian2003b",
+    "citation-label": "11",
+    "type": "article-journal",
+    "title": "A review of process fault detection and diagnosis: Part III: Process history based methods",
+    "issued": {
+      "date-parts": [
+        [
+          2003
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Venkatasubramanian",
+        "given": "V."
+      },
+      {
+        "family": "Rengaswamy",
+        "given": "R."
+      },
+      {
+        "family": "Kavuri",
+        "given": "S.N."
+      },
+      {
+        "family": "Yin",
+        "given": "K."
+      }
+    ],
+    "container-title": "Comput. Chem. Eng.",
+    "volume": "27",
+    "page": "327-346",
+    "DOI": "10.1016/S0098-1354(02)00162-X",
+    "URL": "https://doi.org/10.1016/S0098-1354(02)00162-X"
+  },
+  {
+    "id": "Qin2012",
+    "citation-label": "12",
+    "type": "article-journal",
+    "title": "Survey on data-driven industrial process monitoring and diagnosis",
+    "issued": {
+      "date-parts": [
+        [
+          2012
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Qin",
+        "given": "S.J."
+      }
+    ],
+    "container-title": "Annu. Rev. Control",
+    "volume": "36",
+    "page": "220-234",
+    "DOI": "10.1016/j.arcontrol.2012.09.004",
+    "URL": "https://doi.org/10.1016/j.arcontrol.2012.09.004"
+  },
+  {
+    "id": "Deibert1992",
+    "citation-label": "13",
+    "type": "article-journal",
+    "title": "Examples for Fault Detection in Closed Loops",
+    "issued": {
+      "date-parts": [
+        [
+          1992
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Deibert",
+        "given": "R."
+      },
+      {
+        "family": "Isermann",
+        "given": "R."
+      }
+    ],
+    "container-title": "IFAC Proc. Vol.",
+    "volume": "25",
+    "page": "235-240",
+    "DOI": "10.1016/S1474-6670(17)50827-7",
+    "URL": "https://doi.org/10.1016/S1474-6670(17)50827-7"
+  },
+  {
+    "id": "Pandita2013",
+    "citation-label": "14",
+    "type": "article-journal",
+    "title": "Closed-loop performance metrics for fault detection and isolation filter and controller interaction",
+    "issued": {
+      "date-parts": [
+        [
+          2013
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Pandita",
+        "given": "R."
+      },
+      {
+        "family": "Bokor",
+        "given": "J."
+      },
+      {
+        "family": "Balas",
+        "given": "G."
+      }
+    ],
+    "container-title": "Int. J. Robust Nonlinear Control",
+    "volume": "23",
+    "page": "419-438",
+    "DOI": "10.1002/rnc.1838",
+    "URL": "https://doi.org/10.1002/rnc.1838"
+  },
+  {
+    "id": "Afgan1998",
+    "citation-label": "15",
+    "type": "article-journal",
+    "title": "Boiler tube leakage detection expert system",
+    "issued": {
+      "date-parts": [
+        [
+          1998
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Afgan",
+        "given": "N."
+      },
+      {
+        "family": "Coelho",
+        "given": "P.J."
+      },
+      {
+        "family": "Carvalho",
+        "given": "M.G."
+      }
+    ],
+    "container-title": "Appl. Therm. Eng.",
+    "volume": "18",
+    "page": "317-326",
+    "DOI": "10.1016/S1359-4311(97)00054-9",
+    "URL": "https://doi.org/10.1016/S1359-4311(97)00054-9"
+  },
+  {
+    "id": "An2011",
+    "citation-label": "16",
+    "type": "article-journal",
+    "title": "Hyperbolic boiler tube leak location based on quaternary acoustic array",
+    "issued": {
+      "date-parts": [
+        [
+          2011
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "An",
+        "given": "L."
+      },
+      {
+        "family": "Wang",
+        "given": "P."
+      },
+      {
+        "family": "Sarti",
+        "given": "A."
+      },
+      {
+        "family": "Antonacci",
+        "given": "F."
+      },
+      {
+        "family": "Shi",
+        "given": "J."
+      }
+    ],
+    "container-title": "Appl. Therm. Eng.",
+    "volume": "31",
+    "page": "3428-3436",
+    "DOI": "10.1016/j.applthermaleng.2011.06.028",
+    "URL": "https://doi.org/10.1016/j.applthermaleng.2011.06.028"
+  },
+  {
+    "id": "Sun2002a",
+    "citation-label": "17",
+    "type": "article-journal",
+    "title": "Boiler leak detection using a system identification technique",
+    "issued": {
+      "date-parts": [
+        [
+          2002
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Sun",
+        "given": "X."
+      },
+      {
+        "family": "Chen",
+        "given": "T."
+      },
+      {
+        "family": "Marquez",
+        "given": "H.J."
+      }
+    ],
+    "container-title": "Ind. Eng. Chem. Res.",
+    "volume": "41",
+    "page": "5447-5454",
+    "DOI": "10.1021/ie010949+",
+    "URL": "https://doi.org/10.1021/ie010949+"
+  },
+  {
+    "id": "Sun2002b",
+    "citation-label": "18",
+    "type": "article-journal",
+    "title": "Efficient model-based leak detection in boiler steam-water systems",
+    "issued": {
+      "date-parts": [
+        [
+          2002
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Sun",
+        "given": "X."
+      },
+      {
+        "family": "Chen",
+        "given": "T."
+      },
+      {
+        "family": "Marquez",
+        "given": "H.J."
+      }
+    ],
+    "container-title": "Comput. Chem. Eng.",
+    "volume": "26",
+    "page": "1643-1647",
+    "DOI": "10.1016/S0098-1354(02)00147-3",
+    "URL": "https://doi.org/10.1016/S0098-1354(02)00147-3"
+  },
+  {
+    "id": "Sun2005",
+    "citation-label": "19",
+    "type": "article-journal",
+    "title": "An improved PCA method with application to boiler leak detection",
+    "issued": {
+      "date-parts": [
+        [
+          2005
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Sun",
+        "given": "X."
+      },
+      {
+        "family": "Marquez",
+        "given": "H.J."
+      },
+      {
+        "family": "Chen",
+        "given": "T."
+      },
+      {
+        "family": "Riaz",
+        "given": "M."
+      }
+    ],
+    "container-title": "ISA Trans.",
+    "volume": "44",
+    "page": "379-397",
+    "DOI": "10.1016/S0019-0578(07)60211-0",
+    "URL": "https://doi.org/10.1016/S0019-0578(07)60211-0"
+  },
+  {
+    "id": "Yu2016",
+    "citation-label": "20",
+    "type": "paper-conference",
+    "title": "Leakage detection of steam boiler tube in thermal power plant using principal component analysis",
+    "issued": {
+      "date-parts": [
+        [
+          2016
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Yu",
+        "given": "J."
+      },
+      {
+        "family": "Jang",
+        "given": "J."
+      },
+      {
+        "family": "Yoo",
+        "given": "J."
+      },
+      {
+        "family": "Park",
+        "given": "J.H."
+      },
+      {
+        "family": "Kim",
+        "given": "S."
+      }
+    ],
+    "container-title": "Annu. Conf. PHM Soc.",
+    "volume": "8",
+    "page": "1-8",
+    "DOI": "10.36001/phmconf.2016.v8i1.2510",
+    "URL": "https://doi.org/10.36001/phmconf.2016.v8i1.2510"
+  },
+  {
+    "id": "Swiercz2020",
+    "citation-label": "21",
+    "type": "article-journal",
+    "title": "Multiway PCA for Early Leak Detection in a Pipeline System of a Steam Boiler—Selected Case Studies",
+    "issued": {
+      "date-parts": [
+        [
+          2020
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Swiercz",
+        "given": "M."
+      },
+      {
+        "family": "Mroczkowska",
+        "given": "H."
+      }
+    ],
+    "container-title": "Sensors",
+    "volume": "20",
+    "page": "1561",
+    "DOI": "10.3390/s20061561",
+    "URL": "https://doi.org/10.3390/s20061561"
+  },
+  {
+    "id": "Indrawan2021",
+    "citation-label": "22",
+    "type": "article-journal",
+    "title": "Data analytics for leak detection in a subcritical boiler",
+    "issued": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Indrawan",
+        "given": "N."
+      },
+      {
+        "family": "Shadle",
+        "given": "L.J."
+      },
+      {
+        "family": "Breault",
+        "given": "R.W."
+      },
+      {
+        "family": "Panday",
+        "given": "R."
+      },
+      {
+        "family": "Chitnis",
+        "given": "U.K."
+      }
+    ],
+    "container-title": "Energy",
+    "volume": "220",
+    "page": "119667",
+    "DOI": "10.1016/j.energy.2020.119667",
+    "URL": "https://doi.org/10.1016/j.energy.2020.119667"
+  },
+  {
+    "id": "Panday2021",
+    "citation-label": "23",
+    "type": "article-journal",
+    "title": "Leak detection in a subcritical boiler",
+    "issued": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Panday",
+        "given": "R."
+      },
+      {
+        "family": "Indrawan",
+        "given": "N."
+      },
+      {
+        "family": "Shadle",
+        "given": "L.J."
+      },
+      {
+        "family": "Vesel",
+        "given": "R.W."
+      }
+    ],
+    "container-title": "Appl. Therm. Eng.",
+    "volume": "185",
+    "page": "116371",
+    "DOI": "10.1016/j.applthermaleng.2020.116371",
+    "URL": "https://doi.org/10.1016/j.applthermaleng.2020.116371"
+  },
+  {
+    "id": "Widodo2025",
+    "citation-label": "24",
+    "type": "article-journal",
+    "title": "Diagnostics and prognostics of boilers in power plant based on data-driven and machine learning",
+    "issued": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Widodo",
+        "given": "A."
+      },
+      {
+        "family": "Prahasto",
+        "given": "T."
+      },
+      {
+        "family": "Soleh",
+        "given": "M."
+      },
+      {
+        "family": "Nugraha",
+        "given": "H."
+      }
+    ],
+    "container-title": "Int. J. Progn. Health Manag.",
+    "volume": "16",
+    "page": "4222",
+    "DOI": "10.36001/ijphm.2025.v16i1.4222",
+    "URL": "https://doi.org/10.36001/ijphm.2025.v16i1.4222"
+  },
+  {
+    "id": "Wagner2000",
+    "citation-label": "25",
+    "type": "article-journal",
+    "title": "The IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam",
+    "issued": {
+      "date-parts": [
+        [
+          2000
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Wagner",
+        "given": "W."
+      },
+      {
+        "family": "Cooper",
+        "given": "J.R."
+      },
+      {
+        "family": "Dittmann",
+        "given": "A."
+      },
+      {
+        "family": "Kijima",
+        "given": "J."
+      },
+      {
+        "family": "Kretzschmar",
+        "given": "H.-J."
+      },
+      {
+        "family": "Kruse",
+        "given": "A."
+      },
+      {
+        "family": "Mareš",
+        "given": "R."
+      },
+      {
+        "family": "Oguchi",
+        "given": "K."
+      },
+      {
+        "family": "Sato",
+        "given": "H."
+      },
+      {
+        "family": "Stocker",
+        "given": "I."
+      }
+    ],
+    "container-title": "J. Eng. Gas Turbines Power",
+    "volume": "122",
+    "page": "150-184",
+    "DOI": "10.1115/1.483186",
+    "URL": "https://doi.org/10.1115/1.483186"
+  },
+  {
+    "id": "IAPWS2012",
+    "citation-label": "26",
+    "type": "report",
+    "title": "Revised Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam",
+    "issued": {
+      "date-parts": [
+        [
+          2012
+        ]
+      ]
+    },
+    "author": [
+      {
+        "literal": "International Association for the Properties of Water and Steam (IAPWS)"
+      }
+    ],
+    "publisher": "International Association for the Properties of Water and Steam",
+    "publisher-place": "Lucerne, Switzerland",
+    "number": "R7-97(2012)",
+    "URL": "https://iapws.org/documents/release/IF97-Rev",
+    "accessed": {
+      "date-parts": [
+        [
+          2026,
+          9,
+          16
+        ]
+      ]
+    }
+  },
+  {
+    "id": "Roberts1959",
+    "citation-label": "27",
+    "type": "article-journal",
+    "title": "Control Chart Tests Based on Geometric Moving Averages",
+    "issued": {
+      "date-parts": [
+        [
+          1959
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Roberts",
+        "given": "S.W."
+      }
+    ],
+    "container-title": "Technometrics",
+    "volume": "1",
+    "page": "239-250",
+    "DOI": "10.1080/00401706.1959.10489860",
+    "URL": "https://doi.org/10.1080/00401706.1959.10489860"
+  }
+]

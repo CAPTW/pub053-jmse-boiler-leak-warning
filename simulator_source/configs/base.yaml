@@ -1,0 +1,253 @@
+sim:
+  dt: 0.5
+  horizon_s: 3600
+  solver: "BDF"
+  seed: 42
+  format: "parquet"
+  timebase:
+    controller_dt_s: 0.5
+    sensor_dt_s: 0.5
+    logger_dt_s: 0.5
+
+boiler:
+  geometry:
+    drum_radius_m: 0.8
+    drum_length_m: 6.0
+  nominal:
+    pressure_bar: 10.0
+    steam_flow_kg_s: 2.0
+    feedwater_mass_kg: 600.0
+    level_fraction: 0.55
+  parameters:
+    UA:
+      economizer: 1.2e5
+      evaporator: 2.5e5
+      superheater: 8.0e4
+    Cv:
+      steam_valve: 1.0
+      feedwater_valve: 1.0
+    combustion:
+      eta: 0.90
+      qmax_MW: 10.0
+    steam_discharge_pressure_bar: 1.0
+    losses:
+      wall_loss_W: 50000.0
+    dynamics:
+      pressure_gain: 0.002
+      pressure_mass_gain: 0.0006
+      circum_mass_gain: 0.6
+      circum_tau_s: 20.0
+      shrink_gain: 0.10
+      shrink_tau_s: 14.0
+      shrink_swell_gain: 0.035
+      shrink_swell_pulse_gain: 0.08
+      wall_tau_K: 15.0
+    limits:
+      mdot_fw_max_kg_s: 6.0
+      mdot_s_nom_kg_s: 2.0
+
+control:
+  strategy: "three_element"
+  mode: "auto"
+  low_load_fallback_threshold: 0.58
+  steam_flow_nominal_kg_s: 2.0
+  level_trim_to_flow_gain: 0.22
+  manual_outputs:
+    fuel_cmd: 0.4
+    fw_cmd: 0.55
+    steam_demand: 0.6
+  drum_level_pid:
+    kp: 0.9
+    ki: 0.03
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    setpoint_level_m: 3.3
+    out_feedforward: 0.55
+    antiwindup_gain: 1.0
+    max_step_rate_per_s: 0.9
+  pressure_pid:
+    kp: 0.75
+    ki: 0.022
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    setpoint_pressure_bar: 10.0
+    antiwindup_gain: 1.0
+    max_step_rate_per_s: 1.0
+  feedwater_flow_pid:
+    kp: 0.35
+    ki: 0.04
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    antiwindup_gain: 1.0
+  actuator:
+    fuel:
+      command_lag_s: 2.0
+      rate_limit: 0.8
+      deadband: 0.002
+      saturation:
+        min: 0.0
+        max: 1.0
+      position_feedback_available: true
+    feedwater:
+      command_lag_s: 3.0
+      rate_limit: 0.7
+      deadband: 0.003
+      saturation:
+        min: 0.0
+        max: 1.0
+      stiction_params:
+        deadband: 0.01
+        gain: 1.0
+      position_feedback_available: true
+    steam:
+      command_lag_s: 0.5
+      rate_limit: 1.2
+      deadband: 0.0
+      saturation:
+        min: 0.0
+        max: 1.0
+      position_feedback_available: true
+
+scenario:
+  type: "load_follow"
+  seed: 11
+  load_follow:
+    base: 0.6
+    noise_std: 0.03
+    ramp_limit_per_min: 0.015
+
+fault_instances:
+  - configs/faults/fouling.yaml
+  - configs/faults/tube_leak.yaml
+  - configs/faults/valve_stiction.yaml
+  - configs/faults/sensor_drift.yaml
+  - configs/faults/burner_deg.yaml
+  - configs/faults/pump_wear.yaml
+
+sensors:
+  drum_pressure:
+    sample_period_s: 0.5
+    tau_s: 0.2
+    dead_time_s: 0.0
+    noise_std: 0.02   # bar
+    bias: 0.0
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+    spike_p: 0.0002
+    spike_std: 0.15
+    range_min: 0.0
+    range_max: 30.0
+    quality_flag_logic: "good"
+  drum_level:
+    sample_period_s: 0.5
+    tau_s: 0.6
+    dead_time_s: 0.0
+    noise_std: 0.005
+    drift_per_hour: 0.0002
+    dropout_p: 0.0003
+    range_min: 0.0
+    range_max: 6.0
+    quality_flag_logic: "good"
+    nominal_pressure_bar: 10.0
+    reference_leg_height_m: 6.0
+    reference_leg_temp_C: 60.0
+    reference_leg_temp_shift_C: 0.0
+    wet_leg_density_scale: 1.0
+    impulse_line_plugging: 0.0
+    bad_calibration_bias_m: 0.0
+    radar:
+      enabled: false
+      noise_std: 0.002
+      tau_s: 0.2
+  steam_flow:
+    sample_period_s: 0.5
+    tau_s: 0.3
+    dead_time_s: 0.0
+    noise_std: 0.01
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+    range_min: 0.0
+    range_max: 5.0
+    quality_flag_logic: "good"
+  drum_temp_sh:
+    sample_period_s: 0.5
+    tau_s: 0.3
+    dead_time_s: 0.0
+    noise_std: 1.5
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+    range_min: 100.0
+    range_max: 400.0
+    quality_flag_logic: "good"
+
+identifiability:
+  enabled: true
+  freeze_level_chain: true
+  freeze_sensor_channels:
+    - "drum_level"
+  lock_randomization_keys:
+    - "feedwater_max"
+  randomization_groups:
+    thermal_efficiency:
+      - "UA_evap"
+      - "combustion_eta"
+
+randomization:
+  enable: true
+  drift_std_pct:
+    UA_evap: 0.03
+    combustion_eta: 0.02
+    feedwater_max: 0.04
+
+validation:
+  schema_strict: false
+  # Optional DAE residual checks for algebraic closure diagnostics.
+  # Enable when you want to enforce strict DAE alignment quality.
+  dae:
+    enabled: false
+    residual_tol: 1e-9
+    min_feasible_ratio: 0.95
+    max_residual_ratio: 1.05
+    max_gap_negative: 1e-12
+
+performance:
+  # Performance instrumentation is optional. Enable true only for throughput tracking runs.
+  enabled: false
+  bottleneck:
+    enabled: false
+    baseline_log_path: "outputs/baseline_perf.jsonl"
+    throughput_min_ratio: 0.90
+    stage_share_ratio_max: 1.30
+    fail_on_regression: false
+
+safety:
+  enabled: true
+  lockout_on_trip: true
+  alarm:
+    fuel_cmd_max: 0.9
+    fw_cmd_max: 0.9
+    steam_demand_max: 0.9
+  trip:
+    fuel_cmd: 0.0
+    fw_cmd: 0.0
+    steam_demand: 0.0
+  process:
+    alarm:
+      level_LLL: 0.80
+      level_LL: 1.20
+      level_H: 5.50
+      level_HH: 5.75
+      pressure_H: 18.0
+      feedwater_low: 0.15
+      controller_saturation_timeout_s: 10000.0
+    trip:
+      level_LLL: 0.60
+      level_HH: 5.90
+      pressure_H: 20.0
+      feedwater_low: 0.08
+      controller_saturation_timeout_s: 10000.0
+      auto_reset: false
+      reset_hold_s: 60.0

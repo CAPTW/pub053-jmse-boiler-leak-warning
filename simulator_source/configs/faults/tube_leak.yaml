@@ -1,0 +1,10 @@
+name: tube_leak
+type: tube_leak
+onset_s: 1000
+duration_s: 2000
+k_leak_kg_s_per_sqrtbar: 0.0045
+severity:
+  kind: linear
+  min: 0.0
+  max: 1.0
+rul_threshold: 0.80

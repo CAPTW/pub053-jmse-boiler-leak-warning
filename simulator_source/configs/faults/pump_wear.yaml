@@ -1,0 +1,11 @@
+name: pump_wear
+type: pump_wear
+onset_s: 700
+duration_s: 3000
+max_wear: 0.45
+severity:
+  kind: linear
+  min: 0.0
+  max: 1.0
+rul_threshold: 0.78
+

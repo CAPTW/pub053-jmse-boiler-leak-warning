@@ -1,0 +1,51 @@
+﻿table,row,kind,match,actual,expected
+3,D1,configuration cross-check,True,"[0.55, 3001.0, 3196.0, 6996.0, 0.1635]","[0.55, 3001, 3196.0, 6996.0, 0.1635]"
+3,D2,configuration cross-check,True,"[0.55, 3002.0, 4238.0, 10206.0, 0.2384]","[0.55, 3002, 4238.0, 10206.0, 0.2384]"
+3,D3,configuration cross-check,True,"[0.5, 3003.0, 3738.0, 10684.0, 0.24]","[0.5, 3003, 3738.0, 10684.0, 0.24]"
+3,D4,configuration cross-check,True,"[0.5, 3104.0, 3350.0, 6638.0, 0.234]","[0.5, 3104, 3350.0, 6638.0, 0.234]"
+3,E1,configuration cross-check,True,"[0.55, 3005.0, 3374.0, 7342.0, 0.2177]","[0.55, 3005, 3374.0, 7342.0, 0.2177]"
+3,E2,configuration cross-check,True,"[0.55, 3006.0, 4568.0, 6548.0, 0.2351]","[0.55, 3006, 4568.0, 6548.0, 0.2351]"
+3,E3,configuration cross-check,True,"[0.55, 3007.0, 3946.0, 5724.0, 0.2092]","[0.55, 3007, 3946.0, 5724.0, 0.2092]"
+3,E4,configuration cross-check,True,"[0.55, 3008.0, 4078.0, 5460.0, 0.1749]","[0.55, 3008, 4078.0, 5460.0, 0.1749]"
+3,E5,configuration cross-check,True,"[0.5, 3009.0, 4830.0, 9602.0, 0.1993]","[0.5, 3009, 4830.0, 9602.0, 0.1993]"
+3,E6,configuration cross-check,True,"[0.5, 3010.0, 5254.0, 7770.0, 0.1824]","[0.5, 3010, 5254.0, 7770.0, 0.1824]"
+3,E7,configuration cross-check,True,"[0.5, 3011.0, 4324.0, 9960.0, 0.2218]","[0.5, 3011, 4324.0, 9960.0, 0.2218]"
+3,E8,configuration cross-check,True,"[0.5, 3012.0, 3838.0, 10656.0, 0.2152]","[0.5, 3012, 3838.0, 10656.0, 0.2152]"
+4,a0,archived fit cross-check,True,0.0107829644171,0.010782964417111532
+4,a1,archived fit cross-check,True,-0.00810778822474,-0.008107788224736541
+4,a2,archived fit cross-check,True,1.63198387636,1.6319838763551455
+4,b0,archived fit cross-check,True,-0.403728207267,-0.403728207266868
+4,b1,archived fit cross-check,True,0.617687937742,0.6176879377417606
+4,σF,archived fit cross-check,True,0.0642100702339,0.06421007023390213
+4,σD,archived fit cross-check,True,0.0572613102938,0.05726131029384739
+4,σl,archived fit cross-check,True,0.00692987017346,0.0069298701734583764
+4,σp,archived fit cross-check,True,0.00125315658028,0.001253156580275631
+4,Fit sample N,archived fit cross-check,True,40804.0,40804
+5,State (B0):0.990,independently recomputed thresholds and alarms,True,"[3.767425, 0, 0, 1, 0]","[3.767425, 0, 0, 1, 0]"
+5,State (B0) [Retained]:0.995,independently recomputed thresholds and alarms,True,"[3.927338, 0, 0, 0, 0]","[3.927338, 0, 0, 0, 0]"
+5,State (B0):0.999,independently recomputed thresholds and alarms,True,"[3.970749, 0, 0, 0, 0]","[3.970749, 0, 0, 0, 0]"
+5,State (B0):0.9995,independently recomputed thresholds and alarms,True,"[3.979331, 0, 0, 0, 0]","[3.979331, 0, 0, 0, 0]"
+5,State (B0):1.000,independently recomputed thresholds and alarms,True,"[5.307179, 0, 0, 0, 0]","[5.307179, 0, 0, 0, 0]"
+5,Flow only [Retained]:0.990,independently recomputed thresholds and alarms,True,"[2.328681, 0, 0, 0, 0]","[2.328681, 0, 0, 0, 0]"
+5,Flow only:0.995,independently recomputed thresholds and alarms,True,"[2.574599, 0, 0, 0, 0]","[2.574599, 0, 0, 0, 0]"
+5,Flow only:0.999,independently recomputed thresholds and alarms,True,"[3.11666, 0, 0, 0, 0]","[3.11666, 0, 0, 0, 0]"
+5,Flow only:0.9995,independently recomputed thresholds and alarms,True,"[3.288148, 0, 0, 0, 0]","[3.288148, 0, 0, 0, 0]"
+5,Flow only:1.000,independently recomputed thresholds and alarms,True,"[4.063845, 0, 0, 0, 0]","[4.063845, 0, 0, 0, 0]"
+5,Demand only [Retained]:0.990,independently recomputed thresholds and alarms,True,"[4.388325, 0, 0, 0, 0]","[4.388325, 0, 0, 0, 0]"
+5,Demand only:0.995,independently recomputed thresholds and alarms,True,"[4.594975, 0, 0, 0, 0]","[4.594975, 0, 0, 0, 0]"
+5,Demand only:0.999,independently recomputed thresholds and alarms,True,"[4.822598, 0, 0, 0, 0]","[4.822598, 0, 0, 0, 0]"
+5,Demand only:0.9995,independently recomputed thresholds and alarms,True,"[4.830538, 0, 0, 0, 0]","[4.830538, 0, 0, 0, 0]"
+5,Demand only:1.000,independently recomputed thresholds and alarms,True,"[4.833258, 0, 0, 0, 0]","[4.833258, 0, 0, 0, 0]"
+5,Combined (B1) [Retained]:0.990,independently recomputed thresholds and alarms,True,"[4.388325, 0, 0, 0, 0]","[4.388325, 0, 0, 0, 0]"
+5,Combined (B1):0.995,independently recomputed thresholds and alarms,True,"[4.594975, 0, 0, 0, 0]","[4.594975, 0, 0, 0, 0]"
+5,Combined (B1):0.999,independently recomputed thresholds and alarms,True,"[4.822598, 0, 0, 0, 0]","[4.822598, 0, 0, 0, 0]"
+5,Combined (B1):0.9995,independently recomputed thresholds and alarms,True,"[4.830538, 0, 0, 0, 0]","[4.830538, 0, 0, 0, 0]"
+5,Combined (B1):1.000,independently recomputed thresholds and alarms,True,"[4.833258, 0, 0, 0, 0]","[4.833258, 0, 0, 0, 0]"
+7,E1,independently recomputed alarms and raw events,True,"[3374.0, 8996.0, 7840.0, 7232.0, 7232.0, 10774.0, 10894.0, 18870.0, 20248.0]","[3374.0, 8996.0, 7840.0, 7232.0, 7232.0, 10774.0, 10894.0, 18870.0, 20248.0]"
+7,E2,independently recomputed alarms and raw events,True,"[4568.0, 8580.0, 8574.0, 7860.0, 7860.0, 10664.0, 10784.0, 19532.0, 20976.0]","[4568.0, 8580.0, 8574.0, 7860.0, 7860.0, 10664.0, 10784.0, 19532.0, 20976.0]"
+7,E3,independently recomputed alarms and raw events,True,"[3946.0, 7872.0, 7818.0, 7236.0, 7236.0, 9684.0, 9804.0, 17942.0, 19324.0]","[3946.0, 7872.0, 7818.0, 7236.0, 7236.0, 9684.0, 9804.0, 17942.0, 19324.0]"
+7,E4,independently recomputed alarms and raw events,True,"[4078.0, 8682.0, 8322.0, 7580.0, 7580.0, 10668.0, 10788.0, None, None]","[4078.0, 8682.0, 8322.0, 7580.0, 7580.0, 10668.0, 10788.0, None, None]"
+7,E5,independently recomputed alarms and raw events,True,"[4830.0, 15830.0, 11380.0, 11762.0, 11762.0, None, None, None, None]","[4830.0, 15830.0, 11380.0, 11762.0, 11762.0, None, None, None, None]"
+7,E6,independently recomputed alarms and raw events,True,"[5254.0, 15010.0, 11158.0, 11856.0, 11848.0, 21010.0, 21130.0, None, None]","[5254.0, 15010.0, 11158.0, 11856.0, 11848.0, 21010.0, 21130.0, None, None]"
+7,E7,independently recomputed alarms and raw events,True,"[4324.0, 13974.0, 10572.0, 9578.0, 9578.0, 16294.0, 16414.0, None, None]","[4324.0, 13974.0, 10572.0, 9578.0, 9578.0, 16294.0, 16414.0, None, None]"
+7,E8,independently recomputed alarms and raw events,True,"[3838.0, 15110.0, 10806.0, 9692.0, 9692.0, 20458.0, 20578.0, None, None]","[3838.0, 15110.0, 10806.0, 9692.0, 9692.0, 20458.0, 20578.0, None, None]"

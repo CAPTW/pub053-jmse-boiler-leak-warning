@@ -1,0 +1,11 @@
+name: valve_stiction
+type: valve_stiction
+onset_s: 1400
+duration_s: 2600
+deadband: 0.06
+stiction_gain: 0.20
+severity:
+  kind: linear
+  min: 0.0
+  max: 1.0
+rul_threshold: 0.90

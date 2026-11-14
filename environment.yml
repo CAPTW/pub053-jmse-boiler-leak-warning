@@ -1,0 +1,8 @@
+name: pub053-jmse-boiler-leak-warning
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - -r requirements-lock.txt

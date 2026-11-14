@@ -1,0 +1,123 @@
+{
+  "repo_root": ".",
+  "table1_config_and_source": {
+    "yaml_loaded": true,
+    "ab4_core_constants_verified": true
+  },
+  "reconstructed_inputs_verified": true,
+  "tables_3_4_5_7_crosscheck_matches": "50/50",
+  "current_manuscript_table_checks": "62/62",
+  "episode_method_comparisons_matches": "96/96",
+  "recomputed_table6_summary": {
+    "B0_state": {
+      "normal_alarms": 1,
+      "delay_1dp": [
+        127.3,
+        65.4,
+        187.9
+      ],
+      "lead_1dp": [
+        34.7,
+        29.6,
+        100.0
+      ]
+    },
+    "Flow_only": {
+      "normal_alarms": 0,
+      "delay_1dp": [
+        86.4,
+        64.5,
+        116.1
+      ],
+      "lead_1dp": [
+        48.9,
+        31.1,
+        164.2
+      ]
+    },
+    "Command_only": {
+      "normal_alarms": 0,
+      "delay_1dp": [
+        75.9,
+        54.8,
+        115.5
+      ],
+      "lead_1dp": [
+        59.0,
+        40.8,
+        179.4
+      ]
+    },
+    "B1_combined": {
+      "normal_alarms": 0,
+      "delay_1dp": [
+        75.9,
+        54.8,
+        115.5
+      ],
+      "lead_1dp": [
+        59.0,
+        40.8,
+        179.4
+      ]
+    }
+  },
+  "delay_median_difference_min": 51.3,
+  "b1_max_delay_min_1dp": 115.5,
+  "table8_blocks_verified": 8,
+  "cutoff_leads_verified": 12,
+  "delay_window_comparisons_identical": "32/32",
+  "figures_verified": {
+    "fig1_normal_overview.png": {
+      "bytes": 1034473,
+      "dimensions_px": [
+        1994,
+        1954
+      ]
+    },
+    "fig2_e1_leak_trajectory.png": {
+      "bytes": 224850,
+      "dimensions_px": [
+        1136,
+        1616
+      ]
+    },
+    "fig3_e1_feature_responses.jpeg": {
+      "bytes": 184992,
+      "dimensions_px": [
+        1994,
+        871
+      ]
+    },
+    "fig4_method_summary_delay_lead.png": {
+      "bytes": 81624,
+      "dimensions_px": [
+        1136,
+        896
+      ]
+    },
+    "fig5_e1_score_traces.png": {
+      "bytes": 123429,
+      "dimensions_px": [
+        1136,
+        928
+      ]
+    },
+    "fig6_all_eval_leak_panels.jpeg": {
+      "bytes": 87031,
+      "dimensions_px": [
+        1972,
+        1154
+      ]
+    },
+    "fig7_normal_score_traces.jpeg": {
+      "bytes": 95728,
+      "dimensions_px": [
+        1994,
+        842
+      ]
+    }
+  },
+  "raw_source_assets_count": 8,
+  "all_passed": true
+}

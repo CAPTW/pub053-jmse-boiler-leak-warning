@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "boiler-pdm-sim"
+version = "0.1.0"
+description = "PdM-oriented grey-box drum boiler simulator"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "pandas>=2.0",
+  "pyarrow>=12.0",
+  "tables>=3.8",
+  "pyyaml>=6.0",
+  "iapws>=1.5",
+  "python-dateutil>=2.8"
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+fmu = ["fmpy>=0.3"]
+
+[project.scripts]
+boiler-pdm-sim = "boiler_pdm_sim.cli.main:main"
+
+[tool.pytest.ini_options]
+# research/paper_track_b tests import the local 'cp' namespace package.
+# Mirrors the CI PYTHONPATH so a bare `pytest` collects the full suite
+# without errors (see .github/workflows/quality-gates.yml).
+pythonpath = ["research/paper_track_b"]
+# Long-horizon gates (e.g. the ab4 24 h conservation run) are excluded from the
+# default/PR run and executed on demand or nightly with `pytest -m slow` (R7).
+markers = ["slow: long-horizon / nightly gates, excluded from the default run"]
+addopts = "-m 'not slow'"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["boiler_pdm_sim*"]

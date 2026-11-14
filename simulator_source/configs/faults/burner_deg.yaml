@@ -1,0 +1,12 @@
+name: burner_deg
+type: burner_deg
+onset_s: 900
+duration_s: 2600
+max_eta_drop: 0.22
+max_qmax_drop: 0.18
+severity:
+  kind: linear
+  min: 0.0
+  max: 1.0
+rul_threshold: 0.80
+

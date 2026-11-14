@@ -1,0 +1,243 @@
+sim:
+  dt: 0.5
+  horizon_s: 3600
+  solver: "euler"
+  seed: 42
+  format: "parquet"
+  collect_performance: true
+
+boiler:
+  geometry:
+    drum_radius_m: 0.8
+    drum_length_m: 6.0
+  nominal:
+    pressure_bar: 10.0
+    steam_flow_kg_s: 2.0
+    feedwater_mass_kg: 600.0
+    level_fraction: 0.55
+  parameters:
+    UA:
+      economizer: 1.2e5
+      evaporator: 2.5e5
+      superheater: 8.0e4
+    Cv:
+      steam_valve: 1.0
+      feedwater_valve: 1.0
+    combustion:
+      eta: 0.90
+      qmax_MW: 10.0
+    steam_discharge_pressure_bar: 1.0
+    losses:
+      wall_loss_W: 50000.0
+    dynamics:
+      pressure_gain: 0.002
+      pressure_mass_gain: 0.0006
+      circum_mass_gain: 0.6
+      circum_tau_s: 20.0
+      shrink_gain: 0.10
+      shrink_tau_s: 14.0
+      shrink_swell_gain: 0.035
+      wall_tau_K: 15.0
+    limits:
+      mdot_fw_max_kg_s: 6.0
+      mdot_s_nom_kg_s: 2.0
+
+control:
+  drum_level_pid:
+    kp: 0.9
+    ki: 0.03
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    setpoint_level_m: 3.3
+    out_feedforward: 0.55
+    antiwindup_gain: 1.0
+    max_step_rate_per_s: 0.9
+  pressure_pid:
+    kp: 0.75
+    ki: 0.022
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    setpoint_pressure_bar: 10.0
+    antiwindup_gain: 1.0
+    max_step_rate_per_s: 1.0
+
+scenario:
+  type: "step_tests"
+  seed: 11
+  step_tests:
+    base: 0.6
+    noise_std: 0.02
+    ramp_limit_per_min: 0.02
+    steps:
+      - start_s: 300
+        duration_s: 600
+        value: 0.75
+      - start_s: 1400
+        duration_s: 500
+        value: 0.55
+      - start_s: 2400
+        duration_s: 600
+        value: 0.85
+
+fault_instances:
+  - "configs/faults/fouling.yaml"
+  - "configs/faults/tube_leak.yaml"
+  - "configs/faults/valve_stiction.yaml"
+
+sensors:
+  drum_pressure:
+    noise_std: 0.02
+    bias: 0.0
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+    spike_p: 0.0002
+    spike_std: 0.15
+  drum_level:
+    noise_std: 0.005
+    drift_per_hour: 0.0002
+    dropout_p: 0.0003
+  steam_flow:
+    noise_std: 0.01
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+  drum_temp_sh:
+    noise_std: 1.5
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+
+randomization:
+  enable: true
+  drift_std_pct:
+    UA_evap: 0.03
+    combustion_eta: 0.02
+    feedwater_max: 0.04
+
+# 운영권장 프리셋: production/ci 선택
+profile: production
+runtime_profile: production
+
+profiles:
+  production:
+    validation:
+      schema_strict: true
+      dae:
+        enabled: true
+        residual_tol: 1e-10
+        min_feasible_ratio: 0.95
+        max_residual_ratio: 1.08
+        max_gap_negative: 1e-12
+  ci:
+    validation:
+      schema_strict: true
+      dae:
+        enabled: true
+        residual_tol: 1e-10
+        min_feasible_ratio: 0.98
+        max_residual_ratio: 1.05
+        max_gap_negative: 1e-12
+    performance:
+      enabled: true
+      bottleneck:
+        enabled: true
+        baseline_log_path: "outputs/baseline_fmpy_perf_ci.jsonl"
+        throughput_min_ratio: 0.90
+        stage_share_ratio_max: 1.20
+        fail_on_regression: true
+
+core_backend:
+  type: "fmu"
+  # Replace with your FMU file path
+  path: "models/boiler_core.fmu"
+  library: "fmpy"
+  step_size: 0.1
+  time_var: "time"
+  variables:
+    state_names: ["P_d", "M_l", "T_w_d", "m_circ", "m_shrink"]
+    input_names: ["fuel_cmd", "fw_cmd", "steam_demand"]
+    output_map:
+      drum_pressure: "P_drum"
+      drum_level: "L_drum"
+      steam_flow: "m_dot_steam"
+      drum_temp_sh: "T_sh"
+      feedwater_flow: "m_dot_fw"
+      flue_gas_temp: "T_flue_gas"
+      O2: "O2_pct"
+      h_fw: "h_fw"
+    derivative_names: ["der_P_drum", "der_L_drum", "der_m_dot_steam", "der_m_circ", "der_shrink"]
+    invariants:
+      mass_balance_residual: "mass_balance_residual"
+      energy_balance_residual: "energy_balance_residual"
+
+validation:
+  schema_strict: false
+  mass_tol: 80.0
+  energy_tol: 3e7
+  # Optional DAE residual checks for algebraic closure diagnostics.
+  # Enable when you want to enforce strict DAE alignment quality.
+  dae:
+    enabled: false
+    residual_tol: 1e-9
+    min_feasible_ratio: 0.95
+    max_residual_ratio: 1.05
+    max_gap_negative: 1e-12
+  required_output_columns:
+    - truth/flue_gas_temp
+    - truth/O2
+    - truth/h_fw
+  acceptance:
+    truth/mass_balance_residual_max_abs:
+      max: 80.0
+    truth/energy_balance_residual_max_abs:
+      max: 3e7
+  drum_level_kpi:
+    enabled: true
+    required: false
+    event_window_s: 420.0
+
+validation_battery:
+  enabled: false
+  seeds:
+    - 42
+  log_path: "outputs/last_validation_battery.jsonl"
+  summary_channels:
+    - truth/drum_pressure
+    - truth/drum_level
+    - obs/drum_pressure
+    - obs/drum_level
+  required_kpis:
+    truth/mass_balance_residual_max_abs:
+      max: 80.0
+    truth/energy_balance_residual_max_abs:
+      max: 3e7
+  warning_kpis:
+    truth/mass_balance_residual_max_abs:
+      max: 1000.0
+    truth/energy_balance_residual_max_abs:
+      max: 6e7
+
+safety:
+  enabled: true
+  lockout_on_trip: true
+  alarm:
+    fuel_cmd_max: 0.70
+    fw_cmd_max: 0.70
+    steam_demand_max: 0.70
+  trip:
+    fuel_cmd: 0.0
+    fw_cmd: 0.0
+    steam_demand: 0.0
+
+performance:
+  enabled: true
+  collect_memory: true
+  log_path: "outputs/last_fmpy_perf.jsonl"
+  validation_battery:
+    log_path: "outputs/last_fmpy_validation_battery.jsonl"
+  bottleneck:
+    enabled: false
+    baseline_log_path: "outputs/baseline_fmpy_perf.jsonl"
+    throughput_min_ratio: 0.90
+    stage_share_ratio_max: 1.30
+    fail_on_regression: false

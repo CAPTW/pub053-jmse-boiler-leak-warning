@@ -1,0 +1,543 @@
+=== PAGE 1 ===
+PUB-053 | Manuscript R2 | Author review | 1
+Feedwater-Demand Residuals for Early Tube-Leak Warning in a 
+Closed-Loop Auxiliary-Boiler Simulation
+Technical Brief — author-review revision R2, 16 September 2026. Author details and submission declarations are maintained separately.
+Abstract
+Closed-loop regulation can keep drum pressure near its 
+setpoint while increasing the control effort needed to 
+compensate for leakage. This study compares confirmed 
+warning times of specified pressure/level, flow-imbalance 
+and feedwater-demand detectors in a reduced auxiliary-
+boiler simulation. Twelve operating blocks each comprised 
+a normal and a tube-leak episode; four development-normal 
+episodes supplied references, scales and thresholds, and 
+eight further blocks supplied evaluation trajectories. The 
+detectors used conditioned observations and applied 
+commands, without a matched normal trajectory or future 
+fault information. A post-hoc component analysis applied 
+the same development-normal threshold-selection rule 
+separately to the flow and demand components of the 
+original combined score. All four variants confirmed a 
+post-onset alarm in all eight evaluation fault episodes and 
+before the retrospectively identified functional-degradation 
+start in the seven event-observed episodes. Median strict 
+lead times were 34.7 min for the specified state baseline, 
+48.9 min for flow alone, and 59.0 min for demand alone 
+and the combined score. Demand alone matched the 
+combined first alarm in seven blocks and was 8 s later in 
+one; flow alone was earlier in two blocks. During 45.3 h of 
+normal evaluation monitoring, the state baseline issued one 
+confirmed alarm and the other variants none. The results 
+attribute most combined-score first-alarm timing to 
+feedwater demand in these scenarios, not to a general 
+benefit of fusion. They support a limited detector 
+comparison, not intrinsic sensor superiority, field validation 
+or remaining-life prediction accuracy.
+Keywords: tube-leak monitoring; auxiliary boiler; closed-
+loop simulation; control demand; component analysis; 
+functional endpoint
+1. Introduction
+Boiler leakage can increase the replenishment and heat 
+input needed to maintain operation before a large departure 
+of the regulated pressure or level becomes apparent. The 
+diagnostic significance of feedwater demand is not new. Yu 
+et al. (2016) explicitly discuss increased make-up-water 
+requirements and the ability of feedwater margin to 
+accommodate small leaks. The question here is narrower: 
+when alarms require sustained evidence, how do particular 
+state, flow and demand detectors compare, and which 
+component determines a combined detector’s first warning?
+Earlier boiler studies provide stronger plant-based evidence 
+than the present simulation. Sun, Chen, and Marquez 
+(2002) combined process modelling and forgetting-factor 
+least squares using simulated and plant data. Sun, Marquez, 
+Chen, and Riaz (2005) studied a modified PCA approach to 
+early detection and false alarms. Yu et al. (2016) used 
+multivariate plant monitoring, and Indrawan et al. (2021) 
+considered several multivariate methods on a commercial 
+boiler. Widodo et al. (2025) subsequently examined data-
+driven diagnosis and a separate remaining-life analysis 
+using three boilers. We do not replicate these methods, 
+compare their numerical lead times with ours, or claim to 
+discover the general usefulness of control effort.
+This brief instead measures a specific relationship within 
+one declared feedback experiment: confirmed alarm timing 
+of a normal-conditioned flow/demand score versus a 
+specified pressure/level baseline, followed by attribution of 
+that timing to its components. The result is an episode-level 
+comparison against an explicitly defined functional-
+degradation criterion, including normal alarms, one 
+censored fault episode and a nonuniform component 
+ordering. That comparison—not a new universal leak-
+detection algorithm—is the intended contribution. Because 
+the component analysis was added after inspection of the 
+original combined-score results, it is exploratory reanalysis 
+of the same evaluation trajectories.
+2. Methods
+2.1. Plant and physical leak coupling
+The experiment used the project’s saturated-steam, four-
+state ab4 backend, inspired by Åström and Bell (2000). Its 
+states are absolute pressure p, total liquid volume V w, 
+riser-exit steam mass fraction αr, and subsurface steam 
+volume V sd. The pressure/liquid-volume subsystem 
+follows total mass and energy balances. With 
+V s=V T −V w and saturated properties from IF97 
+(IAPWS, 2012), the implemented stored quantities are
+M=ρwV w+ρsV s
+(1a)
+U=ρwhwV w+ρshsV s−pV T+CmT sat
+(1b)
+Here Cm is the lumped metal heat capacity. Feedwater, 
+steam, blowdown and leak rates are qf ,qs,qbd ,qℓ; Q is 
+net heat delivered to the drum. The implemented boundary 
+terms are
+˙M=qf −qs−qbd−qℓ
+(2a)
+˙U=Q+qf hf −qshs−(qbd+qℓ)hw
+(2b)
+Thus the selected leak withdraws mass and saturated-liquid 
+enthalpy; it is not merely an offset added to a sensor. 
+Pressure and liquid volume are obtained through the chain 
+rule applied to (1a–b). Empirical riser-circulation and 
+subsurface-steam relaxation closures supply the other two 
+states. Apparent drum level depends on drum liquid and 
+subsurface steam, not solely on total liquid inventory. The 
+furnace converts firing into net heat through a gas-side 
+heat-transfer calculation; feedwater and steam rates are 
+recalculated from pressure-dependent line laws within 
+integration steps. Implemented closures, sizing relations 
+and parameters are documented in Supplement S2.1–S2.3.
+The drum radius and length are 0.75 m and 5 m; the riser 
+and downcomer volumes are 0.35 and 0.15 times drum 
+volume. The pressure and level setpoints are 7 bar absolute 
+and 0.85 m. A rated steam-flow parameter of 1.4 kg/s sizes 
+the lines. The two base-load labels, 0.55 and 0.50, are 
+
+=== PAGE 2 ===
+PUB-053 | Manuscript R2 | Author review | 2
+dimensionless steam-valve command settings, not 
+percentages of rated steam mass flow. Actual flow also 
+depends on pressure. Feedwater temperature is fixed at 60 
+°C, and known blowdown is 0.05 kg/s during 60 s of each 
+1,800 s period.
+For each fault branch, qℓ=k s (t )√max ( pbar−1,0) in 
+kg/s, where pbar is absolute pressure in bar and 1 bar is the 
+ambient reference. The coefficient
+ k 
+has units 
+k g s
+−1bar
+−1/2. Severity s (t ) rises linearly from zero to 
+one after onset. This is an accelerated liquid-loss scenario, 
+not a measured tube-crack growth law. The reduced 
+geometry, empirical closures and nominal sizing have not 
+been validated against a vessel in this study; validation of 
+the published Åström–Bell model does not transfer to this 
+implementation.
+2.2. Feedback, protection and block design
+Pressure PI control determines fuel demand. A level PI 
+contributes a trim to observed steam flow to form the 
+feedwater-flow setpoint, and an inner PI drives the 
+feedwater valve. A 60 s manual hot-start hold precedes 
+cascade regulation. Controller and sensor periods are 2 s; 
+the controller uses the previous step’s conditioned 
+observations. Finite good-quality samples update each 
+channel; invalid samples hold the last valid value for at 
+most 10 s, after which the channel is unavailable. Sensor 
+models include lag, noise, dropout and pressure spikes. 
+These assumptions are fixed and listed in Supplement S2.
+Process alarms, trips and lockout remain active but evaluate 
+idealized plant states. Scheduler-only interventions based 
+on known severity thresholds are excluded from actuation 
+and retained as diagnostic labels. An inherited saturation-
+timeout ambiguity remains unresolved. The experiment 
+therefore does not represent fully sensor-based protection 
+or validate every protection function. Plant truth is 
+excluded from detector inputs but retained for this 
+protection layer and retrospective endpoint annotation. No 
+detector actuates the controller or protection logic.
+Four development and eight evaluation blocks each have 
+normal and tube-leak branches: 24 six-hour episodes and 
+259,224 timestamps. Each split is balanced across the two 
+base-load settings. Branches share a plant draw, physical-
+time load realization and sensor innovations applied to their 
+own states. They are paired branches, not independent 
+replicates, and the normal counterpart is never an input to 
+the fault-branch detector. Leak onset, progression duration 
+and k were drawn within 2,700–5,400 s, 5,400–10,800 s 
+and 0.16–0.24, respectively. The original D4 plant draw 
+failed at furnace construction; its replacement retained the 
+other input streams. Actual draws and the construction-
+valid selection condition are reported in Supplement S2.
+The final fitting routine consumed only D1–D4 normal 
+records. Evaluation trajectories were generated before the 
+final D4 replacement and fit were completed. Input binding 
+and refitting establish the numerical development-only 
+dependency, not an absence of every earlier informal 
+inspection. We therefore describe an evaluation set rather 
+than claiming that final artifacts were frozen before its 
+generation. The added component comparison is explicitly 
+post hoc.
+2.3. Four specified detector pipelines
+B0 standardizes causal EWMAs of observed pressure and 
+level deviations from their setpoints; its score is the larger 
+absolute value. The time constant is 120 s, and scales are 
+development-normal standard deviations. Updates begin 
+with the first valid observation; monitoring starts at 1,200 s.
+The flow pipeline uses a 600 s trailing imbalance,
+r M (t )=
+∫
+t −W
+t
+(qf
+ob s−qs
+ob s−qbd)d u−Δ^
+M (t )
+W
+(3)
+where W =600 s and Δ^
+M (t )=^
+M (t )−^
+M (t −W ). The 
+estimator ^
+M is saturated-liquid density times horizontal-
+cylinder volume inferred from observed pressure and level. 
+Unlike M in (1a), it is a drum-only proxy. It does not 
+reconstruct riser/downcomer storage or shrink–swell. A 
+linear reference in trailing mean steam flow and level 
+deviation empirically adjusts normal imbalance; it does not 
+identify or separately absorb those omitted physical 
+contributions. Accordingly, this is an anomaly residual, not 
+a leak-flow estimate.
+The demand residual is trailing mean applied feedwater 
+command minus a linear normal reference in mean 
+observed steam flow. Both references and residual scales 
+are fitted by ordinary least squares on pooled development-
+normal monitoring rows. The standardized scores are
+zF=r M −rr e f
+σ F
+, zD=uf −ur e f
+σ D
+(4)
+The combined score is B1=max (zF , zD). The flow-only 
+and demand-only variants use zF and zD separately. They 
+retain the combined implementation’s availability checks; 
+this is not a reduced-sensor deployment test. Exact 
+formulas and coefficients are supplied in Supplement S3.
+B0 and the flow/demand pipelines differ in smoothing, 
+normal-reference construction and sidedness: a two-sided 
+120 s EWMA is compared with one-sided 600 s residual 
+features. Applying a common threshold-selection and 
+persistence rule does not remove these differences. The 
+study compares these implementations, not the intrinsic 
+information content of sensors under matched processing.
+2.4. Alarm policy and outcome definitions
+For each variant, candidate thresholds are development-
+normal
+ 
+score
+ 
+quantiles 
+{0.990,0.995,0.999,0.9995,1.000} using linear 
+interpolation. The smallest candidate with no confirmed 
+alarm on any development-normal episode is retained. An 
+alarm requires strict exceedance for 600 elapsed seconds 
+and is emitted at confirmation, not backdated to the interval 
+start. Unavailability resets persistence. The 1,800 s 
+cooldown controls repeated notifications, which are not 
+counted as new leaks.
+
+=== PAGE 3 ===
+PUB-053 | Manuscript R2 | Author review | 3
+Table 1. Development-normal threshold selection.
+Method
+Score
+Quantile
+Threshold
+State (B0)
+Absolute state 
+deviations
+0.995
+3.9273
+Flow only
+Flow residual zF
+0.990
+2.3287
+Demand only
+Command residual 
+zD
+0.990
+4.3883
+Combined 
+(B1)
+max (zF , zD)
+0.990
+4.3883
+The functional predicate is applied feedwater command at 
+least 0.95 together with plant level at most 0.75 m, 
+sustained for 120 s. T st ar t is the first timestamp of that 
+subsequently confirmed interval; T c on f ir m=T st ar t+120 
+s is the primary event time. This engineering criterion 
+represents sustained control-demand/level degradation, not 
+physical rupture or a certified safety limit. It deliberately 
+shares a command variable with the demand detector, 
+which limits endpoint-independent interpretation.
+Detection delay is confirmed post-onset alarm time minus 
+leak onset. Strict lead is T st ar t minus that alarm time; only 
+a positive value is early relative to functional-degradation 
+start. Pre-onset alarms are retained separately. If 
+confirmation is absent at the 6 h horizon, the episode is 
+censored and has no point-valued lead. Protection events 
+and model-domain exits are recorded separately. 
+Episode/block outcomes are descriptive; no window-level 
+significance test or population false-alarm guarantee is 
+claimed.
+3. Results
+3.1. Physical response under compensation
+Figure 1 places the E1 warning problem in its physical 
+setting. After the 3,374 s leak onset, the pressure 
+observation remains close to its setpoint, while applied 
+feedwater command eventually rises well above the 
+development-normal reference. The command approaches 
+its available upper range as level declines toward the 
+functional criterion. Figure S5 shows the accompanying 
+feedwater and steam observations. This sequence is 
+consistent with replenishment compensating liquid loss 
+until the simulated feedwater/level margin is depleted; it is 
+not evidence that level is perfectly unchanged before 
+warning.
+Figure 1. Recorded E1 tube-leak observations and applied feedwater 
+command. The dotted vertical line is leak onset; the shaded band is 
+functional dwell. The normal-conditioned command reference is fitted 
+to development normals, not obtained from E1’s paired healthy 
+trajectory. Panel axes differ. The level criterion is applied to plant 
+truth for annotation, whereas the plotted level is a conditioned 
+observation.
+Demand and combined first alarms occur at 7,232 s, the 
+specified B0 alarm at 8,996 s, and functional 
+start/confirmation at 10,774/10,894 s. These are 
+confirmations of different score processes, not the first 
+physical departure of each signal. The normal evaluation 
+branches retain regulated operation; full normal histories 
+and the configured model envelope are supplied in the 
+supplement.
+3.2. Warning timing and component attribution
+Every variant produces a confirmed post-onset alarm in all 
+eight evaluation fault episodes and a positive strict lead in 
+all seven event-observed episodes. E5 remains endpoint-
+censored. Table 2 separates eight-episode delay summaries 
+from seven-event lead summaries.
+Table 2. Evaluation outcomes; all times in minutes.
+Method
+Normal 
+alarms
+Delay median, 
+n=8
+Strict lead median [range], 
+n=7
+State (B0)
+1
+127.3
+34.7 [29.6–100.0]
+Flow only
+0
+86.4
+48.9 [31.1–164.2]
+Demand 
+only
+0
+75.9
+59.0 [40.8–179.4]
+Combined 
+(B1)
+0
+75.9
+59.0 [40.8–179.4]
+Normal exposure is 45.33 h per variant. Ranges describe 
+the seven observed events, not confidence intervals. E5 
+contributes to detection delay but not lead. All methods 
+
+=== PAGE 4 ===
+PUB-053 | Manuscript R2 | Author review | 4
+have 8/8 post-onset detections and 7/7 strict early warnings 
+in the respective sets.
+Figure 2. First confirmed post-onset alarm delay by evaluation block. 
+Points are offset within each categorical block; no interpolation 
+between blocks is implied. E5 is endpoint-censored but has an 
+observed delay. B0’s separate pre-onset E8 alarm is not erased by 
+this comparison.
+Combined B1 precedes B0’s first post-onset alarm by 10.6–
+90.3 min, with a median difference of 41.1 min over eight 
+blocks. Demand alone reproduces the combined first alarm 
+exactly in seven blocks and is 8 s later in E6. Thus most of 
+the combined first-alarm timing is retained without its flow 
+score. However, separately thresholded flow alone is 382 s 
+earlier than combined B1 in E5 and 690 s earlier in E6. The 
+aggregate median ordering is not uniform blockwise 
+dominance, nor evidence that flow is unnecessary.
+Figure 3. E1 scores divided by their own thresholds. Markers denote 
+confirmed alarms after 600 s persistence; the dotted line is onset and 
+the shaded band the functional dwell. Demand and combined traces 
+largely overlap. All score inputs are current or past 
+observations/commands, not the matched normal branch.
+3.3. Normal alarms and interpretation boundaries
+During 45.33 h of normal evaluation monitoring, B0 issues 
+one confirmed alarm in E8 and the other variants none. 
+That same early B0 alarm occurs at 3,276 s in E8’s paired 
+fault branch, before its 3,838 s onset; it is not another 
+independent normal realization. For E8 combined B1, peak 
+score 4.6167 exceeds threshold 4.3883, but the longest 
+continuous exceedance is only 464 s. The highest minimum 
+score over a full 600 s window is 4.2438. Persistence 
+therefore prevents a confirmation on that observed path; 
+this is not a certified robustness margin or a long-run rate 
+bound (Figure S4).
+A recorded refinement with fixed physical-time inputs 
+tightened BDF relative tolerance from 10
+−6 to 10
+−8 and 
+absolute tolerances by a factor of 0.01. Maximum 
+pressure/level
+ 
+differences
+ 
+were
+ 
+approximately 
+1.60×10
+−4 
+bar and
+ 3.84×10
+−5 
+m; D1 
+start/confirmation remained 12,592/12,712 s. This is one 
+numerical-sensitivity comparison, not a global error bound. 
+E1–E3 later experienced process trips and liquid-volume-
+fraction domain exits, all after the primary event; files 
+reached the horizon without logged solver exceptions. No 
+later out-of-domain trajectory is used to support physical 
+conclusions. Computational reproduction checks are 
+documented in Supplement S8 rather than treated as 
+experimental replications.
+4. Discussion
+The observed timing is consistent with control 
+compensation: feedwater demand rises as the controller 
+attempts to offset liquid loss, while regulated pressure and 
+delayed level excursions can yield later state-baseline 
+alarms. This mechanism is already recognized in boiler 
+monitoring; the added evidence here is the timing and 
+component attribution under a specified feedback, 
+persistence and endpoint policy. The comparison shows 
+that the selected composite score’s earliest confirmation 
+was usually demand-driven, with two exceptions favouring 
+separately thresholded flow. It does not demonstrate 
+universal fusion benefit or reproduce the field validation of 
+earlier studies.
+Three design features restrict that interpretation. First, 
+filtering, reference adjustment and score sidedness differ 
+across pipelines. The earlier demand alarms cannot be 
+attributed solely to an inherently superior information 
+source. Second, the functional criterion contains feedwater 
+command, so a demand anomaly may track a variable used 
+in the endpoint definition. This is not future-label leakage, 
+but a different independent endpoint could change the 
+utility assessment. Stored-trajectory level-cutoff 
+sensitivities are exploratory and do not remove the shared 
+command condition. Third, the component comparison 
+retains the original sensor-availability policy. Removing a 
+score is not the same as removing its instruments from a 
+deployed system.
+The experiment remains small and synthetic. Its two steam-
+valve regimes, accelerated liquid-loss law, construction-
+valid draws, idealized process protection and controller 
+tuning bound the population studied. Pairing controls 
+exogenous inputs but does not increase independent sample 
+size; all variants also share development fitting and 
+evaluation
+ 
+trajectories.
+ 
+Geometry-scaled 
+circulation/relaxation parameters, fixed feedwater 
+temperature, absent superheater and simplified drum 
+inventory limit physical transfer. Normal-regression 
+adjustment does not identify these omitted mechanisms. 
+The reported zero alarms cover only the finite normal 
+exposure, not sustained sensor failure or out-of-distribution 
+operation.
+
+=== PAGE 5 ===
+PUB-053 | Manuscript R2 | Author review | 5
+These limits suggest a focused use of the result: a 
+transparent reference comparison for studying how a 
+controller redistributes observable fault effects. A future 
+independent study should keep detector settings fixed while 
+varying control and operating conditions, include an 
+endpoint not defined partly by the demand signal, and test 
+against independent operating evidence. Such work would 
+extend, rather than be established by, the present detector 
+comparison.
+5. Conclusion
+Within the specified simulated operating conditions and 
+threshold-selection policy, the demand-residual detector 
+issued earlier confirmed post-onset alarms than the 
+specified pressure/level baseline in all eight evaluation fault 
+episodes. Demand and combined scores had a 59.0 min 
+median strict lead in seven event-observed episodes, versus 
+34.7 min for B0. Demand alone retained the combined first-
+alarm timing in seven blocks, but separately thresholded 
+flow was earlier in two. The evidence therefore supports a 
+limited pipeline and component comparison: it neither 
+identifies the first physical state deviation nor proves 
+intrinsic sensor superiority, general fusion benefit, 
+remaining-life accuracy or field readiness. No confirmed 
+flow, demand or combined alarm was observed during 45.3 
+h of normal evaluation; that finite observation is not a 
+reliability guarantee.
+Data and code availability — author-review 
+statement
+The accompanying package contains derived observations, 
+detector traces, analysis scripts, figure source data, 
+reproduction instructions and an implementation 
+description tied to the supplied study source. Original 
+simulator records are privately held by the owner. Public 
+access, archival deposition and licensing have not been 
+finalized; no public availability or release permission is 
+asserted. The final submission statement must match the 
+approved access arrangement.
+References
+Åström, K. J., & Bell, R. D. (2000). Drum-boiler dynamics. Automatica, 36(3), 363–378. https://doi.org/10.1016/S0005-1098(99)00171-5
+Indrawan, N., Shadle, L. J., Breault, R. W., Panday, R., & Chitnis, U. K. (2021). Data analytics for leak detection in a subcritical boiler. 
+Energy, 220, 119667. https://doi.org/10.1016/j.energy.2020.119667
+International Association for the Properties of Water and Steam. (2012). Revised release on the IAPWS industrial formulation 1997 for 
+the thermodynamic properties of water and steam (R7-97(2012)). https://iapws.org/documents/release/IF97-Rev
+Sun, X., Chen, T., & Marquez, H. J. (2002). Boiler leak detection using a system identification technique. Industrial & Engineering 
+Chemistry Research, 41(22), 5447–5454. https://doi.org/10.1021/ie010949+
+Sun, X., Marquez, H. J., Chen, T., & Riaz, M. (2005). An improved PCA method with application to boiler leak detection. ISA 
+Transactions, 44(3), 379–397. https://doi.org/10.1016/S0019-0578(07)60211-0
+Widodo, A., Prahasto, T., Soleh, M., & Nugraha, H. (2025). Diagnostics and prognostics of boilers in power plant based on data-driven 
+and
+ 
+machine
+ 
+learning.
+ International
+ 
+Journal
+ 
+of
+ 
+Prognostics
+ 
+and
+ 
+Health
+ 
+Management,
+ 
+16(1). 
+https://doi.org/10.36001/ijphm.2025.v16i1.4222
+Yu, J., Jang, J., Yoo, J., Park, J. H., & Kim, S. (2016). Leakage detection of steam boiler tube in thermal power plant using principal 
+component analysis. Annual Conference of the PHM Society, 8(1). https://doi.org/10.36001/phmconf.2016.v8i1.2510
+

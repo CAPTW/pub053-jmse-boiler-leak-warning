@@ -1,0 +1,853 @@
+=== PAGE 1 ===
+PUB-053 | Supplement R2 | Author review | 1
+Supplementary Methods, Results and Reproducibility
+For: Feedwater-Demand Residuals for Early Tube-Leak Warning in a Closed-Loop Auxiliary-Boiler Simulation
+Author-review supplement R2, 16 September 2026. This document accompanies a stored-data manuscript analysis; it 
+is not a report of new boiler simulations.
+S1. Evidence scope and analysis status
+The primary research input is the owner-supplied archive 
+observable_baseline_study_20260915T215200Z_be142b32.zip. It contains a source copy, applied 
+configurations, recorded trajectories, detector traces and the original methods/results working section. The present 
+manuscript preparation performed stored-data analysis only. It did not rerun the simulator, generate new operating 
+blocks, train a new prognostic model, submit a paper or change repository visibility.
+Three evidence layers are kept distinct: (i) original B0/B1 study records; (ii) reconstruction of those records from 
+observation projections and stored score traces; and (iii) the newly added post-hoc comparison of separately 
+thresholded flow-only and demand-only scores. The third layer reuses an already inspected evaluation set and must 
+not be described as prospective confirmation. Earlier conformal-RUL experiments are not evidence for the claims in 
+this paper.
+The delivered NPZ files are non-pickled, column-preserving projections. They contain all 10,801 timestamps for each 
+of the 24 main episodes (259,224 rows), not only selected successful intervals. episode_metadata.csv binds each 
+projection to hashes of the original episode, both detector traces, applied configuration, event record and run metadata. 
+Absolute Windows locations are retained only in explicitly identified original metadata; the derived block-design tape 
+fields are portable basenames.
+A bounded flat-primitive Parquet reader was used to export the projections because a general-purpose Parquet engine 
+was unavailable in the preparation environment. Its supported encodings and limitations are stated in the code. Earlier 
+independent review compared this reader with separately retained CSV series. In this preparation, raw observation 
+projections were used to reconstruct scores and fitting, while an independent interval alarm implementation checked 
+the sequential alarm state machine. Neither check constitutes independent physical validation.
+S2. Block design, operating policy and sensing
+Table S1 lists the actual retained draws. Regime is the dimensionless base steam-valve opening, not a fraction of rated mass 
+flow. Onset and progression duration are seconds, and k has units kg s ¹ bar ½ in the stated leak law. The generator uses 
+⁻
+⁻
+distinct load, sensor and fault streams in addition to the plant seed. The complete stream IDs are in 
+data/block_design.json; paired normal/fault branches deliberately share exogenous tapes. Branches or windows from the 
+same block are not independent samples.
+Table S1. Retained block draws.
+Block
+Split
+Regime
+Plant seed
+Onset, s
+Duration, s
+k
+D1
+development
+0.55
+3001
+3196
+6996
+0.1635
+D2
+development
+0.55
+3002
+4238
+10206
+0.2384
+D3
+development
+0.5
+3003
+3738
+10684
+0.2400
+D4
+development
+0.5
+3104
+3350
+6638
+0.2340
+E1
+evaluation
+0.55
+3005
+3374
+7342
+0.2177
+E2
+evaluation
+0.55
+3006
+4568
+6548
+0.2351
+E3
+evaluation
+0.55
+3007
+3946
+5724
+0.2092
+E4
+evaluation
+0.55
+3008
+4078
+5460
+0.1749
+E5
+evaluation
+0.5
+3009
+4830
+9602
+0.1993
+E6
+evaluation
+0.5
+3010
+5254
+7770
+0.1824
+E7
+evaluation
+0.5
+3011
+4324
+9960
+0.2218
+E8
+evaluation
+0.5
+3012
+3838
+10656
+0.2152
+D4’s original seed 3004 failed at furnace construction before simulated time advanced. The recorded replacement 
+used 3104 while retaining its load/sensor/fault streams. This is a construction-valid draw condition; the sample should 
+not be described as an unrestricted random sample of every nominal parameter draw.
+
+=== PAGE 2 ===
+PUB-053 | Supplement R2 | Author review | 2
+The ab4 configuration represents saturated-steam operation, fixed 60 °C feedwater and a reduced drum/riser 
+representation. Nominal pressure is 7 bar absolute, level setpoint 0.85 m, and nominal steam-flow parameter 1.4 kg/s. 
+The horizontal-drum geometry used by the monitoring estimator has radius 0.75 m and length 5 m. A known 
+blowdown schedule applies 0.05 kg/s for the first 60 s of each 1,800 s period. These parameters define the simulation, 
+not vessel-certified limits.
+All main periods are 2 s. The sensor conditioner updates on a finite good-quality sample, holds the previous value 
+through invalid samples for at most 10 s, then marks the channel unavailable. The source study contract also mentions 
+“degraded” quality, whereas the executed conditioner and reconstruction use the actual finite/good path; no claim is 
+made about unexercised quality categories. A 60 s manual hot-start hold is followed by cascade control. Analysis 
+monitoring begins at 1,200 s. The main channels and configuration-level noise parameters are below; the full applied 
+configuration remains authoritative.
+Table S2. Main sensor parameters (configured model values, not measured sensor specifications).
+Channel
+Lag, s
+Noise std
+Dropout probability / 
+sample
+Range
+Pressure
+0.2
+0.02 bar
+0.0005
+0–20 bar
+Drum level
+0.6
+0.004 m
+0.0003
+0–1.5 m
+Steam flow
+0.3
+0.01 kg/s
+0.0005
+0–3 kg/s
+Feedwater flow
+0.5
+0.01 kg/s
+0.0005
+0–3 kg/s
+The pressure spike probability is 0.0002 per sample with configured standard deviation 0.15 bar; level drift is 
+configured at 0.0002 m/h. Physical-time tapes fix innovations across paired branches. The actual stochastic model, lag 
+and quality logic—not these four scalar settings alone—determine the observations.
+Process alarms/trips act on idealized plant states. The scheduler’s oracle severity crossings are retained as labels but 
+do not actuate. The inherited ambiguity in saturation-timeout logic was not repaired into a new protective guarantee. 
+Thus pressure/level trip retention is not a demonstration that all saturation hazards or sensor-based protection have 
+been covered.
+S2.1. Implemented states, balances and level reconstruction
+This subsection describes the executed source implementation, not a newly validated plant model. The supplied 
+study archive contains source_copy/src/boiler_pdm_sim/core/ab4/. The relevant constructor is 
+Ab4Backend.from_config; a separate unused default-parameter helper has different geometry ratios and is not 
+used to populate Table S2a. The applied configurations are preserved in data/original_configs. Relative source 
+locations and hashes are listed in revision/model_source_map.csv.
+The state vector is x=( p,V w ,αr ,V sd): pressure in Pa, total liquid volume in m³, riser-exit steam mass fraction, and 
+subsurface steam volume in m³. Define V s=V T −V w, with saturated liquid/vapour densities ρw , ρs, enthalpies 
+hw,hs, latent enthalpy hf g=hs−hw, and saturation temperature T sat ( p). The mass and internal-energy expressions 
+are manuscript Equations (1a–b); temperature differences in the metal term are unaffected by the Celsius/Kelvin 
+reference offset. The pressure/liquid-volume derivatives solve
+[
+M p
+M V
+U p
+U V)[
+˙p
+˙V w)=[
+qf −qs−qℓ−qbd
+Q+qf hf −qshs−(qℓ+qbd)hw).
+(S1)
+Subscripts denote derivatives with respect to pressure or liquid volume. In particular, M V=ρw−ρs and 
+U V=ρwhw−ρshs. Pressure derivatives are computed from the implemented saturated-property functions, including 
+the metal heat-capacity term. The right-hand side explicitly removes saturated-liquid enthalpy with the simulated leak 
+and blowdown. A near-singular determinant branch exists in the implementation; its presence is not a validation of all 
+possible operating states. The present revision documents the implementation without changing or rerunning it.
+The additional closures use a mean riser void fraction α v. For z=( ρw−ρs)αr/ ρs, the source evaluates α v from 
+ρw (1−log (1+z )/z)/( ρw−ρs) with a small-αr branch and clipping to [0,0.999). The empirical circulation and 
+relaxation equations are
+qd c=√
+2 ρw Ad c ( ρw−ρs) gα vV r
+K f
+, ˙αr=max (Q ,0)/hf g−αr qd c
+ρwV r
+,
+(S2)
+
+=== PAGE 3 ===
+PUB-053 | Supplement R2 | Author review | 3
+˙V sd= β αr qd c
+ρs
+−V sd−V sd ,0
+T d
+.
+(S3)
+These are code-level empirical closures, with numerical lower bounds on denominators in the implementation. K f is 
+an implementation-specific circulation sizing coefficient, not an independently measured friction parameter. The 
+constructor starts from 25 and, when no override is supplied, rescales it using a target circulation ratio of 20 and 
+recomputes the nominal distribution. We do not claim that the displayed initial value is the final applied coefficient in 
+every plant draw.
+Apparent drum level is obtained by inverting the horizontal-cylinder volume map at V w d+V sd, where 
+V w d=V w−V d c−(1−α v)V r. Thus the apparent level includes subsurface steam and riser-distribution effects. In 
+contrast, the monitoring inventory estimator uses only observed level and saturated-liquid density. Equations (S1)–
+(S3) explain why that monitoring proxy must not be called the complete boiler inventory.
+Table S2a. Geometry and thermodynamic/numerical parameters used by the selected constructor.
+Quantity
+Value or sizing rule
+Interpretation
+Drum radius, length
+0.75 m, 5 m
+Horizontal cylinder
+Drum volume V d
+π (0.75)
+2 (5) m³
+Approximately 8.836 m³
+Riser/downcomer volumes
+V r=0.35V d, V d c=0.15V d
+Geometry-scaled assumptions
+Total volume V T
+V d+V r+V d c
+Approximately 13.254 m³
+Downcomer area Ad c
+0.03 m²
+Model parameter
+Metal heat capacity Cm
+6000×490=2.94×10
+6 J/K
+Lumped metal term
+T d, β, V sd ,0
+12 s, 0.3, 0.05V d
+Empirical subsurface-steam closure
+Nominal pressure
+7 bar absolute
+IF97 pressure is converted to Pa in the state
+Nominal apparent level
+0.5667×1.5 m
+Hot-start constructor target; controller setpoint 
+0.85 m
+Rated steam flow
+1.4 kg/s
+Line and furnace sizing point
+Feedwater temperature/enthalpy
+60 °C; hf=4200 (60) J/kg
+Fixed feedwater approximation
+Downstream steam pressure
+4.2 bar absolute
+Default 0.6 pnom
+BDF relative tolerance
+10
+−6
+Original main trajectories
+BDF absolute tolerances
+(100,10
+−4,10
+−5,10
+−5)
+State order ( p,V w ,αr ,V sd)
+Outer controller/sensor/logger periods
+2 s each
+Internal BDF steps are adaptive
+These values document the simulation. They are not vessel-certified parameters or sensor specifications. In particular, 
+parameters labelled as riser placeholders by the source have not acquired external validity through manuscript 
+description.
+S2.2. Furnace, pressure-dependent lines and the leak
+In the tube-leak study the furnace is not directly degraded. The constructor sizes maximum fuel delivery and heat-
+transfer conductance from nominal steam duty and the combustion-efficiency draw. Fuel command controls fuel rate; 
+the configured fuel is MGO, excess-air ratio 1.15, wall-loss fraction 0.015 and inlet-air temperature 25 °C. The 
+furnace balances gas enthalpy loss against a gas-to-saturation-temperature logarithmic-mean-temperature-difference 
+heat-transfer relation. Net drum heat is the nonnegative water-side heat transfer after the configured wall loss. There is 
+no superheater in this selected backend. This is a description of the implemented reduced furnace, not a new 
+combustion validation.
+The feedwater valve does not impose a mass rate directly. With opening uf, a fixed-speed pump curve 
+Δ p pum p=a0−a1qf
+2 and valve coefficient C f, the code solves the line balance as
+qf
+2=max ( pt ank+a0−p,0)
+a1+1/[ ρw (C f uf )
+2)
+.
+(S4)
+
+=== PAGE 4 ===
+PUB-053 | Supplement R2 | Author review | 4
+A closed valve produces zero flow. The tank is 1.2 bar absolute. Sizing uses 1.4 kg/s at valve opening 0.5, a rated 
+valve drop equal to 25% of the nominal static rise, and shutoff head 1.6 times rated head. Actual flow therefore 
+depends on both applied opening and drum pressure; approaching an opening limit is not identical to reaching an 
+invariant flow limit.
+Steam command us is likewise a valve opening. For pd o w n/ p>0.577, the source uses qs=C sus√( p−pd o w n) ρs; 
+below that ratio it uses a pressure-proportional choked branch matched at the nominal critical point. C s is sized at 1.4 
+kg/s, opening 0.6 and nominal pressure. The labels 0.50 and 0.55 denote the base opening of the stochastic load 
+command. They do not represent 50% and 55% of the rated steam mass flow. Blowdown is an additional 
+liquid/enthalpy sink, not part of steam demand.
+For each retained fault draw, s (t )=0 before onset, increases linearly to 1 during the recorded progression duration, 
+and remains 1 thereafter. The scheduler supplies the effective coefficient k s (t ) to the backend, which computes 
+qℓ=k s (t )√max ( pbar−1,0). This disturbance reaches the global balances as both mass withdrawal and qℓhw 
+energy loss. The drawing of a progression duration is a synthetic scenario design, not an observed lifetime distribution 
+or proof of actual tube-damage kinetics.
+Figure S5. Conditioned feedwater and steam observations in the same E1 fault trajectory shown in main Figure 1. The dotted line is leak 
+onset and the band is functional dwell. Their difference is not by itself an identified leak flow: storage changes and blowdown also enter 
+the mass balance.
+S2.3. Three-element control and the information boundary
+The recorded pressure PI uses ps p−p
+ob s to form a fuel request. In cascade mode the level PI forms a dimensionless 
+trim vl from ls p−l
+ob s, and the feedwater-flow setpoint is
+qf ,s p=qs
+ob s+0.5 (1.4 k g/s) vl.
+(S5)
+The inner flow PI uses qf ,s p−qf
+ob s to request feedwater opening. Configured pressure gains are 
+(K p, K i)=(0.7,0.02) on bar error; level gains are (3.0,0.01) on metre error; flow gains are (0.3,0.03) on kg/s 
+error. Derivative gains are zero. Pressure/flow outputs are limited to [0,1) and level trim to [−1,1); configured anti-
+windup gains are 1. These numerical gains describe this implementation’s error and time units, not a transferable 
+tuning recommendation.
+Fuel/feedwater/steam actuator lags are 2/3/0.5 s, with rate limits 0.8/0.7/1.2 per second and deadbands 0.002/0.003/0. 
+Controller requests, actuator-limited values, applied commands and position fields are distinguished by the study 
+logging. The first 60 s use manual fuel 0.66 for the 0.55 base setting and 0.61 for the 0.50 setting, feedwater opening 
+0.03 and the corresponding steam command, before transfer to cascade control. Monitoring starts later at 1,200 s; the 
+original transient remains in the data.
+The controller receives previous-step conditioned observations. The detector uses available causal observations and 
+applied commands. Plant truth is used separately by idealized process protection and the retrospective endpoint oracle, 
+never as a detector fallback or fitted predictor. Scheduler severity crossings remain diagnostic records but do not 
+actuate. Process alarm command caps remain 0.95 and trip commands zero with lockout. The actual process 
+
+=== PAGE 5 ===
+PUB-053 | Supplement R2 | Author review | 5
+pressure/level limits and other protection settings remain in each applied configuration. The inherited saturation-
+timeout ambiguity is explicitly outside the demonstrated protective capabilities.
+The expected physical chain is therefore conditional, not tautological: the leak removes water and liquid enthalpy; 
+pressure regulation can increase heat input, while the flow/level cascade increases replenishment demand. That 
+response can reduce or delay state excursions, but it does not guarantee observability, a confirmed alarm or eventual 
+functional failure for every load draw. E5’s endpoint censoring and the method-specific alarm orderings are retained 
+precisely because they are distinct outcomes.
+S3. Exact score construction and fitted constants
+Let p and l denote currently available conditioned observations, and u the applied feedwater command. Only causal 
+windows are used. Invalid input resets alarm persistence; it is not filled using a future sample or plant truth.
+For B0, a = 1 − exp(−2/120). The EWMA starts from the first available deviation, not from a fabricated zero residual, 
+and updates as e(t) = e(t−2) + a[d(t)−e(t−2)]. Its score is max(|e_l|/σ_l, |e_p|/σ_p), where d_l=l−0.85 m and d_p=p−7 
+bar.
+For flow/control features, the 600 s window includes 301 timestamps. Flow integration is trapezoidal; trailing means 
+are arithmetic means of those samples. For h = clip(l,0,1.5), the horizontal-cylinder volume is
+V(h) = 5[0.75² arccos((0.75−h)/0.75) − (0.75−h)√max(1.5h−h²,0)].
+M̂=ρ_l(p)V(h). The density implementation reproduces the original saturated-density interpolation convention: a 
+1,000-knot geometric pressure grid over 0.5–120 bar, cubic interpolation, and detector input clipping to 0.5–30 bar. 
+The independently evaluated IF97 formulation supplies the grid values. This is an implementation check, not external 
+fluid-property or plant validation.
+The drum-only imbalance r M is Equation (3) of the manuscript. With q̄_s the trailing mean steam flow, l̄_d the 
+trailing mean level deviation and ū_fw the trailing mean command:
+r_ref = a₀ + a₁q̄_s + a₂l̄_d; u_ref = b₀ + b₁q̄_s.
+Both models are ordinary least-squares fits on the pooled development-normal monitoring rows. Population residual 
+standard deviations (ddof=0) are used. The finite availability and window policies are unchanged in the component 
+comparison. Regression is an empirical adjustment of normal imbalance, not an identification of individual 
+unobserved physical contributions.
+Table S3. Reconstructed constants (rounded for display; full precision is in results/independent_fit.json).
+Constant
+Value
+a₀
+0.0107829644171
+a₁
+-0.00810778822474
+a₂
+1.63198387636
+b₀
+-0.403728207267
+b₁
+0.617687937742
+σ_F
+0.0642100702339
+σ_D
+0.0572613102938
+σ_l
+0.00692987017346
+σ_p
+0.00125315658028
+Fit rows
+40804
+Flow alone uses z_F; demand alone uses z_D; combined uses max(z_F,z_D). Neither component is clipped to zero 
+before threshold selection. Both component variants retain B1’s four-channel window-availability condition. A 
+deployable reduced-sensor implementation would require its own availability and failure-mode evaluation.
+S4. Threshold selection and component comparisons
+The candidate quantile set is {0.990, 0.995, 0.999, 0.9995, 1.000}, with NumPy’s linear interpolation convention. 
+Candidates are derived from development-normal monitoring scores only. The smallest candidate giving zero 
+confirmed alarms on all four development normals is retained. Since exceedance is strict, the maximum-score 
+candidate is a deterministic no-exceedance fallback on that same sample; this does not prove out-of-sample control.
+
+=== PAGE 6 ===
+PUB-053 | Supplement R2 | Author review | 6
+Table S4. All candidate thresholds and development-normal alarm counts.
+Method
+q
+Threshold
+D1
+D2
+D3
+D4
+State (B0)
+0.99
+3.767425
+0
+0
+1
+0
+State (B0)
+0.995
+3.927338
+0
+0
+0
+0
+State (B0)
+0.999
+3.970749
+0
+0
+0
+0
+State (B0)
+0.9995
+3.979331
+0
+0
+0
+0
+State (B0)
+1
+5.307179
+0
+0
+0
+0
+Flow only
+0.99
+2.328681
+0
+0
+0
+0
+Flow only
+0.995
+2.574599
+0
+0
+0
+0
+Flow only
+0.999
+3.116660
+0
+0
+0
+0
+Flow only
+0.9995
+3.288148
+0
+0
+0
+0
+Flow only
+1
+4.063845
+0
+0
+0
+0
+Demand only
+0.99
+4.388325
+0
+0
+0
+0
+Demand only
+0.995
+4.594975
+0
+0
+0
+0
+Demand only
+0.999
+4.822598
+0
+0
+0
+0
+Demand only
+0.9995
+4.830538
+0
+0
+0
+0
+Demand only
+1
+4.833258
+0
+0
+0
+0
+Combined (B1)
+0.99
+4.388325
+0
+0
+0
+0
+Combined (B1)
+0.995
+4.594975
+0
+0
+0
+0
+Combined (B1)
+0.999
+4.822598
+0
+0
+0
+0
+Combined (B1)
+0.9995
+4.830538
+0
+0
+0
+0
+Combined (B1)
+1
+4.833258
+0
+0
+0
+0
+The new separately thresholded flow result is distinct from the earlier fixed-threshold removal diagnostic. With the 
+combined threshold held at 4.3883254020, flow-only first alarms are E1 9822, E2 9678, E3 8890, E4 9378, E5 14246, 
+E6 13970, E7 12832 and E8 13510 s. Re-selecting its threshold from development normals yields 2.3286806212 and 
+the earlier times in Table S5. Demand’s selected threshold equals the combined threshold under both analyses. These 
+are post-hoc comparisons on the already inspected evaluation trajectories; no claim of new confirmatory evidence is 
+made.
+Table S5. First confirmed post-onset alarm, seconds from episode start.
+Block
+State
+Flow only
+Demand only
+Combined
+E1
+8996
+7840
+7232
+7232
+E2
+8580
+8574
+7860
+7860
+E3
+7872
+7818
+7236
+7236
+E4
+8682
+8322
+7580
+7580
+E5
+15830
+11380
+11762
+11762
+E6
+15010
+11158
+11856
+11848
+E7
+13974
+10572
+9578
+9578
+E8
+15110
+10806
+9692
+9692
+B0 also produces the E8 pre-onset alarm at 3276 s. Table S5 does not overwrite or reclassify that alarm; it answers the 
+separate post-onset timing question. Demand and combined are equal in seven blocks, with an 8 s difference in E6.
+S5. Event, censoring and model-domain accounting
+The functional predicate is applied feedwater command ≥0.95 AND oracle drum level ≤0.75 m. It must remain true 
+for 120 s of elapsed time. On a 2 s grid this spans 61 inclusive timestamps. The start of the retrospectively confirmed 
+interval and its online confirmation are both retained. The primary endpoint is confirmation; strict early warning is 
+alarm confirmation before the interval starts.
+Normal records have no fault endpoint. Seven evaluation fault episodes have an endpoint, one is horizon-censored, 
+and no process trip precedes the primary functional confirmation. A censored episode is not assigned a zero lead or a 
+pseudo-failure at the horizon.
+
+=== PAGE 7 ===
+PUB-053 | Supplement R2 | Author review | 7
+Table S6. Evaluation event and validity times, seconds from episode start.
+Block
+Start
+Confirm
+Process trip
+Domain exit
+E1
+10774
+10894
+18870
+20248
+E2
+10664
+10784
+19532
+20976
+E3
+9684
+9804
+17942
+19324
+E4
+10668
+10788
+—
+—
+E5
+—
+—
+—
+—
+E6
+21010
+21130
+—
+—
+E7
+16294
+16414
+—
+—
+E8
+20458
+20578
+—
+—
+All 24 main files contain 10,801 rows through 21600 s and report COMPLETED with no logged solver exception or 
+solver-fallback samples. In E1–E3 the backend’s state_feasible flag later becomes false when its liquid-volume-
+fraction domain criterion (0.05–0.95) is violated. The original event extractor grouped this with numerical-failure 
+indicators. Here it is reported separately as a model-domain exit; completion of the solver does not validate the later 
+physical trajectory. First alarms and primary endpoints all occur before those exits.
+Figure S1. Functional start, confirmation, process trip, model-domain exit and horizon censoring. The E5 marker denotes censoring, not 
+an observed endpoint.
+Stored-trajectory level-cutoff sensitivities at 0.70, 0.75 and 0.80 m are provided in 
+results/endpoint_sensitivity.csv. They are post-hoc redefinitions, not additional experiments, and the 0.75 m 
+primary criterion is unchanged. Missing endpoints and any ordering relative to protection events remain explicit. The 
+command condition is shared by all variants, so this analysis cannot establish endpoint-independent usefulness.
+S6. Normal alarms, persistence and episode-level denominators
+Each six-hour normal episode contributes (21600−1200)/3600 = 5.6667 h of continuous-time monitoring exposure, 
+not 10201×2/3600 h; the latter would count both endpoints as full intervals. Evaluation exposure is 45.3333 h. No 
+unavailable monitoring samples are present in these main normal trajectories. That observation is not a qualification 
+of long missing-data episodes.
+Table S7. Longest continuous threshold exceedance, seconds, at method-specific thresholds.
+Block
+State
+Flow only
+Demand only
+Combined
+E1
+6
+2
+0
+0
+E2
+0
+0
+0
+0
+E3
+0
+2
+0
+0
+
+=== PAGE 8 ===
+PUB-053 | Supplement R2 | Author review | 8
+Block
+State
+Flow only
+Demand only
+Combined
+E4
+0
+2
+0
+0
+E5
+0
+2
+208
+208
+E6
+104
+2
+184
+184
+E7
+0
+0
+176
+176
+E8
+850
+2
+464
+464
+Figure S4. Normal threshold-exceedance persistence, displayed as categorical blockwise points rather than interpolating curves. Only B0 
+in E8 reaches the 600 s confirmation requirement. A short peak above threshold is not a confirmed alarm.
+A one-sample exceedance has a timestamp span of 0 s. Only the E8 state-baseline interval reaches 600 s and generates 
+a normal alarm. For E8 demand/combined, peak score 4.616698554 exceeds threshold 4.388325402, but the 
+maximum exceedance span is 464 s. The highest minimum over a complete 600 s window is 4.243761165. Peak 
+exceedance and confirmed alarm are therefore different measurements.
+The same E8 early alarm appears in its paired fault branch before leak onset because the exogenous tapes are shared. 
+It is listed as a pre-onset fault-branch alarm, not counted as an additional independent normal realization. 
+Reconfirmations during a persistent fault after the 1800 s cooldown are notifications, not new leak events. Results 
+emphasize first post-onset confirmations and separately retain all alarm timestamps in 
+episode_method_results.csv.
+No Poisson confidence bound, window-bootstrap interval, significance test or zero population-rate claim is attached to 
+the zero-alarm observations. The small, paired, constructed design supports descriptive comparisons only.
+S7. Chronology, numerical sensitivity and remaining assumptions
+The final fitting routine consumes D1–D4 normal trajectories, whose identities are supplied in the original detector 
+settings. Independent refitting from those observations recovers the references, scales and thresholds. The recorded 
+execution order is nevertheless important.
+Table S8. Selected recorded UTC timestamps.
+Recorded event
+UTC
+Last evaluation trajectory completed (E8 leak)
+2026-09-16 00:30:18
+Retained D4 normal completed
+2026-09-16 00:34:51
+Retained D4 leak completed
+2026-09-16 00:38:53
+Final detector fitting
+2026-09-16 00:39:22
+These are recorded execution fields, not reconstructed filesystem dates. Numerical dependence on development-only 
+inputs is established by code and refitting; the records are not an independent log of every human or model inspection. 
+The present component selection is explicitly post hoc.
+The original single-refinement comparison on D1 fixed the physical-time load/sensor tapes, controller policy and 2 s 
+outer timebase, tightened relative tolerance from 1e−6 to 1e−8, and scaled absolute tolerances by 0.01. Reanalysis of 
+the saved comparison gives maximum pressure and level differences of approximately 1.60e−4 bar and 3.84e−5 m, 
+
+=== PAGE 9 ===
+PUB-053 | Supplement R2 | Author review | 9
+respectively, and unchanged start/confirmation at 12592/12712 s. This preparation did not rerun those simulations. 
+Neither a global convergence rate nor an error upper bound follows from one refinement.
+Figure S2. Conditioned pressure in E1 normal. The dotted line marks the start of monitoring; the initial transient is retained rather than 
+removed from the data.
+Figure S3. Conditioned level in E1 normal. This is a recorded simulated observation, not a measured vessel trace.
+The model has no field validation in this package. It omits a superheater in the selected backend, uses a fixed 
+feedwater temperature and simplified riser parameters, and operates in a constrained feedwater-capacity envelope. The 
+study does not test multiple faults, real sensor installation constraints, substantial out-of-distribution loads or policies 
+that automatically intervene on detector alarms.
+S8. Reproduction and verification
+Run the package code from a clean copy. reproduce_analysis.py needs NumPy and reads the delivered trace 
+arrays; it does not call the simulator. verify_features.py additionally needs SciPy and independently reconstructs 
+the original fitting and score arrays from the delivered raw-observation projections. make_figures_r2.py uses 
+pandas and matplotlib; Pillow and PyMuPDF combine separately rendered physical-response panels. This changes 
+presentation only. The R1 make_figures.py remains as a legacy presentation script. The scripts and exact 
+commands are described in REPRODUCIBILITY.md.
+This preparation obtained 96/96 agreement between sequential and interval alarm implementations over 24 episodes × 
+4 methods, and 144/144 whole-array score/availability comparisons over 24 episodes × 6 fields. These are local 
+
+=== PAGE 10 ===
+PUB-053 | Supplement R2 | Author review | 10
+computational checks, not independent experimental replications or proof that every implementation defect is absent. 
+The original simulator and its end-to-end execution remain separate; the archive’s original reproduction notes are 
+preserved as an explicitly unrerun reference.
+To regenerate the projections from the supplied study archive, use export_from_study.py with an extracted study 
+root and a separate output root. This route uses the bounded scalar reader and requires the same supported Parquet 
+encodings, Python thrift and a system Snappy library. It is tested on this archive only. The delivered NPZ replay path 
+avoids that dependency and forbids pickle loading.
+Original study files are not modified. Derived NPZ content, original-file hashes, method settings, results and scripts 
+are included. No public release or license grant is asserted by providing this private author-review package. Final 
+author identity, contribution/funding/conflict declarations, publication rights, repository access and journal-template 
+application remain owner actions.
+S8.1. Execution order
+Extract the package to a new working directory. Python 3.13.5 with NumPy 2.3.5, SciPy 1.17.0, pandas 2.2.3 and 
+matplotlib 3.10.8 was used for this reanalysis. The original Windows simulation used a different environment; the two 
+are not interchangeable claims of end-to-end reproduction.
+Run python -B code/test_analysis.py first. The 12 deterministic tests exercise elapsed-time persistence, strict 
+threshold comparison, missing-input resets, cooldown, event confirmation and agreement between two alarm 
+implementations. They test the analysis, not the boiler physics.
+Next run python -B code/verify_features.py --out results_reproduced to reconstruct the original 
+references and scores. Run python -B code/reproduce_analysis.py --out results_reproduced to 
+regenerate the fair component thresholds, episode metrics, censoring records and sensitivity results. Finally run 
+python -B code/make_figures_r2.py --results results_reproduced --out figures_reproduced. 
+Figures S1–S3 are unchanged R1 presentations and can be regenerated by the legacy make_figures.py in a 
+separate directory. These commands create separate output directories and leave the delivered reference results 
+unchanged.
+S8.2. Data levels and interpretation
+The supplied data/observations files contain selected scalar observation, quality, command and evaluation-oracle 
+fields. data/traces contains the original score components and availability masks. Both use compressed NPZ 
+without Python objects. Their metadata retains the original Parquet file hashes; neither collection is represented as a 
+new physical experiment.
+The optional archive export was exercised on all 24 main episodes. Its 48 NPZ files matched the delivered observation 
+and trace projections in 1,032 column-array comparisons. This checks the supported scalar extraction path on these 
+files, not arbitrary Parquet data. Reproducing the complete simulator requires the separately held original study 
+archive and its source snapshot.
+Treat component-specific thresholds as post-hoc reanalysis of an already inspected evaluation set. No new normal 
+exposure, new fault episode, publication approval, license permission or journal acceptance is produced by running 
+these commands. The intended use is author review and transparent computational reproduction.
+S9. Scope of revision R2
+R2 preserves the R1 numerical results, data projections, fitted settings and analysis algorithms. It adds the source-
+derived model/coupling description above, presents the recorded physical response before detector comparisons, gives 
+explicit observed lead ranges and narrows interpretation to the specified pipelines. The input data, result files and 
+original analysis code are checked against R1 in revision/result_preservation.json. No new simulation, new 
+operating block or threshold retuning was performed. The R1 tests, analysis replay and observation-feature 
+reconstruction were rerun in this revision; this is computational rechecking of existing data, not new experimental 
+evidence.
+Reference checks supporting the revised contribution discussion are logged separately. The brief does not claim the 
+first use of feedwater information for leakage; the distinction from earlier work is the reported component attribution 
+and confirmation-time comparison under this specific feedback/endpoint design. No untested field-generalization or 
+sensor-superiority claim is introduced. Formal journal-template placement, author declarations and an approved 
+reviewer/public access arrangement remain pending before submission.
+

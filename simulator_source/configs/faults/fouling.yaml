@@ -1,0 +1,11 @@
+name: fouling_evap
+type: fouling
+onset_s: 600
+duration_s: 2400
+target: UA.evaporator
+alpha: 0.35
+severity:
+  kind: linear
+  min: 0.0
+  max: 1.0
+rul_threshold: 0.85

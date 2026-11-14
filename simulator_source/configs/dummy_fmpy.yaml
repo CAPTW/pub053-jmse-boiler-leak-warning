@@ -1,0 +1,162 @@
+sim:
+  dt: 0.5
+  horizon_s: 180
+  solver: "euler"
+  seed: 31
+  format: "parquet"
+
+boiler:
+  geometry:
+    drum_radius_m: 0.8
+    drum_length_m: 6.0
+  nominal:
+    pressure_bar: 10.0
+    steam_flow_kg_s: 2.0
+    feedwater_mass_kg: 600.0
+    level_fraction: 0.55
+  parameters:
+    UA:
+      economizer: 1.2e5
+      evaporator: 2.5e5
+      superheater: 8.0e4
+    Cv:
+      steam_valve: 1.0
+      feedwater_valve: 1.0
+    combustion:
+      eta: 0.90
+      qmax_MW: 10.0
+    steam_discharge_pressure_bar: 1.0
+    losses:
+      wall_loss_W: 50000.0
+    dynamics:
+      pressure_gain: 0.002
+      pressure_mass_gain: 0.0006
+      circum_mass_gain: 0.6
+      circum_tau_s: 20.0
+      shrink_gain: 0.10
+      shrink_tau_s: 14.0
+      shrink_swell_gain: 0.035
+      wall_tau_K: 15.0
+    limits:
+      mdot_fw_max_kg_s: 6.0
+      mdot_s_nom_kg_s: 2.0
+
+control:
+  drum_level_pid:
+    kp: 0.9
+    ki: 0.03
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    setpoint_level_m: 3.3
+    out_feedforward: 0.55
+    antiwindup_gain: 1.0
+    max_step_rate_per_s: 0.9
+  pressure_pid:
+    kp: 0.75
+    ki: 0.022
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    setpoint_pressure_bar: 10.0
+    antiwindup_gain: 1.0
+    max_step_rate_per_s: 1.0
+
+scenario:
+  type: "load_follow"
+  seed: 11
+  load_follow:
+    base: 0.6
+    noise_std: 0.0
+    ramp_limit_per_min: 0.015
+
+fault_instances: []
+
+sensors:
+  drum_pressure:
+    noise_std: 0.0
+    bias: 0.0
+    drift_per_hour: 0.0
+    dropout_p: 0.0
+    spike_p: 0.0
+    spike_std: 0.0
+    block_dropout_p: 0.0
+  drum_level:
+    noise_std: 0.0
+    drift_per_hour: 0.0
+    dropout_p: 0.0
+    spike_p: 0.0
+    spike_std: 0.0
+    block_dropout_p: 0.0
+  steam_flow:
+    noise_std: 0.0
+    drift_per_hour: 0.0
+    dropout_p: 0.0
+    spike_p: 0.0
+    spike_std: 0.0
+    block_dropout_p: 0.0
+  drum_temp_sh:
+    noise_std: 0.0
+    drift_per_hour: 0.0
+    dropout_p: 0.0
+    spike_p: 0.0
+    spike_std: 0.0
+    block_dropout_p: 0.0
+
+randomization:
+  enable: false
+
+core_backend:
+  type: "fmu"
+  path: "models/boiler_core.fmu"
+  library: "fmpy"
+  step_size: 0.5
+  time_var: "time"
+  variables:
+    state_names: ["P_d", "M_l", "T_w_d", "m_circ", "m_shrink"]
+    input_names: ["fuel_cmd", "fw_cmd", "steam_demand"]
+    output_map:
+      drum_pressure: "P_drum"
+      drum_level: "L_drum"
+      steam_flow: "m_dot_steam"
+      drum_temp_sh: "T_sh"
+      feedwater_flow: "m_dot_fw"
+      flue_gas_temp: "T_flue_gas"
+      O2: "O2_pct"
+      h_fw: "h_fw"
+    derivative_names:
+      - "der_P_drum"
+      - "der_L_drum"
+      - "der_T_w_d"
+      - "der_m_circ"
+      - "der_m_shrink"
+    invariants:
+      mass_balance_residual: "mass_balance_residual"
+      energy_balance_residual: "energy_balance_residual"
+    algebraic_state_names: ["M_v"]
+    algebraics:
+      volume_residual_m3: "volume_residual_m3"
+
+phase7:
+  parity:
+    seed: 31
+    horizon_s: 180
+    load_follow_horizon_s: 100
+    step_tests_horizon_s: 90
+    atol: 1e-6
+    rtol: 1e-6
+    channels:
+      - "truth/drum_pressure"
+      - "truth/drum_level"
+      - "truth/steam_flow"
+      - "truth/flue_gas_temp"
+      - "truth/O2"
+      - "truth/h_fw"
+
+validation:
+  schema_strict: false
+  dae:
+    enabled: false
+
+performance:
+  enabled: false

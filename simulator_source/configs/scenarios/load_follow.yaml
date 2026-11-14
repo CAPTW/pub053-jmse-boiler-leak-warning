@@ -1,0 +1,7 @@
+name: load_follow
+type: load_follow
+base: 0.6
+noise_std: 0.03
+ramp_limit_per_min: 0.015
+seed: 13
+horizon_s: 3600

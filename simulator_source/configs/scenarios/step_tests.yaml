@@ -1,0 +1,14 @@
+name: step_tests
+type: step_tests
+ramp_limit_per_min: 0.02
+base: 0.6
+steps:
+  - start_s: 900
+    value: 0.75
+    duration_s: 900
+  - start_s: 2100
+    value: 0.45
+    duration_s: 700
+  - start_s: 3000
+    value: 0.85
+    duration_s: 500

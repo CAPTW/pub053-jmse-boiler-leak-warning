@@ -1,0 +1,173 @@
+[
+  {
+    "id": "F01",
+    "severity": "MAJOR",
+    "location": "§3.2 P078; §4.1 P094",
+    "finding": "큰 개별 분위수만으로 max-score의 분위수가 정확히 같다고 일반화",
+    "evidence": "일반적으로 Qq(max(F,D)) != max(Qq(F),Qq(D)). 1000개 counterexample에서 Q.99(F)=0, Q.99(D)=1이나 Q.99(max)=10. 실제 개발자료는 max(zF)=4.0638446766 < demand q.99 보간 하단 4.3865723225라 upper tail이 demand와 같음.",
+    "recommended_action": "일반 정리처럼 쓰지 말고 현재 개발자료의 upper-tail 지배 및 실제 7/8 동일 경보라는 관찰로 한정.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F02",
+    "severity": "MAJOR",
+    "location": "§2.2 P034; Methods policy",
+    "finding": "실험을 결정한 scheduler-oracle 개입 제외 정책이 본문에서 빠짐",
+    "evidence": "실제 설정 safety.scheduler_intervention_policy=process_protection_without_schedule_severity_oracle. Process truth protection 유지와 scheduler severity alarm/trip 제외는 서로 다른 선택.",
+    "recommended_action": "명시적 정책명을 포함한 2–3문장 추가. 보호계층 truth, observer controller obs, detector obs의 역할 분리. 포화 타이머가 완전히 검증된 보호라고 주장하지 않기.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F03",
+    "severity": "MAJOR",
+    "location": "§3.3 P090",
+    "finding": "단일 refinement로 전체 결과의 수치 artifact 부재를 확정",
+    "evidence": "D1 normal/leak의 고정 입력 tolerance 비교만 있음. 끝의 7232–8996 및 9684–10894 범위는 E1–E3의 첫 경보/일부 사건을 가리킴.",
+    "recommended_action": "D1 두 trajectory의 제한된 민감도 검사로 서술. E1–E3 최초 경보·사건 이전 유효구간을 명시. 모든 반복 경보/전체8block/오차상한으로 확대하지 않음.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F04",
+    "severity": "MODERATE",
+    "location": "§4.2 item2 P098",
+    "finding": "endpoint cutoff를 바꿔 순위가 유지된다는 사실의 증거 가치를 과대 해석",
+    "evidence": "같은 block에서 L_A-L_B=(T-a_A)-(T-a_B)=a_B-a_A. 경보가 고정되면 endpoint를 공통 이동해도 순위는 기계적으로 유지. cutoff0.70/0.75/0.80에서 관측사건 분모는5/7/8.",
+    "recommended_action": "순위보존을 독립적 조기경보 검증으로 쓰지 말고 절대 lead·양수 여부·관측분모5/7/8을 보고. onsetdelay도 같은 경보 자료이지 새 독립 표본은 아님.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F05",
+    "severity": "MAJOR",
+    "location": "Introduction P013; references [15], [23]",
+    "finding": "두 인용의 방법 분류가 원문과 불일치",
+    "evidence": "[15] Afgan et al.은 radiation heat flux expert system이며 acoustic가 아님. [23] Panday et al.은 feedwater/steam flow ratio와 optimal EMA/Kalman-equivalent filtering이며 ML 방법 비교가 아님.",
+    "recommended_action": "[15] 열유속 기반 접근과 [16] 음향 접근을 분리. [22] PCA/CVA/FDA와 [23] flow-ratio filtering을 각각 정확하게 기술.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F06",
+    "severity": "MAJOR",
+    "location": "Figure6 caption P082",
+    "finding": "캡션에 적힌 onset 및 첫 경보 marker가 실제 그림에 없음",
+    "evidence": "원본 word/media/image6.jpeg의 범례는 functional start/confirmation/process trip/domain exit/horizon만 포함. E5는 endpoint 자체가 검열됨.",
+    "recommended_action": "Table7 기반으로 onset/첫 confirmed alarm을 실제 추가하거나 캡션을 사건 timeline으로 제한. all blocks endpoints 문장에 7 observed/1 censored 구분.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F07",
+    "severity": "MINOR_NUMERIC",
+    "location": "Table6; §3.2 P075; §4.2 P097–98; Conclusions",
+    "finding": "반올림한 중앙값을 빼 얻은51.4와 최대delay115.6은 원시초 기준 단일반올림과 불일치",
+    "evidence": "(7636-4556)/60=51.333333...→51.3min. (11762-4830)/60=115.533333...→115.5min. paired median41.05min은 별개의 양.",
+    "recommended_action": "모든 파생값을 원시초에서 계산 후 마지막에 반올림. 이미 반올림된127.3−75.9를 사용할 경우 표시값 차이라고 한정.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F08",
+    "severity": "MODERATE",
+    "location": "§4.1 P093",
+    "finding": "Flow가 모든 block에서 substantially earlier라는 표현 과함",
+    "evidence": "E2 Flow8574 vs B08580:6초. E3 Flow7818 vs B07872:54초.",
+    "recommended_action": "earlier in all eight blocks로 쓰고 이득 범위 제시. substantial을 전체 block에 적용하지 않음.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F09",
+    "severity": "MINOR",
+    "location": "Table8 caption; Conclusions P107; §2.4",
+    "finding": "경과시간>=600과>600, threshold excursion와alarm duration을 혼용",
+    "evidence": "코드는 elapsed>=600이며 strict는 score>threshold. E8의850초는 연속초과길이이지 확정경보의 지속시간이 아님.",
+    "recommended_action": "score>theta continuously for at least600elapsed seconds. 850초 threshold-exceedance interval로 교정. cooldown 반복알림과 새로운 독립 alarm episode 구분.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F10",
+    "severity": "MAJOR_REPRODUCIBILITY",
+    "location": "P015; Data Availability P113",
+    "finding": "기존 R2 스크립트가 새 Full Paper 모든 표·그림을 재현한다는 보장이 없음",
+    "evidence": "make_figures_r2.py는 R2 Figure1–3와S4–S5 및S1–S3복사. Full Paper Figure1–7의 번호·선택·JPEG 변환·추가normal timeline에 대한 실행 mapping과 새 패키지는 이번 첨부에 없음.",
+    "recommended_action": "새 원고 Table/Figure→source→script→output 연결표와 실제 Full Paper 생성 스크립트를 제출 패키지에 포함. 데이터 공개/원자료 요청 범위 분리. 새 simulation은 불필요.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F11",
+    "severity": "SUBMISSION",
+    "location": "Acknowledgments P114; Methods",
+    "finding": "실제 GenAI 사용 내역이 없음",
+    "evidence": "제공 이력은 글쓰기뿐 아니라 코드·분석·그림 작성 보조를 포함. MDPI ethics는 적용되는GenAI 사용의 Methods 상세와 Acknowledgments 제품정보 공개를 요구.",
+    "recommended_action": "실제 사용도구/확인 가능한version/범위/저자검증책임을 사실대로 기록. 언어윤문만 사용했다고 축소하거나 없는 version을 넣지 않음.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F12",
+    "severity": "FORMAT",
+    "location": "Abstract P007",
+    "finding": "초록이 약200단어 형식안내보다 김",
+    "evidence": "Abstract: 제외 공백 기준219단어. MDPI 작성template는 about200 words maximum. JMSE instructions 직접열기는429로 현재 전문 미회수.",
+    "recommended_action": "200단어 이내로 줄이면서 simulation-only와 작은 evaluation범위 한 문장 보강. 219는사용한계수규칙과함께보고.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F13",
+    "severity": "SUBMISSION_LAYOUT",
+    "location": "Rendered pp1–3,19; Tables; sectPr",
+    "finding": "35쪽 렌더링의 큰 여백·거의빈쪽과 표/수식번호의 RTL 방향",
+    "evidence": "원본w:sectPr에w:bidi. 본문왼쪽indent2608twip. 서지박스floating 위치. Word cached24pages, LibreOffice35pages.",
+    "recommended_action": "영문section/table 방향과floating editorial box·paragraph pagination을 정리. Windows Word 내보내기PDF와 저널변환미리보기를 최종 확인. 사용자Word에서도35쪽이라고단정하지않음.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F14",
+    "severity": "SUBMISSION_LAYOUT",
+    "location": "Equation7; Figure2; rendered pp8,20–21",
+    "finding": "수식/그림의 실제 렌더링 손상",
+    "evidence": "Eq7 OMML에는max(p_bar−1,0) 원래인수가 있으나 LO PDF는 붉은오류기호로 렌더. Figure2의x축제목하단이잘리고caption이다음쪽.",
+    "recommended_action": "공식지원Word PDF에서 재확인하고수식단순재입력·이미지크기/문단높이/캡션keep 정리. 수학식자체가누락됐다고판정하지않음.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F15",
+    "severity": "MODERATE",
+    "location": "Discussion4.3; Conclusion",
+    "finding": "검증범위가작다는 사실을 제한사항에서 더 직접적으로 설명할 필요",
+    "evidence": "evaluation8 block, load2regime, fault1type, development4normal.259224timestamps는독립실험259224건이아님. 100%는8/8관찰.",
+    "recommended_action": "작은scenario 집합, pipeline 설정차이, 외부plant검증없음, 파라미터범위의일반화한계를짧게명시. 근거없는추론통계나새실험을자동요구하지않음.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F16",
+    "severity": "MODERATE_CITATION",
+    "location": "Introduction P011,P013",
+    "finding": "적용배경과기존방법의실용성비판에직접근거가부족",
+    "evidence": "[3]steam air heater연구,[4]Marine Power Systems editorial은MGO가열·UMS누설연쇄·음향장치의소형보일러비실용성을직접입증하지않음.",
+    "recommended_action": "필요한선박별용도를구체화하거나표현을좁히고직접근거를연결. often impractical 대신additional instrumentation outside this study정도로한정.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F17",
+    "severity": "EDITORIAL",
+    "location": "Table4–5; Results/Discussion/Conclusions",
+    "finding": "Full Paper 확장으로 같은 수치·설명이 여러번 반복되고 핵심기여가 묻힘",
+    "evidence": "20개threshold후보와0count가 본문2쪽이상차지.7/8동일·E5/E6예외·51.4가반복.",
+    "recommended_action": "선택threshold는본문,전체후보는보충으로이동가능. Figure6를alarm+endpoint로완성. 반복서술축약하되모델설명은유지.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F18",
+    "severity": "MINOR",
+    "location": "§2.2 PI ranges; §2.1 void clipping; units",
+    "finding": "실제 clamp와 half-open interval 표기가다름; parameter units 보강여지",
+    "evidence": "코드는umin/umax 포함 clamp. 본문[0,1),[-1,1),[0,.999)표기는상한제외. PI ki시간단위와line-law Cf/Cs 및 pump 계수는보충명시가유용.",
+    "recommended_action": "닫힌구간으로교정. gains의오차단위와초기화/파라미터단위를명료화. Eq6의rho위치는OMML과코드가맞으므로오류로수정하지않음.",
+    "new_simulation_required": false
+  },
+  {
+    "id": "F19",
+    "severity": "SUBMISSION",
+    "location": "Author block; back matter",
+    "finding": "저자·소속·연락처는placeholder이며 선언의실제승인도별도필요",
+    "evidence": "FirstnameLastname,e-mail@e-mail.com 남음. nofunding/noconflict는Owner확인이필요. received/accepted/DOIxxxxx는편집용template필드로저자정보와구분.",
+    "recommended_action": "실제저자기여·소속·교신·펀딩·COI·권리를확인. 편집용metadata를가짜날짜/DOI로채우지않음.",
+    "new_simulation_required": false
+  }
+]

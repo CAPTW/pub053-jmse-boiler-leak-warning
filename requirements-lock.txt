@@ -1,0 +1,12 @@
+# Verified isolated test environment packages for ab4 unit tests & release verification
+numpy==2.5.4
+scipy==1.18.1
+pandas==3.1.1
+pyarrow==26.0.1
+PyYAML==6.0.3
+iapws==1.5.5
+pytest==9.2.0
+python-dateutil==4.0.0
+python-docx>=1.1
+lxml>=6.0.2
+pillow>=10.0

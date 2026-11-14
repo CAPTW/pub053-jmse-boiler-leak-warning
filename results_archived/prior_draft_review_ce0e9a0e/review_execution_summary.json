@@ -1,0 +1,232 @@
+{
+  "episodes": 24,
+  "timestamps": 259224,
+  "episode_method_comparisons": 96,
+  "matches": 96,
+  "manuscript_table6_8_row_checks": 12,
+  "row_matches": 10,
+  "threshold_candidates": [
+    {
+      "method": "B0_state",
+      "quantile": 0.99,
+      "threshold": 3.7674254799071583,
+      "counts": [
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "method": "B0_state",
+      "quantile": 0.995,
+      "threshold": 3.9273375740590137,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "B0_state",
+      "quantile": 0.999,
+      "threshold": 3.970749173889255,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "B0_state",
+      "quantile": 0.9995,
+      "threshold": 3.979331244989736,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "B0_state",
+      "quantile": 1,
+      "threshold": 5.307178863427451,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "Flow_only",
+      "quantile": 0.99,
+      "threshold": 2.328680621249243,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "Flow_only",
+      "quantile": 0.995,
+      "threshold": 2.5745990096661866,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "Flow_only",
+      "quantile": 0.999,
+      "threshold": 3.1166596530622193,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "Flow_only",
+      "quantile": 0.9995,
+      "threshold": 3.2881484152137577,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "Flow_only",
+      "quantile": 1,
+      "threshold": 4.063844676603999,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "Command_only",
+      "quantile": 0.99,
+      "threshold": 4.3883254020275455,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "Command_only",
+      "quantile": 0.995,
+      "threshold": 4.594974930497473,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "Command_only",
+      "quantile": 0.999,
+      "threshold": 4.822598226832178,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "Command_only",
+      "quantile": 0.9995,
+      "threshold": 4.830537910782047,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "Command_only",
+      "quantile": 1,
+      "threshold": 4.833257683390657,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "B1_combined",
+      "quantile": 0.99,
+      "threshold": 4.3883254020275455,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "B1_combined",
+      "quantile": 0.995,
+      "threshold": 4.594974930497473,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "B1_combined",
+      "quantile": 0.999,
+      "threshold": 4.822598226832178,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "B1_combined",
+      "quantile": 0.9995,
+      "threshold": 4.830537910782047,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "method": "B1_combined",
+      "quantile": 1,
+      "threshold": 4.833257683390657,
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "simulation_run": false,
+  "analysis": "independent interval-based replay from saved traces and raw event channels; feature extraction not rerun"
+}

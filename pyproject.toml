@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pub053-jmse-boiler-leak-warning"
+version = "0.1.0"
+description = "Companion verification, physics-core snapshot (ab4), and citation archive for the PUB-053 JMSE manuscript."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT (with GPL-3.0 upstream dependency iapws; see THIRD_PARTY_NOTICES.md)" }
+dependencies = [
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "pandas>=2.0",
+  "pyarrow>=12.0",
+  "pyyaml>=6.0",
+  "iapws>=1.5",
+  "pillow>=10.0",
+  "python-docx>=1.1",
+  "lxml>=5.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]

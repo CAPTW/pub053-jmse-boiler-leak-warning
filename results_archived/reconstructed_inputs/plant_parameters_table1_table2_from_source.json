@@ -1,0 +1,62 @@
+{
+  "source": "Verified directly against simulator_source/configs/ab4_marine_aux.yaml, core/ab4/drum_model.py, and R2 Supplement S2 (r2_text_archive/PUB053_Supplement_R2.txt)",
+  "table1_from_source_yaml_and_code": {
+    "drum_radius_m": 0.75,
+    "drum_length_m": 5.0,
+    "pressure_bar": 7.0,
+    "steam_flow_kg_s": 1.4,
+    "level_fraction_nominal": 0.55,
+    "level_setpoint_m": 0.85,
+    "pressure_setpoint_bar": 7.0,
+    "feedwater_temp_C": 60.0,
+    "excess_air_lambda": 1.15,
+    "blowdown_period_s": 1800.0,
+    "blowdown_duration_s": 60.0,
+    "blowdown_flow_kg_s": 0.05,
+    "qmax_MW": 4.0,
+    "eta": 0.9,
+    "k_friction": 25.0,
+    "T_d_s": 12.0,
+    "beta": 0.3,
+    "sampling_period_benchmark_s": 2.0,
+    "hot_start_manual_hold_s": 60.0,
+    "analysis_window_start_s": 1200.0
+  },
+  "table2_sensor_conditioning_from_r2_supplement_s2": {
+    "benchmark_sampling_period_s": 2.0,
+    "stale_hold_limit_s": 10.0,
+    "pressure_spike_prob_per_sample": 0.0002,
+    "pressure_spike_std_bar": 0.15,
+    "level_drift_m_per_h": 0.0002,
+    "channels": [
+      {
+        "channel": "Drum pressure (p_obs)",
+        "lag_s": 0.2,
+        "noise_std": "0.02 bar",
+        "dropout_prob_per_sample": 0.0005,
+        "valid_range": "0.0-20.0 bar"
+      },
+      {
+        "channel": "Apparent drum level (l_obs)",
+        "lag_s": 0.6,
+        "noise_std": "0.004 m",
+        "dropout_prob_per_sample": 0.0003,
+        "valid_range": "0.0-1.5 m"
+      },
+      {
+        "channel": "Main steam flow (q_s_obs)",
+        "lag_s": 0.3,
+        "noise_std": "0.01 kg/s",
+        "dropout_prob_per_sample": 0.0005,
+        "valid_range": "0.0-3.0 kg/s"
+      },
+      {
+        "channel": "Feedwater flow (q_f_obs)",
+        "lag_s": 0.5,
+        "noise_std": "0.01 kg/s",
+        "dropout_prob_per_sample": 0.0005,
+        "valid_range": "0.0-3.0 kg/s"
+      }
+    ]
+  }
+}

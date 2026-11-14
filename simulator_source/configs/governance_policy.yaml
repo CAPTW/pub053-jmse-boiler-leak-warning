@@ -1,0 +1,27 @@
+require_schema_match: true
+require_validation_passed: true
+require_split_consistency: true
+require_dataset_file: true
+require_governance_block: true
+required_schema_fields:
+  - schema_name
+  - schema_version
+  - freeze_date
+required_manifest_fields:
+  - provenance
+  - provenance.created_utc
+  - provenance.config_hash
+  - validation
+  - validation_battery
+required_governance_fields:
+  - approved_by
+  - approved_at
+  - approval_status
+  - classification
+  - retention_days
+required_governance_status: approved
+required_classification: internal
+min_retention_days: 365
+max_manifest_age_days: 365
+require_integrity: true
+verify_integrity: true
