@@ -133,14 +133,16 @@ def run_checks(orig_docx: Path, rev_docx: Path, rev_pdf: Path, dyn_log: Path, re
     assert "[0, 1)" not in full_text and "[−1, 1)" not in full_text and "[0, 0.999)" not in full_text
     assert "episode_results.csv" in full_text and "summary.csv" in full_text and "normal_persistence.csv" in full_text
 
-    # 6. 3-Scenario Citation Test Log
+    # 6. 4-Operation Citation Test Log
     dyn = json.loads(dyn_log.read_text(encoding="utf-8"))
     assert dyn["ref_field_count"] == 44
     assert dyn["ref_field_errors"] == []
     assert dyn["all_44_fields_shifted_plus_1"] is True
     assert dyn["scenario_1_insert_before_ref1"]["passed"] is True
+    assert dyn["scenario_1b_add_new_sdt_g27_and_ref28"]["passed"] is True
     assert dyn["scenario_2_move_interior_ref06_to_27_no_reorder"]["passed"] is True
     assert dyn["scenario_3_move_g23_early_and_reorder_refs"]["passed"] is True
+    assert dyn["scenario_4_delete_g02_and_prune_uncited"]["passed"] is True
 
     # 7. PDF checks
     assert rev_pdf.exists(), f"Missing PDF: {rev_pdf}"
@@ -150,7 +152,7 @@ def run_checks(orig_docx: Path, rev_docx: Path, rev_pdf: Path, dyn_log: Path, re
     pdf_norm = re.sub(r"\s+", " ", pdf_norm)
     assert "OpenAI Codex" in pdf_norm
     assert "episode_results.csv" in pdf_norm
-    for forbidden_local in ("C:\u003a\\Users\\", "G:\u003a\\\ub0b4 \ub4dc\ub77c\uc774\ube0c", "G:\u003a\\\ub2e4\ub978 \ucef4\ud4e8\ud130", "D:\u003a\\dev\\"):
+    for forbidden_local in ("\u0043\u003a\\Users\\", "\u0047\u003a\\\ub0b4 \ub4dc\ub77c\uc774\ube0c", "\u0047\u003a\\\ub2e4\ub978 \ucef4\ud4e8\ud130", "D\u003a\\dev\\"):
         assert forbidden_local not in full_text, f"Local path leaked into DOCX: {forbidden_local}"
         assert forbidden_local not in pdf_txt, f"Local path leaked into PDF: {forbidden_local}"
     pdf_info = subprocess.check_output(["pdfinfo", str(rev_pdf)]).decode("utf-8", errors="ignore")
@@ -196,8 +198,10 @@ def run_checks(orig_docx: Path, rev_docx: Path, rev_pdf: Path, dyn_log: Path, re
         "customxml_sources_count": len(sources),
         "bidi_elements_count": bidi_count,
         "scenario_1_passed": True,
-        "scenario_2_passed": True,
-        "scenario_3_passed": True,
+        "scenario_1b_add_passed": True,
+        "scenario_2_move_passed": True,
+        "scenario_3_reorder_passed": True,
+        "scenario_4_delete_passed": True,
         "pdf_pages": office_pages,
         "pdf_text_chars": len(pdf_txt),
         "pdf_ref_errors": 0,

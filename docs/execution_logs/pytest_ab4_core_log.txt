@@ -1,7 +1,7 @@
 ============================= test session starts =============================
-platform win32 -- Python 3.12.13, pytest-9.2.0, pluggy-1.7.0 -- <venv>/Scripts/python.exe
+platform win32 -- Python 3.12.13, pytest-7.4.4, pluggy-1.7.0 -- <PARENT>\isolated_test_venv\Scripts\python.exe
 cachedir: .pytest_cache
-rootdir: <repo_root>\simulator_source
+rootdir: <REPO_ROOT>\simulator_source
 configfile: pyproject.toml
 collecting ... collected 88 items
 
@@ -94,4 +94,5 @@ tests/test_backend_protocol.py::test_step_report_state_is_defensive_copy PASSED 
 tests/test_backend_protocol.py::test_fmu_advance_recovers_from_transient_step_failure PASSED [ 98%]
 tests/test_backend_protocol.py::test_additive_truth_channels_pass_label_contract PASSED [100%]
 
-============================= 88 passed in 4.86s ==============================
+============================= 88 passed in 15.87s =============================
+

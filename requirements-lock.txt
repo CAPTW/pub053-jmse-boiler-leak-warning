@@ -1,12 +1,15 @@
-# Verified isolated test environment packages for ab4 unit tests & release verification
-numpy==2.5.4
-scipy==1.18.1
-pandas==3.1.1
-pyarrow==26.0.1
-PyYAML==6.0.3
-iapws==1.5.5
-pytest==9.2.0
-python-dateutil==4.0.0
-python-docx>=1.1
-lxml>=6.0.2
-pillow>=10.0
+# Verified isolated Python 3.12 environment packages (prebuilt PyPI wheels) for R2 analysis, figure rendering, and ab4 simulator tests
+numpy==1.26.4
+scipy==1.13.1
+pandas==2.2.2
+matplotlib==3.9.2
+pyarrow==16.1.0
+PyYAML==6.0.1
+pytest==7.4.4
+python-dateutil==2.9.0.post0
+lxml==6.0.2
+pillow==10.4.0
+iapws==1.5.5        # External GPL-3.0 PyPI dependency for simulator_source/props/if97.py (not bundled in git; see THIRD_PARTY_NOTICES.md)
+# Optional extras:
+# python-docx>=1.1  # Needed only to re-run manuscript_verification/build_full_paper.py from scratch
+# pywin32>=306      # Windows-only Word COM automation in sync_citations_and_references.py / word_update_export_and_test.py

@@ -1,0 +1,126 @@
+{
+  "source": "Reconstructed from archived verification cross-checks (tables_3_4_5_7_crosscheck.csv) and R2 Supplement S2",
+  "note": "Original D4 seed 3004 failed at furnace construction before simulated time advanced and was replaced by seed 3104 while retaining load/sensor/fault streams.",
+  "blocks": [
+    {
+      "block": "D1",
+      "split": "development",
+      "base_load": 0.55,
+      "plant_seed": 3001,
+      "leak_onset_s": 3196.0,
+      "progression_duration_s": 6996.0,
+      "leak_severity_k": 0.1635,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "D2",
+      "split": "development",
+      "base_load": 0.55,
+      "plant_seed": 3002,
+      "leak_onset_s": 4238.0,
+      "progression_duration_s": 10206.0,
+      "leak_severity_k": 0.2384,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "D3",
+      "split": "development",
+      "base_load": 0.5,
+      "plant_seed": 3003,
+      "leak_onset_s": 3738.0,
+      "progression_duration_s": 10684.0,
+      "leak_severity_k": 0.24,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "D4",
+      "split": "development",
+      "base_load": 0.5,
+      "plant_seed": 3104,
+      "leak_onset_s": 3350.0,
+      "progression_duration_s": 6638.0,
+      "leak_severity_k": 0.234,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "E1",
+      "split": "evaluation",
+      "base_load": 0.55,
+      "plant_seed": 3005,
+      "leak_onset_s": 3374.0,
+      "progression_duration_s": 7342.0,
+      "leak_severity_k": 0.2177,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "E2",
+      "split": "evaluation",
+      "base_load": 0.55,
+      "plant_seed": 3006,
+      "leak_onset_s": 4568.0,
+      "progression_duration_s": 6548.0,
+      "leak_severity_k": 0.2351,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "E3",
+      "split": "evaluation",
+      "base_load": 0.55,
+      "plant_seed": 3007,
+      "leak_onset_s": 3946.0,
+      "progression_duration_s": 5724.0,
+      "leak_severity_k": 0.2092,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "E4",
+      "split": "evaluation",
+      "base_load": 0.55,
+      "plant_seed": 3008,
+      "leak_onset_s": 4078.0,
+      "progression_duration_s": 5460.0,
+      "leak_severity_k": 0.1749,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "E5",
+      "split": "evaluation",
+      "base_load": 0.5,
+      "plant_seed": 3009,
+      "leak_onset_s": 4830.0,
+      "progression_duration_s": 9602.0,
+      "leak_severity_k": 0.1993,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "E6",
+      "split": "evaluation",
+      "base_load": 0.5,
+      "plant_seed": 3010,
+      "leak_onset_s": 5254.0,
+      "progression_duration_s": 7770.0,
+      "leak_severity_k": 0.1824,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "E7",
+      "split": "evaluation",
+      "base_load": 0.5,
+      "plant_seed": 3011,
+      "leak_onset_s": 4324.0,
+      "progression_duration_s": 9960.0,
+      "leak_severity_k": 0.2218,
+      "verification_kind": "configuration cross-check"
+    },
+    {
+      "block": "E8",
+      "split": "evaluation",
+      "base_load": 0.5,
+      "plant_seed": 3012,
+      "leak_onset_s": 3838.0,
+      "progression_duration_s": 10656.0,
+      "leak_severity_k": 0.2152,
+      "verification_kind": "configuration cross-check"
+    }
+  ]
+}

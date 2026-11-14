@@ -5,6 +5,8 @@ __pycache__/
 .venv*/
 venv/
 outputs/
+results_reproduced/
+figures_reproduced/
 *.docx
 *.dot
 *.pdf

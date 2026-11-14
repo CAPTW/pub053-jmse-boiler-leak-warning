@@ -1,1200 +1,1681 @@
 {
-  "file_count": 239,
+  "repository": "CAPTW/pub053-jmse-boiler-leak-warning",
+  "total_files_excluding_self_manifest": 272,
+  "total_bytes_excluding_self_manifest": 4461285,
+  "summary_by_top_level": {
+    "(root)": {
+      "files": 8,
+      "bytes": 17233
+    },
+    "code": {
+      "files": 6,
+      "bytes": 52396
+    },
+    "data": {
+      "files": 11,
+      "bytes": 40349
+    },
+    "docs": {
+      "files": 7,
+      "bytes": 63517
+    },
+    "figures": {
+      "files": 16,
+      "bytes": 2942821
+    },
+    "manuscript_verification": {
+      "files": 19,
+      "bytes": 413892
+    },
+    "references": {
+      "files": 6,
+      "bytes": 85559
+    },
+    "results": {
+      "files": 13,
+      "bytes": 33625
+    },
+    "results_archived": {
+      "files": 30,
+      "bytes": 130139
+    },
+    "simulator_source": {
+      "files": 156,
+      "bytes": 681754
+    }
+  },
   "files": [
     {
       "path": ".gitignore",
-      "bytes": 123,
-      "sha256": "b7fe524686341a411bda5dd58122d8ce151f0850ca4730db570b1334135bdec9"
+      "bytes": 165,
+      "sha256": "06b7eadf0dbb1eb29d4ffc43ae577fca739f0583c3855058caa5685db9e0ac8f",
+      "top_dir": "(root)"
     },
     {
       "path": "CITATION.cff",
-      "bytes": 1108,
-      "sha256": "8bab71dea8a1e04d219d6009b95aed930aacb00f1f07875b9a2eefc6dc565145"
+      "bytes": 1891,
+      "sha256": "23c7b72a296d3ff3eeab08196e935004ad8341a127f93fc02c1a05be8fc453dd",
+      "top_dir": "(root)"
+    },
+    {
+      "path": "code/_common.py",
+      "bytes": 9389,
+      "sha256": "1d76b7be65d4b999cd26e34eb1801d7afd346b3979efc593269aa9883097e1da",
+      "top_dir": "code"
+    },
+    {
+      "path": "code/make_figures_r2.py",
+      "bytes": 8115,
+      "sha256": "ca35b4825e093da001ea26b5638b955725778b7a39d8256be0246ff0a424d7ef",
+      "top_dir": "code"
+    },
+    {
+      "path": "code/README.md",
+      "bytes": 1905,
+      "sha256": "c9610fa1e8a3ce206eca7fa637affeab4340e06e36718061f627afdd3778c053",
+      "top_dir": "code"
+    },
+    {
+      "path": "code/reproduce_analysis.py",
+      "bytes": 15220,
+      "sha256": "5e1e1a2bd80b527b65a2d0272ed4e2d7e316e1ea83eba6dbbd8723344fc8d663",
+      "top_dir": "code"
+    },
+    {
+      "path": "code/test_analysis.py",
+      "bytes": 7245,
+      "sha256": "047cf7fff44edd529cea10113f5bfda7170a58c66d9766923e6b1db567cb0e40",
+      "top_dir": "code"
+    },
+    {
+      "path": "code/verify_features.py",
+      "bytes": 10522,
+      "sha256": "fb4a79a28c3fb8746c1ed97c7abcb0263d324bb2dd357eceed36b96ee88427c1",
+      "top_dir": "code"
+    },
+    {
+      "path": "data/block_design.json",
+      "bytes": 6525,
+      "sha256": "8faa6038f01bc6a500912cf05be7e9335f3c81b83a568a7ef57400652ed344fd",
+      "top_dir": "data"
+    },
+    {
+      "path": "data/episode_metadata.csv",
+      "bytes": 4143,
+      "sha256": "420f5a5a2418e9121bc4bec9f72daed2004ce2bed61dfba4258bda8dfe26322f",
+      "top_dir": "data"
+    },
+    {
+      "path": "data/original_configs/ab4_marine_aux.yaml",
+      "bytes": 4503,
+      "sha256": "2c6c330289008b27a3fc6cc3434900cb5642ee661241d4ff70a360ef1c6491df",
+      "top_dir": "data"
+    },
+    {
+      "path": "data/original_configs/README.md",
+      "bytes": 1154,
+      "sha256": "b74aa3a426669609cdee6680e9be881c0e5d5ce73c08075abfa3e6641e4b1775",
+      "top_dir": "data"
+    },
+    {
+      "path": "data/README.md",
+      "bytes": 5455,
+      "sha256": "26f21de01702184f76e7b8e96f1bb58cbc549f3ec20f43891e4644f959727107",
+      "top_dir": "data"
+    },
+    {
+      "path": "data/reconstructed_inputs/block_design_table3_reconstructed.json",
+      "bytes": 3701,
+      "sha256": "98d52b487a093d58b397fd9247ce78baeb131b618ff2ce4cabcc2cc3a93ca63c",
+      "top_dir": "data"
+    },
+    {
+      "path": "data/reconstructed_inputs/episode_event_timings_table7_reconstructed.json",
+      "bytes": 5361,
+      "sha256": "936220d44215ddea9ce12edbe2e7d10cd14ee244ff65a61394d29c2212282e66",
+      "top_dir": "data"
+    },
+    {
+      "path": "data/reconstructed_inputs/ewls_fit_table4_reconstructed.json",
+      "bytes": 2258,
+      "sha256": "5473a5ed7e2af20b4f871ff4c43b5d8e58e91996b6d929cf4266643e7bac31bd",
+      "top_dir": "data"
+    },
+    {
+      "path": "data/reconstructed_inputs/plant_parameters_table1_table2_from_source.json",
+      "bytes": 1933,
+      "sha256": "87a3d1892edc092cb7e6824c75723fbea251005dd33397bced426f15461b208a",
+      "top_dir": "data"
+    },
+    {
+      "path": "data/reconstructed_inputs/README.md",
+      "bytes": 1362,
+      "sha256": "ade8a4eb649a8d53f419af2e71051898b7f2dbf61baf7bdd4a2fa5b8d270ca35",
+      "top_dir": "data"
+    },
+    {
+      "path": "data/reconstructed_inputs/threshold_candidates_table5_reconstructed.json",
+      "bytes": 3954,
+      "sha256": "e891f197c77f78b22e59bfa72b66b4b9764971f18380d9e0e553ff62ac120017",
+      "top_dir": "data"
     },
     {
       "path": "docs/AI_USAGE_AUDIT.md",
-      "bytes": 3899,
-      "sha256": "f6dd9e341c8a9b39751bd6cff479d88e7d91144b6609f239b8330ba8bdb5ec09"
+      "bytes": 4897,
+      "sha256": "b4fe6cf832cbce75272c3dae18bf32bc96e76f7511394136a2a88e45e7152229",
+      "top_dir": "docs"
     },
     {
       "path": "docs/execution_logs/pytest_ab4_core_log.txt",
-      "bytes": 7881,
-      "sha256": "a5a7dcaedba412c8755fbd42a98f59ae47ecaedaf5f461cc3908da493209a668"
+      "bytes": 8001,
+      "sha256": "efcd14eb25937be58c48c8098ac661dc1ed6aaa9fe3d1c6c95b49e767219bd14",
+      "top_dir": "docs"
     },
     {
       "path": "docs/execution_logs/pytest_ab4_integration_log.txt",
-      "bytes": 3670,
-      "sha256": "707c3a8a6c8049ee97cbf4b4d8e647709d956fbf37fdcaeb1e21362f1d6a29e9"
+      "bytes": 19920,
+      "sha256": "1ee9e32bad63b2d3f2d8f7c6955c466dc3141ac5c236483c9c60f1e67d0b340e",
+      "top_dir": "docs"
     },
     {
       "path": "docs/execution_logs/verify_citations_and_manuscript_log.json",
       "bytes": 897,
-      "sha256": "9a15aab02baba71e7e6d0607244b6def302dcd3f9850df99b57ab7bf2459beab"
+      "sha256": "9a15aab02baba71e7e6d0607244b6def302dcd3f9850df99b57ab7bf2459beab",
+      "top_dir": "docs"
     },
     {
       "path": "docs/execution_logs/verify_tables_from_archived_results_log.json",
       "bytes": 2407,
-      "sha256": "82e255422b8eca55cf275e66e5401179206556a37ca3ef79c8f93c162f3166e4"
+      "sha256": "82e255422b8eca55cf275e66e5401179206556a37ca3ef79c8f93c162f3166e4",
+      "top_dir": "docs"
     },
     {
       "path": "docs/REPRODUCTION_GUIDE.md",
-      "bytes": 2077,
-      "sha256": "8fd183f09127644396eeb08a284de5040a1a308bf1087fc845f11fe20e7e7373"
+      "bytes": 4562,
+      "sha256": "b6585a44bcc701a27552070c24beee8d438ad4957c7ed32a2bc982d1ce8e3a11",
+      "top_dir": "docs"
+    },
+    {
+      "path": "docs/SOURCE_PROVENANCE.md",
+      "bytes": 22833,
+      "sha256": "edc3cf2229a409e0da297337849940a81b0aa9d55e449807326dff96e0796dfc",
+      "top_dir": "docs"
     },
     {
       "path": "environment.yml",
       "bytes": 152,
-      "sha256": "4204c43c19a7d80d1de94099a205915601549f3917c006eef9b740dc0d93a5a6"
+      "sha256": "4204c43c19a7d80d1de94099a205915601549f3917c006eef9b740dc0d93a5a6",
+      "top_dir": "(root)"
     },
     {
       "path": "figures/fig1_normal_overview.png",
       "bytes": 1034473,
-      "sha256": "7ecb3a6c9027701f0ea668e9ac918a738e9521fdb8498f2cd5a4ed3ef51b9bd0"
+      "sha256": "7ecb3a6c9027701f0ea668e9ac918a738e9521fdb8498f2cd5a4ed3ef51b9bd0",
+      "top_dir": "figures"
     },
     {
       "path": "figures/fig2_e1_leak_trajectory.png",
       "bytes": 224850,
-      "sha256": "30656bf2f24c002ddeae4ec5ebcd05572867ce1be3f886af8021509af3fbed22"
+      "sha256": "30656bf2f24c002ddeae4ec5ebcd05572867ce1be3f886af8021509af3fbed22",
+      "top_dir": "figures"
     },
     {
       "path": "figures/fig3_e1_feature_responses.jpeg",
       "bytes": 184992,
-      "sha256": "23239e769ede357c872b112c6115ecdb5e07eee5986c52d22f41af61f3f7edbb"
+      "sha256": "23239e769ede357c872b112c6115ecdb5e07eee5986c52d22f41af61f3f7edbb",
+      "top_dir": "figures"
     },
     {
       "path": "figures/fig4_method_summary_delay_lead.png",
       "bytes": 81624,
-      "sha256": "5436148c5eaa4e4398a0b2cbf20b0d72209222bc483cfe5a1c3b6287eec12810"
+      "sha256": "5436148c5eaa4e4398a0b2cbf20b0d72209222bc483cfe5a1c3b6287eec12810",
+      "top_dir": "figures"
     },
     {
       "path": "figures/fig5_e1_score_traces.png",
       "bytes": 123429,
-      "sha256": "a91411013f985a81f13ce5515a5701cde35ac98baf2bcde288ff7e6f3ca39b5f"
+      "sha256": "a91411013f985a81f13ce5515a5701cde35ac98baf2bcde288ff7e6f3ca39b5f",
+      "top_dir": "figures"
     },
     {
       "path": "figures/fig6_all_eval_leak_panels.jpeg",
       "bytes": 87031,
-      "sha256": "d0f0bff48a54178b8d490310a4827ea05aa2cddc7a90e08512bbadabb1ea8ba2"
+      "sha256": "d0f0bff48a54178b8d490310a4827ea05aa2cddc7a90e08512bbadabb1ea8ba2",
+      "top_dir": "figures"
     },
     {
       "path": "figures/fig7_normal_score_traces.jpeg",
       "bytes": 95728,
-      "sha256": "5d1d6063025506c5d3b8aec06df36006ce939e1fbdb8e5616014b40bd6e6a760"
+      "sha256": "5d1d6063025506c5d3b8aec06df36006ce939e1fbdb8e5616014b40bd6e6a760",
+      "top_dir": "figures"
     },
     {
       "path": "figures/FIGURE_MAP.md",
       "bytes": 1370,
-      "sha256": "5478d8f91bb5f99e61f0a74bb9c45c0af6702240dd4a96f9c8ffa707d4fed7c1"
+      "sha256": "5478d8f91bb5f99e61f0a74bb9c45c0af6702240dd4a96f9c8ffa707d4fed7c1",
+      "top_dir": "figures"
     },
     {
       "path": "figures/raw_source_assets/page1_img1_1103.jpeg",
       "bytes": 87031,
-      "sha256": "d0f0bff48a54178b8d490310a4827ea05aa2cddc7a90e08512bbadabb1ea8ba2"
+      "sha256": "d0f0bff48a54178b8d490310a4827ea05aa2cddc7a90e08512bbadabb1ea8ba2",
+      "top_dir": "figures"
     },
     {
       "path": "figures/raw_source_assets/page1_img2_1217.jpeg",
       "bytes": 95728,
-      "sha256": "5d1d6063025506c5d3b8aec06df36006ce939e1fbdb8e5616014b40bd6e6a760"
+      "sha256": "5d1d6063025506c5d3b8aec06df36006ce939e1fbdb8e5616014b40bd6e6a760",
+      "top_dir": "figures"
     },
     {
       "path": "figures/raw_source_assets/page1_img3_1261.jpeg",
       "bytes": 156544,
-      "sha256": "d7291393e24c7e81467f986b68394b8476f1875921e6909b36c0b88fc2617790"
+      "sha256": "d7291393e24c7e81467f986b68394b8476f1875921e6909b36c0b88fc2617790",
+      "top_dir": "figures"
     },
     {
       "path": "figures/raw_source_assets/page1_img4_1265.jpeg",
       "bytes": 149715,
-      "sha256": "22d8c5953200f879696386da07469e444d38a9b9a77b89dc3d5f42530c5ec347"
+      "sha256": "22d8c5953200f879696386da07469e444d38a9b9a77b89dc3d5f42530c5ec347",
+      "top_dir": "figures"
     },
     {
       "path": "figures/raw_source_assets/page1_img5_475.jpeg",
       "bytes": 184992,
-      "sha256": "23239e769ede357c872b112c6115ecdb5e07eee5986c52d22f41af61f3f7edbb"
+      "sha256": "23239e769ede357c872b112c6115ecdb5e07eee5986c52d22f41af61f3f7edbb",
+      "top_dir": "figures"
     },
     {
       "path": "figures/raw_source_assets/rId27.png",
       "bytes": 230261,
-      "sha256": "cba137c211344bad556be3b54ae62028b43fb9b9cc18709a2dcfa49f7882d62f"
+      "sha256": "cba137c211344bad556be3b54ae62028b43fb9b9cc18709a2dcfa49f7882d62f",
+      "top_dir": "figures"
     },
     {
       "path": "figures/raw_source_assets/rId31.png",
       "bytes": 81624,
-      "sha256": "5436148c5eaa4e4398a0b2cbf20b0d72209222bc483cfe5a1c3b6287eec12810"
+      "sha256": "5436148c5eaa4e4398a0b2cbf20b0d72209222bc483cfe5a1c3b6287eec12810",
+      "top_dir": "figures"
     },
     {
       "path": "figures/raw_source_assets/rId34.png",
       "bytes": 123429,
-      "sha256": "a91411013f985a81f13ce5515a5701cde35ac98baf2bcde288ff7e6f3ca39b5f"
+      "sha256": "a91411013f985a81f13ce5515a5701cde35ac98baf2bcde288ff7e6f3ca39b5f",
+      "top_dir": "figures"
     },
     {
       "path": "LICENSE",
       "bytes": 1118,
-      "sha256": "3679a44f4f6b02735f24977cf0d2136ab1fb2ae19c76f3cc696b5256373b71f4"
+      "sha256": "3679a44f4f6b02735f24977cf0d2136ab1fb2ae19c76f3cc696b5256373b71f4",
+      "top_dir": "(root)"
     },
     {
       "path": "manuscript_verification/build_bibliography_and_mapping.py",
       "bytes": 37476,
-      "sha256": "669df4747ef48a8572a04ee041a64a5887e77f8e3f354deb77263c8dd6f74fac"
+      "sha256": "669df4747ef48a8572a04ee041a64a5887e77f8e3f354deb77263c8dd6f74fac",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/build_full_paper.py",
       "bytes": 125134,
-      "sha256": "e456e0f9872c91d85286838283c9d0416e8ac46098862bb7dccec84094965978"
+      "sha256": "e456e0f9872c91d85286838283c9d0416e8ac46098862bb7dccec84094965978",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/check_cutoff_leads.py",
       "bytes": 3085,
-      "sha256": "2c506766e456712b099f5eb3276b0a1dc066b77da75787111646782f5b20619b"
+      "sha256": "2c506766e456712b099f5eb3276b0a1dc066b77da75787111646782f5b20619b",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/check_delay_window.py",
       "bytes": 1520,
-      "sha256": "4a550100f7dcb345c8e8c74a140fbbc7119fb7926b4422a2a17e9636c42f2a87"
+      "sha256": "4a550100f7dcb345c8e8c74a140fbbc7119fb7926b4422a2a17e9636c42f2a87",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/check_tables_and_scope.py",
       "bytes": 4824,
-      "sha256": "de3c594ee0ac6d7039a5208d076bf5fe82060d727338501e50da9346dff1caf4"
+      "sha256": "de3c594ee0ac6d7039a5208d076bf5fe82060d727338501e50da9346dff1caf4",
+      "top_dir": "manuscript_verification"
+    },
+    {
+      "path": "manuscript_verification/citation_dynamic_update_test_log.json",
+      "bytes": 28481,
+      "sha256": "36dd6d33847fdddb88e97907a7b154178c26387e4be90c34c783f07ce39b9db7",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/citation_editing_and_reordering_test_log.json",
-      "bytes": 26184,
-      "sha256": "a854af7c3e26b6648580dc5721a4cf21ef54ae53b78352bbc5529b487fbe1aed"
+      "bytes": 28481,
+      "sha256": "36dd6d33847fdddb88e97907a7b154178c26387e4be90c34c783f07ce39b9db7",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/CITATION_EDITING_TEST_REPORT.md",
-      "bytes": 2300,
-      "sha256": "d485a618faf6f68865788a39bef42c45fa9b65623f471546fb43fd477855df87"
+      "bytes": 3335,
+      "sha256": "1f4ccc9545fd1307bc178615e87086c92c3bb963196bbded7678ca2ce899d65e",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/combine_normal_figs.py",
       "bytes": 489,
-      "sha256": "111fff0b68f151afba7f621f54b3dcd2499ac16de70c0c3c660be40b98875329"
+      "sha256": "111fff0b68f151afba7f621f54b3dcd2499ac16de70c0c3c660be40b98875329",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/create_automated_citation_docx.py",
       "bytes": 23900,
-      "sha256": "f2f5a3b0e4e460510b032f447c131451bcc38efb7cfb34dd8a8392efba358b0a"
+      "sha256": "f2f5a3b0e4e460510b032f447c131451bcc38efb7cfb34dd8a8392efba358b0a",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/independent_numeric_review.py",
       "bytes": 7071,
-      "sha256": "0ffa624462f91cdd0549437c4404f1a09261a09bde99ad6f0b4247d16719da30"
+      "sha256": "0ffa624462f91cdd0549437c4404f1a09261a09bde99ad6f0b4247d16719da30",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/MANUSCRIPT_ARTIFACT_MAP.md",
-      "bytes": 8320,
-      "sha256": "d29bd8041913083ee313256ba94eac569c31a7afeeb5907936cc042154401920"
+      "bytes": 8946,
+      "sha256": "7b11680e27a10112ebd4bf9478bc5e6de9575d2da893e5f83ae63e42e489ea3a",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/r2_text_archive/PUB053_Manuscript_R2.txt",
       "bytes": 24451,
-      "sha256": "37da49229bd6f7b33d68a449314af00b55117afb221a017fd22e43be783f62cb"
+      "sha256": "37da49229bd6f7b33d68a449314af00b55117afb221a017fd22e43be783f62cb",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/r2_text_archive/PUB053_Supplement_R2.txt",
       "bytes": 33851,
-      "sha256": "ec391194b1bab8de4f4432cb5593a76209b4ee95b0d5f2e079140aebe3320dc1"
+      "sha256": "ec391194b1bab8de4f4432cb5593a76209b4ee95b0d5f2e079140aebe3320dc1",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/sync_citations_and_references.py",
-      "bytes": 14638,
-      "sha256": "d161f34fba0c84433db0f9212cf5b7091c8269bcaab3481c142885f3ab96fc69"
+      "bytes": 15274,
+      "sha256": "54b0aa8ea7169a98c2555273f7f57fe1738ccd1548e226ee1a443843c624ed19",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/verify_citations_and_manuscript.py",
-      "bytes": 10489,
-      "sha256": "ccaa6fc47b917fda00ecee66241369dcf11c32d1463510e1993a41e8794b5e29"
+      "bytes": 10750,
+      "sha256": "bb974c138577792e4ebf522314895ce8f72128934d9e09d6355de44119f38287",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/verify_revised_manuscript.py",
       "bytes": 14284,
-      "sha256": "ebda4418aed10d84a8b37c8de3e521c2ac589345b50c1e115dc6208396bfd9bd"
+      "sha256": "ebda4418aed10d84a8b37c8de3e521c2ac589345b50c1e115dc6208396bfd9bd",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/verify_tables_from_archived_results.py",
       "bytes": 12311,
-      "sha256": "971ae1e88abc061f38a215b0cdb77cc7e10015bd1d09c4b16762f7fa3fa23534"
+      "sha256": "971ae1e88abc061f38a215b0cdb77cc7e10015bd1d09c4b16762f7fa3fa23534",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "manuscript_verification/word_update_export_and_test.py",
-      "bytes": 18641,
-      "sha256": "5052f4e0709164c948263b207777eb34d6e9e622a0adcbd8ef28fc0d2668f8ec"
+      "bytes": 30229,
+      "sha256": "65d859985b28390c592f38eea9d534b16cc60da4dcfd335f67b7ab51ad20a838",
+      "top_dir": "manuscript_verification"
     },
     {
       "path": "pyproject.toml",
-      "bytes": 688,
-      "sha256": "ae0ea7d128cf1b1b56841e2adc21350739b09fa84e28225b3429590c3d37b478"
+      "bytes": 805,
+      "sha256": "fcb8ac40c3ea785d892b0ddd4d6ac8b9711f2c876a99cdad864f14326f169b8c",
+      "top_dir": "(root)"
     },
     {
       "path": "README.md",
-      "bytes": 6113,
-      "sha256": "19e6f55685c70b03f3f17f72e334fd23474a18f5b4e0fa0fc7a2284845d2eaeb"
+      "bytes": 9746,
+      "sha256": "13a44c32c61a26b97e883efd86250701fab81039c46c2dee5c30e914ca29d41b",
+      "top_dir": "(root)"
     },
     {
       "path": "references/citation_mapping_table.csv",
       "bytes": 3651,
-      "sha256": "c5988baa40c2c798029508cd517b64b142b1b3b2b1c500617de0702eeb991271"
+      "sha256": "c5988baa40c2c798029508cd517b64b142b1b3b2b1c500617de0702eeb991271",
+      "top_dir": "references"
     },
     {
       "path": "references/CITATION_MAPPING_TABLE.md",
       "bytes": 15095,
-      "sha256": "9bd2175559c0bdb60952b90599a5d98264fa1c2b4f4c2cf16729cf71c6e1dd3b"
+      "sha256": "9bd2175559c0bdb60952b90599a5d98264fa1c2b4f4c2cf16729cf71c6e1dd3b",
+      "top_dir": "references"
     },
     {
       "path": "references/pub053_references.bib",
       "bytes": 10017,
-      "sha256": "9120c054f7a915c324904a63b14a337c0adaacb2a4ce09e7bd42d90966a29969"
+      "sha256": "9120c054f7a915c324904a63b14a337c0adaacb2a4ce09e7bd42d90966a29969",
+      "top_dir": "references"
     },
     {
       "path": "references/pub053_references.json",
       "bytes": 19627,
-      "sha256": "e965d0b428ed20b82306fae32dabab7e74a904835b23a617cab785bc3f6bc013"
+      "sha256": "e965d0b428ed20b82306fae32dabab7e74a904835b23a617cab785bc3f6bc013",
+      "top_dir": "references"
     },
     {
       "path": "references/pub053_references.ris",
       "bytes": 8997,
-      "sha256": "cb30c3e3f0a543e7b5885c91c4532b78d17714a3d5c2fed0c4565f02404bd4b7"
+      "sha256": "cb30c3e3f0a543e7b5885c91c4532b78d17714a3d5c2fed0c4565f02404bd4b7",
+      "top_dir": "references"
     },
     {
       "path": "references/word_sources.xml",
       "bytes": 28172,
-      "sha256": "d083f99492d676122036db61f095474b49b1a3a2309a12884059ef5137bfee66"
+      "sha256": "d083f99492d676122036db61f095474b49b1a3a2309a12884059ef5137bfee66",
+      "top_dir": "references"
     },
     {
       "path": "requirements-lock.txt",
-      "bytes": 263,
-      "sha256": "ad9fde6abacd51ec9bd413682cf3e1927d8c118200393d928f37d0e0cb392267"
+      "bytes": 693,
+      "sha256": "a5e7d9981ffd9d937a8731b252b58e7c3557eccb7aefe626098ba296403d7758",
+      "top_dir": "(root)"
+    },
+    {
+      "path": "results/component_crossing_timing.csv",
+      "bytes": 799,
+      "sha256": "f07a8968f43070f6605a98ac218bb14006c9472baf4d3610e3bffa2756390f8d",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/cutoff_leads_by_block.csv",
+      "bytes": 4289,
+      "sha256": "9775c720ea592140ca5a5fa399c74966f32db1021feecc3a41d0707d1d692371",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/cutoff_leads_summary.csv",
+      "bytes": 526,
+      "sha256": "c1a1c6e243002ff847df15612b57f781bd69e926cb53190496a0c4dba5612149",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/delay_window_check.csv",
+      "bytes": 1991,
+      "sha256": "10ec4d9b852ee43fbacef0e145911a1dd7491265fa39c2a361d1705a6d34d989",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/episode_results.csv",
+      "bytes": 8442,
+      "sha256": "30366798344e612334546028432e9c455c547b805444865628e5722f82feda9d",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/normal_persistence.csv",
+      "bytes": 2168,
+      "sha256": "3fa2a88bba1831f0afa34f212038713d855fbd16d52bb9237b5957bb950035c9",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/quantile_claim_check.json",
+      "bytes": 421,
+      "sha256": "3987d8f41f0840c596cc33184b4251e2f530947df034b292dd995843b95b3aff",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/r2_replay_summary.json",
+      "bytes": 4125,
+      "sha256": "9528ea6d15b8fdfd665bc299c33a09a4169d7ce876100bac44ee228465db2fea",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/README.md",
+      "bytes": 771,
+      "sha256": "d6848cbffdae039080e0fd71a20398d5368edebadc4cc241c0447220e9e203de",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/recomputed_vs_archived.csv",
+      "bytes": 2777,
+      "sha256": "a37df7d3903bcf47a6e2d9f89dfff726efb801ee5a466ed18b53a400b6b761c1",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/summary.csv",
+      "bytes": 641,
+      "sha256": "cc5d49bf067f1b4ec9b4488dcb9d2d0b3dcaf27644088baf0b4493b72a52eba5",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/tables_3_4_5_7_crosscheck.csv",
+      "bytes": 6326,
+      "sha256": "8381552222c2433af42365f88a7fcff982da6afff48771b6d129af98e8cdb4eb",
+      "top_dir": "results"
+    },
+    {
+      "path": "results/tables_and_rounding_summary.json",
+      "bytes": 349,
+      "sha256": "f6e40318018949cab3fedae6d841252ff7894609ca39dff6280e69ffc442d489",
+      "top_dir": "results"
     },
     {
       "path": "results_archived/component_crossing_timing.csv",
       "bytes": 799,
-      "sha256": "f07a8968f43070f6605a98ac218bb14006c9472baf4d3610e3bffa2756390f8d"
+      "sha256": "f07a8968f43070f6605a98ac218bb14006c9472baf4d3610e3bffa2756390f8d",
+      "top_dir": "results_archived"
+    },
+    {
+      "path": "results_archived/current_manuscript_verification/citation_editing_and_reordering_test_log.json",
+      "bytes": 28481,
+      "sha256": "36dd6d33847fdddb88e97907a7b154178c26387e4be90c34c783f07ce39b9db7",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/current_manuscript_verification/current_docx_verification_report.json",
       "bytes": 1435,
-      "sha256": "f6d9dc5391df9611a2cefacfaf5e5114d7803fc56cd4580699edc002586408aa"
+      "sha256": "f6d9dc5391df9611a2cefacfaf5e5114d7803fc56cd4580699edc002586408aa",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/current_manuscript_verification/current_manuscript_table_checks.csv",
       "bytes": 5272,
-      "sha256": "8e3efd7d4eac65c0ec5c85bd77afda76b6a1cd96e72fbbf8258e0706afbaa875"
+      "sha256": "8e3efd7d4eac65c0ec5c85bd77afda76b6a1cd96e72fbbf8258e0706afbaa875",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/current_manuscript_verification/README.md",
       "bytes": 580,
-      "sha256": "7d5c502aadce10d31e02bb2e134102d501f8decb00c66a1ea21d7965051816a1"
+      "sha256": "7d5c502aadce10d31e02bb2e134102d501f8decb00c66a1ea21d7965051816a1",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/cutoff_leads_by_block.csv",
       "bytes": 4289,
-      "sha256": "9775c720ea592140ca5a5fa399c74966f32db1021feecc3a41d0707d1d692371"
+      "sha256": "9775c720ea592140ca5a5fa399c74966f32db1021feecc3a41d0707d1d692371",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/cutoff_leads_summary.csv",
       "bytes": 526,
-      "sha256": "c1a1c6e243002ff847df15612b57f781bd69e926cb53190496a0c4dba5612149"
+      "sha256": "c1a1c6e243002ff847df15612b57f781bd69e926cb53190496a0c4dba5612149",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/delay_window_check.csv",
       "bytes": 1991,
-      "sha256": "10ec4d9b852ee43fbacef0e145911a1dd7491265fa39c2a361d1705a6d34d989"
+      "sha256": "10ec4d9b852ee43fbacef0e145911a1dd7491265fa39c2a361d1705a6d34d989",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/episode_results.csv",
       "bytes": 8442,
-      "sha256": "30366798344e612334546028432e9c455c547b805444865628e5722f82feda9d"
+      "sha256": "30366798344e612334546028432e9c455c547b805444865628e5722f82feda9d",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/normal_persistence.csv",
       "bytes": 2168,
-      "sha256": "3fa2a88bba1831f0afa34f212038713d855fbd16d52bb9237b5957bb950035c9"
+      "sha256": "3fa2a88bba1831f0afa34f212038713d855fbd16d52bb9237b5957bb950035c9",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/prior_draft_review_ce0e9a0e/manuscript_table_checks.csv",
       "bytes": 917,
-      "sha256": "c0de2a8060f3439b151514d805c48da03490dc947e7a6598635d2c92a11d55be"
+      "sha256": "c0de2a8060f3439b151514d805c48da03490dc947e7a6598635d2c92a11d55be",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/prior_draft_review_ce0e9a0e/QA_FINDINGS.csv",
       "bytes": 8688,
-      "sha256": "278aa191e5de5993e56d6779d57715ea3391efe2105a35f7d8a7a5e8f8cb1114"
+      "sha256": "278aa191e5de5993e56d6779d57715ea3391efe2105a35f7d8a7a5e8f8cb1114",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/prior_draft_review_ce0e9a0e/QA_FINDINGS.json",
       "bytes": 11711,
-      "sha256": "7666b6ebd64f3d41b24c0d4b3e17ea76602a7523b4e156ef5381c5d4f2b7be26"
+      "sha256": "7666b6ebd64f3d41b24c0d4b3e17ea76602a7523b4e156ef5381c5d4f2b7be26",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/prior_draft_review_ce0e9a0e/README.md",
       "bytes": 672,
-      "sha256": "11a96583ca76cedee72466f92f9171681089f0ecc4a7ceac995839ee44f2137c"
+      "sha256": "11a96583ca76cedee72466f92f9171681089f0ecc4a7ceac995839ee44f2137c",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/prior_draft_review_ce0e9a0e/REFERENCE_AUDIT.csv",
       "bytes": 9815,
-      "sha256": "c92badc3ce75bd1e2e0fe74869c0a405b099f14593c1d1eebea45880a0da1c52"
+      "sha256": "c92badc3ce75bd1e2e0fe74869c0a405b099f14593c1d1eebea45880a0da1c52",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/prior_draft_review_ce0e9a0e/review_execution_summary.json",
       "bytes": 4061,
-      "sha256": "90c06f57e7d1c7f72c457cc900120858925cd2716265f2228cbd22df8a7ef657"
+      "sha256": "90c06f57e7d1c7f72c457cc900120858925cd2716265f2228cbd22df8a7ef657",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/prior_draft_review_ce0e9a0e/review_manifest.json",
       "bytes": 4501,
-      "sha256": "941083d55cdb75e5eff6466efd51411936458e9fb9fcd1be64ed2149acd8d289"
+      "sha256": "941083d55cdb75e5eff6466efd51411936458e9fb9fcd1be64ed2149acd8d289",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/quantile_claim_check.json",
       "bytes": 421,
-      "sha256": "3987d8f41f0840c596cc33184b4251e2f530947df034b292dd995843b95b3aff"
+      "sha256": "3987d8f41f0840c596cc33184b4251e2f530947df034b292dd995843b95b3aff",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/r2_replay_summary.json",
       "bytes": 4125,
-      "sha256": "9528ea6d15b8fdfd665bc299c33a09a4169d7ce876100bac44ee228465db2fea"
+      "sha256": "9528ea6d15b8fdfd665bc299c33a09a4169d7ce876100bac44ee228465db2fea",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/README.md",
       "bytes": 2583,
-      "sha256": "41a07f048b70ffd3886fcdd5d3de073cf2b759817e87d0abed870722a6d5996a"
+      "sha256": "41a07f048b70ffd3886fcdd5d3de073cf2b759817e87d0abed870722a6d5996a",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/recomputed_vs_archived.csv",
       "bytes": 2777,
-      "sha256": "a37df7d3903bcf47a6e2d9f89dfff726efb801ee5a466ed18b53a400b6b761c1"
+      "sha256": "a37df7d3903bcf47a6e2d9f89dfff726efb801ee5a466ed18b53a400b6b761c1",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/reconstructed_inputs/block_design_table3_reconstructed.json",
       "bytes": 3701,
-      "sha256": "98d52b487a093d58b397fd9247ce78baeb131b618ff2ce4cabcc2cc3a93ca63c"
+      "sha256": "98d52b487a093d58b397fd9247ce78baeb131b618ff2ce4cabcc2cc3a93ca63c",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/reconstructed_inputs/episode_event_timings_table7_reconstructed.json",
-      "bytes": 4836,
-      "sha256": "01c88d44374a4ff8793690877d9fa98fe3be746cf623a028e729d8b5b90ab418"
+      "bytes": 5361,
+      "sha256": "936220d44215ddea9ce12edbe2e7d10cd14ee244ff65a61394d29c2212282e66",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/reconstructed_inputs/ewls_fit_table4_reconstructed.json",
       "bytes": 2258,
-      "sha256": "5473a5ed7e2af20b4f871ff4c43b5d8e58e91996b6d929cf4266643e7bac31bd"
+      "sha256": "5473a5ed7e2af20b4f871ff4c43b5d8e58e91996b6d929cf4266643e7bac31bd",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/reconstructed_inputs/plant_parameters_table1_table2_from_source.json",
       "bytes": 1933,
-      "sha256": "87a3d1892edc092cb7e6824c75723fbea251005dd33397bced426f15461b208a"
+      "sha256": "87a3d1892edc092cb7e6824c75723fbea251005dd33397bced426f15461b208a",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/reconstructed_inputs/README.md",
       "bytes": 1362,
-      "sha256": "ade8a4eb649a8d53f419af2e71051898b7f2dbf61baf7bdd4a2fa5b8d270ca35"
+      "sha256": "ade8a4eb649a8d53f419af2e71051898b7f2dbf61baf7bdd4a2fa5b8d270ca35",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/reconstructed_inputs/threshold_candidates_table5_reconstructed.json",
       "bytes": 3954,
-      "sha256": "e891f197c77f78b22e59bfa72b66b4b9764971f18380d9e0e553ff62ac120017"
+      "sha256": "e891f197c77f78b22e59bfa72b66b4b9764971f18380d9e0e553ff62ac120017",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/summary.csv",
       "bytes": 641,
-      "sha256": "cc5d49bf067f1b4ec9b4488dcb9d2d0b3dcaf27644088baf0b4493b72a52eba5"
+      "sha256": "cc5d49bf067f1b4ec9b4488dcb9d2d0b3dcaf27644088baf0b4493b72a52eba5",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/tables_3_4_5_7_crosscheck.csv",
       "bytes": 6326,
-      "sha256": "8381552222c2433af42365f88a7fcff982da6afff48771b6d129af98e8cdb4eb"
+      "sha256": "8381552222c2433af42365f88a7fcff982da6afff48771b6d129af98e8cdb4eb",
+      "top_dir": "results_archived"
     },
     {
       "path": "results_archived/tables_and_rounding_summary.json",
       "bytes": 349,
-      "sha256": "f6e40318018949cab3fedae6d841252ff7894609ca39dff6280e69ffc442d489"
+      "sha256": "f6e40318018949cab3fedae6d841252ff7894609ca39dff6280e69ffc442d489",
+      "top_dir": "results_archived"
     },
     {
       "path": "simulator_source/configs/ab4_marine_aux.yaml",
       "bytes": 4503,
-      "sha256": "2c6c330289008b27a3fc6cc3434900cb5642ee661241d4ff70a360ef1c6491df"
+      "sha256": "2c6c330289008b27a3fc6cc3434900cb5642ee661241d4ff70a360ef1c6491df",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/base.yaml",
       "bytes": 5629,
-      "sha256": "92254b7a5b07aa2743c49525063d983c76df5b3d536d7d8a47217ac2e7f3b409"
+      "sha256": "92254b7a5b07aa2743c49525063d983c76df5b3d536d7d8a47217ac2e7f3b409",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/base_fmpy.yaml",
       "bytes": 3893,
-      "sha256": "bfe433f69bf3c2ad8a3fe120432aaf90a9f8114cc8d75afa9973f91a9ff49522"
+      "sha256": "bfe433f69bf3c2ad8a3fe120432aaf90a9f8114cc8d75afa9973f91a9ff49522",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/base_fmpy_model_exchange.yaml",
       "bytes": 3215,
-      "sha256": "c1a8436c4681f878acd0986fd747fb91c686a0cf08f8329c7e7d5f0eb44a7ddc"
+      "sha256": "c1a8436c4681f878acd0986fd747fb91c686a0cf08f8329c7e7d5f0eb44a7ddc",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/base_fmpy_template.yaml",
       "bytes": 5398,
-      "sha256": "919ec90e7a33f1b7d660a40794de24b10f45215de85516f668df30726ef06128"
+      "sha256": "919ec90e7a33f1b7d660a40794de24b10f45215de85516f668df30726ef06128",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/dummy_fmpy.yaml",
       "bytes": 3199,
-      "sha256": "7b8e4cafacc68b2c37e78d3f8adb2e2749aa9acc614bced3e8aa84a29fb8bdc8"
+      "sha256": "7b8e4cafacc68b2c37e78d3f8adb2e2749aa9acc614bced3e8aa84a29fb8bdc8",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/faults/burner_deg.yaml",
       "bytes": 171,
-      "sha256": "4b129180f924dd89d9b384aba9e3f05c519266fd2fa735c39fc7bab76ffb1296"
+      "sha256": "4b129180f924dd89d9b384aba9e3f05c519266fd2fa735c39fc7bab76ffb1296",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/faults/fouling.yaml",
       "bytes": 164,
-      "sha256": "cb38748c39f03394f4151cd780bd6e16d4dd579ae87fdfd4143397fcd8ad62bc"
+      "sha256": "cb38748c39f03394f4151cd780bd6e16d4dd579ae87fdfd4143397fcd8ad62bc",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/faults/pump_wear.yaml",
       "bytes": 145,
-      "sha256": "d2382fe2c9039697868ccdf55602c7815e8b2ab471fce31652d897492d1e5bfa"
+      "sha256": "d2382fe2c9039697868ccdf55602c7815e8b2ab471fce31652d897492d1e5bfa",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/faults/sensor_drift.yaml",
       "bytes": 180,
-      "sha256": "8aab14ad644f4b584d6d8c79b34ba2f3e01c8fd345eef2b06099f3ee3c8a07d9"
+      "sha256": "8aab14ad644f4b584d6d8c79b34ba2f3e01c8fd345eef2b06099f3ee3c8a07d9",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/faults/tube_leak.yaml",
       "bytes": 162,
-      "sha256": "2c495a191d9ce82d3b66a64d1e441918291abe50021645d6114320ca55aaaf05"
+      "sha256": "2c495a191d9ce82d3b66a64d1e441918291abe50021645d6114320ca55aaaf05",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/faults/valve_stiction.yaml",
       "bytes": 175,
-      "sha256": "5668ca6c4e930435302315534169c766cf1d88e903c047dc04488c1f293c73b3"
+      "sha256": "5668ca6c4e930435302315534169c766cf1d88e903c047dc04488c1f293c73b3",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/governance_policy.yaml",
       "bytes": 644,
-      "sha256": "96883484dd1c3aa4054f8629263662f98e56977fbd59914a90cb74d0426df62f"
+      "sha256": "96883484dd1c3aa4054f8629263662f98e56977fbd59914a90cb74d0426df62f",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/local_pipeline.yaml",
       "bytes": 3475,
-      "sha256": "5f7be0a93170cafd74736411026db2ca15399b3a52766bf902a72fb32be722a5"
+      "sha256": "5f7be0a93170cafd74736411026db2ca15399b3a52766bf902a72fb32be722a5",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/local_pipeline_step_tests.yaml",
       "bytes": 3050,
-      "sha256": "9f07a2ea63cfdd27ec835d7475f984ad1461bf2522a1b01c5386d80e800b223d"
+      "sha256": "9f07a2ea63cfdd27ec835d7475f984ad1461bf2522a1b01c5386d80e800b223d",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/scenarios/load_follow.yaml",
       "bytes": 113,
-      "sha256": "b0d50fbcd2c933111290febf0f76cbec9f0b156f6d9cc10d4bb44175a980c5c5"
+      "sha256": "b0d50fbcd2c933111290febf0f76cbec9f0b156f6d9cc10d4bb44175a980c5c5",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/configs/scenarios/step_tests.yaml",
       "bytes": 237,
-      "sha256": "ed6f6c1c59621af93a674564bac18bc39edcb57d29a7e99770722c75e9352120"
+      "sha256": "ed6f6c1c59621af93a674564bac18bc39edcb57d29a7e99770722c75e9352120",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/docs/phase_a_design.md",
       "bytes": 36558,
-      "sha256": "483d740f99bb83af7cf5381d6575d4f9651fe9cf7a8e20f9a10800be79d1d3b0"
+      "sha256": "483d740f99bb83af7cf5381d6575d4f9651fe9cf7a8e20f9a10800be79d1d3b0",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/docs/spec_boiler_pdm_sim.md",
       "bytes": 17853,
-      "sha256": "ffcab396a23ae2831712647e5799581e1706a50869ae6665cb809e811956bc6a"
+      "sha256": "ffcab396a23ae2831712647e5799581e1706a50869ae6665cb809e811956bc6a",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/LICENSE",
       "bytes": 1098,
-      "sha256": "60bc5680ab3a98a222066d5553d45b28816a5635efefeb5503d66a3e2f335f92"
+      "sha256": "60bc5680ab3a98a222066d5553d45b28816a5635efefeb5503d66a3e2f335f92",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/pyproject.toml",
       "bytes": 1222,
-      "sha256": "b19b181bb65a7cab2731c38af926fc1ae1287bf8db383eabe312a790d4659313"
+      "sha256": "b19b181bb65a7cab2731c38af926fc1ae1287bf8db383eabe312a790d4659313",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/README.md",
       "bytes": 14525,
-      "sha256": "cabe7255ddd71fd887f0b73d730b9d509929ee135176156b169c4084cdfad74e"
+      "sha256": "cabe7255ddd71fd887f0b73d730b9d509929ee135176156b169c4084cdfad74e",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/__init__.py",
       "bytes": 207,
-      "sha256": "2e8f68fe8730c6dd30963a97e07bbb86759cdd53c55601f23588c7e402d56ca4"
+      "sha256": "2e8f68fe8730c6dd30963a97e07bbb86759cdd53c55601f23588c7e402d56ca4",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/calibration/__init__.py",
       "bytes": 486,
-      "sha256": "c6f8ecb88bdeaa77ed405ac4485eb29a6de981ce98eaf3319ce44a91001ffdd2"
+      "sha256": "c6f8ecb88bdeaa77ed405ac4485eb29a6de981ce98eaf3319ce44a91001ffdd2",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/calibration/baseline.py",
       "bytes": 210,
-      "sha256": "01df609f6ebb5810654df38ddf9473f0d63b425349a773381496fb68146991a4"
+      "sha256": "01df609f6ebb5810654df38ddf9473f0d63b425349a773381496fb68146991a4",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/calibration/identify.py",
       "bytes": 226,
-      "sha256": "489b9d298f57d789d469a224ac7099ba42c077d698b2387a97b2c5b18eff7dc5"
+      "sha256": "489b9d298f57d789d469a224ac7099ba42c077d698b2387a97b2c5b18eff7dc5",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/calibration/sensitivity.py",
       "bytes": 246,
-      "sha256": "f8dde5f477ae290d65e3b866dbcfea589d653f7d6ae633af79ca62990f3f0ea8"
+      "sha256": "f8dde5f477ae290d65e3b866dbcfea589d653f7d6ae633af79ca62990f3f0ea8",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/cli/main.py",
       "bytes": 986,
-      "sha256": "0b3fbbf7b0d554495d25f7e3d543ac31ed06f02d7ff1aa5ab775c6f3a4b9ea36"
+      "sha256": "0b3fbbf7b0d554495d25f7e3d543ac31ed06f02d7ff1aa5ab775c6f3a4b9ea36",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/control/__init__.py",
       "bytes": 304,
-      "sha256": "646a816fc6d7f91d115f9089d0403b06ebcb513db13502c02d026d0dda899d6d"
+      "sha256": "646a816fc6d7f91d115f9089d0403b06ebcb513db13502c02d026d0dda899d6d",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/control/loops.py",
       "bytes": 3136,
-      "sha256": "87fca53b0099024a19d880e187668d4029e1c2a06483b1aa943b315c0905aa14"
+      "sha256": "87fca53b0099024a19d880e187668d4029e1c2a06483b1aa943b315c0905aa14",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/control/pid.py",
       "bytes": 3044,
-      "sha256": "c9d3e43570b22679150eb69c2cf6e82414ae5c26cf5ec821c2942b1f8f8e9913"
+      "sha256": "c9d3e43570b22679150eb69c2cf6e82414ae5c26cf5ec821c2942b1f8f8e9913",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/control/three_element.py",
       "bytes": 13242,
-      "sha256": "b891e95aaa0acc4389f7550f2c0ab95f9ae4d1851e759e893def19f9b407cef8"
+      "sha256": "b891e95aaa0acc4389f7550f2c0ab95f9ae4d1851e759e893def19f9b407cef8",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/__init__.py",
       "bytes": 172,
-      "sha256": "8f2a0845fdead47a050dd144fccf41783de199d746fa34111ef48c55926a6fde"
+      "sha256": "8f2a0845fdead47a050dd144fccf41783de199d746fa34111ef48c55926a6fde",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/ab4/__init__.py",
       "bytes": 413,
-      "sha256": "857d7e6bccb494e04378a8c87e957df8e60a50d95b3fa336f0125b4e8f2c7382"
+      "sha256": "857d7e6bccb494e04378a8c87e957df8e60a50d95b3fa336f0125b4e8f2c7382",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/ab4/backend.py",
       "bytes": 15749,
-      "sha256": "a3c5138aa271560cb2bbf842989fc38a6aa51542ba00f1a7e0d9e5d259b71ccd"
+      "sha256": "a3c5138aa271560cb2bbf842989fc38a6aa51542ba00f1a7e0d9e5d259b71ccd",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/ab4/drum_model.py",
       "bytes": 9372,
-      "sha256": "9bad1fb0764dcd9f82d6aea817281b7d0b4e7e3ee598b55ce011b44bf8f86bd0"
+      "sha256": "9bad1fb0764dcd9f82d6aea817281b7d0b4e7e3ee598b55ce011b44bf8f86bd0",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/ab4/feedwater.py",
       "bytes": 3482,
-      "sha256": "81c1134f168c75c776728a10183437f0988eb53bde5106f8ac196e8459d594d7"
+      "sha256": "81c1134f168c75c776728a10183437f0988eb53bde5106f8ac196e8459d594d7",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/ab4/furnace.py",
       "bytes": 8929,
-      "sha256": "78436839e24e768188fd7ceffe48c185109c84ff48d576c5581102881e40cef1"
+      "sha256": "78436839e24e768188fd7ceffe48c185109c84ff48d576c5581102881e40cef1",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/ab4/geometry.py",
       "bytes": 3037,
-      "sha256": "a0d0bf53d2451ffc18a4a20868ee7c522f5ba69e247ee071de2facc0e92b3640"
+      "sha256": "a0d0bf53d2451ffc18a4a20868ee7c522f5ba69e247ee071de2facc0e92b3640",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/ab4/steam_line.py",
       "bytes": 3337,
-      "sha256": "49d8f6001c191f2130d38205eaa67e2db913976e8493d7ca99016b0a4f0d1e3b"
+      "sha256": "49d8f6001c191f2130d38205eaa67e2db913976e8493d7ca99016b0a4f0d1e3b",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/backend_factory.py",
       "bytes": 1037,
-      "sha256": "d53e6124e85e3b0804d873c4ec33bb8c655bd6a28e28427f28a4614fb664dc59"
+      "sha256": "d53e6124e85e3b0804d873c4ec33bb8c655bd6a28e28427f28a4614fb664dc59",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/backend_protocol.py",
       "bytes": 12036,
-      "sha256": "cfbe8c1a2655c34635b214ade4b9b33878017da43a9aa58d66c1415093f3631e"
+      "sha256": "cfbe8c1a2655c34635b214ade4b9b33878017da43a9aa58d66c1415093f3631e",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/boiler_system.py",
       "bytes": 33390,
-      "sha256": "3327987323e578a3ddece226c0c2abf33133f57a1a56ca2e5a836eb380b3e998"
+      "sha256": "3327987323e578a3ddece226c0c2abf33133f57a1a56ca2e5a836eb380b3e998",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/components/__init__.py",
       "bytes": 71,
-      "sha256": "f5363c62b36ac457b9c7356e51f0095ba0d91bd77db48e026b4bb876cf2b9313"
+      "sha256": "f5363c62b36ac457b9c7356e51f0095ba0d91bd77db48e026b4bb876cf2b9313",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/components/combustion.py",
       "bytes": 214,
-      "sha256": "c83b95b29655f109f28d7298d6b25c7321a15c15a3ebb05908a9ad0f4da6a07e"
+      "sha256": "c83b95b29655f109f28d7298d6b25c7321a15c15a3ebb05908a9ad0f4da6a07e",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/components/drum.py",
       "bytes": 1608,
-      "sha256": "579442a17eb11a2636a52cff0789caa42ba689d9274b4bbd60ef1e5b8ec94c10"
+      "sha256": "579442a17eb11a2636a52cff0789caa42ba689d9274b4bbd60ef1e5b8ec94c10",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/components/economizer.py",
       "bytes": 1256,
-      "sha256": "37e202eb9d97156e9c1ea750e53397144e455749179ed1a1371053185897b3fc"
+      "sha256": "37e202eb9d97156e9c1ea750e53397144e455749179ed1a1371053185897b3fc",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/components/evaporator.py",
       "bytes": 249,
-      "sha256": "2ebef520636b0ce2957c8c4a3c2021d791e2f322012065fdacb4e2c814d8da86"
+      "sha256": "2ebef520636b0ce2957c8c4a3c2021d791e2f322012065fdacb4e2c814d8da86",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/components/pump.py",
       "bytes": 212,
-      "sha256": "87e2b24bc3dc609de170a70709a607313015d8a811db1e935af0c0ac8e4bfc8d"
+      "sha256": "87e2b24bc3dc609de170a70709a607313015d8a811db1e935af0c0ac8e4bfc8d",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/components/superheater.py",
       "bytes": 830,
-      "sha256": "af8aa3b20572d6a609e4b644c93a68843cb260ff0ddecdcd69b351747268f1ab"
+      "sha256": "af8aa3b20572d6a609e4b644c93a68843cb260ff0ddecdcd69b351747268f1ab",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/components/valves.py",
       "bytes": 806,
-      "sha256": "a3d916a0623312e8bf4f491d1b34a5ad8ba6a5ea46f26c0a6c28d6cbb6b09b50"
+      "sha256": "a3d916a0623312e8bf4f491d1b34a5ad8ba6a5ea46f26c0a6c28d6cbb6b09b50",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/fmu_adapter.py",
       "bytes": 37897,
-      "sha256": "22dbe5e2157f14745bf6c8b683b36b0d98485f2858fdc9acea1675be19257680"
+      "sha256": "22dbe5e2157f14745bf6c8b683b36b0d98485f2858fdc9acea1675be19257680",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/media.py",
       "bytes": 5984,
-      "sha256": "28426de19fd6f1b1d7d5c58e6e728c11755751a8d8eb367d41a82de846682ad0"
+      "sha256": "28426de19fd6f1b1d7d5c58e6e728c11755751a8d8eb367d41a82de846682ad0",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/solver.py",
       "bytes": 3621,
-      "sha256": "22bcd4e933cd20479bd8508de0d1c3b3ea621729a0b2586ef9d589e34158a3ab"
+      "sha256": "22bcd4e933cd20479bd8508de0d1c3b3ea621729a0b2586ef9d589e34158a3ab",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/state.py",
       "bytes": 1040,
-      "sha256": "3871647f1e14535465cd59055606b119fc41cdc57e9e051de996d526283abd0e"
+      "sha256": "3871647f1e14535465cd59055606b119fc41cdc57e9e051de996d526283abd0e",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/thermo/__init__.py",
       "bytes": 203,
-      "sha256": "81548fc0533e246f36184657fd5569d88012d406e077656cb14bbb4f9c263350"
+      "sha256": "81548fc0533e246f36184657fd5569d88012d406e077656cb14bbb4f9c263350",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/thermo/if97.py",
       "bytes": 197,
-      "sha256": "dd55c41f344b99e75c7e558547d0cfe4d65cc9a2bb94803461caf767e1ba5f67"
+      "sha256": "dd55c41f344b99e75c7e558547d0cfe4d65cc9a2bb94803461caf767e1ba5f67",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/core/thermo/steam_props.py",
       "bytes": 291,
-      "sha256": "05b6a81528438caa5d97a95aa52a1bc5631f7373b3749b16456f5286880f013c"
+      "sha256": "05b6a81528438caa5d97a95aa52a1bc5631f7373b3749b16456f5286880f013c",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/dataset/__init__.py",
       "bytes": 46,
-      "sha256": "77c1db25f876cb285bca9f01014dded90bbed9ee20a82bc795666be657c26fec"
+      "sha256": "77c1db25f876cb285bca9f01014dded90bbed9ee20a82bc795666be657c26fec",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/dataset/generator.py",
       "bytes": 290,
-      "sha256": "8aa2dff39c8879ba2b911fb674283979b0fc1cc61a5c26751bc314a407a58eb3"
+      "sha256": "8aa2dff39c8879ba2b911fb674283979b0fc1cc61a5c26751bc314a407a58eb3",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/dataset/labeling.py",
       "bytes": 831,
-      "sha256": "a4a4e1f1b45b08d5539f8409a9a65034b9d9ae70d71a1c39065cfd87e84458a1"
+      "sha256": "a4a4e1f1b45b08d5539f8409a9a65034b9d9ae70d71a1c39065cfd87e84458a1",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/dataset/splits.py",
       "bytes": 366,
-      "sha256": "15ad350ae750b3010db6e50deaf4b4467ec1cc89f736625d8a9c828158f2ea74"
+      "sha256": "15ad350ae750b3010db6e50deaf4b4467ec1cc89f736625d8a9c828158f2ea74",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/dataset/writer.py",
       "bytes": 10618,
-      "sha256": "e751cc46d3cc96e60a6ae1918a2d94a6010f8d8fb5338b4f4072c5d1e5b30067"
+      "sha256": "e751cc46d3cc96e60a6ae1918a2d94a6010f8d8fb5338b4f4072c5d1e5b30067",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/degradation/__init__.py",
       "bytes": 34,
-      "sha256": "a870086c45855bb82afd0fcdb565e39fc2b37c4e5e5e2b961eea3f1e2dbbb984"
+      "sha256": "a870086c45855bb82afd0fcdb565e39fc2b37c4e5e5e2b961eea3f1e2dbbb984",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/degradation/base.py",
       "bytes": 291,
-      "sha256": "e064ffb1ea6c7c6c39c9c963d14dfa88edb7120cd688da203214a272da4bd536"
+      "sha256": "e064ffb1ea6c7c6c39c9c963d14dfa88edb7120cd688da203214a272da4bd536",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/degradation/burner_deg.py",
       "bytes": 786,
-      "sha256": "bdef2e30efda12c3b5d75cd6935bfc420f7bcec97b7c5da0d450b5d2efa3570c"
+      "sha256": "bdef2e30efda12c3b5d75cd6935bfc420f7bcec97b7c5da0d450b5d2efa3570c",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/degradation/fouling.py",
       "bytes": 1992,
-      "sha256": "af6f0618d5b24f678ce2f321ce2cae19017477ca99ff9c762bbcb2097ea709df"
+      "sha256": "af6f0618d5b24f678ce2f321ce2cae19017477ca99ff9c762bbcb2097ea709df",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/degradation/pump_wear.py",
       "bytes": 483,
-      "sha256": "291d9ab0e2ee37432a9a7d45a891be51f4bc3202010270a73e3d9f18778a6632"
+      "sha256": "291d9ab0e2ee37432a9a7d45a891be51f4bc3202010270a73e3d9f18778a6632",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/degradation/scheduler.py",
       "bytes": 16190,
-      "sha256": "542d11711cbda6d29a94cc16c7e332f1d0b20521d70762d5f47a74a912e17cad"
+      "sha256": "542d11711cbda6d29a94cc16c7e332f1d0b20521d70762d5f47a74a912e17cad",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/degradation/sensor_faults.py",
       "bytes": 1801,
-      "sha256": "3edce2d2e8bb737f072b8a977229361618e9e11379f416a33a04657961f29de7"
+      "sha256": "3edce2d2e8bb737f072b8a977229361618e9e11379f416a33a04657961f29de7",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/degradation/tube_leak.py",
       "bytes": 289,
-      "sha256": "2d3dc38fa1c987e44e1ef06d4e116f8d68079677a05ebbcb319b54a45aabdf79"
+      "sha256": "2d3dc38fa1c987e44e1ef06d4e116f8d68079677a05ebbcb319b54a45aabdf79",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/degradation/valve_stiction.py",
       "bytes": 372,
-      "sha256": "2fea504d1236c5899bb79be306382ee306ecb42d8d8be788918e4c437b2ceb36"
+      "sha256": "2fea504d1236c5899bb79be306382ee306ecb42d8d8be788918e4c437b2ceb36",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/interface/fmu.py",
       "bytes": 1144,
-      "sha256": "5fea2326cd51f9c0334410e62a7311e6017f89e3ceb81ac00e742e04d0790449"
+      "sha256": "5fea2326cd51f9c0334410e62a7311e6017f89e3ceb81ac00e742e04d0790449",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/pipeline/__init__.py",
       "bytes": 70,
-      "sha256": "2fe71c3bfa291a110900d456a3b7a8686d3a183308287d662fda776f703d6b29"
+      "sha256": "2fe71c3bfa291a110900d456a3b7a8686d3a183308287d662fda776f703d6b29",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/pipeline/calibration.py",
       "bytes": 12258,
-      "sha256": "42632ae67f5802ad773adb12e494e3198775aee8426c5668ff955a09a7226eda"
+      "sha256": "42632ae67f5802ad773adb12e494e3198775aee8426c5668ff955a09a7226eda",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/pipeline/config_types.py",
       "bytes": 13684,
-      "sha256": "e8fbb30cb87467a477e14bf380462d04edf672b6a4e1986219f4fdf8e49cb5bc"
+      "sha256": "e8fbb30cb87467a477e14bf380462d04edf672b6a4e1986219f4fdf8e49cb5bc",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/pipeline/governance.py",
       "bytes": 11916,
-      "sha256": "0cace88a2cac5c6a4d3e80ae8234908e9e807e85532f4e0906e47c8679e2c04d"
+      "sha256": "0cace88a2cac5c6a4d3e80ae8234908e9e807e85532f4e0906e47c8679e2c04d",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/pipeline/performance.py",
       "bytes": 6066,
-      "sha256": "8f246f449fe5d84ffb8814dd5ed2e0160d85cda4a8be119c0a8143cb73c75441"
+      "sha256": "8f246f449fe5d84ffb8814dd5ed2e0160d85cda4a8be119c0a8143cb73c75441",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/pipeline/postprocess.py",
       "bytes": 5574,
-      "sha256": "287ccb066d5d84df459f2a69ed4af7dc972a28fa4e61c4e650ec6135d07ed475"
+      "sha256": "287ccb066d5d84df459f2a69ed4af7dc972a28fa4e61c4e650ec6135d07ed475",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/pipeline/run_to_file.py",
       "bytes": 7777,
-      "sha256": "18c3a83b1ac740ad291a2a2172bbe7e87d3abe80b6010b98afb1e925d08e5489"
+      "sha256": "18c3a83b1ac740ad291a2a2172bbe7e87d3abe80b6010b98afb1e925d08e5489",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/pipeline/runtime.py",
       "bytes": 6567,
-      "sha256": "c1852e22d965b4a340b88e20d7bc2b53925c105e1698edc72be76b6ddc1bd3ac"
+      "sha256": "c1852e22d965b4a340b88e20d7bc2b53925c105e1698edc72be76b6ddc1bd3ac",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/pipeline/step_loop.py",
       "bytes": 11463,
-      "sha256": "ee77c0636982ee45f2025f8875ddd31bb702a13ebeae1f1d42ecd4af8b87dc83"
+      "sha256": "ee77c0636982ee45f2025f8875ddd31bb702a13ebeae1f1d42ecd4af8b87dc83",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/props/__init__.py",
       "bytes": 915,
-      "sha256": "3059f85147d407255259d17f9474e0c22a117ff5d698838805e5d1914f975a30"
+      "sha256": "3059f85147d407255259d17f9474e0c22a117ff5d698838805e5d1914f975a30",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/props/fuels.py",
       "bytes": 2063,
-      "sha256": "9f8a61995b24d9a7b1ac075ea0c087380d1a0048b02a0cdde6e668b3c3afa91f"
+      "sha256": "9f8a61995b24d9a7b1ac075ea0c087380d1a0048b02a0cdde6e668b3c3afa91f",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/props/gas.py",
       "bytes": 3919,
-      "sha256": "9d29cea4668695236d0b0e407ee814f4e1e5a3eaacf127a2862bf37f192e17bf"
+      "sha256": "9d29cea4668695236d0b0e407ee814f4e1e5a3eaacf127a2862bf37f192e17bf",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/props/if97.py",
       "bytes": 5734,
-      "sha256": "a6e58169036d6d93c342ff2fd17406aac6a3b96f9eccb47daf00d1566f746fb3"
+      "sha256": "a6e58169036d6d93c342ff2fd17406aac6a3b96f9eccb47daf00d1566f746fb3",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/research/__init__.py",
       "bytes": 806,
-      "sha256": "dba4cd353f7c5e1bde1847a2fb50cb91f110f060d2d9698ee9dfeaab5e17b031"
+      "sha256": "dba4cd353f7c5e1bde1847a2fb50cb91f110f060d2d9698ee9dfeaab5e17b031",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/research/baseline.py",
       "bytes": 3183,
-      "sha256": "98e027d954dabb7c9e991ec933b524fcecdb986c7593790640c5a305a7953709"
+      "sha256": "98e027d954dabb7c9e991ec933b524fcecdb986c7593790640c5a305a7953709",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/research/benchmark.py",
       "bytes": 1781,
-      "sha256": "0039468512b27ff2f578fc7bb057309063d771bbe3e125cab64f9fed293b9656"
+      "sha256": "0039468512b27ff2f578fc7bb057309063d771bbe3e125cab64f9fed293b9656",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/research/calibration.py",
       "bytes": 3206,
-      "sha256": "58726a7f56bd97953dc6b6072a6077cd9dddbc2e10b5f79c1a377829fc19e921"
+      "sha256": "58726a7f56bd97953dc6b6072a6077cd9dddbc2e10b5f79c1a377829fc19e921",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/research/features.py",
       "bytes": 1598,
-      "sha256": "728cf667caf8f3c1697bf93181f7c140165d7ed7ba45b7d0c4f8e467f3d74bc7"
+      "sha256": "728cf667caf8f3c1697bf93181f7c140165d7ed7ba45b7d0c4f8e467f3d74bc7",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/research/identifiability.py",
       "bytes": 3789,
-      "sha256": "acac480ee2cbeb294fec0677ad3939c34b5be0103f4418a1a5de582e5f8871f4"
+      "sha256": "acac480ee2cbeb294fec0677ad3939c34b5be0103f4418a1a5de582e5f8871f4",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/research/sensitivity.py",
       "bytes": 3495,
-      "sha256": "8051c79177a0d5d1c38bd3c72242b566f096bec66704d969c4ed2a659b39cd0c"
+      "sha256": "8051c79177a0d5d1c38bd3c72242b566f096bec66704d969c4ed2a659b39cd0c",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/safety/__init__.py",
       "bytes": 1658,
-      "sha256": "ec7b449eb9a780f0080ef5c8b85a3afb5562f4383e94f956cdb61d235587840c"
+      "sha256": "ec7b449eb9a780f0080ef5c8b85a3afb5562f4383e94f956cdb61d235587840c",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/safety/alarms.py",
       "bytes": 3627,
-      "sha256": "06e58f303d28df089506eb4bfe11dfc42d1f8edaa9e0b72e3e11e3d19c59e8a2"
+      "sha256": "06e58f303d28df089506eb4bfe11dfc42d1f8edaa9e0b72e3e11e3d19c59e8a2",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/safety/trips.py",
       "bytes": 4249,
-      "sha256": "bdb7addb15bcc53d08f9543516258450af4bb53bcab78a72f5af4f0aa67d83df"
+      "sha256": "bdb7addb15bcc53d08f9543516258450af4bb53bcab78a72f5af4f0aa67d83df",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/scenarios/__init__.py",
       "bytes": 39,
-      "sha256": "b035546efbede42740f56854297b884ac403d31344326e57f2e86322b8f3eef1"
+      "sha256": "b035546efbede42740f56854297b884ac403d31344326e57f2e86322b8f3eef1",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/scenarios/profile.py",
       "bytes": 2809,
-      "sha256": "8e43890cf3c29721683065845bd093f30ff2f261638adef1e935257c6ed0276d"
+      "sha256": "8e43890cf3c29721683065845bd093f30ff2f261638adef1e935257c6ed0276d",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/scenarios/randomization.py",
       "bytes": 3776,
-      "sha256": "8b59c93249cf6fc6cf710d0c3d455f9b9c2b5b8eca5d77ef53a908104f3c7457"
+      "sha256": "8b59c93249cf6fc6cf710d0c3d455f9b9c2b5b8eca5d77ef53a908104f3c7457",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/scenarios/scenario.py",
       "bytes": 487,
-      "sha256": "07504509aa0ca878e72d8f8a907e9ba8170d440159f96f30c1649fa2be50a07b"
+      "sha256": "07504509aa0ca878e72d8f8a907e9ba8170d440159f96f30c1649fa2be50a07b",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/schema.py",
       "bytes": 13026,
-      "sha256": "0e901c8cf5a9b713cae83e56eb1256eeef7a6a21a029312adfb5ab45fc46dd8e"
+      "sha256": "0e901c8cf5a9b713cae83e56eb1256eeef7a6a21a029312adfb5ab45fc46dd8e",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/sensors/__init__.py",
       "bytes": 210,
-      "sha256": "e9adaa98416e332d3dde8c957fa9a5a79ccce8039fff46a02a4bfa3ce69ac210"
+      "sha256": "e9adaa98416e332d3dde8c957fa9a5a79ccce8039fff46a02a4bfa3ce69ac210",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/sensors/dropout.py",
       "bytes": 161,
-      "sha256": "992471acae56479ee4ae6a66b9c3af2c390e105658d23b4b74364a6aa375c63c"
+      "sha256": "992471acae56479ee4ae6a66b9c3af2c390e105658d23b4b74364a6aa375c63c",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/sensors/drum_level_dp.py",
       "bytes": 7643,
-      "sha256": "a11bcfd93e6cebdf21a25b9287d0bf15d63da9ad815059321adf4fd8d8b36a0b"
+      "sha256": "a11bcfd93e6cebdf21a25b9287d0bf15d63da9ad815059321adf4fd8d8b36a0b",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/sensors/noise.py",
       "bytes": 177,
-      "sha256": "18ac1f7cb2c5e021142af34e209780bde3a1a6e896dbd4440d048341c26a4b7a"
+      "sha256": "18ac1f7cb2c5e021142af34e209780bde3a1a6e896dbd4440d048341c26a4b7a",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/sensors/sensor_model.py",
       "bytes": 10082,
-      "sha256": "7458605ba9f403c3b5b1aef194bdf60c1744fa40185da8e230cc2d81469d9410"
+      "sha256": "7458605ba9f403c3b5b1aef194bdf60c1744fa40185da8e230cc2d81469d9410",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/simulator.py",
       "bytes": 49137,
-      "sha256": "e7677ef105e31662840df7d9f9b1f537b537d65dd793a223fe52d6fbf6cdc930"
+      "sha256": "e7677ef105e31662840df7d9f9b1f537b537d65dd793a223fe52d6fbf6cdc930",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/validation/__init__.py",
       "bytes": 697,
-      "sha256": "52a7f932a46a27695f935b3aad4ce7bf02ef4bf502d0aef3a39d72e03d1f092a"
+      "sha256": "52a7f932a46a27695f935b3aad4ce7bf02ef4bf502d0aef3a39d72e03d1f092a",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/validation/control_mode_transition.py",
       "bytes": 1068,
-      "sha256": "0cb2b06b770068477d71adc63588b51cdaba244ea7a9693348105da34869b49e"
+      "sha256": "0cb2b06b770068477d71adc63588b51cdaba244ea7a9693348105da34869b49e",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/validation/fault_observability.py",
       "bytes": 1347,
-      "sha256": "8702aa1debfb8743f6f8eabcad9d17f90ab151d82cb23b2d9952672ab29e846d"
+      "sha256": "8702aa1debfb8743f6f8eabcad9d17f90ab151d82cb23b2d9952672ab29e846d",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/validation/invariants.py",
       "bytes": 307,
-      "sha256": "c28e5d9e1dffdcc96cc44b0dc89f707e5878ebf76517fbb61bd2696fd19aa5ea"
+      "sha256": "c28e5d9e1dffdcc96cc44b0dc89f707e5878ebf76517fbb61bd2696fd19aa5ea",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/validation/level_instrumentation.py",
       "bytes": 1457,
-      "sha256": "3889dcee833c1353ca7b221d4388c923267e9c7205d4047af0ea88dc80bc66a9"
+      "sha256": "3889dcee833c1353ca7b221d4388c923267e9c7205d4047af0ea88dc80bc66a9",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/validation/phase6.py",
       "bytes": 5239,
-      "sha256": "17a4c1e7620e67429968aac816f7a98d4bad69ffa04033ab7c1339348d622d41"
+      "sha256": "17a4c1e7620e67429968aac816f7a98d4bad69ffa04033ab7c1339348d622d41",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/validation/regression.py",
       "bytes": 6647,
-      "sha256": "cf7ccbd8776009f2feb1e0b457786f15c586558f8f8d267a854f1019fed0e599"
+      "sha256": "cf7ccbd8776009f2feb1e0b457786f15c586558f8f8d267a854f1019fed0e599",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/validation/steady_state_map.py",
       "bytes": 1744,
-      "sha256": "25fe213600bca67e8c908fa060e3a38c377c508a6d575dbcc20269269ca2b4dc"
+      "sha256": "25fe213600bca67e8c908fa060e3a38c377c508a6d575dbcc20269269ca2b4dc",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/src/boiler_pdm_sim/validation/step_response.py",
       "bytes": 8349,
-      "sha256": "48c238c5fe51a244dd6ceeab48fe143b73685bc7cddfbfe19d2633540b4c8ed2"
+      "sha256": "48c238c5fe51a244dd6ceeab48fe143b73685bc7cddfbfe19d2633540b4c8ed2",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/fixtures/dummy_boiler_fmu.py",
       "bytes": 7280,
-      "sha256": "e337ca40c6ed923cb3a1d727becb3c9a0c3d30df4984ac210f21069e47b74bf7"
+      "sha256": "e337ca40c6ed923cb3a1d727becb3c9a0c3d30df4984ac210f21069e47b74bf7",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_ab4_24h_gate.py",
       "bytes": 3081,
-      "sha256": "3d81471eb395e016f13659180fa342215786e5ad15ac04fec94a5da18ff8a201"
+      "sha256": "3d81471eb395e016f13659180fa342215786e5ad15ac04fec94a5da18ff8a201",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_ab4_anchoring.py",
       "bytes": 3812,
-      "sha256": "cab14965d584e65afb75885532e52622441e761d1063359854b0617011369592"
+      "sha256": "cab14965d584e65afb75885532e52622441e761d1063359854b0617011369592",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_ab4_backend.py",
       "bytes": 6208,
-      "sha256": "6095f48e6b169924c5bab60fac136e3bcad75e46c4c40319a3e21ad6f871f886"
+      "sha256": "6095f48e6b169924c5bab60fac136e3bcad75e46c4c40319a3e21ad6f871f886",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_ab4_cross_model.py",
       "bytes": 3066,
-      "sha256": "32ea5fafbba3e2c779bfb08e948a5360fe2181a2dd835330979d2ace8eee4f1a"
+      "sha256": "32ea5fafbba3e2c779bfb08e948a5360fe2181a2dd835330979d2ace8eee4f1a",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_ab4_drum_model.py",
       "bytes": 5214,
-      "sha256": "24cf2e24a22f3ce00d83f1ef21a7241e5c924fe64db89cde19a270257f1c9deb"
+      "sha256": "24cf2e24a22f3ce00d83f1ef21a7241e5c924fe64db89cde19a270257f1c9deb",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_ab4_furnace.py",
       "bytes": 3417,
-      "sha256": "b6c63dace9d93cbc16bc8a28d909b83e7d66cb687550f3fbae41d738e55a45a3"
+      "sha256": "b6c63dace9d93cbc16bc8a28d909b83e7d66cb687550f3fbae41d738e55a45a3",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_ab4_geometry.py",
       "bytes": 2673,
-      "sha256": "3933e6f1e75cfb4f172cdfb0ce19c8ad9c68068665de4974046bfc3b64a64844"
+      "sha256": "3933e6f1e75cfb4f172cdfb0ce19c8ad9c68068665de4974046bfc3b64a64844",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_ab4_lines.py",
       "bytes": 4581,
-      "sha256": "0e513dc63d6ea3e08d15062f9f460eb5ebb6d124b534fe9f7cea2a6478cd30be"
+      "sha256": "0e513dc63d6ea3e08d15062f9f460eb5ebb6d124b534fe9f7cea2a6478cd30be",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_ab4_obs_closed_loop.py",
       "bytes": 3070,
-      "sha256": "43c2f97bb2d283758b3403f90521d5bccb29ba041a76f719718581b631bbd1af"
+      "sha256": "43c2f97bb2d283758b3403f90521d5bccb29ba041a76f719718581b631bbd1af",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_ab4_pipeline.py",
       "bytes": 2905,
-      "sha256": "ccdba4a391f7d7d1374e2934cea8ed4c188477a90a5f4e47808378418a2fe1b5"
+      "sha256": "ccdba4a391f7d7d1374e2934cea8ed4c188477a90a5f4e47808378418a2fe1b5",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_backend_protocol.py",
       "bytes": 10649,
-      "sha256": "7216ddbb727b79f0eb13475a7a4b76866e6a56fa17ffc8fc3a373495d3ffb72d"
+      "sha256": "7216ddbb727b79f0eb13475a7a4b76866e6a56fa17ffc8fc3a373495d3ffb72d",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_compatibility_modules.py",
       "bytes": 2482,
-      "sha256": "bc1d80630a949a17634d0fbb86d990e1bcc132542dc045fd714f73e8accce375"
+      "sha256": "bc1d80630a949a17634d0fbb86d990e1bcc132542dc045fd714f73e8accce375",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_control_mode_transition.py",
       "bytes": 1455,
-      "sha256": "09b0e88df66aa75314b9f803333f606975eddf6bdbddbb861309be446c321772"
+      "sha256": "09b0e88df66aa75314b9f803333f606975eddf6bdbddbb861309be446c321772",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_core_fmu_parity.py",
       "bytes": 5066,
-      "sha256": "3f4dba57ec241eb1d5ea45d65385af436426f7b761b9229d133f86deb831ed09"
+      "sha256": "3f4dba57ec241eb1d5ea45d65385af436426f7b761b9229d133f86deb831ed09",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_dae_closure.py",
       "bytes": 2588,
-      "sha256": "6eb533ae2bd82438ed0cdb7c7e0427c31d830165c031bb807dd1b1e39b38384b"
+      "sha256": "6eb533ae2bd82438ed0cdb7c7e0427c31d830165c031bb807dd1b1e39b38384b",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_fault_injection.py",
       "bytes": 1579,
-      "sha256": "2c7eddf25550a2d42308010aa927937e654b27770cf3c883f17ce6ca8fa1469c"
+      "sha256": "2c7eddf25550a2d42308010aa927937e654b27770cf3c883f17ce6ca8fa1469c",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_fault_observability.py",
       "bytes": 837,
-      "sha256": "06ee71a12a05022b4e513a6c16fd45225f78d4979aec1986c944143d50d6e9f6"
+      "sha256": "06ee71a12a05022b4e513a6c16fd45225f78d4979aec1986c944143d50d6e9f6",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_fmu_contract.py",
       "bytes": 4594,
-      "sha256": "ea9ffc794541e7540618a17802bce4876c61a1c7dff059d0bb53cb34bb1d43d2"
+      "sha256": "ea9ffc794541e7540618a17802bce4876c61a1c7dff059d0bb53cb34bb1d43d2",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_fmu_e2e.py",
       "bytes": 7210,
-      "sha256": "54b4b713cd18db1870efcb3d43b5d074acfc67cf0f979cf7883226c5a3a8c608"
+      "sha256": "54b4b713cd18db1870efcb3d43b5d074acfc67cf0f979cf7883226c5a3a8c608",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_governance_and_calibration_contracts.py",
       "bytes": 6639,
-      "sha256": "328af97eb2648d0a4a68cd9c9eaacc36c13c23ef36d373a202c672725631fe35"
+      "sha256": "328af97eb2648d0a4a68cd9c9eaacc36c13c23ef36d373a202c672725631fe35",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_governance_policy_contracts.py",
       "bytes": 2883,
-      "sha256": "f2049b1d7c7b2bd891d82c1c9f1bf601763a1cdcadf4545ab8ea412f4400ef85"
+      "sha256": "f2049b1d7c7b2bd891d82c1c9f1bf601763a1cdcadf4545ab8ea412f4400ef85",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_identifiability_contracts.py",
       "bytes": 2481,
-      "sha256": "8c539d2e1db23791ef1560bd08e806a5eedc0481824d5cf2ad4ad5b8d04abf99"
+      "sha256": "8c539d2e1db23791ef1560bd08e806a5eedc0481824d5cf2ad4ad5b8d04abf99",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_label_and_bottleneck_contracts.py",
       "bytes": 3356,
-      "sha256": "89dd9334759ff363cc3b9d98b29583e9c7662e793ee7137e16b2c23189754dde"
+      "sha256": "89dd9334759ff363cc3b9d98b29583e9c7662e793ee7137e16b2c23189754dde",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_level_instrumentation.py",
       "bytes": 3428,
-      "sha256": "7f84e9f3580eef33c05af4f38eaf8864ffcb39395cca1b83bb2c94e9469f5b0c"
+      "sha256": "7f84e9f3580eef33c05af4f38eaf8864ffcb39395cca1b83bb2c94e9469f5b0c",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_manifest_integrity.py",
       "bytes": 3091,
-      "sha256": "ee00118da2b4b8a7675fc9bf9689a1b6179b0c139c9d14b729acf28e03290bb8"
+      "sha256": "ee00118da2b4b8a7675fc9bf9689a1b6179b0c139c9d14b729acf28e03290bb8",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_mass_energy_balance.py",
       "bytes": 1196,
-      "sha256": "63618125d0e5e877b48c50e48b3d8a8ad8fd0ac25259fbac20fb5f3ac7d4eafc"
+      "sha256": "63618125d0e5e877b48c50e48b3d8a8ad8fd0ac25259fbac20fb5f3ac7d4eafc",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_multirate_and_process_safety.py",
       "bytes": 2614,
-      "sha256": "d6c0eca73ad059ef15d06a06e33c67d7c9e88fd2faae52d856f338439dad6e32"
+      "sha256": "d6c0eca73ad059ef15d06a06e33c67d7c9e88fd2faae52d856f338439dad6e32",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_pipeline_contracts.py",
       "bytes": 8963,
-      "sha256": "ec28235bce065700cbe847f59c06047bd2d4467b380230b28bdaf50ed81906ab"
+      "sha256": "ec28235bce065700cbe847f59c06047bd2d4467b380230b28bdaf50ed81906ab",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_props_fuels_gas.py",
       "bytes": 2489,
-      "sha256": "1635a46ee7870774ea6c957ffda3ac1935564f717dba50509953243abf5af8ef"
+      "sha256": "1635a46ee7870774ea6c957ffda3ac1935564f717dba50509953243abf5af8ef",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_props_if97.py",
       "bytes": 4466,
-      "sha256": "943b842f688fe1b6fcd0b70ce7c711450f34085f87a19a3f90375bf5427d0619"
+      "sha256": "943b842f688fe1b6fcd0b70ce7c711450f34085f87a19a3f90375bf5427d0619",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_real_fmu_e2e.py",
       "bytes": 4122,
-      "sha256": "c54d3736fed272ff2dd305ef2d19e00e8a454be133266280b4fb661a049c8a6b"
+      "sha256": "c54d3736fed272ff2dd305ef2d19e00e8a454be133266280b4fb661a049c8a6b",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_real_fmu_parity.py",
       "bytes": 4175,
-      "sha256": "14af86b135e27ff3a14c8cbbdd35e9a35717f7f545d541d934b3f9c4c3a6ef7a"
+      "sha256": "14af86b135e27ff3a14c8cbbdd35e9a35717f7f545d541d934b3f9c4c3a6ef7a",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_reproducibility.py",
       "bytes": 535,
-      "sha256": "567b9b547919169e83743e027f131738963baffb0f1365e9172c197c29e917ef"
+      "sha256": "567b9b547919169e83743e027f131738963baffb0f1365e9172c197c29e917ef",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_safety_hard_stop.py",
       "bytes": 2394,
-      "sha256": "364522f951db38c14dcf05dfb1b19ee4e9978b95ba0f9bd0223c0b8f002cdc0b"
+      "sha256": "364522f951db38c14dcf05dfb1b19ee4e9978b95ba0f9bd0223c0b8f002cdc0b",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_schema_event_grammar.py",
       "bytes": 1263,
-      "sha256": "2d99066f38d2d070878efbd691d63ef8627ac29b139afa2add04cab093b7f2bd"
+      "sha256": "2d99066f38d2d070878efbd691d63ef8627ac29b139afa2add04cab093b7f2bd",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_shrink_swell.py",
       "bytes": 1384,
-      "sha256": "57ea3299c542ff17976e2ed62dae2ace516fd5d1ed0f5c13fc3e7390257d933e"
+      "sha256": "57ea3299c542ff17976e2ed62dae2ace516fd5d1ed0f5c13fc3e7390257d933e",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_simulator_run_to_file_smoke.py",
       "bytes": 2890,
-      "sha256": "1363ff15d4c5a7a4e34b994bf6c82af96c44eab311c8d2efda4b0ecf7e5fd2c9"
+      "sha256": "1363ff15d4c5a7a4e34b994bf6c82af96c44eab311c8d2efda4b0ecf7e5fd2c9",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_validation_battery.py",
       "bytes": 2777,
-      "sha256": "7e3fee7695f3869f718e1786dbec26b276ff870b07c149da2ee4cc60f3206e23"
+      "sha256": "7e3fee7695f3869f718e1786dbec26b276ff870b07c149da2ee4cc60f3206e23",
+      "top_dir": "simulator_source"
     },
     {
       "path": "simulator_source/tests/test_workspace_structure.py",
       "bytes": 379,
-      "sha256": "960714c1f1b3f7c8526d140dce9adac637114f2cd3a075c52f07d2ac2efa4770"
+      "sha256": "960714c1f1b3f7c8526d140dce9adac637114f2cd3a075c52f07d2ac2efa4770",
+      "top_dir": "simulator_source"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "bytes": 1855,
-      "sha256": "482823c7983c6ab9fb1a0c3514c9301805b5dce605bc1e698221a3015fa7978f"
+      "bytes": 2663,
+      "sha256": "fd54b1f8f4d1a7744ccf578927a92ecf1cc4349d9b85d20523503d127be0e170",
+      "top_dir": "(root)"
     }
   ]
 }

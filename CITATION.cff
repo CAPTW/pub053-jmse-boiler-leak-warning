@@ -1,9 +1,10 @@
 cff-version: 1.2.0
-message: "If you use this simulator code, archived R2 verification artifacts, or bibliography files, please cite the JMSE manuscript and upstream simulator repository."
+message: "If you use this companion repository, ab4 physics snapshot, or R2 reproduction scripts, please cite the software repository below. Publication venue details remain omitted until peer review and editorial assignment conclude."
 title: "PUB-053 JMSE Release Package: Closed-Loop Tube-Leak Early Warning in a Four-State Marine Auxiliary Steam Boiler"
 type: software
 license: MIT
-repository-code: "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" # PENDING AUTHOR CONFIRMATION
+repository-code: "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning"
+url: "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning"
 authors:
   - family-names: "Kim"
     given-names: "Gyeomwon"
@@ -17,9 +18,17 @@ keywords:
   - EWMA
   - digital twin simulation
   - boiler_pdm_sim
+preferred-citation:
+  type: article
+  title: "Closed-Loop Tube-Leak Early Warning in a Four-State Marine Auxiliary Steam Boiler: Demand-Versus-Flow Residuals, Functional Lead Times, and Component Attribution"
+  authors:
+    - family-names: "Kim"
+      given-names: "Gyeomwon"
+      affiliation: "Department of Naval Architecture and Ocean Engineering, Inha University, Incheon 22212, Republic of Korea"
+  journal: "Journal of Marine Science and Engineering (submitted; under review — volume, pages, and DOI unassigned)"
 references:
   - type: software
-    title: "boiler-pdm-sim (ab4 four-state saturated-steam drum-boiler core)"
-    repository-code: "https://github.com/CAPTW/boiler-pdm-sim"
+    title: "boiler-pdm-sim (local base HEAD snapshot for ab4 four-state drum-boiler core)"
+    notes: "Local development base commit 4fea4646723f04db41583cb682bac8b62c44bc05 in unpushed upstream working tree; study execution used preserved source_copy/ with pilot and study patches applied."
     commit: "4fea4646723f04db41583cb682bac8b62c44bc05"
     license: MIT

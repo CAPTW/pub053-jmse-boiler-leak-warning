@@ -1,0 +1,20 @@
+{
+  "observed_max_flow": 4.063844676603999,
+  "observed_q99_flow": 2.328680621249243,
+  "observed_q99_demand": 4.3883254020275455,
+  "observed_q99_max": 4.3883254020275455,
+  "counterexample": {
+    "q": 0.99,
+    "F_nonzero": 9,
+    "D_nonzero": 9,
+    "disjoint_positions": true,
+    "Q_F": 0.0,
+    "Q_D": 0.0,
+    "Q_max": 10.0
+  },
+  "counterexample_strict": {
+    "Q_F": 0.0,
+    "Q_D": 1.0,
+    "Q_max": 10.0
+  }
+}

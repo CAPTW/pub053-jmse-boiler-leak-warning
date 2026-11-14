@@ -187,7 +187,12 @@ def extract_ref_bookmark(p: etree._Element) -> str | None:
     return None
 
 
-def sync_docx(docx_path: Path, out_path: Path | None = None, reorder_refs: bool = True) -> dict:
+def sync_docx(
+    docx_path: Path,
+    out_path: Path | None = None,
+    reorder_refs: bool = True,
+    prune_uncited: bool = False,
+) -> dict:
     target_path = out_path if out_path is not None else docx_path
     with zipfile.ZipFile(docx_path, "r") as zin:
         entries = {name: zin.read(name) for name in zin.namelist()}
@@ -229,12 +234,18 @@ def sync_docx(docx_path: Path, out_path: Path | None = None, reorder_refs: bool 
     if missing_bms:
         raise RuntimeError(f"Cited bookmarks missing from References: {missing_bms}")
 
-    # Reorder References paragraphs if requested
-    if reorder_refs:
-        cited_paras = [bm_to_para[bm] for bm in cited_order]
-        cited_set = set(cited_order)
-        uncited_paras = [p for p, bm in zip(ref_paras, para_bms) if bm is None or bm not in cited_set]
-        new_ref_paras = cited_paras + uncited_paras
+    # Reorder and/or prune References paragraphs if requested
+    cited_set = set(cited_order)
+    pruned_bms = [bm for bm in para_bms if bm is not None and bm not in cited_set] if prune_uncited else []
+    if reorder_refs or prune_uncited:
+        if reorder_refs:
+            cited_paras = [bm_to_para[bm] for bm in cited_order]
+            uncited_paras = [] if prune_uncited else [
+                p for p, bm in zip(ref_paras, para_bms) if bm is None or bm not in cited_set
+            ]
+            new_ref_paras = cited_paras + uncited_paras
+        else:
+            new_ref_paras = [p for p, bm in zip(ref_paras, para_bms) if bm in cited_set]
 
         # Remove old ref_paras from body and reinsert immediately after ref_heading_el
         for p in ref_paras:
@@ -286,6 +297,8 @@ def sync_docx(docx_path: Path, out_path: Path | None = None, reorder_refs: bool 
     return {
         "docx_path": str(target_path),
         "reorder_refs": reorder_refs,
+        "prune_uncited": prune_uncited,
+        "pruned_bookmarks": pruned_bms,
         "sdt_groups_count": len(cit_sdts),
         "expanded_citations_count": sum(len(refs) for _, refs, _ in cit_sdts),
         "first_citation_order": cited_order,
@@ -352,11 +365,12 @@ def main() -> int:
     ap.add_argument("--out", type=Path, default=None, help="Optional output DOCX path (defaults to in-place)")
     ap.add_argument("--reorder-refs", dest="reorder_refs", action="store_true", default=True)
     ap.add_argument("--no-reorder-refs", dest="reorder_refs", action="store_false")
+    ap.add_argument("--prune-uncited", action="store_true", default=False, help="Remove References items no longer cited in body")
     ap.add_argument("--update-word", action="store_true", help="Run Word COM Fields.Update() and save")
     ap.add_argument("--pdf-out", type=Path, default=None, help="Optional PDF export path (with --update-word)")
     args = ap.parse_args()
 
-    res = sync_docx(args.docx, args.out, reorder_refs=args.reorder_refs)
+    res = sync_docx(args.docx, args.out, reorder_refs=args.reorder_refs, prune_uncited=args.prune_uncited)
     target = args.out if args.out is not None else args.docx
     if args.update_word:
         res["word_com"] = word_com_update_and_verify(target, args.pdf_out)

@@ -1,6 +1,6 @@
 {
-  "revised_docx": ".\\JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.docx",
-  "revised_pdf": ".\\JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.pdf",
+  "revised_docx_name": "JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.docx",
+  "revised_pdf_name": "JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.pdf",
   "pdf_page_count": 26,
   "baseline_ref_field_count": 44,
   "ref_field_count": 44,
@@ -8,7 +8,9 @@
   "sdt_controls_count": 26,
   "sdt_expanded_ref_ids_count": 54,
   "all_44_fields_shifted_plus_1": true,
+  "all_4_operations_passed": true,
   "scenario_1_insert_before_ref1": {
+    "operation": "ADD_REFERENCE_AT_TOP",
     "passed": true,
     "field_count": 44,
     "errors": [],
@@ -69,7 +71,55 @@
       }
     ]
   },
+  "scenario_1b_add_new_sdt_g27_and_ref28": {
+    "operation": "ADD_CITATION_AND_REFERENCE",
+    "passed": true,
+    "sdt_controls_count": 27,
+    "expanded_ref_ids_count": 55,
+    "references_count": 28,
+    "field_count": 45,
+    "errors": [],
+    "group_displays": {
+      "G01": {
+        "refs": [
+          "Ref01",
+          "Ref02"
+        ],
+        "word_display": "[1,2]"
+      },
+      "G27": {
+        "refs": [
+          "Ref28"
+        ],
+        "word_display": "[3]"
+      },
+      "G02": {
+        "refs": [
+          "Ref03",
+          "Ref04"
+        ],
+        "word_display": "[4,5]"
+      },
+      "G03": {
+        "refs": [
+          "Ref02",
+          "Ref05",
+          "Ref06",
+          "Ref07",
+          "Ref08"
+        ],
+        "word_display": "[2,6–9]"
+      },
+      "G24": {
+        "refs": [
+          "Ref27"
+        ],
+        "word_display": "[28]"
+      }
+    }
+  },
   "scenario_2_move_interior_ref06_to_27_no_reorder": {
+    "operation": "MOVE_REFERENCE",
     "passed": true,
     "field_count_after_range_split": 47,
     "errors": [],
@@ -153,6 +203,7 @@
     }
   },
   "scenario_3_move_g23_early_and_reorder_refs": {
+    "operation": "REORDER_FIRST_CITATION",
     "passed": true,
     "field_count": 44,
     "errors": [],
@@ -252,6 +303,64 @@
           "Ref27"
         ],
         "word_display": "[27]"
+      }
+    }
+  },
+  "scenario_4_delete_g02_and_prune_uncited": {
+    "operation": "DELETE_CITATION_AND_PRUNE",
+    "passed": true,
+    "sdt_controls_count": 25,
+    "expanded_ref_ids_count": 52,
+    "pruned_bookmarks": [
+      "Ref03",
+      "Ref04"
+    ],
+    "references_count": 25,
+    "field_count": 41,
+    "errors": [],
+    "recomputed_group_displays": {
+      "G01": {
+        "refs": [
+          "Ref01",
+          "Ref02"
+        ],
+        "word_display": "[1,2]"
+      },
+      "G03": {
+        "refs": [
+          "Ref02",
+          "Ref05",
+          "Ref06",
+          "Ref07",
+          "Ref08"
+        ],
+        "word_display": "[2–6]"
+      },
+      "G04": {
+        "refs": [
+          "Ref05",
+          "Ref06",
+          "Ref07",
+          "Ref08"
+        ],
+        "word_display": "[3–6]"
+      },
+      "G07": {
+        "refs": [
+          "Ref09",
+          "Ref10",
+          "Ref11",
+          "Ref12",
+          "Ref13",
+          "Ref14"
+        ],
+        "word_display": "[7–12]"
+      },
+      "G24": {
+        "refs": [
+          "Ref27"
+        ],
+        "word_display": "[25]"
       }
     }
   },

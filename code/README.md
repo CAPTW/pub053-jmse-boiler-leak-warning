@@ -1,0 +1,9 @@
+# R2 Analysis & Figure Reproduction Scripts (`code/`)
+
+These scripts provide a clean, standalone CLI execution path compatible with the R2 workflow and independent of any private `.docx`/`.pdf` submission files:
+
+- `_common.py` — Shared NumPy detector/EWLS equations, CSV/JSON helpers, and primary `.npz` availability detection (`full_raw_npz_replay` vs `archived_r2_tables_and_reconstructed_inputs`).
+- `test_analysis.py` — Unit and integrity tests for sequential persistence confirmation (`score > theta` for `elapsed >= 600` s, `1800` s cooldown), EWLS residual formulas, empirical quantile upper-tail condition vs. counterexample, and Table 6 rounding (`51.3 min`, `115.5 min`).
+- `verify_features.py --out results_reproduced` — Verifies Table 4 EWLS parameters, Table 5 threshold candidates (`0.99..1.000`), normal persistence spans (`48` rows), flow-first component crossing timings (`8/8` blocks), and quantile dominance without overwriting `results/`.
+- `reproduce_analysis.py --out results_reproduced` — Recomputes the 24-episode x 4-detector evaluation (`96` rows), Table 6 summary (`summary.csv`), multi-cutoff sensitivity (`0.70/0.75/0.80 m` -> `5/7/8` observed endpoints), delay-window equivalence (`32/32`), and Table 3/4/5/7 cross-checks (`50/50`) into `results_reproduced/` and compares every cell numerically against `results/` (`max_abs_diff = 0.0`).
+- `make_figures_r2.py --results results_reproduced --out figures_reproduced` — Freshly plots Figure 4 from `results_reproduced/episode_results.csv`, deterministically recomposes Figures 1 and 2 from `figures/raw_source_assets/`, stages preserved R2 raw-trace panels for Figures 3, 5, 6, and 7 (which require primary `.npz` time-series from `PUB053_Manuscript_Package_R2.zip` for full curve replotting), and writes `figure_generation_manifest.json` distinguishing byte/metadata differences from underlying numerical agreement.

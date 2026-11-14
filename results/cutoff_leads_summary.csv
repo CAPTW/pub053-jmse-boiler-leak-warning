@@ -1,0 +1,13 @@
+level_cutoff_m,method,n_observed,n_positive,median_strict_lead_s,median_strict_lead_min
+0.7,B0_state,5,5,3276,54.6
+0.7,Flow_only,5,5,3970,66.16666666666667
+0.7,Command_only,5,5,4578,76.3
+0.7,B1_combined,5,5,4578,76.3
+0.75,B0_state,7,7,2084,34.733333333333334
+0.75,Flow_only,7,7,2934,48.9
+0.75,Command_only,7,7,3542,59.03333333333333
+0.75,B1_combined,7,7,3542,59.03333333333333
+0.8,B0_state,8,8,531.0,8.85
+0.8,Flow_only,8,8,2610.0,43.5
+0.8,Command_only,8,8,3288.0,54.8
+0.8,B1_combined,8,8,3292.0,54.86666666666667

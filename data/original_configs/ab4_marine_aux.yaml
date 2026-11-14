@@ -1,0 +1,197 @@
+# Marine auxiliary boiler — Phase A ab4 (Astrom-Bell 4-state) physics core.
+#
+# Mirrors the FMU-backend example pattern (base_fmpy.yaml) for the ab4 backend:
+# select the conservation-first physics core with core_backend.type = "ab4".
+# Unlike the legacy grey-box, drum_level here is the *physical* horizontal-drum
+# level in metres (0..2r = 0..1.5 m for r=0.75), so controller setpoints, safety
+# limits and the level-sensor range are all in true metres.
+#
+# Run:
+#   python -m boiler_pdm_sim.cli.main --config configs/ab4_marine_aux.yaml \
+#       --out outputs/ab4_marine.parquet --format parquet
+
+sim:
+  dt: 1.0
+  horizon_s: 3600
+  solver: "BDF"
+  seed: 42
+  format: "parquet"
+  timebase:
+    controller_dt_s: 1.0
+    sensor_dt_s: 1.0
+    logger_dt_s: 1.0
+
+core_backend:
+  type: "ab4"
+  # marine geometry/metal placeholders (R9) — refine from vendor data
+  T_fw_C: 60.0
+  lambda_excess_air: 1.15
+  blowdown:
+    enabled: true
+    period_s: 1800.0
+    duration_s: 60.0
+    flow_kg_s: 0.05
+
+boiler:
+  application: "marine_auxiliary"
+  geometry:
+    drum_radius_m: 0.75
+    drum_length_m: 5.0
+  nominal:
+    pressure_bar: 7.0
+    steam_flow_kg_s: 1.4
+    feedwater_mass_kg: 500.0
+    level_fraction: 0.55
+  parameters:
+    combustion:
+      eta: 0.90
+      qmax_MW: 4.0
+
+control:
+  strategy: "three_element"
+  mode: "auto"
+  # Set to "obs" to close the control loop on the (noisy) sensor observations
+  # instead of plant truth (1-step measurement delay, §4/ADR-6). Safety stays on
+  # truth unless safety.evaluation_source is also set to "obs".
+  closed_loop_source: "truth"
+  low_load_fallback_threshold: 0.40
+  steam_flow_nominal_kg_s: 1.4
+  level_trim_to_flow_gain: 0.20
+  manual_outputs:
+    fuel_cmd: 0.6
+    fw_cmd: 0.5
+    steam_demand: 0.6
+  drum_level_pid:
+    kp: 0.8
+    ki: 0.02
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    setpoint_level_m: 0.85      # physical drum level (drum diameter 1.5 m)
+    out_feedforward: 0.5
+    antiwindup_gain: 1.0
+    max_step_rate_per_s: 0.5
+  pressure_pid:
+    kp: 0.7
+    ki: 0.02
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    setpoint_pressure_bar: 7.0
+    antiwindup_gain: 1.0
+    max_step_rate_per_s: 0.6
+  feedwater_flow_pid:
+    kp: 0.30
+    ki: 0.03
+    kd: 0.0
+    umin: 0.0
+    umax: 1.0
+    antiwindup_gain: 1.0
+  actuator:
+    fuel:
+      command_lag_s: 2.0
+      rate_limit: 0.8
+      deadband: 0.002
+      saturation: {min: 0.0, max: 1.0}
+      position_feedback_available: true
+    feedwater:
+      command_lag_s: 3.0
+      rate_limit: 0.7
+      deadband: 0.003
+      saturation: {min: 0.0, max: 1.0}
+      position_feedback_available: true
+    steam:
+      command_lag_s: 0.5
+      rate_limit: 1.2
+      deadband: 0.0
+      saturation: {min: 0.0, max: 1.0}
+      position_feedback_available: true
+
+scenario:
+  type: "load_follow"
+  seed: 11
+  load_follow:
+    base: 0.6
+    noise_std: 0.025
+    ramp_limit_per_min: 0.015
+
+sensors:
+  drum_pressure:
+    sample_period_s: 1.0
+    tau_s: 0.2
+    noise_std: 0.02
+    bias: 0.0
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+    spike_p: 0.0002
+    spike_std: 0.15
+    range_min: 0.0
+    range_max: 20.0
+    quality_flag_logic: "good"
+  drum_level:
+    sample_period_s: 1.0
+    tau_s: 0.6
+    noise_std: 0.004
+    drift_per_hour: 0.0002
+    dropout_p: 0.0003
+    range_min: 0.0
+    range_max: 1.5
+    quality_flag_logic: "good"
+    nominal_pressure_bar: 7.0
+    reference_leg_height_m: 1.5
+    reference_leg_temp_C: 60.0
+    radar:
+      enabled: false
+  steam_flow:
+    sample_period_s: 1.0
+    tau_s: 0.3
+    noise_std: 0.01
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+    range_min: 0.0
+    range_max: 3.0
+    quality_flag_logic: "good"
+  drum_temp_sh:
+    sample_period_s: 1.0
+    tau_s: 0.3
+    noise_std: 1.0
+    drift_per_hour: 0.0
+    dropout_p: 0.0005
+    range_min: 100.0
+    range_max: 250.0
+    quality_flag_logic: "good"
+
+validation:
+  schema_strict: false
+
+performance:
+  enabled: false
+
+safety:
+  enabled: true
+  lockout_on_trip: true
+  alarm:
+    fuel_cmd_max: 0.95
+    fw_cmd_max: 0.95
+    steam_demand_max: 0.95
+  trip:
+    fuel_cmd: 0.0
+    fw_cmd: 0.0
+    steam_demand: 0.0
+  process:
+    alarm:
+      level_LLL: 0.45
+      level_LL: 0.55
+      level_H: 1.15
+      level_HH: 1.30
+      pressure_H: 9.0
+      feedwater_low: 0.10
+      controller_saturation_timeout_s: 10000.0
+    trip:
+      level_LLL: 0.35
+      level_HH: 1.40
+      pressure_H: 11.0
+      feedwater_low: 0.05
+      controller_saturation_timeout_s: 10000.0
+      auto_reset: false
+      reset_hold_s: 60.0
