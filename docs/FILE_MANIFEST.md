@@ -1,7 +1,7 @@
 # File Manifest (`CAPTW/pub053-jmse-boiler-leak-warning`)
 
 - **Indexed files** (excluding self-referencing `docs/FILE_MANIFEST.*`): **279**
-- **Total indexed size**: **4,598,859 bytes**
+- **Total indexed size**: **4,598,273 bytes**
 
 ## Summary by Top-Level Directory
 | Top-Level | File Count | Bytes |
@@ -9,7 +9,7 @@
 | `(root)` | 10 | 25,273 |
 | `code` | 6 | 143,564 |
 | `data` | 11 | 39,797 |
-| `docs` | 10 | 106,381 |
+| `docs` | 10 | 105,795 |
 | `figures` | 16 | 2,943,718 |
 | `manuscript_verification` | 20 | 416,307 |
 | `references` | 6 | 83,011 |
@@ -42,13 +42,13 @@
 | `data/reconstructed_inputs/threshold_candidates_table5_reconstructed.json` | 3723 | `29ad01c048dd80db1b6f44edd21ab093348df2d9e1378406afcf82fcc1093e20` |
 | `docs/AI_USAGE_AUDIT.md` | 5870 | `4d335b1f0ff15277bb632bd7858a183efdd62914cf0e1f8e7b60e54da3478876` |
 | `docs/DATA_PROVENANCE.md` | 6152 | `386aa9084cdaa9257b290c2a06e0f5ab9680d79dffde0e1ea2d259be212990b9` |
-| `docs/execution_logs/fresh_clone_reproduction_log.json` | 27774 | `b8a31cda3dc26396ed48ee59440996f4979f98ec9460746af374feacf63bef31` |
+| `docs/execution_logs/fresh_clone_reproduction_log.json` | 27115 | `36105a80774ec838e59b63e6f911d13ecd0842f3e1c5d565ce451457d07725f8` |
 | `docs/execution_logs/pytest_ab4_core_log.txt` | 7903 | `d3fe3044b6992a24139749a9e95b1394c39a95ed341e3f16db03d5b19330d940` |
 | `docs/execution_logs/pytest_ab4_integration_log.txt` | 19492 | `405dbe089fe67fff0bee041ccd11745c6bbaa291db114eccd10a2f5bfa0bc788` |
 | `docs/execution_logs/verify_citations_and_manuscript_log.json` | 980 | `ff3901655777ad996a2e31e3a5f917fdc231c7225412d645ba0ab9ff78ee0202` |
 | `docs/execution_logs/verify_tables_from_archived_results_log.json` | 2363 | `d5c8e43566fb037995d6c26d1825ec21518f398747841be2a5fd144ef63a0f52` |
 | `docs/KNOWN_LIMITATIONS.md` | 5346 | `8a67e9944894e41dd9ecc763fa1baa9c62fd5d6877b9f5851f939fb31f7cfb59` |
-| `docs/REPRODUCTION_GUIDE.md` | 7852 | `40376f8fae9231bf111dfa0be05bbaeceb79db7503a063fb5e34273b9e4bd616` |
+| `docs/REPRODUCTION_GUIDE.md` | 7925 | `57be2b2402cf22fbac1bddaa9ea2edeca660f8d7fffa3edd57dc8e46bddce1c3` |
 | `docs/SOURCE_PROVENANCE.md` | 22649 | `6700afc52a8cbc39de0863b47de0cbc26a7e08fc95e6891243752c05913b5a0b` |
 | `environment.yml` | 144 | `930ab1e8c0a3d749080750509742d9d52dff4221be622e128dbd5c2bb237d9fb` |
 | `figures/fig1_normal_overview.png` | 1034473 | `7ecb3a6c9027701f0ea668e9ac918a738e9521fdb8498f2cd5a4ed3ef51b9bd0` |
