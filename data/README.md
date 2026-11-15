@@ -26,12 +26,14 @@ All structured tabular metadata, block schedules, EWLS parameters, threshold can
 - `data/original_configs/ab4_marine_aux.yaml`: Base marine auxiliary boiler YAML recovered from local upstream HEAD `4fea4646723f04db41583cb682bac8b62c44bc05`.
 - `data/reconstructed_inputs/`: Five verified JSON reconstructions covering Tables 1–5 and Table 7 (`plant_parameters_table1_table2_from_source.json`, `block_design_table3_reconstructed.json`, `ewls_fit_table4_reconstructed.json`, `threshold_candidates_table5_reconstructed.json`, `episode_event_timings_table7_reconstructed.json`).
 
-## 3. Running Full Raw `.npz` Replay When Primary Archives Are Mounted
-When the 48 primary `.npz` files from `PUB053_Manuscript_Package_R2.zip` (available from the corresponding author upon reasonable request) are extracted into:
+## 3. Running Full Raw `.npz` Replay vs. Explicit Archived Opt-In
+When all 48 primary `.npz` files from `PUB053_Manuscript_Package_R2.zip` (available from the corresponding author upon reasonable request) are extracted into:
 - `data/observations/<episode>.npz` (24 files)
 - `data/traces/<episode>.npz` (24 files)
 
-the scripts in `code/` (`test_analysis.py`, `verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`) automatically detect all 48 `.npz` files and switch from **archived-table verification mode** (`mode = "archived_r2_tables"`) to **full raw `.npz` trajectory replay mode** (`mode = "full_raw_npz_replay"`).
+the scripts in `code/` (`verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`) detect all 48 `.npz` files via `_common.check_raw_npz_availability()` and execute **full raw `.npz` trajectory replay mode** (`mode = "full_raw_npz_replay"`).
+
+When those 48 `.npz` files are absent (`mode = "missing_primary_raw_npz"`), default CLI invocations fail loudly with exit code `1` (`all_passed: false`) rather than substituting archived CSVs silently. To verify the bundled archived tables and preserved graphic assets on a standalone fresh clone without `.npz` files, pass the explicit opt-in flags `--archived-tables-only` (`verify_features.py`, `reproduce_analysis.py`) and `--archived-assets-only` (`make_figures_r2.py`). See `../REPRODUCIBILITY.md`, `../docs/DATA_PROVENANCE.md`, and `../docs/KNOWN_LIMITATIONS.md`.
 
 ### Expected 24 Observation Archives (`data/observations/`)
 - `data/observations/D1_normal.npz`

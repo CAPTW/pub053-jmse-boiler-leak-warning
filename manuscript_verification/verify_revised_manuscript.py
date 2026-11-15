@@ -231,7 +231,15 @@ def verify_all(
             and "reconstructed_inputs" in full_text
         ),
         "has_live_public_github_url": "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" in full_text,
-        "has_release_tag": "v1.0.0-pub053-r2" in full_text,
+        "has_release_tag": "v1.0.1-pub053-r2" in full_text and "v1.0.0-pub053-r2" in full_text,
+        "has_v101_provenance_and_flags": (
+            "REPRODUCIBILITY.md" in full_text
+            and "DATA_PROVENANCE.md" in full_text
+            and "KNOWN_LIMITATIONS.md" in full_text
+            and "--archived-tables-only" in full_text
+            and "--archived-assets-only" in full_text
+        ),
+        "no_auto_fallback_overclaim": "automatic full_raw_npz_replay" not in full_text,
         "no_pending_confirmation_placeholder": "to be confirmed by the authors" not in full_text,
         "has_claude_code_pr_footer_disclosure": "Claude Code" in full_text and "PR_BODY.md" in full_text,
         "has_corrected_archive_separation": "PUB053_Manuscript_Package_R2.zip" in full_text and "source_copy/" in full_text,

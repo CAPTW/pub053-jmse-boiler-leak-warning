@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import statistics
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -19,14 +20,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _common import (
     METHODS_ORDER,
     check_raw_npz_availability,
+    compare_csv_files,
     compute_ewls_residuals,
     compute_table6_from_episode_rows,
     detect_sequential_alarms,
     load_csv,
     max_exceedance_span_s,
+    reconstruct_features_from_observations,
     resolve_repo_root,
     round_half_up_1dp,
+    write_csv,
 )
+from verify_features import verify_from_raw_npz
 
 REPO_ROOT = resolve_repo_root()
 
@@ -58,7 +63,7 @@ class TestPub053R2Analysis(unittest.TestCase):
         self.assertAlmostEqual(max_exceedance_span_s(t, s2, av, theta), 600.0)
 
     def test_ewls_residuals_and_fit_parameters(self) -> None:
-        """Verify Table 4 OLS fit structure and zero-residual algebraic identity."""
+        """Verify Table 4 OLS fit structure, zero-residual identity, and signed positive/negative residuals."""
         ewls = json.loads((REPO_ROOT / "data" / "reconstructed_inputs" / "ewls_fit_table4_reconstructed.json").read_text(encoding="utf-8"))
         self.assertEqual(ewls["fit_sample_n"], 40804)
         self.assertEqual(40804, 4 * 10201)  # 4 development blocks * (21600 - 1200) / 2 + 1 samples
@@ -72,13 +77,28 @@ class TestPub053R2Analysis(unittest.TestCase):
             "sigma_F": p["σF"],
             "sigma_D": p["σD"],
         }
-        q_s = np.array([0.8, 1.4])
-        l_dev = np.array([0.0, -0.02])
-        q_f_exact = fit["a0"] + fit["a1"] * q_s + fit["a2"] * l_dev
-        u_f_exact = fit["b0"] + fit["b1"] * q_s
-        _, _, z_f, z_d = compute_ewls_residuals(q_s, l_dev, q_f_exact, u_f_exact, fit)
-        np.testing.assert_allclose(z_f, 0.0, atol=1e-12)
-        np.testing.assert_allclose(z_d, 0.0, atol=1e-12)
+        q_s = np.array([0.8, 1.4, 1.1])
+        l_dev = np.array([0.0, -0.02, 0.01])
+        r_ref_expected = fit["a0"] + fit["a1"] * q_s + fit["a2"] * l_dev
+        u_ref_expected = fit["b0"] + fit["b1"] * q_s
+
+        # Zero-residual check
+        _, _, z_f0, z_d0 = compute_ewls_residuals(q_s, l_dev, r_ref_expected, u_ref_expected, fit)
+        np.testing.assert_allclose(z_f0, 0.0, atol=1e-12)
+        np.testing.assert_allclose(z_d0, 0.0, atol=1e-12)
+
+        # Signed residual preservation (positive, zero, negative)
+        delta_r = np.array([2.5 * fit["sigma_F"], 0.0, -1.75 * fit["sigma_F"]])
+        delta_u = np.array([-3.0 * fit["sigma_D"], 1.5 * fit["sigma_D"], -0.5 * fit["sigma_D"]])
+        _, _, z_f, z_d = compute_ewls_residuals(q_s, l_dev, r_ref_expected + delta_r, u_ref_expected + delta_u, fit)
+        np.testing.assert_allclose(z_f, np.array([2.5, 0.0, -1.75]), atol=1e-12)
+        np.testing.assert_allclose(z_d, np.array([-3.0, 1.5, -0.5]), atol=1e-12)
+
+        # Keyword backward-compatibility & duplicate-argument guard
+        _, _, z_f_kw, _ = compute_ewls_residuals(q_s, l_dev, q_f=r_ref_expected + delta_r, u_f=u_ref_expected, fit_params=fit)
+        np.testing.assert_allclose(z_f_kw, z_f, atol=1e-12)
+        with self.assertRaises(ValueError):
+            compute_ewls_residuals(q_s, l_dev, r_ref_expected, u_ref_expected, fit, q_f=r_ref_expected)
 
     def test_quantile_counterexample_and_empirical_dominance(self) -> None:
         """Prove max-score quantile != max of marginal quantiles in general, while checking observed upper-tail condition."""
@@ -133,6 +153,130 @@ class TestPub053R2Analysis(unittest.TestCase):
         for r in np_rows:
             if r["episode"].startswith("E") and not (r["episode"] == "E8_normal" and r["method"] == "B0_state"):
                 self.assertLess(float(r["max_exceedance_span_s"]), 600.0)
+
+    def test_raw_feature_reconstruction_and_negative_mutation(self) -> None:
+        """Exercise end-to-end 24-episode raw NPZ reconstruction (144/144 arrays) and fail on perturbation."""
+        base_meta = load_csv(REPO_ROOT / "data" / "episode_metadata.csv")
+        t = np.arange(0.0, 2602.0, 2.0)
+        q_bd = np.where(np.mod(t, 1800.0) < (60.0 - 1e-9), 0.05, 0.0)
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp_root = Path(td)
+            (tmp_root / "data" / "observations").mkdir(parents=True)
+            (tmp_root / "data" / "traces").mkdir(parents=True)
+            (tmp_root / "results").mkdir(parents=True)
+
+            obs_map: dict[str, dict[str, np.ndarray]] = {}
+            synth_meta: list[dict[str, str]] = []
+            for idx, m in enumerate(base_meta):
+                ep = m["episode"]
+                row = dict(m)
+                rng = np.random.default_rng(1000 + idx)
+                base_qs = float(m["base_regime"]) * 2.0 + 0.04 * np.sin(t / 180.0 + idx) + rng.normal(0.0, 0.005, size=t.size)
+                p_obs = 7.0 + 0.02 * np.cos(t / 240.0 + idx) + rng.normal(0.0, 0.002, size=t.size)
+                l_obs = 0.85 + 0.005 * np.sin(t / 300.0 + idx) + rng.normal(0.0, 0.001, size=t.size)
+                q_f = base_qs + q_bd + 0.02 + 0.02 * (base_qs - 1.0) + rng.normal(0.0, 0.015, size=t.size)
+                u_fw = 0.40 + 0.30 * base_qs + rng.normal(0.0, 0.012, size=t.size)
+
+                if m["condition"] == "tube_leak":
+                    onset = 1300.0
+                    row["onset_s"] = str(onset)
+                    after = t >= onset
+                    # Flow leak anomaly starts at onset, well before feedwater command saturation
+                    q_f = np.where(after, q_f + 0.90, q_f)
+                    u_fw = 0.40 + 0.30 * base_qs + np.where(t >= onset + 320.0, 0.40, 0.0)
+                    l_obs = np.where(t >= onset + 320.0, l_obs - 0.08, l_obs)
+                synth_meta.append(row)
+
+                obs_ep = {
+                    "time": t,
+                    "meta/obs_held_drum_pressure": p_obs,
+                    "meta/obs_held_drum_level": l_obs,
+                    "meta/obs_held_feedwater_flow": q_f,
+                    "meta/obs_held_steam_flow": base_qs,
+                    "meta/fw_cmd": u_fw,
+                    "meta/q_bd": q_bd,
+                    "truth/drum_level": l_obs,
+                }
+                obs_map[ep] = obs_ep
+                np.savez(tmp_root / "data" / "observations" / f"{ep}.npz", **obs_ep)
+
+            write_csv(tmp_root / "data" / "episode_metadata.csv", synth_meta, list(base_meta[0].keys()))
+            episodes = [r["episode"] for r in synth_meta]
+            recon = reconstruct_features_from_observations(obs_map, episodes)
+            for ep, tr_ep in recon["traces"].items():
+                np.savez(
+                    tmp_root / "data" / "traces" / f"{ep}.npz",
+                    time=tr_ep["time"],
+                    state_score=tr_ep["state_score"],
+                    flow_z=tr_ep["flow_z"],
+                    command_z=tr_ep["command_z"],
+                    combined_score=tr_ep["combined_score"],
+                    available_state=tr_ep["available_state"],
+                    available_flow_command=tr_ep["available_flow_command"],
+                )
+
+            ok = verify_from_raw_npz(tmp_root, tmp_root / "out_ok")
+            self.assertEqual(ok["trace_array_checks_total"], 144)
+            self.assertEqual(ok["trace_array_checks_passed"], 144)
+            self.assertTrue(ok["all_trace_arrays_matched"])
+            self.assertTrue(ok["flow_crossed_first_all_8"])
+            self.assertTrue(ok["all_passed"])
+
+            # Mutate raw feedwater observation in D1_normal and verify raw-replay check detects mismatch
+            d1_mut = dict(obs_map["D1_normal"])
+            d1_mut["meta/obs_held_feedwater_flow"] = d1_mut["meta/obs_held_feedwater_flow"] + np.where(t >= 1200.0, 0.30, 0.0)
+            np.savez(tmp_root / "data" / "observations" / "D1_normal.npz", **d1_mut)
+
+            bad = verify_from_raw_npz(tmp_root, tmp_root / "out_bad")
+            self.assertEqual(bad["trace_array_checks_total"], 144)
+            self.assertLess(bad["trace_array_checks_passed"], 144)
+            self.assertFalse(bad["all_trace_arrays_matched"])
+            self.assertFalse(bad["all_passed"])
+
+    def test_cutoff_leads_key_alignment(self) -> None:
+        """Verify key-aligned CSV comparison handles permuted rows and canonical numeric keys while rejecting corruptions."""
+        ref_rows = load_csv(REPO_ROOT / "results" / "cutoff_leads_by_block.csv")
+        cols = list(ref_rows[0].keys())
+        # Permute from (episode, level_cutoff_m, method) to (episode, method, level_cutoff_m) and format 0.7 -> 0.70
+        permuted = sorted(
+            [dict(r) for r in ref_rows],
+            key=lambda r: (r["episode"], METHODS_ORDER.index(r["method"]), float(r["level_cutoff_m"])),
+        )
+        permuted[0]["level_cutoff_m"] = "0.70" if permuted[0]["level_cutoff_m"] == "0.7" else permuted[0]["level_cutoff_m"]
+
+        with tempfile.TemporaryDirectory() as td:
+            p_ref = Path(td) / "ref.csv"
+            p_perm = Path(td) / "perm.csv"
+            p_bad = Path(td) / "bad.csv"
+            p_dup = Path(td) / "dup.csv"
+            write_csv(p_ref, ref_rows, cols)
+            write_csv(p_perm, permuted, cols)
+
+            # Positional comparison fails on row permutation; keyed comparison passes
+            pos_cmp = compare_csv_files(p_ref, p_perm)
+            key_cmp = compare_csv_files(p_ref, p_perm, key_cols=("episode", "level_cutoff_m", "method"))
+            self.assertFalse(pos_cmp["exact_match"])
+            self.assertTrue(key_cmp["exact_match"])
+            self.assertEqual(key_cmp["rows_checked"], len(ref_rows))
+
+            # Value perturbation fails
+            bad_rows = [dict(r) for r in permuted]
+            for r in bad_rows:
+                if r["strict_lead_s"] != "":
+                    r["strict_lead_s"] = str(int(r["strict_lead_s"]) + 2)
+                    break
+            write_csv(p_bad, bad_rows, cols)
+            bad_cmp = compare_csv_files(p_ref, p_bad, key_cols=("episode", "level_cutoff_m", "method"))
+            self.assertFalse(bad_cmp["exact_match"])
+            self.assertEqual(bad_cmp["mismatch_count"], 1)
+
+            # Duplicate/missing key fails
+            dup_rows = [dict(r) for r in permuted[:-1]] + [dict(permuted[0])]
+            write_csv(p_dup, dup_rows, cols)
+            dup_cmp = compare_csv_files(p_ref, p_dup, key_cols=("episode", "level_cutoff_m", "method"))
+            self.assertFalse(dup_cmp["exact_match"])
+            self.assertTrue(len(dup_cmp["duplicate_gen_keys"]) > 0 or len(dup_cmp["missing_keys"]) > 0)
 
 
 def main() -> int:

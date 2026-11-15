@@ -38,9 +38,7 @@ DEFAULT_REV_PDF = Path(
 DEFAULT_DYN_LOG = Path(
     r"manuscript_verification\citation_editing_and_reordering_test_log.json"
 )
-DEFAULT_REPO_DIR = Path(
-    r"<repo_root>"
-)
+DEFAULT_REPO_DIR = Path(__file__).resolve().parent.parent
 
 BIB_NS = "{http://schemas.openxmlformats.org/officeDocument/2006/bibliography}"
 
@@ -128,7 +126,10 @@ def run_checks(orig_docx: Path, rev_docx: Path, rev_pdf: Path, dyn_log: Path, re
     assert "current_manuscript_verification" in full_text
     assert "reconstructed_inputs" in full_text
     assert "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" in full_text
-    assert "v1.0.0-pub053-r2" in full_text
+    assert "v1.0.1-pub053-r2" in full_text and "v1.0.0-pub053-r2" in full_text
+    assert "REPRODUCIBILITY.md" in full_text and "DATA_PROVENANCE.md" in full_text and "KNOWN_LIMITATIONS.md" in full_text
+    assert "--archived-tables-only" in full_text and "--archived-assets-only" in full_text
+    assert "automatic full_raw_npz_replay" not in full_text
     assert "to be confirmed by the authors" not in full_text
     assert "Claude Code" in full_text and "PR_BODY.md" in full_text
     assert "boiler_pdm_sim" in full_text and "ab4" in full_text

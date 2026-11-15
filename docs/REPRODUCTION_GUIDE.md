@@ -1,18 +1,28 @@
 # Reproduction and Verification Guide (`PUB-053`)
 
-## Level A — Direct Standalone Reproduction & Verification (Fresh Clone, No Private Files Required)
+## Level A — Standalone Verification & Unit Tests (Fresh Clone, No Private Files Required)
 Install dependencies into an isolated Python 3.12 virtual environment (`pip install -r requirements-lock.txt`, or `conda env create -f environment.yml`) and run all commands from the repository root without overwriting `results/`:
 
 1. **R2 Analysis & Figure Reproduction Suite (`code/`)**:
-   ```bash
-   python -B code/test_analysis.py
-   python -B code/verify_features.py --out results_reproduced
-   python -B code/reproduce_analysis.py --out results_reproduced
-   python -B code/make_figures_r2.py --results results_reproduced --out figures_reproduced
-   ```
-   - Automatically detects whether the 48 binary `.npz` arrays (`data/observations/*.npz` and `data/traces/*.npz` from `PUB053_Manuscript_Package_R2.zip`) are mounted locally.
-   - When the 48 binary `.npz` files are absent (default public fresh clone), runs cleanly in `archived_r2_tables_and_reconstructed_inputs` mode against `data/`, `results/`, `results_archived/`, and `simulator_source/`, verifying `4/4` unit tests, `48/48` normal-persistence checks (`max_abs_diff = 0.0`), `8/8` component-crossing checks (`max_abs_diff = 0.0`), `96/96` episode-method rows, `32/32` delay-window checks, `50/50` Table 3/4/5/7 cross-checks, freshly rendering `fig4_method_summary_delay_lead.png` from `results_reproduced/episode_results.csv`, and validating all 7 manuscript figures in `figures_reproduced/`.
-   - When all 48 `.npz` files from `PUB053_Manuscript_Package_R2.zip` are placed under `data/observations/` and `data/traces/`, switches automatically to `full_raw_npz_replay` mode without changing CLI invocations.
+   - **Strict Default (Fails Loudly Without Primary `.npz` Archives)**:
+     Without all 48 `.npz` files under `data/observations/` and `data/traces/`, default runs exit with code `1` (`missing_raw_npz_error` / `all_passed: false`).
+     ```bash
+     python -B code/verify_features.py --out results_reproduced
+     python -B code/reproduce_analysis.py --out results_reproduced
+     python -B code/make_figures_r2.py --results results_reproduced --out figures_reproduced
+     ```
+     When all 48 `.npz` files from `PUB053_Manuscript_Package_R2.zip` are placed under `data/observations/` and `data/traces/`, these same default commands run `full_raw_npz_replay` (reconstructing raw features per Supplement S3 and verifying all 144 trace arrays, `fit_params.json`, keyed CSVs, and raw `.npz` trace curves).
+   - **Explicit Archived Opt-In (Standalone Fresh Clone Without `.npz` Files)**:
+     ```bash
+     python -B code/test_analysis.py
+     python -B code/verify_features.py --archived-tables-only --out results_reproduced
+     python -B code/reproduce_analysis.py --archived-tables-only --out results_reproduced
+     python -B code/make_figures_r2.py --archived-assets-only --results results_reproduced --out figures_reproduced
+     ```
+     - `code/test_analysis.py` passes `6/6` unit tests (including signed `r_m` EWLS checks, synthetic 24-episode Supplement S3 raw `.npz` reconstruction + 144-array comparison + negative mutation failure check, and canonical keyed CSV alignment).
+     - `verify_features.py --archived-tables-only` verifies `normal_persistence.csv` (`48/48`, `max_abs_diff = 0.0`), `component_crossing_timing.csv` (`8/8`, `max_abs_diff = 0.0`), and `fit_params.json`, reporting all 5 provenance buckets (`recomputed_from_raw_inputs` empty in archived mode).
+     - `reproduce_analysis.py --archived-tables-only` reproduces `96/96` episode-method rows and `32/32` delay-window checks using keyed CSV comparison (`cutoff_leads_by_block.csv` keyed by `("episode", "level_cutoff_m", "method")`), and writes `results_reproduced/archived_tables_3_4_5_7_internal_checks.json` (`50/50` internal checks) without copying `results/tables_3_4_5_7_crosscheck.csv` as newly executed output.
+     - `make_figures_r2.py --archived-assets-only` freshly renders `fig4_method_summary_delay_lead.png` (`1136x896`) from `results_reproduced/episode_results.csv`, recomposes Figures 1–2, validates preserved R2 panels for Figures 3, 5–7, and records 5 explicit asset-provenance buckets.
 
 2. **Tables 1–8, Reconstructed Inputs & Figures 1–7 Cross-Check (`manuscript_verification/`)**:
    ```bash
@@ -20,14 +30,16 @@ Install dependencies into an isolated Python 3.12 virtual environment (`pip inst
    ```
    Checks Table 1 parameters against `simulator_source/configs/ab4_marine_aux.yaml` and `core/ab4/drum_model.py`, asserts `50/50` cross-checks, verifies `data/reconstructed_inputs/` and `results_archived/reconstructed_inputs/` plus `current_manuscript_table_checks.csv` (`62/62`), recomputes Table 6 summary stats from `results/episode_results.csv`, verifies `5/7/8` cutoff counts and `32/32` delay-window identity, and inspects `figures/` + `figures/raw_source_assets/`.
 
-3. **Physics Core (`ab4`) & Property Layer Unit Tests (`simulator_source/`)**:
+3. **Physics Core & Contract Tests (`simulator_source/`)**:
+   Run from inside `simulator_source/` so relative `configs/base.yaml` fixtures resolve cleanly:
    ```bash
-   PYTHONPATH=simulator_source/src python -m pytest simulator_source/tests/test_ab4_geometry.py \
-     simulator_source/tests/test_ab4_lines.py simulator_source/tests/test_ab4_drum_model.py \
-     simulator_source/tests/test_ab4_furnace.py simulator_source/tests/test_props_if97.py \
-     simulator_source/tests/test_props_fuels_gas.py simulator_source/tests/test_backend_protocol.py -v
+   cd simulator_source
+   PYTHONPATH=src python -B -m pytest tests/test_ab4_geometry.py \
+     tests/test_ab4_lines.py tests/test_backend_protocol.py \
+     tests/test_fmu_contract.py tests/test_manifest_integrity.py \
+     tests/test_pipeline_contracts.py tests/test_simulator_run_to_file_smoke.py -q
    ```
-   Runs the `88` core `ab4` + property tests in ~16 s. Running the entire `simulator_source/tests/` directory (requiring `pyarrow==16.1.0` with `numpy==1.26.4` and `iapws==1.5.5`) also passes the pipeline/closed-loop/cross-model suites, while reporting 2 expected failures in `test_workspace_structure.py` and `test_governance_policy_contracts.py` because top-level compatibility wrappers (`blueprint.md`, `scripts/check_dataset_governance.py`) were excluded from the minimal `simulator_source/` snapshot (see `docs/SOURCE_PROVENANCE.md`).
+   In a base environment without optional `iapws`, these 7 non-`iapws` modules pass `45 passed, 1 skipped`. Running modules that import `props/if97.py`, `drum_model.py`, or `furnace.py` (`test_ab4_drum_model.py`, `test_ab4_furnace.py`, `test_props_if97.py`, `test_props_fuels_gas.py`, `test_props_backend_switch.py`) additionally requires user-installed optional `iapws` (excluded under GPL-3.0 separation), and `test_workspace_structure.py` / `test_governance_policy_contracts.py` reference excluded upstream repository files (see `docs/SOURCE_PROVENANCE.md` and `docs/KNOWN_LIMITATIONS.md`).
 
 ## Level B — Optional Manuscript DOCX/PDF Checks (Author Local Copy Only)
 Formatted submission `.docx` and `.pdf` files are excluded from GitHub (`.gitignore`). If supplied locally by the author:
