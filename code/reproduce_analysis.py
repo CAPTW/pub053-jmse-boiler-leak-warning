@@ -29,12 +29,14 @@ from _common import (
     METHODS_ORDER,
     METHOD_KEY_MAP,
     METHOD_LABELS,
+    calibrate_thresholds_from_traces,
     check_raw_npz_availability,
     compare_csv_files,
     compute_table6_from_episode_rows,
-    consecutive_true_runs,
+    detect_functional_event,
     detect_sequential_alarms,
     extract_observation_channels,
+    extract_raw_trip_and_domain_exit,
     load_csv,
     reconstruct_features_from_observations,
     resolve_repo_root,
@@ -44,33 +46,14 @@ from _common import (
 )
 
 
-def _extract_raw_trip_and_domain_exit(obs_npz: dict[str, np.ndarray], t: np.ndarray, meta_row: dict[str, str]) -> tuple[float | None, float | None]:
-    """Extract earliest process trip and liquid-volume-fraction domain exit times when available."""
-    trip_t = None
-    domain_t = None
-    if "meta/process_trip_s" in obs_npz:
-        val = float(obs_npz["meta/process_trip_s"])
-        if np.isfinite(val):
-            trip_t = val
-    elif "truth/liquid_volume_fraction" in obs_npz and "meta/trip_active" in obs_npz:
-        idx = np.flatnonzero(np.asarray(obs_npz["meta/trip_active"], dtype=bool))
-        if len(idx) > 0:
-            trip_t = float(t[idx[0]])
-    elif meta_row.get("process_trip_s"):
-        trip_t = float(meta_row["process_trip_s"])
+_extract_raw_trip_and_domain_exit = extract_raw_trip_and_domain_exit
 
-    if "meta/domain_exit_s" in obs_npz:
-        val = float(obs_npz["meta/domain_exit_s"])
-        if np.isfinite(val):
-            domain_t = val
-    elif "truth/liquid_volume_fraction" in obs_npz:
-        lvf = np.asarray(obs_npz["truth/liquid_volume_fraction"], dtype=float)
-        idx = np.flatnonzero((lvf < 0.05) | (lvf > 0.95))
-        if len(idx) > 0:
-            domain_t = float(t[idx[0]])
-    elif meta_row.get("domain_exit_s"):
-        domain_t = float(meta_row["domain_exit_s"])
-    return trip_t, domain_t
+
+def _format_table5_quantile(q: float) -> str:
+    if abs(q - 1.0) < 1e-12:
+        return "1.000"
+    s4 = f"{q:.4f}"
+    return f"{q:.3f}" if s4.endswith("0") else s4
 
 
 def _build_tables_3_4_5_7_from_raw(
@@ -80,7 +63,7 @@ def _build_tables_3_4_5_7_from_raw(
     cands: list[dict[str, Any]],
     selected_q: dict[str, float],
     ep_rows: list[dict[str, Any]],
-    extra_events: dict[str, tuple[float | None, float | None]],
+    extra_events: dict[str, tuple[float | None, float | None, dict[str, str]]],
 ) -> list[dict[str, Any]]:
     """Recompute Table 3/4/5/7 cross-check rows directly from raw observation replay outputs."""
     rec_dir = repo_root / "data" / "reconstructed_inputs"
@@ -104,8 +87,8 @@ def _build_tables_3_4_5_7_from_raw(
         pname = item["parameter"]
         act = fit_map[pname]
         exp = float(item["full_precision_value"])
-        rows.append({"table": 4, "row": pname, "kind": "raw OLS/EWMA fit check", "match": str(abs(act - exp) <= 1e-3), "actual": act, "expected": item["full_precision_value"]})
-    rows.append({"table": 4, "row": "Fit sample N", "kind": "raw OLS/EWMA fit check", "match": str(int(fit_map["Fit sample N"]) == int(t4_ref["fit_sample_n"])), "actual": fit_map["Fit sample N"], "expected": t4_ref["fit_sample_n"]})
+        is_match = int(round(act)) == int(round(exp)) if pname == "Fit sample N" else abs(act - exp) <= 1e-9
+        rows.append({"table": 4, "row": pname, "kind": "raw OLS/EWMA fit check", "match": str(is_match), "actual": act, "expected": item["full_precision_value"]})
 
     ref_t5 = {(c["method"], float(c["quantile"])): [round(float(c["threshold"]), 6)] + [int(x) for x in c["counts"]] for c in t5_ref["candidates"]}
     for c in cands:
@@ -114,30 +97,40 @@ def _build_tables_3_4_5_7_from_raw(
         label = METHOD_LABELS[m] + (" [Retained]" if abs(q - selected_q[m]) < 1e-12 else "")
         act = [round(float(c["threshold"]), 6)] + [int(x) for x in c["counts"]]
         exp = ref_t5[(m, q)]
-        rows.append({"table": 5, "row": f"{label}:{q:.4f}".rstrip("0").rstrip(".") if q != 1.0 else f"{label}:1.000", "kind": "independently recomputed thresholds and alarms", "match": str(act == exp), "actual": json.dumps(act), "expected": json.dumps(exp)})
+        rows.append({"table": 5, "row": f"{label}:{_format_table5_quantile(q)}", "kind": "independently recomputed thresholds and alarms", "match": str(act == exp), "actual": json.dumps(act), "expected": json.dumps(exp)})
 
     ep_map = {(r["episode"], r["method"]): r for r in ep_rows}
     for blk_row in t7_ref["evaluation_blocks"]:
         blk = blk_row["block"]
         ep = f"{blk}_tube_leak"
         onset = float(meta_fault[blk]["onset_s"])
-        trip_t, dom_t = extra_events[ep]
+        trip_t, dom_t, ev_prov = extra_events[ep]
         ev_start = ep_map[(ep, "B0_state")]["event_start_s"]
         ev_conf = ep_map[(ep, "B0_state")]["event_confirm_s"]
+
+        def _alarm_val(method_key: str) -> float | None:
+            v = ep_map[(ep, method_key)]["first_post_onset_alarm_s"]
+            return None if v == "" else float(v)
+
         act = [
             onset,
-            float(ep_map[(ep, "B0_state")]["first_post_onset_alarm_s"]),
-            float(ep_map[(ep, "Flow_only")]["first_post_onset_alarm_s"]),
-            float(ep_map[(ep, "Command_only")]["first_post_onset_alarm_s"]),
-            float(ep_map[(ep, "B1_combined")]["first_post_onset_alarm_s"]),
+            _alarm_val("B0_state"),
+            _alarm_val("Flow_only"),
+            _alarm_val("Command_only"),
+            _alarm_val("B1_combined"),
             None if ev_start == "" else float(ev_start),
             None if ev_conf == "" else float(ev_conf),
             trip_t,
             dom_t,
         ]
         exp = blk_row["values_ordered"]
-        rows.append({"table": 7, "row": blk, "kind": "independently recomputed alarms and raw events", "match": str(act == exp), "actual": json.dumps(act), "expected": json.dumps(exp)})
+        fallback_used = ev_prov["trip_source"] == "metadata_fallback" or ev_prov["domain_exit_source"] == "metadata_fallback"
+        kind_label = "recomputed alarms with metadata event fallback" if fallback_used else "independently recomputed alarms and raw events"
+        rows.append({"table": 7, "row": blk, "kind": kind_label, "match": str(act == exp), "actual": json.dumps(act), "expected": json.dumps(exp)})
 
+    assert len(rows) == 50, f"Expected 50 unique Table 3/4/5/7 rows, got {len(rows)}"
+    keys = {(r["table"], r["row"]) for r in rows}
+    assert len(keys) == len(rows), "Duplicate (table, row) keys generated in tables_3_4_5_7_crosscheck"
     return rows
 
 
@@ -150,27 +143,13 @@ def reproduce_from_raw_npz(repo_root: Path, out_dir: Path) -> tuple[list[dict], 
     recon = reconstruct_features_from_observations(obs, episodes)
     tr = recon["traces"]
 
-    thresholds: dict[str, float] = {}
-    selected_q: dict[str, float] = {}
-    cands: list[dict[str, Any]] = []
-    for method in METHODS_ORDER:
-        key, av = METHOD_KEY_MAP[method]
-        vals = np.concatenate([
-            tr[f"{blk}_normal"][key][(tr[f"{blk}_normal"]["time"] >= 1200.0) & tr[f"{blk}_normal"][av]]
-            for blk in DEV_BLOCKS
-        ])
-        for q in (0.99, 0.995, 0.999, 0.9995, 1.0):
-            th = float(np.quantile(vals, q, method="linear"))
-            counts = [len(detect_sequential_alarms(tr[f"{blk}_normal"]["time"], tr[f"{blk}_normal"][key], tr[f"{blk}_normal"][av], th)) for blk in DEV_BLOCKS]
-            cands.append({"method": method, "quantile": q, "threshold": th, "counts": counts})
-            if method not in thresholds and sum(counts) == 0:
-                thresholds[method] = th
-                selected_q[method] = q
+    thresholds, selected_q, cands = calibrate_thresholds_from_traces(tr)
 
     ep_rows: list[dict] = []
     delay_win_rows: list[dict] = []
     cutoff_rows: list[dict] = []
-    extra_events: dict[str, tuple[float | None, float | None]] = {}
+    extra_events: dict[str, tuple[float | None, float | None, dict[str, str]]] = {}
+    event_prov_by_ep: dict[str, dict[str, str]] = {}
     for m in meta:
         ep = m["episode"]
         d = tr[ep]
@@ -180,14 +159,12 @@ def reproduce_from_raw_npz(repo_root: Path, out_dir: Path) -> tuple[list[dict], 
         onset = float(m["onset_s"]) if m["onset_s"] else None
         drum_lvl = np.asarray(o["truth/drum_level"], dtype=float) if "truth/drum_level" in o else ch["l_obs"]
         fw_cmd = ch["u_fw"]
-        extra_events[ep] = _extract_raw_trip_and_domain_exit(o, t, m)
+        ev_res = _extract_raw_trip_and_domain_exit(o, t, m)
+        extra_events[ep] = ev_res
+        if m["condition"] == "tube_leak" and ep.startswith("E"):
+            event_prov_by_ep[ep] = ev_res[2]
 
-        ev_start = ev_conf = None
-        for a, b in consecutive_true_runs((fw_cmd >= 0.95) & (drum_lvl <= 0.75)):
-            if t[b] - t[a] >= 120.0:
-                ev_start = float(t[a])
-                ev_conf = float(t[int(np.searchsorted(t, t[a] + 120.0))])
-                break
+        ev_start, ev_conf = detect_functional_event(t, fw_cmd, drum_lvl)
 
         first_by_method: dict[str, float | None] = {}
         for method in METHODS_ORDER:
@@ -226,11 +203,8 @@ def reproduce_from_raw_npz(repo_root: Path, out_dir: Path) -> tuple[list[dict], 
 
         if ep.startswith("E") and onset is not None:
             for lvl_cut in (0.7, 0.75, 0.8):
-                f_cut = None
-                for a, b in consecutive_true_runs((fw_cmd >= 0.95) & (drum_lvl <= lvl_cut)):
-                    if t[b] - t[a] >= 120.0:
-                        f_cut = int(round(t[a]))
-                        break
+                f_cut_s, _ = detect_functional_event(t, fw_cmd, drum_lvl, level_cutoff=lvl_cut)
+                f_cut = None if f_cut_s is None else int(round(f_cut_s))
                 for method in METHODS_ORDER:
                     first = first_by_method[method]
                     alarm_s = "" if first is None else int(round(first))
@@ -249,7 +223,18 @@ def reproduce_from_raw_npz(repo_root: Path, out_dir: Path) -> tuple[list[dict], 
     write_csv(out_dir / "tables_3_4_5_7_crosscheck.csv", t3457_rows)
     write_csv(out_dir / "cutoff_leads_by_block.csv", cutoff_rows)
     write_csv(out_dir / "delay_window_check.csv", delay_win_rows)
-    return ep_rows, thresholds, {"mode": "full_raw_npz_replay", "fit_sample_n": recon["fit_sample_n"]}
+    fallback_eps = [
+        ep
+        for ep, p in event_prov_by_ep.items()
+        if p["trip_source"] == "metadata_fallback" or p["domain_exit_source"] == "metadata_fallback"
+    ]
+    return ep_rows, thresholds, {
+        "mode": "full_raw_npz_replay",
+        "fit_sample_n": recon["fit_sample_n"],
+        "event_timing_provenance": event_prov_by_ep,
+        "raw_event_fallback_used": bool(fallback_eps),
+        "raw_event_fallback_episodes": fallback_eps,
+    }
 
 
 def reproduce_from_archived_inputs(repo_root: Path, out_dir: Path) -> tuple[list[dict], dict[str, float], dict]:
@@ -513,7 +498,13 @@ def main() -> int:
             "tables_3_4_5_7_crosscheck.csv",
         ]
         comparisons = {
-            name: compare_csv_files(repo_root / "results" / name, out_dir / name, key_cols=key_map[name])
+            name: compare_csv_files(
+                repo_root / "results" / name,
+                out_dir / name,
+                key_cols=key_map[name],
+                provenance_cols=("kind",) if name == "tables_3_4_5_7_crosscheck.csv" else (),
+                display_rounded_cols=("actual",) if name == "tables_3_4_5_7_crosscheck.csv" else (),
+            )
             for name in csv_targets
         }
         report = {
@@ -531,7 +522,7 @@ def main() -> int:
             "recomputed_table6_summary": summary_rows,
             "rounding_summary": rounding_sum,
             "comparisons_against_results": comparisons,
-            "all_passed": all(c["exact_match"] for c in comparisons.values()),
+            "all_passed": all(c["exact_match"] for c in comparisons.values()) and not run_meta.get("raw_event_fallback_used", False),
         }
     else:
         archived_checks = _archived_internal_crosschecks(repo_root, ep_rows)

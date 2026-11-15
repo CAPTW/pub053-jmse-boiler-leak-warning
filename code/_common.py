@@ -160,6 +160,120 @@ def max_exceedance_span_s(
     return max(spans, default=0.0)
 
 
+def _decode_str_array(arr: np.ndarray) -> np.ndarray:
+    flat = np.asarray(arr).ravel()
+    return np.array([
+        (x.decode("utf-8", errors="ignore") if isinstance(x, (bytes, np.bytes_)) else str(x)).strip().lower()
+        for x in flat
+    ])
+
+
+def extract_raw_trip_and_domain_exit(
+    obs_npz: Mapping[str, np.ndarray],
+    t: np.ndarray,
+    meta_row: Mapping[str, str],
+) -> tuple[float | None, float | None, dict[str, str]]:
+    """Extract earliest process trip and domain exit times from primary raw .npz arrays first."""
+    trip_t: float | None = None
+    domain_t: float | None = None
+    trip_src = "unavailable"
+    domain_src = "unavailable"
+
+    for key in ("meta/safety_state", "label/safety_state"):
+        if key in obs_npz:
+            states = _decode_str_array(obs_npz[key])
+            idx = np.flatnonzero(states == "trip")
+            trip_t = float(t[idx[0]]) if len(idx) > 0 else None
+            trip_src = f"raw_npz:{key}"
+            break
+    else:
+        if "meta/process_trip_s" in obs_npz:
+            val = float(obs_npz["meta/process_trip_s"])
+            trip_t = val if np.isfinite(val) else None
+            trip_src = "raw_npz:meta/process_trip_s"
+        elif "meta/trip_active" in obs_npz:
+            idx = np.flatnonzero(np.asarray(obs_npz["meta/trip_active"], dtype=bool))
+            trip_t = float(t[idx[0]]) if len(idx) > 0 else None
+            trip_src = "raw_npz:meta/trip_active"
+        elif meta_row.get("process_trip_s"):
+            trip_t = float(meta_row["process_trip_s"])
+            trip_src = "metadata_fallback"
+
+    if "truth/state_feasible" in obs_npz:
+        sf_raw = np.asarray(obs_npz["truth/state_feasible"])
+        if sf_raw.dtype == bool:
+            infeasible = ~sf_raw
+        else:
+            sf = np.asarray(sf_raw, dtype=float)
+            infeasible = np.isfinite(sf) & (sf <= 0.0)
+        idx = np.flatnonzero(infeasible)
+        domain_t = float(t[idx[0]]) if len(idx) > 0 else None
+        domain_src = "raw_npz:truth/state_feasible"
+    elif "meta/domain_exit_s" in obs_npz:
+        val = float(obs_npz["meta/domain_exit_s"])
+        domain_t = val if np.isfinite(val) else None
+        domain_src = "raw_npz:meta/domain_exit_s"
+    elif "truth/liquid_volume_fraction" in obs_npz:
+        lvf = np.asarray(obs_npz["truth/liquid_volume_fraction"], dtype=float)
+        idx = np.flatnonzero((lvf < 0.05) | (lvf > 0.95))
+        domain_t = float(t[idx[0]]) if len(idx) > 0 else None
+        domain_src = "raw_npz:truth/liquid_volume_fraction"
+    elif meta_row.get("domain_exit_s"):
+        domain_t = float(meta_row["domain_exit_s"])
+        domain_src = "metadata_fallback"
+
+    return trip_t, domain_t, {"trip_source": trip_src, "domain_exit_source": domain_src}
+
+
+def detect_functional_event(
+    time_s: np.ndarray,
+    fw_cmd: np.ndarray,
+    drum_lvl: np.ndarray,
+    level_cutoff: float = 0.75,
+    dwell_s: float = 120.0,
+) -> tuple[float | None, float | None]:
+    """Detect earliest functional saturation-and-level-depletion start and confirmation times."""
+    t = np.asarray(time_s, dtype=float)
+    cmd = np.asarray(fw_cmd, dtype=float)
+    lvl = np.asarray(drum_lvl, dtype=float)
+    for a, b in consecutive_true_runs((cmd >= 0.95) & (lvl <= level_cutoff)):
+        if t[b] - t[a] >= dwell_s:
+            ev_start = float(t[a])
+            conf_idx = min(int(np.searchsorted(t, t[a] + dwell_s)), len(t) - 1)
+            ev_conf = float(t[conf_idx])
+            return ev_start, ev_conf
+    return None, None
+
+
+def calibrate_thresholds_from_traces(
+    traces: Mapping[str, Mapping[str, np.ndarray]],
+    dev_blocks: Sequence[str] = DEV_BLOCKS,
+    start_s: float = 1200.0,
+    quantiles: Sequence[float] = (0.99, 0.995, 0.999, 0.9995, 1.0),
+) -> tuple[dict[str, float], dict[str, float], list[dict[str, Any]]]:
+    """Calibrate per-method zero-alarm thresholds from normal development episodes."""
+    thresholds: dict[str, float] = {}
+    selected_q: dict[str, float] = {}
+    cands: list[dict[str, Any]] = []
+    for method in METHODS_ORDER:
+        key, av = METHOD_KEY_MAP[method]
+        vals = np.concatenate([
+            traces[f"{blk}_normal"][key][(traces[f"{blk}_normal"]["time"] >= start_s) & traces[f"{blk}_normal"][av]]
+            for blk in dev_blocks
+        ])
+        for q in quantiles:
+            th = float(np.quantile(vals, q, method="linear"))
+            counts = [
+                len(detect_sequential_alarms(traces[f"{blk}_normal"]["time"], traces[f"{blk}_normal"][key], traces[f"{blk}_normal"][av], th))
+                for blk in dev_blocks
+            ]
+            cands.append({"method": method, "quantile": q, "threshold": th, "counts": counts})
+            if method not in thresholds and sum(counts) == 0:
+                thresholds[method] = th
+                selected_q[method] = q
+    return thresholds, selected_q, cands
+
+
 def compute_ewls_residuals(
     q_s: np.ndarray,
     l_dev: np.ndarray,
@@ -576,6 +690,17 @@ def _canonical_key_part(val: str) -> str:
     s = str(val).strip()
     if s == "":
         return ""
+    if ":" in s:
+        prefix, suffix = s.rsplit(":", 1)
+        suf = suffix.strip()
+        if prefix and suf:
+            try:
+                f = float(suf)
+                if math.isfinite(f):
+                    norm_suf = str(int(round(f))) if abs(f - round(f)) <= 1e-12 else f"{f:.12g}"
+                    return f"{prefix.strip()}:{norm_suf}"
+            except ValueError:
+                pass
     try:
         f = float(s)
         if math.isfinite(f):
@@ -595,7 +720,14 @@ def _compare_row_cells(
     tol: float,
     max_diff: float,
     mismatches: list[dict[str, Any]],
+    *,
+    provenance_cols: set[str] | None = None,
+    display_rounded_cols: set[str] | None = None,
+    provenance_differences: list[dict[str, Any]] | None = None,
+    display_rounded_matches: list[dict[str, Any]] | None = None,
 ) -> float:
+    prov_set = provenance_cols or set()
+    disp_set = display_rounded_cols or set()
     for k in cols:
         rv = rr.get(k, "")
         gv = gr.get(k, "")
@@ -603,6 +735,10 @@ def _compare_row_cells(
             continue
         if rv == "" or gv == "":
             mismatches.append({"row": idx_or_key, "col": k, "ref": rv, "gen": gv, "diff": "empty_mismatch"})
+            continue
+        if k in prov_set:
+            if provenance_differences is not None:
+                provenance_differences.append({"row": idx_or_key, "col": k, "ref": rv, "gen": gv})
             continue
         try:
             rf = float(rv)
@@ -620,6 +756,19 @@ def _compare_row_cells(
                 mismatches.append({"row": idx_or_key, "col": k, "ref": rv, "gen": gv, "diff": "inf_mismatch"})
             continue
         diff = abs(rf - gf)
+        if diff > tol and k in disp_set and rv in {f"{gf:.12g}", f"{gf:.11g}"}:
+            exp_ok = True
+            if "expected" in rr and rr["expected"] not in ("", None):
+                try:
+                    exp_f = float(rr["expected"])
+                    if math.isfinite(exp_f):
+                        exp_ok = abs(gf - exp_f) <= max(tol, 1e-11)
+                except ValueError:
+                    exp_ok = False
+            if exp_ok:
+                if display_rounded_matches is not None:
+                    display_rounded_matches.append({"row": idx_or_key, "col": k, "ref": rv, "gen": gv, "diff": diff})
+                continue
         max_diff = max(max_diff, diff)
         if diff > tol:
             mismatches.append({"row": idx_or_key, "col": k, "ref": rv, "gen": gv, "diff": diff})
@@ -631,12 +780,16 @@ def compare_csv_files(
     gen_path: Path,
     tol: float = 1e-12,
     key_cols: Sequence[str] | None = None,
+    provenance_cols: Sequence[str] = (),
+    display_rounded_cols: Sequence[str] = (),
 ) -> dict[str, Any]:
     """Compare two CSV tables row-by-row or aligned by key_cols and report exact differences."""
     ref_cols, ref_rows = _load_csv_with_header(ref_path)
     gen_cols, gen_rows = _load_csv_with_header(gen_path)
     header_match = ref_cols == gen_cols
     row_count_match = len(ref_rows) == len(gen_rows)
+    prov_set = set(provenance_cols)
+    disp_set = set(display_rounded_cols)
 
     if key_cols is None:
         if not header_match or not row_count_match:
@@ -653,8 +806,22 @@ def compare_csv_files(
             }
         max_diff = 0.0
         mismatches: list[dict[str, Any]] = []
+        prov_diffs: list[dict[str, Any]] = []
+        disp_matches: list[dict[str, Any]] = []
         for idx, (rr, gr) in enumerate(zip(ref_rows, gen_rows)):
-            max_diff = _compare_row_cells(idx, rr, gr, ref_cols, tol, max_diff, mismatches)
+            max_diff = _compare_row_cells(
+                idx,
+                rr,
+                gr,
+                ref_cols,
+                tol,
+                max_diff,
+                mismatches,
+                provenance_cols=prov_set,
+                display_rounded_cols=disp_set,
+                provenance_differences=prov_diffs,
+                display_rounded_matches=disp_matches,
+            )
         return {
             "header_match": True,
             "row_count_match": True,
@@ -664,6 +831,9 @@ def compare_csv_files(
             "max_abs_diff": max_diff,
             "mismatch_count": len(mismatches),
             "mismatches": mismatches[:5],
+            "provenance_difference_count": len(prov_diffs),
+            "provenance_differences": prov_diffs[:10],
+            "display_rounded_match_count": len(disp_matches),
         }
 
     key_list = list(key_cols)
@@ -704,9 +874,23 @@ def compare_csv_files(
     extra_keys = [k for k in gen_map if k not in ref_map]
     max_diff = 0.0
     mismatches = []
+    prov_diffs = []
+    disp_matches = []
     shared_keys = [k for k in ref_map if k in gen_map]
     for kt in shared_keys:
-        max_diff = _compare_row_cells(list(kt), ref_map[kt], gen_map[kt], ref_cols, tol, max_diff, mismatches)
+        max_diff = _compare_row_cells(
+            list(kt),
+            ref_map[kt],
+            gen_map[kt],
+            ref_cols,
+            tol,
+            max_diff,
+            mismatches,
+            provenance_cols=prov_set,
+            display_rounded_cols=disp_set,
+            provenance_differences=prov_diffs,
+            display_rounded_matches=disp_matches,
+        )
 
     exact = (
         header_match
@@ -732,6 +916,9 @@ def compare_csv_files(
         "max_abs_diff": max_diff,
         "mismatch_count": len(mismatches),
         "mismatches": mismatches[:5],
+        "provenance_difference_count": len(prov_diffs),
+        "provenance_differences": prov_diffs[:10],
+        "display_rounded_match_count": len(disp_matches),
     }
 
 

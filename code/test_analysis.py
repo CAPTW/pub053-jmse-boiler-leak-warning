@@ -24,6 +24,7 @@ from _common import (
     compute_ewls_residuals,
     compute_table6_from_episode_rows,
     detect_sequential_alarms,
+    extract_raw_trip_and_domain_exit,
     load_csv,
     max_exceedance_span_s,
     reconstruct_features_from_observations,
@@ -31,6 +32,8 @@ from _common import (
     round_half_up_1dp,
     write_csv,
 )
+from make_figures_r2 import render_figures_from_raw_npz
+from reproduce_analysis import _format_table5_quantile, reproduce_from_raw_npz
 from verify_features import verify_from_raw_npz
 
 REPO_ROOT = resolve_repo_root()
@@ -154,67 +157,84 @@ class TestPub053R2Analysis(unittest.TestCase):
             if r["episode"].startswith("E") and not (r["episode"] == "E8_normal" and r["method"] == "B0_state"):
                 self.assertLess(float(r["max_exceedance_span_s"]), 600.0)
 
-    def test_raw_feature_reconstruction_and_negative_mutation(self) -> None:
-        """Exercise end-to-end 24-episode raw NPZ reconstruction (144/144 arrays) and fail on perturbation."""
+    def _build_synthetic_raw_repo(self, tmp_root: Path) -> tuple[np.ndarray, list[dict[str, str]], dict[str, dict[str, np.ndarray]]]:
+        import shutil
+
+        (tmp_root / "data" / "observations").mkdir(parents=True)
+        (tmp_root / "data" / "traces").mkdir(parents=True)
+        shutil.copytree(REPO_ROOT / "data" / "reconstructed_inputs", tmp_root / "data" / "reconstructed_inputs")
+        shutil.copytree(REPO_ROOT / "results", tmp_root / "results")
         base_meta = load_csv(REPO_ROOT / "data" / "episode_metadata.csv")
         t = np.arange(0.0, 2602.0, 2.0)
         q_bd = np.where(np.mod(t, 1800.0) < (60.0 - 1e-9), 0.05, 0.0)
 
+        obs_map: dict[str, dict[str, np.ndarray]] = {}
+        synth_meta: list[dict[str, str]] = []
+        for idx, m in enumerate(base_meta):
+            ep = m["episode"]
+            row = dict(m)
+            rng = np.random.default_rng(1000 + idx)
+            base_qs = float(m["base_regime"]) * 2.0 + 0.04 * np.sin(t / 180.0 + idx) + rng.normal(0.0, 0.005, size=t.size)
+            p_obs = 7.0 + 0.02 * np.cos(t / 240.0 + idx) + rng.normal(0.0, 0.002, size=t.size)
+            l_obs = 0.85 + 0.005 * np.sin(t / 300.0 + idx) + rng.normal(0.0, 0.001, size=t.size)
+            q_f = base_qs + q_bd + 0.02 + 0.02 * (base_qs - 1.0) + rng.normal(0.0, 0.015, size=t.size)
+            u_fw = 0.40 + 0.30 * base_qs + rng.normal(0.0, 0.012, size=t.size)
+            safety_state = np.full(t.shape, "safe", dtype="<U8")
+            state_feasible = np.ones(t.shape, dtype=float)
+
+            if m["condition"] == "tube_leak":
+                onset = 1300.0
+                row["onset_s"] = str(onset)
+                after = t >= onset
+                # Flow leak anomaly starts at onset, well before feedwater command saturation
+                q_f = np.where(after, q_f + 0.90, q_f)
+                u_fw = 0.40 + 0.30 * base_qs + np.where(t >= onset + 320.0, 0.40, 0.0)
+                l_obs = np.where(t >= onset + 320.0, l_obs - 0.08, l_obs)
+                if m["block"] != "E5":
+                    u_fw = np.where(t >= 2300.0, 0.98, u_fw)
+                    l_obs = np.where(t >= 2300.0, 0.71, l_obs)
+                    if m["block"].startswith("E"):
+                        safety_state = np.where(t >= 2460.0, "trip", "safe")
+                    if m["block"] in ("E1", "E2", "E3"):
+                        state_feasible = np.where(t >= 2500.0, 0.0, 1.0)
+            synth_meta.append(row)
+
+            obs_ep = {
+                "time": t,
+                "meta/obs_held_drum_pressure": p_obs,
+                "meta/obs_held_drum_level": l_obs,
+                "meta/obs_held_feedwater_flow": q_f,
+                "meta/obs_held_steam_flow": base_qs,
+                "meta/fw_cmd": u_fw,
+                "meta/q_bd": q_bd,
+                "meta/safety_state": safety_state,
+                "truth/drum_level": l_obs,
+                "truth/state_feasible": state_feasible,
+            }
+            obs_map[ep] = obs_ep
+            np.savez(tmp_root / "data" / "observations" / f"{ep}.npz", **obs_ep)
+
+        write_csv(tmp_root / "data" / "episode_metadata.csv", synth_meta, list(base_meta[0].keys()))
+        episodes = [r["episode"] for r in synth_meta]
+        recon = reconstruct_features_from_observations(obs_map, episodes)
+        for ep, tr_ep in recon["traces"].items():
+            np.savez(
+                tmp_root / "data" / "traces" / f"{ep}.npz",
+                time=tr_ep["time"],
+                state_score=tr_ep["state_score"],
+                flow_z=tr_ep["flow_z"],
+                command_z=tr_ep["command_z"],
+                combined_score=tr_ep["combined_score"],
+                available_state=tr_ep["available_state"],
+                available_flow_command=tr_ep["available_flow_command"],
+            )
+        return t, synth_meta, obs_map
+
+    def test_raw_feature_reconstruction_and_negative_mutation(self) -> None:
+        """Exercise end-to-end 24-episode raw NPZ reconstruction (144/144 arrays) and fail on perturbation."""
         with tempfile.TemporaryDirectory() as td:
             tmp_root = Path(td)
-            (tmp_root / "data" / "observations").mkdir(parents=True)
-            (tmp_root / "data" / "traces").mkdir(parents=True)
-            (tmp_root / "results").mkdir(parents=True)
-
-            obs_map: dict[str, dict[str, np.ndarray]] = {}
-            synth_meta: list[dict[str, str]] = []
-            for idx, m in enumerate(base_meta):
-                ep = m["episode"]
-                row = dict(m)
-                rng = np.random.default_rng(1000 + idx)
-                base_qs = float(m["base_regime"]) * 2.0 + 0.04 * np.sin(t / 180.0 + idx) + rng.normal(0.0, 0.005, size=t.size)
-                p_obs = 7.0 + 0.02 * np.cos(t / 240.0 + idx) + rng.normal(0.0, 0.002, size=t.size)
-                l_obs = 0.85 + 0.005 * np.sin(t / 300.0 + idx) + rng.normal(0.0, 0.001, size=t.size)
-                q_f = base_qs + q_bd + 0.02 + 0.02 * (base_qs - 1.0) + rng.normal(0.0, 0.015, size=t.size)
-                u_fw = 0.40 + 0.30 * base_qs + rng.normal(0.0, 0.012, size=t.size)
-
-                if m["condition"] == "tube_leak":
-                    onset = 1300.0
-                    row["onset_s"] = str(onset)
-                    after = t >= onset
-                    # Flow leak anomaly starts at onset, well before feedwater command saturation
-                    q_f = np.where(after, q_f + 0.90, q_f)
-                    u_fw = 0.40 + 0.30 * base_qs + np.where(t >= onset + 320.0, 0.40, 0.0)
-                    l_obs = np.where(t >= onset + 320.0, l_obs - 0.08, l_obs)
-                synth_meta.append(row)
-
-                obs_ep = {
-                    "time": t,
-                    "meta/obs_held_drum_pressure": p_obs,
-                    "meta/obs_held_drum_level": l_obs,
-                    "meta/obs_held_feedwater_flow": q_f,
-                    "meta/obs_held_steam_flow": base_qs,
-                    "meta/fw_cmd": u_fw,
-                    "meta/q_bd": q_bd,
-                    "truth/drum_level": l_obs,
-                }
-                obs_map[ep] = obs_ep
-                np.savez(tmp_root / "data" / "observations" / f"{ep}.npz", **obs_ep)
-
-            write_csv(tmp_root / "data" / "episode_metadata.csv", synth_meta, list(base_meta[0].keys()))
-            episodes = [r["episode"] for r in synth_meta]
-            recon = reconstruct_features_from_observations(obs_map, episodes)
-            for ep, tr_ep in recon["traces"].items():
-                np.savez(
-                    tmp_root / "data" / "traces" / f"{ep}.npz",
-                    time=tr_ep["time"],
-                    state_score=tr_ep["state_score"],
-                    flow_z=tr_ep["flow_z"],
-                    command_z=tr_ep["command_z"],
-                    combined_score=tr_ep["combined_score"],
-                    available_state=tr_ep["available_state"],
-                    available_flow_command=tr_ep["available_flow_command"],
-                )
+            t, _synth_meta, obs_map = self._build_synthetic_raw_repo(tmp_root)
 
             ok = verify_from_raw_npz(tmp_root, tmp_root / "out_ok")
             self.assertEqual(ok["trace_array_checks_total"], 144)
@@ -233,6 +253,107 @@ class TestPub053R2Analysis(unittest.TestCase):
             self.assertLess(bad["trace_array_checks_passed"], 144)
             self.assertFalse(bad["all_trace_arrays_matched"])
             self.assertFalse(bad["all_passed"])
+
+    def test_raw_reproduce_crosscheck_and_figures(self) -> None:
+        """Verify 50-row crosscheck, quantile labels, provenance/rounding compare, event extraction, and Fig 1-7 specs."""
+        self.assertEqual(
+            [_format_table5_quantile(q) for q in (0.99, 0.995, 0.999, 0.9995, 1.0)],
+            ["0.990", "0.995", "0.999", "0.9995", "1.000"],
+        )
+
+        t_arr = np.arange(0.0, 20.0, 2.0)
+        trip_none, dom_none, prov_raw = extract_raw_trip_and_domain_exit(
+            {"meta/safety_state": np.full(t_arr.shape, "safe"), "truth/state_feasible": np.ones(t_arr.shape)},
+            t_arr,
+            {"process_trip_s": "10.0", "domain_exit_s": "12.0"},
+        )
+        self.assertIsNone(trip_none)
+        self.assertIsNone(dom_none)
+        self.assertEqual(prov_raw, {"trip_source": "raw_npz:meta/safety_state", "domain_exit_source": "raw_npz:truth/state_feasible"})
+
+        trip_fb, dom_fb, prov_fb = extract_raw_trip_and_domain_exit({}, t_arr, {"process_trip_s": "10.0", "domain_exit_s": "12.0"})
+        self.assertEqual((trip_fb, dom_fb), (10.0, 12.0))
+        self.assertEqual(prov_fb, {"trip_source": "metadata_fallback", "domain_exit_source": "metadata_fallback"})
+
+        with tempfile.TemporaryDirectory() as td:
+            tmp_root = Path(td)
+            self._build_synthetic_raw_repo(tmp_root)
+            out_rep = tmp_root / "rep_out"
+            ep_rows, thresholds, run_meta = reproduce_from_raw_npz(tmp_root, out_rep)
+            self.assertEqual(len(thresholds), 4)
+            self.assertFalse(run_meta["raw_event_fallback_used"])
+            self.assertEqual(
+                run_meta["event_timing_provenance"]["E1_tube_leak"],
+                {"trip_source": "raw_npz:meta/safety_state", "domain_exit_source": "raw_npz:truth/state_feasible"},
+            )
+
+            t_rows = load_csv(out_rep / "tables_3_4_5_7_crosscheck.csv")
+            self.assertEqual(len(t_rows), 50)
+            self.assertEqual(len({(r["table"], r["row"]) for r in t_rows}), 50)
+            t5_rows = [r["row"] for r in t_rows if r["table"] == "5"]
+            self.assertTrue(any(r.endswith(":0.990") for r in t5_rows))
+            self.assertTrue(any(r.endswith(":1.000") for r in t5_rows))
+            t7_map = {r["row"]: json.loads(r["actual"]) for r in t_rows if r["table"] == "7"}
+            self.assertEqual(t7_map["E1"][-2:], [2460.0, 2500.0])
+            self.assertEqual(t7_map["E5"][-4:], [None, None, None, None])
+
+            ep_csv = out_rep / "episode_results.csv"
+            write_csv(ep_csv, ep_rows, list(ep_rows[0].keys()))
+            fig_out = tmp_root / "figs_out"
+            specs = render_figures_from_raw_npz(tmp_root, ep_csv, fig_out)
+            self.assertEqual(len(specs), 7)
+            self.assertTrue(all(s["spec_ok"] for s in specs.values()))
+            self.assertFalse(specs["fig6_all_eval_leak_panels.jpeg"]["fallback_used"])
+            self.assertEqual(specs["fig1_normal_overview.png"]["panels"], 2)
+            self.assertEqual(specs["fig2_e1_leak_trajectory.png"]["panels"], 3)
+            self.assertEqual(specs["fig3_e1_feature_responses.jpeg"]["ylabel"], "Conditioned flow (kg/s)")
+            self.assertEqual(specs["fig7_normal_score_traces.jpeg"]["ylabel"], "Longest threshold-exceedance span (s)")
+            for fname in specs:
+                fpath = fig_out / fname
+                self.assertTrue(fpath.exists() and fpath.stat().st_size > 10_000, f"Invalid figure {fname}")
+
+            ref_csv = REPO_ROOT / "results" / "tables_3_4_5_7_crosscheck.csv"
+            ref_rows = load_csv(ref_csv)
+            gen_full = [dict(r) for r in ref_rows]
+            for r in gen_full:
+                if r["table"] == "4":
+                    r["kind"] = "raw OLS/EWMA fit check"
+                    if r["row"] != "Fit sample N":
+                        r["actual"] = r["expected"]
+                elif r["table"] == "5":
+                    r["kind"] = "independently recomputed thresholds and alarms"
+                elif r["table"] == "7":
+                    r["kind"] = "independently recomputed alarms and raw events"
+            p_full = tmp_root / "t3457_full.csv"
+            write_csv(p_full, gen_full, list(ref_rows[0].keys()))
+            cmp_ok = compare_csv_files(
+                ref_csv,
+                p_full,
+                key_cols=("table", "row"),
+                provenance_cols=("kind",),
+                display_rounded_cols=("actual",),
+            )
+            self.assertTrue(cmp_ok["exact_match"])
+            self.assertEqual(cmp_ok["mismatch_count"], 0)
+            self.assertGreater(cmp_ok["provenance_difference_count"], 0)
+            self.assertEqual(cmp_ok["display_rounded_match_count"], 1)
+
+            gen_bad = [dict(r) for r in gen_full]
+            for r in gen_bad:
+                if r["table"] == "4" and r["row"] == "a2":
+                    r["actual"] = str(float(r["actual"]) + 1e-6)
+                    break
+            p_bad = tmp_root / "t3457_bad.csv"
+            write_csv(p_bad, gen_bad, list(ref_rows[0].keys()))
+            cmp_bad = compare_csv_files(
+                ref_csv,
+                p_bad,
+                key_cols=("table", "row"),
+                provenance_cols=("kind",),
+                display_rounded_cols=("actual",),
+            )
+            self.assertFalse(cmp_bad["exact_match"])
+            self.assertEqual(cmp_bad["mismatch_count"], 1)
 
     def test_cutoff_leads_key_alignment(self) -> None:
         """Verify key-aligned CSV comparison handles permuted rows and canonical numeric keys while rejecting corruptions."""

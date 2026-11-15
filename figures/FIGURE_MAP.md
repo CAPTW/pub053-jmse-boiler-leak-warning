@@ -1,11 +1,11 @@
 # Manuscript Figures Mapping (Figures 1–7)
 
-| Manuscript Figure | Repo File | Raw Asset & Upstream R2 Origin | Assembly Processing |
+| Manuscript Figure | Repo File | Raw Asset & Upstream R2 Origin | Assembly / `render_figures_from_raw_npz` Spec (`v1.0.2-pub053-r2`) |
 |---|---|---|---|
-| Figure 1 | `fig1_normal_overview.png` | `raw_source_assets/page1_img3_1261.jpeg` & `page1_img4_1265.jpeg` (R2 Supp Figs S2 & S3 from `E1_normal.npz`) | Stacked vertically (+30 px gap) by `manuscript_verification/combine_normal_figs.py` |
-| Figure 2 | `fig2_e1_leak_trajectory.png` | `raw_source_assets/rId27.png` (R2 Main Fig 1 from `E1_tube_leak.npz` & `independent_fit.json`) | Bottom-padded +32 px white margin in `build_full_paper.py` |
-| Figure 3 | `fig3_e1_feature_responses.jpeg` | `raw_source_assets/page1_img5_475.jpeg` (R2 Supp Fig S5 from `E1_tube_leak.npz`) | Direct embed |
-| Figure 4 | `fig4_method_summary_delay_lead.png` | `raw_source_assets/rId31.png` (R2 Main Fig 2 from `episode_method_results.csv`) | Direct embed |
-| Figure 5 | `fig5_e1_score_traces.png` | `raw_source_assets/rId34.png` (R2 Main Fig 3 from `E1_tube_leak.npz` traces) | Direct embed |
-| Figure 6 | `fig6_all_eval_leak_panels.jpeg` | `raw_source_assets/page1_img1_1103.jpeg` (R2 Supp Fig S1 from `E*_tube_leak.npz`) | Direct embed (E1–E8 exact times reported in Table 7) |
-| Figure 7 | `fig7_normal_score_traces.jpeg` | `raw_source_assets/page1_img2_1217.jpeg` (R2 Supp Fig S4 from `E*_normal.npz`) | Direct embed |
+| Figure 1 | `fig1_normal_overview.png` | `raw_source_assets/page1_img3_1261.jpeg` & `page1_img4_1265.jpeg` (R2 Supp Figs S2 & S3 from `E1_normal.npz`) | Stacked vertically (+30 px gap) by `manuscript_verification/combine_normal_figs.py`; raw `.npz` mode renders 2 stacked `E1_normal` panels (`pressure_MPa`, conditioned `drum_level_m`) |
+| Figure 2 | `fig2_e1_leak_trajectory.png` | `raw_source_assets/rId27.png` (R2 Main Fig 1 from `E1_tube_leak.npz` & `independent_fit.json`) | Bottom-padded +32 px white margin in `build_full_paper.py`; raw `.npz` mode renders 3 stacked `E1_tube_leak` panels (`p`, conditioned + dashed plant-truth drum level vs. `0.85`/`0.75 m`, `u_fw`/`u_fw_bar`/`u_ref` vs. `0.95`) |
+| Figure 3 | `fig3_e1_feature_responses.jpeg` | `raw_source_assets/page1_img5_475.jpeg` (R2 Supp Fig S5 from `E1_tube_leak.npz`) | Direct embed; raw `.npz` mode plots `E1_tube_leak` signed flows `q_f` & `q_s` (`kg/s`) and EWLS predictions/residuals (`r_m`, `q_s - q_f`, `r_u`, `EWMA`) |
+| Figure 4 | `fig4_method_summary_delay_lead.png` | `raw_source_assets/rId31.png` (R2 Main Fig 2 from `episode_method_results.csv`) | Direct embed; freshly rendered in both `--archived-assets-only` and raw `.npz` modes from `episode_results.csv` |
+| Figure 5 | `fig5_e1_score_traces.png` | `raw_source_assets/rId34.png` (R2 Main Fig 3 from `E1_tube_leak.npz` traces) | Direct embed; raw `.npz` mode plots unshifted `score / threshold` (`theta_m`) traces over `[0, 6]` h plus confirmed post-onset alarm markers |
+| Figure 6 | `fig6_all_eval_leak_panels.jpeg` | `raw_source_assets/page1_img1_1103.jpeg` (R2 Supp Fig S1 from `E*_tube_leak.npz`) | Direct embed; raw `.npz` mode renders `E1`–`E8` horizontal milestone timeline (`leak_onset`, `B1`/`Flow`/`Cmd`/`B0`, `cutoff`, `trip`/`domain_exit`, `Horizon censoring` `>`) |
+| Figure 7 | `fig7_normal_score_traces.jpeg` | `raw_source_assets/page1_img2_1217.jpeg` (R2 Supp Fig S4 from `E*_normal.npz`) | Direct embed; raw `.npz` mode plots categorical `E1`–`E8` normal `max_exceedance_span_s` vs. `600 s` persistence line |

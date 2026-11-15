@@ -214,10 +214,11 @@ def verify_all(
         ),
         "has_delay_window_32_32": "Removing this upper time limit returned the same first alarm in all 32 evaluation episode–detector comparisons" in full_text,
         "has_codex_verified_disclosure": (
-            "OpenAI Codex served as the principal AI-assisted coding tool" in full_text
+            "OpenAI Codex" in full_text
             and "gpt-5.3-codex-spark" in full_text
-            and "0.104.0" in full_text
-            and "0.142.3" in full_text
+            and "gpt-5.4" in full_text
+            and "gpt-5.5" in full_text
+            and "docs/AI_USAGE_AUDIT.md" in full_text
         ),
         "no_unverified_ai_models": (
             "gpt-5.6-sol" not in full_text
@@ -226,23 +227,29 @@ def verify_all(
         ),
         "r2_did_not_generate_trajectories": "did not generate new simulation trajectories or alter physical states" in full_text,
         "has_provenance_separated_data_availability": (
-            "prior_draft_review_ce0e9a0e" in full_text
-            and "current_manuscript_verification" in full_text
-            and "reconstructed_inputs" in full_text
+            "results_archived/current_manuscript_verification" in full_text
+            and "data/reconstructed_inputs" in full_text
+            and "tables_3_4_5_7_crosscheck.csv" in full_text
         ),
         "has_live_public_github_url": "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" in full_text,
-        "has_release_tag": "v1.0.1-pub053-r2" in full_text and "v1.0.0-pub053-r2" in full_text,
-        "has_v101_provenance_and_flags": (
+        "has_release_tag": "v1.0.2-pub053-r2" in full_text,
+        "has_v102_provenance_and_flags": (
             "REPRODUCIBILITY.md" in full_text
             and "DATA_PROVENANCE.md" in full_text
             and "KNOWN_LIMITATIONS.md" in full_text
+            and "SOURCE_PROVENANCE.md" in full_text
+            and "AI_USAGE_AUDIT.md" in full_text
             and "--archived-tables-only" in full_text
             and "--archived-assets-only" in full_text
         ),
+        "has_fig2_truth_clarification": "Both the conditioned observation and dashed plant-truth drum-level traces are shown in panel (b)" in full_text,
         "no_auto_fallback_overclaim": "automatic full_raw_npz_replay" not in full_text,
         "no_pending_confirmation_placeholder": "to be confirmed by the authors" not in full_text,
-        "has_claude_code_pr_footer_disclosure": "Claude Code" in full_text and "PR_BODY.md" in full_text,
-        "has_corrected_archive_separation": "PUB053_Manuscript_Package_R2.zip" in full_text and "source_copy/" in full_text,
+        "has_corrected_archive_separation": (
+            "PUB053_Manuscript_Package_R2.zip" in full_text
+            and "observable_baseline_study_20260915T215200Z_be142b32.zip" in full_text
+            and "simulator_source/" in full_text
+        ),
         "no_half_open_clamps": "[0, 1)" not in full_text and "[−1, 1)" not in full_text and "[0, 0.999)" not in full_text,
     }
 

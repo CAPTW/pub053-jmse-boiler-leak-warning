@@ -117,21 +117,21 @@ def run_checks(orig_docx: Path, rev_docx: Path, rev_pdf: Path, dyn_log: Path, re
     para_texts = ["".join(p.itertext()) for p in body.findall(wtag("p"))]
     full_text = "\n".join(para_texts)
     assert "OpenAI Codex" in full_text
-    assert "gpt-5.3-codex-spark" in full_text and "0.104.0" in full_text and "0.142.3" in full_text
+    assert "gpt-5.3-codex-spark" in full_text and "gpt-5.4" in full_text and "gpt-5.5" in full_text
     assert "gpt-5.6-sol" not in full_text
     assert "Claude Opus 4.6" not in full_text
     assert "Gemini 3.1 Pro" not in full_text
     assert "did not generate new simulation trajectories or alter physical states" in full_text
-    assert "prior_draft_review_ce0e9a0e" in full_text
-    assert "current_manuscript_verification" in full_text
-    assert "reconstructed_inputs" in full_text
+    assert "results_archived/current_manuscript_verification" in full_text
+    assert "data/reconstructed_inputs" in full_text
     assert "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" in full_text
-    assert "v1.0.1-pub053-r2" in full_text and "v1.0.0-pub053-r2" in full_text
+    assert "v1.0.2-pub053-r2" in full_text
     assert "REPRODUCIBILITY.md" in full_text and "DATA_PROVENANCE.md" in full_text and "KNOWN_LIMITATIONS.md" in full_text
+    assert "SOURCE_PROVENANCE.md" in full_text and "AI_USAGE_AUDIT.md" in full_text
     assert "--archived-tables-only" in full_text and "--archived-assets-only" in full_text
+    assert "Both the conditioned observation and dashed plant-truth drum-level traces are shown in panel (b)" in full_text
     assert "automatic full_raw_npz_replay" not in full_text
     assert "to be confirmed by the authors" not in full_text
-    assert "Claude Code" in full_text and "PR_BODY.md" in full_text
     assert "boiler_pdm_sim" in full_text and "ab4" in full_text
     assert "Firstname Lastname 2,*" in full_text
     assert "[0, 1]" in full_text and "[−1, 1]" in full_text and "[0, 0.999]" in full_text
