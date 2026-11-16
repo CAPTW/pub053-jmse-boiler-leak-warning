@@ -179,7 +179,8 @@ def render_figures_from_raw_npz(repo_root: Path, ep_csv: Path, out_dir: Path) ->
     onset_e1 = float(meta_by_ep["E1_tube_leak"]["onset_s"])
     ev_s1, ev_c1 = detect_functional_event(t_f, e1f["u_fw"], lvl_e1)
     _trip1, dom1, _ = extract_raw_trip_and_domain_exit(obs["E1_tube_leak"], t_f, meta_by_ep["E1_tube_leak"])
-    m_e1 = (t_f >= 1200.0) & ((t_f <= dom1) if dom1 is not None else True)
+    end_e1 = min(float(t_f[-1]), float(ev_c1 + 300.0)) if ev_c1 is not None else (float(dom1) if dom1 is not None else float(t_f[-1]))
+    m_e1 = (t_f >= 1200.0) & (t_f <= end_e1)
 
     def _annotate_e1_events(ax: plt.Axes) -> None:
         ax.axvline(onset_e1 / 3600.0, linestyle=":", color="0.3", linewidth=1.0, label="Leak onset")
@@ -197,8 +198,6 @@ def render_figures_from_raw_npz(repo_root: Path, ep_csv: Path, out_dir: Path) ->
     axes[0].legend(loc="best", fontsize=7.5, frameon=False)
 
     axes[1].plot(t_fh[m_e1], e1f["l_obs"][m_e1], linewidth=0.9, color="#1f77b4", label="Observed level")
-    if "truth/drum_level" in obs["E1_tube_leak"]:
-        axes[1].plot(t_fh[m_e1], lvl_e1[m_e1], linewidth=0.9, linestyle="--", color="#ff7f0e", label="Plant truth level")
     axes[1].axhline(0.85, linestyle="--", color="0.35", linewidth=0.9, label="Setpoint (0.85 m)")
     axes[1].axhline(0.75, linestyle="-.", color="#d62728", linewidth=0.9, label="Oracle level criterion (0.75 m)")
     _annotate_e1_events(axes[1])
@@ -215,15 +214,23 @@ def render_figures_from_raw_npz(repo_root: Path, ep_csv: Path, out_dir: Path) ->
     axes[2].set_title("(c) Rising control requirement", loc="left", fontsize=9.5)
     axes[2].set_ylabel("Feedwater command")
     axes[2].set_xlabel("Episode time (h)")
+    axes[2].set_xlim(1200.0 / 3600.0, end_e1 / 3600.0)
     axes[2].grid(color="#e6e6e6", linewidth=0.7)
     axes[2].legend(loc="best", fontsize=7.5, frameon=False)
     fig.tight_layout()
+    panel_b_labels = [line.get_label() for line in axes[1].get_lines()]
     specs["fig2_e1_leak_trajectory.png"] = {
         "panels": len(axes),
         "titles": [ax.get_title(loc="left") for ax in axes],
         "ylabel": [ax.get_ylabel() for ax in axes],
         "xlabel": axes[2].get_xlabel(),
-        "spec_ok": len(axes) == 3 and [ax.get_ylabel() for ax in axes] == ["Pressure (bar abs.)", "Drum level (m)", "Feedwater command"],
+        "time_window_s": [1200.0, float(end_e1)],
+        "panel_b_series": panel_b_labels,
+        "spec_ok": (
+            len(axes) == 3
+            and [ax.get_ylabel() for ax in axes] == ["Pressure (bar abs.)", "Drum level (m)", "Feedwater command"]
+            and "Plant truth level" not in panel_b_labels
+        ),
     }
     _save_fig(fig, out_dir / "fig2_e1_leak_trajectory.png")
 
@@ -244,6 +251,7 @@ def render_figures_from_raw_npz(repo_root: Path, ep_csv: Path, out_dir: Path) ->
         "series": ["Observed feedwater", "Observed steam"],
         "xlabel": ax.get_xlabel(),
         "ylabel": ax.get_ylabel(),
+        "time_window_s": [1200.0, float(end_e1)],
         "spec_ok": ax.get_ylabel() == "Conditioned flow (kg/s)" and ax.get_xlabel() == "Episode time (h)",
     }
     _save_fig(fig, out_dir / "fig3_e1_feature_responses.jpeg")
@@ -293,6 +301,7 @@ def render_figures_from_raw_npz(repo_root: Path, ep_csv: Path, out_dir: Path) ->
         ax.axvspan(ev_s1 / 3600.0, ev_c1 / 3600.0, alpha=0.22, color="#ffbb78", label="Endpoint dwell")
     ax.set_xlabel("Episode time (h)")
     ax.set_ylabel("Score / own threshold")
+    ax.set_xlim(1200.0 / 3600.0, end_e1 / 3600.0)
     ax.grid(color="#e6e6e6", linewidth=0.7)
     ax.legend(loc="best", frameon=False, fontsize=7.5, ncol=2)
     fig.tight_layout()
@@ -301,6 +310,7 @@ def render_figures_from_raw_npz(repo_root: Path, ep_csv: Path, out_dir: Path) ->
         "alarm_markers_plotted": alarm_markers_plotted,
         "xlabel": ax.get_xlabel(),
         "ylabel": ax.get_ylabel(),
+        "time_window_s": [1200.0, float(end_e1)],
         "spec_ok": ax.get_ylabel() == "Score / own threshold" and ax.get_xlabel() == "Episode time (h)",
     }
     _save_fig(fig, out_dir / "fig5_e1_score_traces.png")

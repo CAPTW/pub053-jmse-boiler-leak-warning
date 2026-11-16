@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import ast
 import csv
 import functools
 import hashlib
@@ -712,6 +713,52 @@ def _canonical_key_part(val: str) -> str:
     return s
 
 
+def _parse_list_cell(val: str) -> list[Any] | None:
+    s = val.strip()
+    if not (s.startswith("[") and s.endswith("]")):
+        return None
+    try:
+        parsed = json.loads(s)
+    except (json.JSONDecodeError, TypeError, ValueError):
+        try:
+            parsed = ast.literal_eval(s)
+        except (ValueError, SyntaxError, TypeError):
+            return None
+    return parsed if isinstance(parsed, list) else None
+
+
+def _lists_match(ref_list: list[Any], gen_list: list[Any], tol: float) -> tuple[bool, float, str | float]:
+    if len(ref_list) != len(gen_list):
+        return False, 0.0, "list_length_mismatch"
+    cell_max_diff = 0.0
+    for ri, gi in zip(ref_list, gen_list):
+        if ri is None or gi is None:
+            if ri is None and gi is None:
+                continue
+            return False, 0.0, "list_none_mismatch"
+        if isinstance(ri, bool) or isinstance(gi, bool):
+            if isinstance(ri, bool) and isinstance(gi, bool) and ri == gi:
+                continue
+            return False, 0.0, "list_type_mismatch"
+        if isinstance(ri, (int, float)) and isinstance(gi, (int, float)):
+            rf, gf = float(ri), float(gi)
+            if math.isnan(rf) and math.isnan(gf):
+                continue
+            if math.isnan(rf) or math.isnan(gf):
+                return False, 0.0, "list_nan_mismatch"
+            if math.isinf(rf) or math.isinf(gf):
+                if rf != gf:
+                    return False, 0.0, "list_inf_mismatch"
+                continue
+            diff = abs(rf - gf)
+            cell_max_diff = max(cell_max_diff, diff)
+            if diff > tol:
+                return False, diff, diff
+        elif ri != gi:
+            return False, 0.0, "list_string_mismatch"
+    return True, cell_max_diff, 0.0
+
+
 def _compare_row_cells(
     idx_or_key: Any,
     rr: dict[str, str],
@@ -739,6 +786,14 @@ def _compare_row_cells(
         if k in prov_set:
             if provenance_differences is not None:
                 provenance_differences.append({"row": idx_or_key, "col": k, "ref": rv, "gen": gv})
+            continue
+        r_list = _parse_list_cell(rv)
+        g_list = _parse_list_cell(gv)
+        if r_list is not None and g_list is not None:
+            ok, list_diff, err_diff = _lists_match(r_list, g_list, tol)
+            max_diff = max(max_diff, list_diff)
+            if not ok:
+                mismatches.append({"row": idx_or_key, "col": k, "ref": rv, "gen": gv, "diff": err_diff})
             continue
         try:
             rf = float(rv)

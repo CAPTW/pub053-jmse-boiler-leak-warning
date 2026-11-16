@@ -232,7 +232,7 @@ def verify_all(
             and "tables_3_4_5_7_crosscheck.csv" in full_text
         ),
         "has_live_public_github_url": "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" in full_text,
-        "has_release_tag": "v1.0.2-pub053-r2" in full_text,
+        "has_release_tag": "v1.0.3-pub053-r2" in full_text,
         "has_v102_provenance_and_flags": (
             "REPRODUCIBILITY.md" in full_text
             and "DATA_PROVENANCE.md" in full_text
@@ -242,7 +242,11 @@ def verify_all(
             and "--archived-tables-only" in full_text
             and "--archived-assets-only" in full_text
         ),
-        "has_fig2_truth_clarification": "Both the conditioned observation and dashed plant-truth drum-level traces are shown in panel (b)" in full_text,
+        "has_fig2_truth_clarification": (
+            "whereas panel (b) plots only the conditioned observation" in full_text
+            and "Tconfirm + 300 s = 11,194 s" in full_text
+            and "dashed plant-truth" not in full_text
+        ),
         "no_auto_fallback_overclaim": "automatic full_raw_npz_replay" not in full_text,
         "no_pending_confirmation_placeholder": "to be confirmed by the authors" not in full_text,
         "has_corrected_archive_separation": (

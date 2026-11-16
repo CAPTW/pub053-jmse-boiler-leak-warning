@@ -1,9 +1,9 @@
 {
   "target_docx": "JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.docx",
-  "docx_sha256": "275c4aff82e3e9ed3d11f331c8fe96560ca413dd2d5527de5d9b3eae47b98f91",
+  "docx_sha256": "94c1f12ac814d7ff1946df98603cb8cb73afceee8e61940f1990d68c8c6f88af",
   "target_pdf": "JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.pdf",
-  "pdf_sha256": "0f0e7cfae0efd747495a9e164a10a710d508e94053fc007742084a39950fc78b",
-  "office_cached_pages": 8,
+  "pdf_sha256": "dcd73eed9807787ec833e1ffda8424914d639a74dd4e6e2f217de89b1e19f6f2",
+  "office_cached_pages": 4,
   "pdf_pages": 26,
   "pdf_field_errors": 0,
   "bidi_elements_count": 0,

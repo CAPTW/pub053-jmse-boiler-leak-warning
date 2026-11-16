@@ -306,11 +306,31 @@ class TestPub053R2Analysis(unittest.TestCase):
             self.assertFalse(specs["fig6_all_eval_leak_panels.jpeg"]["fallback_used"])
             self.assertEqual(specs["fig1_normal_overview.png"]["panels"], 2)
             self.assertEqual(specs["fig2_e1_leak_trajectory.png"]["panels"], 3)
+            self.assertNotIn("Plant truth level", specs["fig2_e1_leak_trajectory.png"]["panel_b_series"])
+            self.assertIn("Observed level", specs["fig2_e1_leak_trajectory.png"]["panel_b_series"])
+            expected_win = [1200.0, 2600.0]
+            self.assertEqual(specs["fig2_e1_leak_trajectory.png"]["time_window_s"], expected_win)
+            self.assertEqual(specs["fig3_e1_feature_responses.jpeg"]["time_window_s"], expected_win)
+            self.assertEqual(specs["fig5_e1_score_traces.png"]["time_window_s"], expected_win)
             self.assertEqual(specs["fig3_e1_feature_responses.jpeg"]["ylabel"], "Conditioned flow (kg/s)")
             self.assertEqual(specs["fig7_normal_score_traces.jpeg"]["ylabel"], "Longest threshold-exceedance span (s)")
             for fname in specs:
                 fpath = fig_out / fname
                 self.assertTrue(fpath.exists() and fpath.stat().st_size > 10_000, f"Invalid figure {fname}")
+
+            # Verify Figs 2, 3, 5 stop at ev_confirm + 300 s when confirm + 300 < domain_exit < t_end
+            e1_obs_path = tmp_root / "data" / "observations" / "E1_tube_leak.npz"
+            with np.load(e1_obs_path) as e1_z:
+                e1_d = {k: e1_z[k] for k in e1_z.files}
+            t_e1 = e1_d["time"]
+            e1_d["meta/fw_cmd"] = np.where(t_e1 >= 1900.0, 0.98, e1_d["meta/fw_cmd"])
+            e1_d["truth/drum_level"] = np.where(t_e1 >= 1900.0, 0.71, e1_d["truth/drum_level"])
+            np.savez(e1_obs_path, **e1_d)
+            fig_out_early = tmp_root / "figs_out_early"
+            specs_early = render_figures_from_raw_npz(tmp_root, ep_csv, fig_out_early)
+            # 1900 + 120 dwell = 2020 confirm; + 300 = 2320 (< dom1 = 2500 < t_end = 2600)
+            for fig_key in ("fig2_e1_leak_trajectory.png", "fig3_e1_feature_responses.jpeg", "fig5_e1_score_traces.png"):
+                self.assertEqual(specs_early[fig_key]["time_window_s"], [1200.0, 2320.0])
 
             ref_csv = REPO_ROOT / "results" / "tables_3_4_5_7_crosscheck.csv"
             ref_rows = load_csv(ref_csv)
@@ -324,6 +344,9 @@ class TestPub053R2Analysis(unittest.TestCase):
                     r["kind"] = "independently recomputed thresholds and alarms"
                 elif r["table"] == "7":
                     r["kind"] = "independently recomputed alarms and raw events"
+                    # Simulate reproduce_analysis.py json.dumps ("null") vs reference Python repr ("None")
+                    r["actual"] = r["actual"].replace("None", "null")
+                    r["expected"] = r["expected"].replace("None", "null")
             p_full = tmp_root / "t3457_full.csv"
             write_csv(p_full, gen_full, list(ref_rows[0].keys()))
             cmp_ok = compare_csv_files(
@@ -337,6 +360,25 @@ class TestPub053R2Analysis(unittest.TestCase):
             self.assertEqual(cmp_ok["mismatch_count"], 0)
             self.assertGreater(cmp_ok["provenance_difference_count"], 0)
             self.assertEqual(cmp_ok["display_rounded_match_count"], 1)
+
+            # Negative check: Table 7 None vs numeric value must fail comparison
+            gen_t7_bad = [dict(r) for r in gen_full]
+            for r in gen_t7_bad:
+                if r["table"] == "7" and r["row"] == "E5":
+                    r["actual"] = r["actual"].replace("null", "21000.0", 1)
+                    break
+            p_t7_bad = tmp_root / "t3457_t7_bad.csv"
+            write_csv(p_t7_bad, gen_t7_bad, list(ref_rows[0].keys()))
+            cmp_t7_bad = compare_csv_files(
+                ref_csv,
+                p_t7_bad,
+                key_cols=("table", "row"),
+                provenance_cols=("kind",),
+                display_rounded_cols=("actual",),
+            )
+            self.assertFalse(cmp_t7_bad["exact_match"])
+            self.assertEqual(cmp_t7_bad["mismatch_count"], 1)
+            self.assertEqual(cmp_t7_bad["mismatches"][0]["diff"], "list_none_mismatch")
 
             gen_bad = [dict(r) for r in gen_full]
             for r in gen_bad:

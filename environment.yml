@@ -1,3 +1,4 @@
+# Installs MIT/BSD/PSF core packages only (excludes optional GPL-3.0 iapws; see THIRD_PARTY_NOTICES.md)
 name: pub053-jmse-boiler-leak-warning
 channels:
   - conda-forge

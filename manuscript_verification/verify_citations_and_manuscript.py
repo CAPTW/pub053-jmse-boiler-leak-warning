@@ -125,11 +125,13 @@ def run_checks(orig_docx: Path, rev_docx: Path, rev_pdf: Path, dyn_log: Path, re
     assert "results_archived/current_manuscript_verification" in full_text
     assert "data/reconstructed_inputs" in full_text
     assert "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" in full_text
-    assert "v1.0.2-pub053-r2" in full_text
+    assert "v1.0.3-pub053-r2" in full_text
     assert "REPRODUCIBILITY.md" in full_text and "DATA_PROVENANCE.md" in full_text and "KNOWN_LIMITATIONS.md" in full_text
     assert "SOURCE_PROVENANCE.md" in full_text and "AI_USAGE_AUDIT.md" in full_text
     assert "--archived-tables-only" in full_text and "--archived-assets-only" in full_text
-    assert "Both the conditioned observation and dashed plant-truth drum-level traces are shown in panel (b)" in full_text
+    assert "whereas panel (b) plots only the conditioned observation" in full_text
+    assert "Tconfirm + 300 s = 11,194 s" in full_text
+    assert "dashed plant-truth" not in full_text
     assert "automatic full_raw_npz_replay" not in full_text
     assert "to be confirmed by the authors" not in full_text
     assert "boiler_pdm_sim" in full_text and "ab4" in full_text

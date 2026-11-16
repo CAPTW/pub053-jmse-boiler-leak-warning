@@ -1,4 +1,4 @@
-# Reproducibility Guide (`v1.0.2-pub053-r2`)
+# Reproducibility Guide (`v1.0.3-pub053-r2`)
 
 ## 1. Environment Setup
 ```bash
@@ -7,6 +7,7 @@ python -m venv .venv
 # Linux/macOS: source .venv/bin/activate
 pip install -r requirements-lock.txt
 ```
+`requirements-lock.txt` installs only MIT/BSD/PSF core packages (`numpy`, `scipy`, `pandas`, `matplotlib`, `pyarrow`, `PyYAML`, `pytest`, `python-dateutil`, `lxml`, `pillow`), which suffice for **all** `code/` reproduction/test scripts (`code/test_analysis.py` uses stdlib `unittest`), `verify_tables_from_archived_results.py`, and the `7` non-`iapws` simulator contract test modules. Optional extras (GPL-3.0 `iapws==1.5.5` for `core/ab4` physics tests via `pip install -e ".[thermo]"`, `python-docx` via `pip install -e ".[docx]"`, Windows `pywin32`, and external Poppler `pdftotext`/`pdfinfo`) are excluded from default installation; see `THIRD_PARTY_NOTICES.md`.
 
 ## 2. Mode A — Unit Tests & Strict Missing-Raw-NPZ Check (Standalone Clone)
 Default CLI invocations of `verify_features.py`, `reproduce_analysis.py`, and `make_figures_r2.py` **require all 48 primary `.npz` files** (`data/observations/*.npz` and `data/traces/*.npz` from `PUB053_Manuscript_Package_R2.zip`) and fail loudly (`exit 1`, `"all_passed": false`, `"provenance_mode": "missing_raw_npz_error"`) when those files are absent:
@@ -18,7 +19,7 @@ python -B code/reproduce_analysis.py --out results_reproduced       # exits 1 wh
 python -B code/make_figures_r2.py --results results_reproduced --out figures_reproduced  # exits 1 when .npz absent
 ```
 
-`code/test_analysis.py` (`7/7` tests) validates sequential detector rules, signed EWLS residuals (`+`/`-` without `np.abs()`), quantile dominance vs. general counterexample, 24-episode Table 6 rounding (`51.3 min` / `115.5 min`), keyed CSV alignment (`cutoff_leads_by_block.csv`), full 24-episode (`144`-array) Supplement S3 raw reconstruction + negative mutation detection, and end-to-end synthetic raw-`.npz` replay (`tables_3_4_5_7_crosscheck.csv` 50-row cross-check, primary trip/feasibility event extraction, and `render_figures_from_raw_npz` Figures 1–7 panel checks) over an isolated temporary `.npz` fixture.
+`code/test_analysis.py` (`7/7` tests) validates sequential detector rules, signed EWLS residuals (`+`/`-` without `np.abs()`), quantile dominance vs. general counterexample, 24-episode Table 6 rounding (`51.3 min` / `115.5 min`), keyed CSV alignment (`cutoff_leads_by_block.csv`), full 24-episode (`144`-array) Supplement S3 raw reconstruction + negative mutation detection, and end-to-end synthetic raw-`.npz` replay (`tables_3_4_5_7_crosscheck.csv` 50-row cross-check including Table 7 `None`/`null` list matching + negative check, primary trip/feasibility event extraction, and `render_figures_from_raw_npz` Figures 1–7 panel/window specs matching `[1200, min(t_end, T_confirm + 300)]` s and panel (b) `Observed level`-only plotting) over an isolated temporary `.npz` fixture.
 
 ## 3. Mode B — Explicit Standalone Verification (`--archived-tables-only` / `--archived-assets-only`)
 In a public clone without the 48 binary `.npz` files, pass the explicit opt-in flags to audit all algebraic/tabular invariants, derived delays/leads, Table 6 summaries, cutoff leads (`5/7/8`), delay-window identity (`32/32`), Figure 4 Matplotlib rendering, and archived graphic validation into separate output directories (`results_reproduced/`, `figures_reproduced/`) without overwriting `results/` or `figures/`:
