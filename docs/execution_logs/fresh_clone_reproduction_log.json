@@ -1,14 +1,93 @@
 {
   "repository": "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning.git",
-  "release_target": "v1.0.5-pub053-r2",
-  "cloned_head_commit": "609083ec5718f9394478f69526a0ab2c8d520258",
+  "release_target": "v1.0.6-pub053-r2",
+  "cloned_head_commit": "862a94838d18cec0963d7df3bfe7bdab4327a447",
   "python_executable": "3.12.13 | packaged by conda-forge | (main, Mar  5 2026, 16:36:12) [MSC v.1944 64 bit (AMD64)]",
-  "provenance_mode": "explicit_default_failure_without_raw_npz_plus_archived_opt_in_uniform_iapws_guards_and_core_tests",
+  "provenance_mode": "explicit_default_failure_without_raw_npz_plus_archived_opt_in_isolated_tests_and_core_tests",
   "file_manifest_check": {
     "files_checked": 279,
     "mismatch_count": 0,
     "mismatches": [],
     "bad_eol_count": 0
+  },
+  "json_report_checks": {
+    "build/reproduced_results_def/feature_verification_report.json": {
+      "provenance_mode": "missing_raw_npz_error",
+      "density_backend": {
+        "iapws_available": true,
+        "iapws_version": "1.5.5",
+        "density_backend": "iapws.IAPWS97",
+        "sat_liquid_rho_7bar_kg_m3": 902.5555231864862
+      },
+      "all_passed": false,
+      "figure_spec_verified_all_specs": null
+    },
+    "build/reproduced_results_def/reproduction_comparison_report.json": {
+      "provenance_mode": "missing_raw_npz_error",
+      "density_backend": {
+        "iapws_available": true,
+        "iapws_version": "1.5.5",
+        "density_backend": "iapws.IAPWS97",
+        "sat_liquid_rho_7bar_kg_m3": 902.5555231864862
+      },
+      "all_passed": false,
+      "figure_spec_verified_all_specs": null
+    },
+    "build/reproduced_figures_def/figure_generation_manifest.json": {
+      "provenance_mode": "missing_raw_npz_error",
+      "density_backend": {
+        "iapws_available": true,
+        "iapws_version": "1.5.5",
+        "density_backend": "iapws.IAPWS97",
+        "sat_liquid_rho_7bar_kg_m3": 902.5555231864862
+      },
+      "all_passed": false,
+      "figure_spec_verified_all_specs": null
+    },
+    "build/reproduced_results/feature_verification_report.json": {
+      "provenance_mode": "archived_tables_only",
+      "density_backend": {
+        "iapws_available": true,
+        "iapws_version": "1.5.5",
+        "density_backend": "iapws.IAPWS97",
+        "sat_liquid_rho_7bar_kg_m3": 902.5555231864862
+      },
+      "all_passed": true,
+      "figure_spec_verified_all_specs": null
+    },
+    "build/reproduced_results/reproduction_comparison_report.json": {
+      "provenance_mode": "archived_tables_only",
+      "density_backend": {
+        "iapws_available": true,
+        "iapws_version": "1.5.5",
+        "density_backend": "iapws.IAPWS97",
+        "sat_liquid_rho_7bar_kg_m3": 902.5555231864862
+      },
+      "all_passed": true,
+      "figure_spec_verified_all_specs": null
+    },
+    "build/reproduced_figures/figure_generation_manifest.json": {
+      "provenance_mode": "archived_assets_only",
+      "density_backend": {
+        "iapws_available": true,
+        "iapws_version": "1.5.5",
+        "density_backend": "iapws.IAPWS97",
+        "sat_liquid_rho_7bar_kg_m3": 902.5555231864862
+      },
+      "all_passed": true,
+      "figure_spec_verified_all_specs": false
+    },
+    "build/reproduced_figures_py314/figure_generation_manifest.json": {
+      "provenance_mode": "archived_assets_only",
+      "density_backend": {
+        "iapws_available": false,
+        "iapws_version": null,
+        "density_backend": "approx_if97_reg4_iapws95_fallback",
+        "sat_liquid_rho_7bar_kg_m3": 902.5547295155644
+      },
+      "all_passed": true,
+      "figure_spec_verified_all_specs": false
+    }
   },
   "git_status_after_cleanup": "",
   "all_steps_matched_expected": true,
@@ -20,7 +99,7 @@
       "returncode": 0,
       "matched_expected": true,
       "stdout_tail": "{\n  \"script\": \"code/test_analysis.py\",\n  \"provenance_mode\": \"missing_primary_raw_npz\",\n  \"raw_npz_status\": {\n    \"mode\": \"missing_primary_raw_npz\",\n    \"all_raw_npz_present\": false,\n    \"observations_npz_found\": 0,\n    \"traces_npz_found\": 0,\n    \"expected_per_kind\": 24,\n    \"total_expected_npz\": 48,\n    \"total_found_npz\": 0,\n    \"missing_observations_count\": 24,\n    \"missing_traces_count\": 24,\n    \"missing_examples\": [\n      \"data/observations/D1_normal.npz\",\n      \"data/traces/D1_normal.npz\",\n      \"data/observations/D1_tube_leak.npz\",\n      \"data/traces/D1_tube_leak.npz\",\n      \"data/traces/D2_normal.npz\",\n      \"data/traces/D2_tube_leak.npz\"\n    ],\n    \"primary_archive_origin\": \"PUB053_Manuscript_Package_R2.zip (not bundled on public release)\"\n  },\n  \"density_backend\": {\n    \"iapws_available\": true,\n    \"iapws_version\": \"1.5.5\",\n    \"density_backend\": \"iapws.IAPWS97\",\n    \"sat_liquid_rho_7bar_kg_m3\": 902.5555231864862\n  },\n  \"synthetic_if97_vs_fallback_branch_executed\": true,\n  \"tests_run\": 8,\n  \"failures\": 0,\n  \"errors\": 0,\n  \"passed\": true\n}\n",
-      "stderr_tail": "test_archived_24_episode_consistency_and_rounding (__main__.TestPub053R2Analysis.test_archived_24_episode_consistency_and_rounding)\nVerify 96 episode-method records, Table 6 rounding (51.3 min / 115.5 min), and 5/7/8 cutoffs. ... ok\ntest_cutoff_leads_key_alignment (__main__.TestPub053R2Analysis.test_cutoff_leads_key_alignment)\nVerify key-aligned CSV comparison handles permuted rows and canonical numeric keys while rejecting corruptions. ... ok\ntest_ewls_residuals_and_fit_parameters (__main__.TestPub053R2Analysis.test_ewls_residuals_and_fit_parameters)\nVerify Table 4 OLS fit structure, zero-residual identity, and signed positive/negative residuals. ... ok\ntest_iapws_density_backend_and_missing_iapws_guard (__main__.TestPub053R2Analysis.test_iapws_density_backend_and_missing_iapws_guard)\nVerify IAPWS97 (iapws==1.5.5) vs fallback divergence and missing_iapws_error CLI guards across all 3 scripts. ... ok\ntest_quantile_counterexample_and_empirical_dominance (__main__.TestPub053R2Analysis.test_quantile_counterexample_and_empirical_dominance)\nProve max-score quantile != max of marginal quantiles in general, while checking observed upper-tail condition. ... ok\ntest_raw_feature_reconstruction_and_negative_mutation (__main__.TestPub053R2Analysis.test_raw_feature_reconstruction_and_negative_mutation)\nExercise end-to-end 24-episode raw NPZ reconstruction (144/144 arrays) and fail on perturbation. ... ok\ntest_raw_reproduce_crosscheck_and_figures (__main__.TestPub053R2Analysis.test_raw_reproduce_crosscheck_and_figures)\nVerify 50-row crosscheck, quantile labels, provenance/rounding compare, event extraction, and Fig 1-7 specs. ... ok\ntest_sequential_detector_persistence_and_cooldown (__main__.TestPub053R2Analysis.test_sequential_detector_persistence_and_cooldown)\nVerify strict > threshold, elapsed >= 600 s persistence, and 1800 s cooldown. ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 8.307s\n\nOK\n"
+      "stderr_tail": "test_archived_24_episode_consistency_and_rounding (__main__.TestPub053R2Analysis.test_archived_24_episode_consistency_and_rounding)\nVerify 96 episode-method records, Table 6 rounding (51.3 min / 115.5 min), and 5/7/8 cutoffs. ... ok\ntest_cutoff_leads_key_alignment (__main__.TestPub053R2Analysis.test_cutoff_leads_key_alignment)\nVerify key-aligned CSV comparison handles permuted rows and canonical numeric keys while rejecting corruptions. ... ok\ntest_ewls_residuals_and_fit_parameters (__main__.TestPub053R2Analysis.test_ewls_residuals_and_fit_parameters)\nVerify Table 4 OLS fit structure, zero-residual identity, and signed positive/negative residuals. ... ok\ntest_iapws_density_backend_and_missing_iapws_guard (__main__.TestPub053R2Analysis.test_iapws_density_backend_and_missing_iapws_guard)\nVerify IAPWS97 (iapws==1.5.5) vs fallback divergence and missing_iapws_error CLI guards across all 3 scripts. ... ok\ntest_quantile_counterexample_and_empirical_dominance (__main__.TestPub053R2Analysis.test_quantile_counterexample_and_empirical_dominance)\nProve max-score quantile != max of marginal quantiles in general, while checking observed upper-tail condition. ... ok\ntest_raw_feature_reconstruction_and_negative_mutation (__main__.TestPub053R2Analysis.test_raw_feature_reconstruction_and_negative_mutation)\nExercise end-to-end 24-episode raw NPZ reconstruction (144/144 arrays) and fail on perturbation. ... ok\ntest_raw_reproduce_crosscheck_and_figures (__main__.TestPub053R2Analysis.test_raw_reproduce_crosscheck_and_figures)\nVerify 50-row crosscheck, quantile labels, provenance/rounding compare, event extraction, and Fig 1-7 specs. ... ok\ntest_sequential_detector_persistence_and_cooldown (__main__.TestPub053R2Analysis.test_sequential_detector_persistence_and_cooldown)\nVerify strict > threshold, elapsed >= 600 s persistence, and 1800 s cooldown. ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 8.389s\n\nOK\n"
     },
     {
       "command": "C:\\Python314\\python.exe -B code/test_analysis.py",
@@ -29,7 +108,7 @@
       "returncode": 0,
       "matched_expected": true,
       "stdout_tail": "{\n  \"script\": \"code/test_analysis.py\",\n  \"provenance_mode\": \"missing_primary_raw_npz\",\n  \"raw_npz_status\": {\n    \"mode\": \"missing_primary_raw_npz\",\n    \"all_raw_npz_present\": false,\n    \"observations_npz_found\": 0,\n    \"traces_npz_found\": 0,\n    \"expected_per_kind\": 24,\n    \"total_expected_npz\": 48,\n    \"total_found_npz\": 0,\n    \"missing_observations_count\": 24,\n    \"missing_traces_count\": 24,\n    \"missing_examples\": [\n      \"data/observations/D1_normal.npz\",\n      \"data/traces/D1_normal.npz\",\n      \"data/observations/D1_tube_leak.npz\",\n      \"data/traces/D1_tube_leak.npz\",\n      \"data/traces/D2_normal.npz\",\n      \"data/traces/D2_tube_leak.npz\"\n    ],\n    \"primary_archive_origin\": \"PUB053_Manuscript_Package_R2.zip (not bundled on public release)\"\n  },\n  \"density_backend\": {\n    \"iapws_available\": false,\n    \"iapws_version\": null,\n    \"density_backend\": \"approx_if97_reg4_iapws95_fallback\",\n    \"sat_liquid_rho_7bar_kg_m3\": 902.5547295155644\n  },\n  \"synthetic_if97_vs_fallback_branch_executed\": false,\n  \"tests_run\": 8,\n  \"failures\": 0,\n  \"errors\": 0,\n  \"passed\": true\n}\n",
-      "stderr_tail": "test_archived_24_episode_consistency_and_rounding (__main__.TestPub053R2Analysis.test_archived_24_episode_consistency_and_rounding)\nVerify 96 episode-method records, Table 6 rounding (51.3 min / 115.5 min), and 5/7/8 cutoffs. ... ok\ntest_cutoff_leads_key_alignment (__main__.TestPub053R2Analysis.test_cutoff_leads_key_alignment)\nVerify key-aligned CSV comparison handles permuted rows and canonical numeric keys while rejecting corruptions. ... ok\ntest_ewls_residuals_and_fit_parameters (__main__.TestPub053R2Analysis.test_ewls_residuals_and_fit_parameters)\nVerify Table 4 OLS fit structure, zero-residual identity, and signed positive/negative residuals. ... ok\ntest_iapws_density_backend_and_missing_iapws_guard (__main__.TestPub053R2Analysis.test_iapws_density_backend_and_missing_iapws_guard)\nVerify IAPWS97 (iapws==1.5.5) vs fallback divergence and missing_iapws_error CLI guards across all 3 scripts. ... C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\pub053_fresh_clone_v105\\code\\_common.py:453: RuntimeWarning: iapws is unavailable; falling back to approximate IAPWS-95 saturation density, which diverges from IAPWS-IF97 raw .npz traces (install iapws==1.5.5 via requirements-lock.txt).\n  rho = _sat_liquid_density_spline()(p_safe)\nok\ntest_quantile_counterexample_and_empirical_dominance (__main__.TestPub053R2Analysis.test_quantile_counterexample_and_empirical_dominance)\nProve max-score quantile != max of marginal quantiles in general, while checking observed upper-tail condition. ... ok\ntest_raw_feature_reconstruction_and_negative_mutation (__main__.TestPub053R2Analysis.test_raw_feature_reconstruction_and_negative_mutation)\nExercise end-to-end 24-episode raw NPZ reconstruction (144/144 arrays) and fail on perturbation. ... C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\pub053_fresh_clone_v105\\code\\_common.py:453: RuntimeWarning: iapws is unavailable; falling back to approximate IAPWS-95 saturation density, which diverges from IAPWS-IF97 raw .npz traces (install iapws==1.5.5 via requirements-lock.txt).\n  rho = _sat_liquid_density_spline()(p_safe)\nok\ntest_raw_reproduce_crosscheck_and_figures (__main__.TestPub053R2Analysis.test_raw_reproduce_crosscheck_and_figures)\nVerify 50-row crosscheck, quantile labels, provenance/rounding compare, event extraction, and Fig 1-7 specs. ... ok\ntest_sequential_detector_persistence_and_cooldown (__main__.TestPub053R2Analysis.test_sequential_detector_persistence_and_cooldown)\nVerify strict > threshold, elapsed >= 600 s persistence, and 1800 s cooldown. ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 5.885s\n\nOK\n"
+      "stderr_tail": "test_archived_24_episode_consistency_and_rounding (__main__.TestPub053R2Analysis.test_archived_24_episode_consistency_and_rounding)\nVerify 96 episode-method records, Table 6 rounding (51.3 min / 115.5 min), and 5/7/8 cutoffs. ... ok\ntest_cutoff_leads_key_alignment (__main__.TestPub053R2Analysis.test_cutoff_leads_key_alignment)\nVerify key-aligned CSV comparison handles permuted rows and canonical numeric keys while rejecting corruptions. ... ok\ntest_ewls_residuals_and_fit_parameters (__main__.TestPub053R2Analysis.test_ewls_residuals_and_fit_parameters)\nVerify Table 4 OLS fit structure, zero-residual identity, and signed positive/negative residuals. ... ok\ntest_iapws_density_backend_and_missing_iapws_guard (__main__.TestPub053R2Analysis.test_iapws_density_backend_and_missing_iapws_guard)\nVerify IAPWS97 (iapws==1.5.5) vs fallback divergence and missing_iapws_error CLI guards across all 3 scripts. ... C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\pub053_fresh_clone_v106\\code\\_common.py:453: RuntimeWarning: iapws is unavailable; falling back to approximate IAPWS-95 saturation density, which diverges from IAPWS-IF97 raw .npz traces (install iapws==1.5.5 via requirements-lock.txt).\n  rho = _sat_liquid_density_spline()(p_safe)\nok\ntest_quantile_counterexample_and_empirical_dominance (__main__.TestPub053R2Analysis.test_quantile_counterexample_and_empirical_dominance)\nProve max-score quantile != max of marginal quantiles in general, while checking observed upper-tail condition. ... ok\ntest_raw_feature_reconstruction_and_negative_mutation (__main__.TestPub053R2Analysis.test_raw_feature_reconstruction_and_negative_mutation)\nExercise end-to-end 24-episode raw NPZ reconstruction (144/144 arrays) and fail on perturbation. ... C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\pub053_fresh_clone_v106\\code\\_common.py:453: RuntimeWarning: iapws is unavailable; falling back to approximate IAPWS-95 saturation density, which diverges from IAPWS-IF97 raw .npz traces (install iapws==1.5.5 via requirements-lock.txt).\n  rho = _sat_liquid_density_spline()(p_safe)\nok\ntest_raw_reproduce_crosscheck_and_figures (__main__.TestPub053R2Analysis.test_raw_reproduce_crosscheck_and_figures)\nVerify 50-row crosscheck, quantile labels, provenance/rounding compare, event extraction, and Fig 1-7 specs. ... ok\ntest_sequential_detector_persistence_and_cooldown (__main__.TestPub053R2Analysis.test_sequential_detector_persistence_and_cooldown)\nVerify strict > threshold, elapsed >= 600 s persistence, and 1800 s cooldown. ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 6.008s\n\nOK\n"
     },
     {
       "command": "C:\\Users\\IDEAL\\anaconda3\\python.exe -B code/verify_features.py --out build/reproduced_results_def",
@@ -100,7 +179,7 @@
       "expected_returncode": 0,
       "returncode": 0,
       "matched_expected": true,
-      "stdout_tail": "{\n  \"repo_root\": \"C:\\\\Users\\\\Public\\\\Documents\\\\ESTsoft\\\\CreatorTemp\\\\pub053_fresh_clone_v105\",\n  \"table1_config_and_source\": {\n    \"yaml_loaded\": true,\n    \"ab4_core_constants_verified\": true\n  },\n  \"reconstructed_inputs_verified\": true,\n  \"tables_3_4_5_7_crosscheck_matches\": \"50/50\",\n  \"current_manuscript_table_checks\": \"62/62\",\n  \"episode_method_comparisons_matches\": \"96/96\",\n  \"recomputed_table6_summary\": {\n    \"B0_state\": {\n      \"normal_alarms\": 1,\n      \"delay_1dp\": [\n        127.3,\n        65.4,\n        187.9\n      ],\n      \"lead_1dp\": [\n        34.7,\n        29.6,\n        100.0\n      ]\n    },\n    \"Flow_only\": {\n      \"normal_alarms\": 0,\n      \"delay_1dp\": [\n        86.4,\n        64.5,\n        116.1\n      ],\n      \"lead_1dp\": [\n        48.9,\n        31.1,\n        164.2\n      ]\n    },\n    \"Command_only\": {\n      \"normal_alarms\": 0,\n      \"delay_1dp\": [\n        75.9,\n        54.8,\n        115.5\n      ],\n      \"lead_1dp\": [\n        59.0,\n        40.8,\n        179.4\n      ]\n    },\n    \"B1_combined\": {\n      \"normal_alarms\": 0,\n      \"delay_1dp\": [\n        75.9,\n        54.8,\n        115.5\n      ],\n      \"lead_1dp\": [\n        59.0,\n        40.8,\n        179.4\n      ]\n    }\n  },\n  \"delay_median_difference_min\": 51.3,\n  \"b1_max_delay_min_1dp\": 115.5,\n  \"table8_blocks_verified\": 8,\n  \"cutoff_leads_verified\": 12,\n  \"delay_window_comparisons_identical\": \"32/32\",\n  \"figures_verified\": {\n    \"fig1_normal_overview.png\": {\n      \"bytes\": 1034473,\n      \"dimensions_px\": [\n        1994,\n        1954\n      ]\n    },\n    \"fig2_e1_leak_trajectory.png\": {\n      \"bytes\": 224850,\n      \"dimensions_px\": [\n        1136,\n        1616\n      ]\n    },\n    \"fig3_e1_feature_responses.jpeg\": {\n      \"bytes\": 184992,\n      \"dimensions_px\": [\n        1994,\n        871\n      ]\n    },\n    \"fig4_method_summary_delay_lead.png\": {\n      \"bytes\": 81624,\n      \"dimensions_px\": [\n        1136,\n        896\n      ]\n    },\n    \"fig5_e1_score_traces.png\": {\n      \"bytes\": 123429,\n      \"dimensions_px\": [\n        1136,\n        928\n      ]\n    },\n    \"fig6_all_eval_leak_panels.jpeg\": {\n      \"bytes\": 87031,\n      \"dimensions_px\": [\n        1972,\n        1154\n      ]\n    },\n    \"fig7_normal_score_traces.jpeg\": {\n      \"bytes\": 95728,\n      \"dimensions_px\": [\n        1994,\n        842\n      ]\n    }\n  },\n  \"raw_source_assets_count\": 8,\n  \"all_passed\": true\n}\n",
+      "stdout_tail": "{\n  \"repo_root\": \"C:\\\\Users\\\\Public\\\\Documents\\\\ESTsoft\\\\CreatorTemp\\\\pub053_fresh_clone_v106\",\n  \"table1_config_and_source\": {\n    \"yaml_loaded\": true,\n    \"ab4_core_constants_verified\": true\n  },\n  \"reconstructed_inputs_verified\": true,\n  \"tables_3_4_5_7_crosscheck_matches\": \"50/50\",\n  \"current_manuscript_table_checks\": \"62/62\",\n  \"episode_method_comparisons_matches\": \"96/96\",\n  \"recomputed_table6_summary\": {\n    \"B0_state\": {\n      \"normal_alarms\": 1,\n      \"delay_1dp\": [\n        127.3,\n        65.4,\n        187.9\n      ],\n      \"lead_1dp\": [\n        34.7,\n        29.6,\n        100.0\n      ]\n    },\n    \"Flow_only\": {\n      \"normal_alarms\": 0,\n      \"delay_1dp\": [\n        86.4,\n        64.5,\n        116.1\n      ],\n      \"lead_1dp\": [\n        48.9,\n        31.1,\n        164.2\n      ]\n    },\n    \"Command_only\": {\n      \"normal_alarms\": 0,\n      \"delay_1dp\": [\n        75.9,\n        54.8,\n        115.5\n      ],\n      \"lead_1dp\": [\n        59.0,\n        40.8,\n        179.4\n      ]\n    },\n    \"B1_combined\": {\n      \"normal_alarms\": 0,\n      \"delay_1dp\": [\n        75.9,\n        54.8,\n        115.5\n      ],\n      \"lead_1dp\": [\n        59.0,\n        40.8,\n        179.4\n      ]\n    }\n  },\n  \"delay_median_difference_min\": 51.3,\n  \"b1_max_delay_min_1dp\": 115.5,\n  \"table8_blocks_verified\": 8,\n  \"cutoff_leads_verified\": 12,\n  \"delay_window_comparisons_identical\": \"32/32\",\n  \"figures_verified\": {\n    \"fig1_normal_overview.png\": {\n      \"bytes\": 1034473,\n      \"dimensions_px\": [\n        1994,\n        1954\n      ]\n    },\n    \"fig2_e1_leak_trajectory.png\": {\n      \"bytes\": 224850,\n      \"dimensions_px\": [\n        1136,\n        1616\n      ]\n    },\n    \"fig3_e1_feature_responses.jpeg\": {\n      \"bytes\": 184992,\n      \"dimensions_px\": [\n        1994,\n        871\n      ]\n    },\n    \"fig4_method_summary_delay_lead.png\": {\n      \"bytes\": 81624,\n      \"dimensions_px\": [\n        1136,\n        896\n      ]\n    },\n    \"fig5_e1_score_traces.png\": {\n      \"bytes\": 123429,\n      \"dimensions_px\": [\n        1136,\n        928\n      ]\n    },\n    \"fig6_all_eval_leak_panels.jpeg\": {\n      \"bytes\": 87031,\n      \"dimensions_px\": [\n        1972,\n        1154\n      ]\n    },\n    \"fig7_normal_score_traces.jpeg\": {\n      \"bytes\": 95728,\n      \"dimensions_px\": [\n        1994,\n        842\n      ]\n    }\n  },\n  \"raw_source_assets_count\": 8,\n  \"all_passed\": true\n}\n",
       "stderr_tail": ""
     },
     {
@@ -109,7 +188,7 @@
       "expected_returncode": 0,
       "returncode": 0,
       "matched_expected": true,
-      "stdout_tail": "........................................................................ [ 81%]\n................                                                         [100%]\n88 passed in 3.38s\n",
+      "stdout_tail": "........................................................................ [ 81%]\n................                                                         [100%]\n88 passed in 2.81s\n",
       "stderr_tail": ""
     },
     {
@@ -118,7 +197,7 @@
       "expected_returncode": 0,
       "returncode": 0,
       "matched_expected": true,
-      "stdout_tail": ".............................................                            [100%]\n============================== warnings summary ===============================\nsrc\\boiler_pdm_sim\\core\\boiler_system.py:18\n  C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\pub053_fresh_clone_v105\\simulator_source\\src\\boiler_pdm_sim\\core\\boiler_system.py:18: RuntimeWarning: iapws is unavailable; boiler_pdm_sim is falling back to a 9-point table + ideal-gas approximation for water/steam properties. Results are NOT IAPWS-IF97 accurate. Install iapws, or set BOILER_STRICT_PROPS=1 to make this a hard error. Underlying import error: ModuleNotFoundError(\"No module named 'iapws'\")\n    from .media import saturation_props, dhdP_approx\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n45 passed, 1 skipped, 1 warning in 5.97s\n",
+      "stdout_tail": ".............................................                            [100%]\n============================== warnings summary ===============================\nsrc\\boiler_pdm_sim\\core\\boiler_system.py:18\n  C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\pub053_fresh_clone_v106\\simulator_source\\src\\boiler_pdm_sim\\core\\boiler_system.py:18: RuntimeWarning: iapws is unavailable; boiler_pdm_sim is falling back to a 9-point table + ideal-gas approximation for water/steam properties. Results are NOT IAPWS-IF97 accurate. Install iapws, or set BOILER_STRICT_PROPS=1 to make this a hard error. Underlying import error: ModuleNotFoundError(\"No module named 'iapws'\")\n    from .media import saturation_props, dhdP_approx\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n45 passed, 1 skipped, 1 warning in 5.12s\n",
       "stderr_tail": ""
     }
   ]

@@ -1,7 +1,7 @@
 {
   "repository": "CAPTW/pub053-jmse-boiler-leak-warning",
   "total_files_excluding_self_manifest": 279,
-  "total_bytes_excluding_self_manifest": 4658247,
+  "total_bytes_excluding_self_manifest": 4661476,
   "summary_by_top_level": {
     "(root)": {
       "files": 10,
@@ -17,7 +17,7 @@
     },
     "docs": {
       "files": 10,
-      "bytes": 128736
+      "bytes": 131965
     },
     "figures": {
       "files": 16,
@@ -179,8 +179,8 @@
     },
     {
       "path": "docs/execution_logs/fresh_clone_reproduction_log.json",
-      "bytes": 38514,
-      "sha256": "2085fb977288a57ed1f74a55978bc295a7d21910f41fad085b320a41b04283a8",
+      "bytes": 41357,
+      "sha256": "9107a9cfe900ac6d2017e44b6105224fd0e21d162c1bc3d19733939aa0363523",
       "top_dir": "docs"
     },
     {
@@ -215,8 +215,8 @@
     },
     {
       "path": "docs/REPRODUCTION_GUIDE.md",
-      "bytes": 15011,
-      "sha256": "c5c0d6f908dcdc1cbcee0fde460c3466bd4be6c41d8dbb1369412522a7905566",
+      "bytes": 15397,
+      "sha256": "af925a8142504e5f556303d7285e9fd757961eb39631a7c146aa811a3f32ff6e",
       "top_dir": "docs"
     },
     {
