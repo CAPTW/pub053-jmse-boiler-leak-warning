@@ -476,6 +476,10 @@ class TestPub053R2Analysis(unittest.TestCase):
                             self.assertTrue(any("iapws" in str(w.message) for w in wrec))
                             mismatch_res = verify_features.verify_from_raw_npz(tmp_root, tmp_root / "out_no_iapws")
                             self.assertFalse(mismatch_res["density_backend"]["iapws_available"])
+                            self.assertEqual(mismatch_res["trace_array_checks_total"], 144)
+                            self.assertEqual(mismatch_res["trace_array_checks_passed"], 132)
+                            self.assertFalse(mismatch_res["all_trace_arrays_matched"])
+                            self.assertGreater(mismatch_res["max_trace_array_abs_diff"], 1e-4)
                             self.assertFalse(mismatch_res["all_passed"])
 
                     _common._sat_liquid_density_spline.cache_clear()
@@ -522,15 +526,35 @@ class TestPub053R2Analysis(unittest.TestCase):
                         self.assertFalse(rep_mf["all_passed"])
                         self.assertFalse(rep_mf["density_backend"]["iapws_available"])
 
-                # Also verify make_figures_r2 reports density_backend in archived-assets and missing-npz modes
+                # Isolate missing-NPZ and --archived-assets-only tests from whatever .npz files exist in REPO_ROOT
+                import shutil
                 with tempfile.TemporaryDirectory() as td_arch:
+                    arch_repo = Path(td_arch) / "repo_no_npz"
+                    (arch_repo / "data" / "observations").mkdir(parents=True)
+                    (arch_repo / "data" / "traces").mkdir(parents=True)
+                    (arch_repo / "results").mkdir(parents=True)
+                    shutil.copy2(REPO_ROOT / "data" / "episode_metadata.csv", arch_repo / "data" / "episode_metadata.csv")
+                    shutil.copy2(REPO_ROOT / "results" / "episode_results.csv", arch_repo / "results" / "episode_results.csv")
+                    shutil.copytree(REPO_ROOT / "figures", arch_repo / "figures")
+
+                    def_out = Path(td_arch) / "figs_def"
                     arch_out = Path(td_arch) / "figs_arch"
-                    with mock.patch.object(sys, "argv", ["make_figures_r2.py", "--archived-assets-only", "--results", "results", "--out", str(arch_out)]):
-                        with contextlib.redirect_stdout(io.StringIO()):
-                            rc_arch = make_figures_r2.main()
+                    with mock.patch.object(make_figures_r2, "resolve_repo_root", return_value=arch_repo):
+                        with mock.patch.object(sys, "argv", ["make_figures_r2.py", "--results", str(arch_repo / "results"), "--out", str(def_out)]):
+                            with contextlib.redirect_stdout(io.StringIO()):
+                                rc_def = make_figures_r2.main()
+                        self.assertEqual(rc_def, 1)
+                        def_man = json.loads((def_out / "figure_generation_manifest.json").read_text(encoding="utf-8"))
+                        self.assertEqual(def_man["provenance_mode"], "missing_raw_npz_error")
+                        self.assertIn("density_backend", def_man)
+
+                        with mock.patch.object(sys, "argv", ["make_figures_r2.py", "--archived-assets-only", "--results", str(arch_repo / "results"), "--out", str(arch_out)]):
+                            with contextlib.redirect_stdout(io.StringIO()):
+                                rc_arch = make_figures_r2.main()
                     self.assertEqual(rc_arch, 0)
                     arch_man = json.loads((arch_out / "figure_generation_manifest.json").read_text(encoding="utf-8"))
                     self.assertEqual(arch_man["provenance_mode"], "archived_assets_only")
+                    self.assertFalse(arch_man["figure_spec_verified"]["all_specs_verified"])
                     self.assertIn("density_backend", arch_man)
         finally:
             _common._sat_liquid_density_spline.cache_clear()

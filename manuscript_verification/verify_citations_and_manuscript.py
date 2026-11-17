@@ -125,7 +125,7 @@ def run_checks(orig_docx: Path, rev_docx: Path, rev_pdf: Path, dyn_log: Path, re
     assert "results_archived/current_manuscript_verification" in full_text
     assert "data/reconstructed_inputs" in full_text
     assert "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" in full_text
-    assert "v1.0.5-pub053-r2" in full_text
+    assert "v1.0.6-pub053-r2" in full_text
     assert "REPRODUCIBILITY.md" in full_text and "DATA_PROVENANCE.md" in full_text and "KNOWN_LIMITATIONS.md" in full_text
     assert "SOURCE_PROVENANCE.md" in full_text and "AI_USAGE_AUDIT.md" in full_text
     assert "--archived-tables-only" in full_text and "--archived-assets-only" in full_text
