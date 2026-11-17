@@ -10,6 +10,8 @@ import hashlib
 import json
 import math
 import statistics
+import sys
+import warnings
 from collections.abc import Mapping, Sequence
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
@@ -405,9 +407,42 @@ def _sat_liquid_density_spline() -> CubicSpline:
 
         rho_grid = np.array([float(IAPWS97(P=float(p) / 10.0, x=0).rho) for p in p_grid_bar], dtype=float)
     except Exception:
+        warnings.warn(
+            "iapws is unavailable; falling back to approximate IAPWS-95 saturation density, which diverges "
+            "from IAPWS-IF97 raw .npz traces (install iapws==1.5.5 via requirements-lock.txt).",
+            RuntimeWarning,
+            stacklevel=2,
+        )
         t_sat = _if97_region4_tsat_k(p_grid_bar)
         rho_grid = _iapws95_sat_liquid_density_kg_m3(t_sat)
     return CubicSpline(p_grid_bar, rho_grid, bc_type="not-a-knot")
+
+
+def get_density_backend_info() -> dict[str, Any]:
+    """Report active saturated-liquid density backend and whether exact iapws.IAPWS97 is available."""
+    try:
+        import importlib.metadata
+        from iapws import IAPWS97  # type: ignore
+
+        rho_7bar = float(IAPWS97(P=0.7, x=0).rho)
+        try:
+            ver = importlib.metadata.version("iapws")
+        except Exception:
+            ver = getattr(sys.modules.get("iapws"), "__version__", None)
+        return {
+            "iapws_available": True,
+            "iapws_version": ver,
+            "density_backend": "iapws.IAPWS97",
+            "sat_liquid_rho_7bar_kg_m3": rho_7bar,
+        }
+    except Exception:
+        rho_7bar = float(_iapws95_sat_liquid_density_kg_m3(_if97_region4_tsat_k(np.array([7.0])))[0])
+        return {
+            "iapws_available": False,
+            "iapws_version": None,
+            "density_backend": "approx_if97_reg4_iapws95_fallback",
+            "sat_liquid_rho_7bar_kg_m3": rho_7bar,
+        }
 
 
 def saturated_liquid_density_kg_m3(pressure_bar: np.ndarray) -> np.ndarray:

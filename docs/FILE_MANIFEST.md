@@ -1,17 +1,17 @@
 # File Manifest (`CAPTW/pub053-jmse-boiler-leak-warning`)
 
 - **Indexed files** (excluding self-referencing `docs/FILE_MANIFEST.*`): **279**
-- **Total indexed size**: **4,615,301 bytes**
+- **Total indexed size**: **4,626,704 bytes**
 
 ## Summary by Top-Level Directory
 | Top-Level | File Count | Bytes |
 |---|---:|---:|
-| `(root)` | 10 | 30,047 |
-| `code` | 6 | 149,262 |
+| `(root)` | 10 | 30,717 |
+| `code` | 6 | 158,399 |
 | `data` | 11 | 39,797 |
-| `docs` | 10 | 109,719 |
+| `docs` | 10 | 110,657 |
 | `figures` | 16 | 2,944,747 |
-| `manuscript_verification` | 20 | 417,910 |
+| `manuscript_verification` | 20 | 418,568 |
 | `references` | 6 | 83,011 |
 | `results` | 13 | 32,936 |
 | `results_archived` | 31 | 129,403 |
@@ -23,12 +23,12 @@
 | `.gitattributes` | 151 | `3bce680ab62573be67ce8839b2a7f0cf43892e9fb253bb694e1562ff316781f0` |
 | `.gitignore` | 151 | `f640da066e9c62fe45b70fbffaf9f1f8836c52a0a1fe3299f69007c3a25d06ad` |
 | `CITATION.cff` | 1857 | `f263548de598e61068f14e1cc1531e5719e045fa123ba10c4c8f9b563c6e135c` |
-| `code/_common.py` | 38699 | `bf790c0063bdbc752e6338a6ce73df37ff7f308dcade0225114994c24784157c` |
+| `code/_common.py` | 40024 | `f645a492b5d3b34ffaeffcfbac2716fc93ddc6504afbdf16b6a237d62b5d4cd0` |
 | `code/make_figures_r2.py` | 29358 | `3d19c84df3d14316f7f0a6f35fc1acea4c5642d406759be9fbb48b22a104643d` |
-| `code/README.md` | 4453 | `9437e8593c617f59f6aa5277085562477091a0954181b84183018503b042b80c` |
-| `code/reproduce_analysis.py` | 28305 | `67b4c92315ee635bf6477d8507fe82dc48ae9fa9a2d1b09f97e6cc89d5918a29` |
-| `code/test_analysis.py` | 24320 | `fb3e7817f17d7683d4792afd1579dfeb110fda42039b2679b1b76008d37d6441` |
-| `code/verify_features.py` | 24127 | `a74259bb6de100e51ef693477e51cdbd58dd98f00e4ad09468f9f1fcec5f3d6a` |
+| `code/README.md` | 4945 | `1f72745ffafdd6a7d838a86620d8c8c1f3e710ed8cc83357170e8c28504fb630` |
+| `code/reproduce_analysis.py` | 29880 | `b62779ccc073738b6dc478d15d4cbfbfa09e75356df451880707929c7d372b6e` |
+| `code/test_analysis.py` | 28451 | `e8f53071eb2ab2009d6f3dd46f63627e595952cdbcd12cfa90399df63fe8f5d7` |
+| `code/verify_features.py` | 25741 | `db61d8786751a5fdb14e344b290b136314e021252ddd60b00bc019ff763921d0` |
 | `data/block_design.json` | 6293 | `1fa8c3a481f037dda81baeccd32990527333bcfcb4addffa635acc2fcd9aaa74` |
 | `data/episode_metadata.csv` | 4118 | `b9f83a3ddb325bea8bbb0caaa96a7b6f5385684eab046f24462d35335e45267e` |
 | `data/original_configs/ab4_marine_aux.yaml` | 4503 | `2c6c330289008b27a3fc6cc3434900cb5642ee661241d4ff70a360ef1c6491df` |
@@ -40,17 +40,17 @@
 | `data/reconstructed_inputs/plant_parameters_table1_table2_from_source.json` | 1871 | `f1635b78ffc094e57f6ad9adcd679751a24281ce5076a4a2cbe8a39132d407f6` |
 | `data/reconstructed_inputs/README.md` | 1351 | `a89e8cac3623bc0e3b090b333ee7ffddd9c83f5cd1cdfddb7e79dfd90858fd67` |
 | `data/reconstructed_inputs/threshold_candidates_table5_reconstructed.json` | 3723 | `29ad01c048dd80db1b6f44edd21ab093348df2d9e1378406afcf82fcc1093e20` |
-| `docs/AI_USAGE_AUDIT.md` | 5870 | `611f89857537676b5cf8fe430c4bf9247b17ccaf8e9171e340feea920b3c41ec` |
-| `docs/DATA_PROVENANCE.md` | 6372 | `29a3a7b0e547c205db5b0924f9315436e193a52be64e5d7629df9c509247519f` |
+| `docs/AI_USAGE_AUDIT.md` | 5870 | `082a02810291f2a53a5f43139585775c525442ac391b9b93dca5f60464d714da` |
+| `docs/DATA_PROVENANCE.md` | 6784 | `e3159dcdd709032c64bd2c5c5fe7042c0832b4a810e19dc96ef8c6792d33c052` |
 | `docs/execution_logs/fresh_clone_reproduction_log.json` | 28473 | `3ebbfc1acd98b07e6270762f12027248bbd748549a4fba2ad007cde701b2bf4c` |
 | `docs/execution_logs/pytest_ab4_core_log.txt` | 7903 | `d3fe3044b6992a24139749a9e95b1394c39a95ed341e3f16db03d5b19330d940` |
 | `docs/execution_logs/pytest_ab4_integration_log.txt` | 19492 | `405dbe089fe67fff0bee041ccd11745c6bbaa291db114eccd10a2f5bfa0bc788` |
-| `docs/execution_logs/verify_citations_and_manuscript_log.json` | 980 | `7265e4a55278f94957db76c4c7a1ddd46be3a18db36779c5f32d707d99ad70c0` |
+| `docs/execution_logs/verify_citations_and_manuscript_log.json` | 980 | `b1f5131260f666d6807262f265d9c29cf69104deabf642a2e4d2cd01f682d727` |
 | `docs/execution_logs/verify_tables_from_archived_results_log.json` | 2363 | `d5c8e43566fb037995d6c26d1825ec21518f398747841be2a5fd144ef63a0f52` |
-| `docs/KNOWN_LIMITATIONS.md` | 6743 | `a5f1cba44d43b4a785fe57d7a3748354d243cb5784b0a8b736b04352af8ec62b` |
-| `docs/REPRODUCTION_GUIDE.md` | 8874 | `b195fb267865d7c690408d7b8f3d789fd7b0f54123f7de14157ffa7c75df924f` |
+| `docs/KNOWN_LIMITATIONS.md` | 6900 | `c64bb35804f4198e98c1cf47e655ae543020928fb123ba2864c2a3b9618ac323` |
+| `docs/REPRODUCTION_GUIDE.md` | 9243 | `d53e7012495301048a9ed0d1c93f4debca9d8e53251847c6b1c2188ba3842e1d` |
 | `docs/SOURCE_PROVENANCE.md` | 22649 | `6700afc52a8cbc39de0863b47de0cbc26a7e08fc95e6891243752c05913b5a0b` |
-| `environment.yml` | 248 | `ab67c0d5058281023d4423fb9db8ff7414886aa7ba708bed2f4be95fd15b9664` |
+| `environment.yml` | 306 | `d1a892cb2be58918f49e9e5cc58c5d6dfb460d69e1148ba6b0713cf22e0e82b3` |
 | `figures/fig1_normal_overview.png` | 1034473 | `7ecb3a6c9027701f0ea668e9ac918a738e9521fdb8498f2cd5a4ed3ef51b9bd0` |
 | `figures/fig2_e1_leak_trajectory.png` | 224850 | `30656bf2f24c002ddeae4ec5ebcd05572867ce1be3f886af8021509af3fbed22` |
 | `figures/fig3_e1_feature_responses.jpeg` | 184992 | `23239e769ede357c872b112c6115ecdb5e07eee5986c52d22f41af61f3f7edbb` |
@@ -58,7 +58,7 @@
 | `figures/fig5_e1_score_traces.png` | 123429 | `a91411013f985a81f13ce5515a5701cde35ac98baf2bcde288ff7e6f3ca39b5f` |
 | `figures/fig6_all_eval_leak_panels.jpeg` | 87031 | `d0f0bff48a54178b8d490310a4827ea05aa2cddc7a90e08512bbadabb1ea8ba2` |
 | `figures/fig7_normal_score_traces.jpeg` | 95728 | `5d1d6063025506c5d3b8aec06df36006ce939e1fbdb8e5616014b40bd6e6a760` |
-| `figures/FIGURE_MAP.md` | 3296 | `2f1585cd5d8fd8d1ca29f361f253f1826e9a08ab80d1e69936bd7c413e901fd8` |
+| `figures/FIGURE_MAP.md` | 3296 | `d1909cb63166426d0c6259e95a879ecabdbc7ef5850ca3f984a7cfc82cc28144` |
 | `figures/raw_source_assets/page1_img1_1103.jpeg` | 87031 | `d0f0bff48a54178b8d490310a4827ea05aa2cddc7a90e08512bbadabb1ea8ba2` |
 | `figures/raw_source_assets/page1_img2_1217.jpeg` | 95728 | `5d1d6063025506c5d3b8aec06df36006ce939e1fbdb8e5616014b40bd6e6a760` |
 | `figures/raw_source_assets/page1_img3_1261.jpeg` | 156544 | `d7291393e24c7e81467f986b68394b8476f1875921e6909b36c0b88fc2617790` |
@@ -79,25 +79,25 @@
 | `manuscript_verification/combine_normal_figs.py` | 475 | `d13a495d7a449e54f84c22b8c3f812c87f9e77100a07e6537091500f0449e9f1` |
 | `manuscript_verification/create_automated_citation_docx.py` | 27099 | `14c8a15b137d5cba857ae5f47f936ad8832a7e3f8e3ffd0a5c094beb322ae159` |
 | `manuscript_verification/independent_numeric_review.py` | 6993 | `649e40f8e4e51604737a13c0bcea302d21de8bddfe1fd3b3e61f5db7b72836e3` |
-| `manuscript_verification/LATEST_MANUSCRIPT_VERIFICATION_REPORT.md` | 4250 | `1164264395003f3d36cbf4f470b1d29a14ec3f64bd915778e3296ce84ffb364d` |
-| `manuscript_verification/MANUSCRIPT_ARTIFACT_MAP.md` | 10277 | `6e37f977fc3204e469af30232d777655ee45aa4fd4aac299d10fdd4bb3699232` |
+| `manuscript_verification/LATEST_MANUSCRIPT_VERIFICATION_REPORT.md` | 4796 | `457dcfb6fee5e7362950e89fb15f7ad08cf041f8075b10d4f489c37925ce3fa3` |
+| `manuscript_verification/MANUSCRIPT_ARTIFACT_MAP.md` | 10389 | `eb06bdd8346ba66807082fad779a752d4fb457101d7f66e1d8fb64a7bdec8f6d` |
 | `manuscript_verification/r2_text_archive/PUB053_Manuscript_R2.txt` | 23908 | `2dff531921560c615bc37be6b7ee3914727452434238778d00b60f6c4a12c60a` |
 | `manuscript_verification/r2_text_archive/PUB053_Supplement_R2.txt` | 32998 | `53dddac42a2cc268e670f7d5e67b8039851a34c50e37708a1cc185354d260532` |
 | `manuscript_verification/sync_citations_and_references.py` | 14892 | `f85e3c949d7fad8ffb006bb24db32c4f26294e460bacde8664b895abdab8a111` |
-| `manuscript_verification/verify_citations_and_manuscript.py` | 11231 | `8941e7a32c40d9fe82644d84d7dee6d9afe3abd26e3cd1042ebadf2c8b38e8f1` |
-| `manuscript_verification/verify_revised_manuscript.py` | 15264 | `bb45b4c109d4403908544cdfe1a8b40cec76eac693d46cc37a7127ee59f4e5a4` |
+| `manuscript_verification/verify_citations_and_manuscript.py` | 11231 | `8deed1802384f62423e2e6ff27705a2d5fb1827160900f6f9378527b9ca0b70d` |
+| `manuscript_verification/verify_revised_manuscript.py` | 15264 | `0b33c662ae733d03918453495ccdcd272341c9eea01aeb13e1fcbc8ddaa932af` |
 | `manuscript_verification/verify_tables_from_archived_results.py` | 12054 | `6015b94d637207217aee6da3ec40cac628593596562b5149fb8fa932404cacc4` |
 | `manuscript_verification/word_update_export_and_test.py` | 29627 | `9adc834cf4bcb8adf0bcb9adf45dba6246bd525d20f60521b35011e82db9cb6f` |
-| `pyproject.toml` | 878 | `f2bbc3f008b58c2d05c6be5c4849c4c54698f25444cf0ff4088b64ca79847aca` |
-| `README.md` | 14554 | `c57ed95091d7f9e0f7559c9ce411b4317be17f7cec1e32c1a61393c52ec4cf04` |
+| `pyproject.toml` | 883 | `d36f056c1a3e976d2c43842666d9e523a7cf7fe33dce6dc41bd8527054dba176` |
+| `README.md` | 14931 | `9bb281684d099291bf2324ef863fcd667449187b7835fae21edeb941baa2411a` |
 | `references/citation_mapping_table.csv` | 3624 | `3c6dbacefa25eb1784335c9baf8679d1ff22d581f95d989a15b9504057a907e6` |
 | `references/CITATION_MAPPING_TABLE.md` | 15009 | `4d8433cc799e4cd2fbb9c851ca162a8a2c69f30e43efa0d22d7f3524353f7926` |
 | `references/pub053_references.bib` | 9719 | `fb9d9576a96020ca49276fece26d2e2e4e2ea2ffb729a84577b35b1725e3a8b0` |
 | `references/pub053_references.json` | 18739 | `9395a3450304513f47d105e936ccdb82dc5e6e69c84d0c4f158892700bbb85c9` |
 | `references/pub053_references.ris` | 8597 | `492c27e62cfab8f899c48150677eb793682814ff551f83bcacb0961624987260` |
 | `references/word_sources.xml` | 27323 | `5f6dbd1fe41a05fd71b53eb62808d2bd72b667a0029c3b4a6b44e024a44614fd` |
-| `REPRODUCIBILITY.md` | 5293 | `f3a06cb733a8af0105a713061bac7f5441dd6714150f00f69194a41d7f93d757` |
-| `requirements-lock.txt` | 1464 | `2e0e32d2c1e5bede428be5e5f8fe87837415094f157388e0479888b883d40ee1` |
+| `REPRODUCIBILITY.md` | 5512 | `f753ba89b0cc68725d625365db393cb28d7b9b5c6c0f575bef85a1f9e7e43e1a` |
+| `requirements-lock.txt` | 1325 | `a741576f4b1a8e49833bfa7346bf1745857a7b5bd09cee94084ef0e012e0bc56` |
 | `results/component_crossing_timing.csv` | 790 | `61782d6a368964b695c230f78911f00578de3d4151f2ad76b0ef8a99a506f384` |
 | `results/cutoff_leads_by_block.csv` | 4192 | `6a172523e8ab49e8e1eaa0f2f7dbefb850439f87f41205bde523f8f34aa461d0` |
 | `results/cutoff_leads_summary.csv` | 513 | `e50bd5299dc6030af66196c366d73297661741640917f9318cceac7839561561` |
@@ -113,8 +113,8 @@
 | `results/tables_and_rounding_summary.json` | 349 | `f6e40318018949cab3fedae6d841252ff7894609ca39dff6280e69ffc442d489` |
 | `results_archived/component_crossing_timing.csv` | 790 | `61782d6a368964b695c230f78911f00578de3d4151f2ad76b0ef8a99a506f384` |
 | `results_archived/current_manuscript_verification/citation_editing_and_reordering_test_log.json` | 28029 | `5b6fa446777210ab81b0abe468a633e616a1538d8d3eb2afa98c412fb79ee0b3` |
-| `results_archived/current_manuscript_verification/current_citations_and_manuscript_report.json` | 980 | `7265e4a55278f94957db76c4c7a1ddd46be3a18db36779c5f32d707d99ad70c0` |
-| `results_archived/current_manuscript_verification/current_docx_verification_report.json` | 1683 | `cde7745fed5b3c1c30f7564e591d47cbdb88c5af627335bf0d94775ba4a1004e` |
+| `results_archived/current_manuscript_verification/current_citations_and_manuscript_report.json` | 980 | `b1f5131260f666d6807262f265d9c29cf69104deabf642a2e4d2cd01f682d727` |
+| `results_archived/current_manuscript_verification/current_docx_verification_report.json` | 1683 | `2c2452b6f457cb55da515169c1209a7edfdb4bbc119e6e2e526e4fa37b3162ff` |
 | `results_archived/current_manuscript_verification/current_manuscript_table_checks.csv` | 5209 | `4f66a973501c5287f2d2a50cca87a0691a5bd22f1e6d30320b220058d74a0844` |
 | `results_archived/current_manuscript_verification/README.md` | 1138 | `05c9b531cdf520ef10677af51e3a24e8d330c0a6f60d64cbdf4d92d8727075a8` |
 | `results_archived/cutoff_leads_by_block.csv` | 4192 | `6a172523e8ab49e8e1eaa0f2f7dbefb850439f87f41205bde523f8f34aa461d0` |
@@ -298,4 +298,4 @@
 | `simulator_source/tests/test_simulator_run_to_file_smoke.py` | 2890 | `1363ff15d4c5a7a4e34b994bf6c82af96c44eab311c8d2efda4b0ecf7e5fd2c9` |
 | `simulator_source/tests/test_validation_battery.py` | 2777 | `7e3fee7695f3869f718e1786dbec26b276ff870b07c149da2ee4cc60f3206e23` |
 | `simulator_source/tests/test_workspace_structure.py` | 379 | `960714c1f1b3f7c8526d140dce9adac637114f2cd3a075c52f07d2ac2efa4770` |
-| `THIRD_PARTY_NOTICES.md` | 4354 | `d817ea2145e863fd9f2f129de2b34d98f115f6c301a97ce66bf79c29ba283430` |
+| `THIRD_PARTY_NOTICES.md` | 4504 | `d491fe33d4989e0c18e2165d3de8758841e6a918b266c423027892c8c1ca869d` |

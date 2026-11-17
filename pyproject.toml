@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Companion verification, physics-core snapshot (ab4), and citation archive for the PUB-053 JMSE manuscript."
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT (for code components; optional upstream dependency iapws is GPL-3.0 — see LICENSE and THIRD_PARTY_NOTICES.md)" }
+license = { text = "MIT (repository source code only; external PyPI dependency iapws==1.5.5 is GPL-3.0 — see LICENSE and THIRD_PARTY_NOTICES.md)" }
 dependencies = [
   "numpy>=1.24,<2.0",
   "scipy>=1.10",
@@ -19,11 +19,11 @@ dependencies = [
   "pillow>=10.0",
   "lxml>=5.0",
   "python-dateutil>=2.8",
+  "iapws==1.5.5",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest>=7.4"]
-thermo = ["iapws>=1.5"]
 docx = ["python-docx>=1.1"]
 word-com = ["pywin32>=306; platform_system == 'Windows'"]
 sim-extras = ["tables>=3.8", "fmpy>=0.3"]

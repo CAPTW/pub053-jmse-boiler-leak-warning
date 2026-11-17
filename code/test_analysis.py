@@ -7,12 +7,17 @@ Usage:
 
 from __future__ import annotations
 
+import contextlib
+import importlib.util
+import io
 import json
 import statistics
 import sys
 import tempfile
 import unittest
+import warnings
 from pathlib import Path
+from unittest import mock
 
 import numpy as np
 
@@ -25,11 +30,13 @@ from _common import (
     compute_table6_from_episode_rows,
     detect_sequential_alarms,
     extract_raw_trip_and_domain_exit,
+    get_density_backend_info,
     load_csv,
     max_exceedance_span_s,
     reconstruct_features_from_observations,
     resolve_repo_root,
     round_half_up_1dp,
+    saturated_liquid_density_kg_m3,
     write_csv,
 )
 from make_figures_r2 import render_figures_from_raw_npz
@@ -441,6 +448,61 @@ class TestPub053R2Analysis(unittest.TestCase):
             self.assertFalse(dup_cmp["exact_match"])
             self.assertTrue(len(dup_cmp["duplicate_gen_keys"]) > 0 or len(dup_cmp["missing_keys"]) > 0)
 
+    def test_iapws_density_backend_and_missing_iapws_guard(self) -> None:
+        """Verify IAPWS97 (iapws==1.5.5) vs fallback divergence and missing_iapws_error CLI guard."""
+        import _common
+        import reproduce_analysis
+        import verify_features
+
+        try:
+            with tempfile.TemporaryDirectory() as td:
+                tmp_root = Path(td)
+                self._build_synthetic_raw_repo(tmp_root)
+                _common._sat_liquid_density_spline.cache_clear()
+
+                if importlib.util.find_spec("iapws") is not None:
+                    info = get_density_backend_info()
+                    self.assertTrue(info["iapws_available"])
+                    self.assertEqual(info["density_backend"], "iapws.IAPWS97")
+                    rho_if97 = float(saturated_liquid_density_kg_m3(np.array([7.0]))[0])
+
+                    with mock.patch.dict(sys.modules, {"iapws": None}):
+                        _common._sat_liquid_density_spline.cache_clear()
+                        with warnings.catch_warnings(record=True) as wrec:
+                            warnings.simplefilter("always")
+                            rho_fb = float(saturated_liquid_density_kg_m3(np.array([7.0]))[0])
+                            self.assertGreater(abs(rho_if97 - rho_fb), 1e-4)
+                            self.assertTrue(any("iapws" in str(w.message) for w in wrec))
+                            mismatch_res = verify_features.verify_from_raw_npz(tmp_root, tmp_root / "out_no_iapws")
+                            self.assertFalse(mismatch_res["density_backend"]["iapws_available"])
+                            self.assertFalse(mismatch_res["all_passed"])
+
+                    _common._sat_liquid_density_spline.cache_clear()
+
+                # Verify CLI guard refuses full_raw_npz_replay without iapws
+                with (
+                    mock.patch.object(_common, "get_density_backend_info", return_value={"iapws_available": False, "iapws_version": None, "density_backend": "approx_if97_reg4_iapws95_fallback", "sat_liquid_rho_7bar_kg_m3": 750.56}),
+                    mock.patch.object(verify_features, "get_density_backend_info", return_value={"iapws_available": False, "iapws_version": None, "density_backend": "approx_if97_reg4_iapws95_fallback", "sat_liquid_rho_7bar_kg_m3": 750.56}),
+                    mock.patch.object(reproduce_analysis, "get_density_backend_info", return_value={"iapws_available": False, "iapws_version": None, "density_backend": "approx_if97_reg4_iapws95_fallback", "sat_liquid_rho_7bar_kg_m3": 750.56}),
+                    mock.patch.object(verify_features, "resolve_repo_root", return_value=tmp_root),
+                    mock.patch.object(reproduce_analysis, "resolve_repo_root", return_value=tmp_root),
+                    mock.patch.object(sys, "argv", ["verify_features.py", "--out", str(tmp_root / "cli_vf")]),
+                ):
+                    rc_vf = None
+                    with contextlib.redirect_stdout(io.StringIO()):
+                        rc_vf = verify_features.main()
+                    self.assertEqual(rc_vf, 1)
+                    rep_vf = json.loads((tmp_root / "cli_vf" / "feature_verification_report.json").read_text(encoding="utf-8"))
+                    self.assertEqual(rep_vf["provenance_mode"], "missing_iapws_error")
+                    with mock.patch.object(sys, "argv", ["reproduce_analysis.py", "--out", str(tmp_root / "cli_ra")]):
+                        with contextlib.redirect_stdout(io.StringIO()):
+                            rc_ra = reproduce_analysis.main()
+                        self.assertEqual(rc_ra, 1)
+                        rep_ra = json.loads((tmp_root / "cli_ra" / "reproduction_comparison_report.json").read_text(encoding="utf-8"))
+                        self.assertEqual(rep_ra["provenance_mode"], "missing_iapws_error")
+        finally:
+            _common._sat_liquid_density_spline.cache_clear()
+
 
 def main() -> int:
     npz_status = check_raw_npz_availability(REPO_ROOT)
@@ -451,6 +513,7 @@ def main() -> int:
         "script": "code/test_analysis.py",
         "provenance_mode": npz_status["mode"],
         "raw_npz_status": npz_status,
+        "density_backend": get_density_backend_info(),
         "tests_run": res.testsRun,
         "failures": len(res.failures),
         "errors": len(res.errors),

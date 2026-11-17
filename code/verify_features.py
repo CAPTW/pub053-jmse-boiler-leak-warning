@@ -31,6 +31,7 @@ from _common import (
     compare_csv_files,
     compute_ewls_residuals,
     detect_sequential_alarms,
+    get_density_backend_info,
     load_csv,
     max_exceedance_span_s,
     reconstruct_features_from_observations,
@@ -240,6 +241,7 @@ def verify_from_raw_npz(repo_root: Path, out_dir: Path, *, trace_atol: float = 1
     )
     all_passed = bool(trace_cmp["all_matched"] and len(np_rows) == 48 and len(cc_rows) == 8)
     return {
+        "density_backend": get_density_backend_info(),
         "trace_array_checks_total": trace_cmp["total"],
         "trace_array_checks_passed": trace_cmp["passed"],
         "all_trace_arrays_matched": trace_cmp["all_matched"],
@@ -351,6 +353,11 @@ def main() -> int:
         action="store_true",
         help="Explicit opt-in to run algebraic/internal checks on archived tables when primary .npz files are absent.",
     )
+    ap.add_argument(
+        "--allow-approx-density",
+        action="store_true",
+        help="Allow approximate IAPWS-95 density fallback during raw .npz replay when iapws is absent (not exact).",
+    )
     args = ap.parse_args()
 
     repo_root = resolve_repo_root()
@@ -359,6 +366,7 @@ def main() -> int:
     out_rel = out_dir.relative_to(repo_root).as_posix() if out_dir.is_relative_to(repo_root) else str(out_dir)
 
     npz_status = check_raw_npz_availability(repo_root)
+    density_info = get_density_backend_info()
     unexecuted_raw_items = [
         "Reconstruct B0 EWMA and 600 s mass-balance residual r_M from 24 data/observations/*.npz files",
         "Refit Table 4 OLS and B0 scale parameters on pooled D1_normal..D4_normal monitoring rows",
@@ -367,6 +375,28 @@ def main() -> int:
     ]
 
     if npz_status["all_raw_npz_present"]:
+        if not density_info["iapws_available"] and not args.allow_approx_density:
+            report = {
+                "script": "code/verify_features.py",
+                "out_dir": out_rel,
+                "provenance_mode": "missing_iapws_error",
+                "raw_npz_status": npz_status,
+                "density_backend": density_info,
+                "error": (
+                    "iapws==1.5.5 is required for exact IAPWS-IF97 saturated-liquid density spline reconstruction "
+                    "during full_raw_npz_replay (install via `pip install -r requirements-lock.txt`). "
+                    "Built-in approximate fallback diverges from primary .npz traces."
+                ),
+                "recomputed_from_raw_inputs": [],
+                "compared_against_reference_results": {},
+                "archived_table_internal_checks": {},
+                "preserved_or_copied_artifacts": [],
+                "unexecuted_items": unexecuted_raw_items,
+                "all_passed": False,
+            }
+            write_json(out_dir / "feature_verification_report.json", report)
+            print(json.dumps(report, indent=2, ensure_ascii=False))
+            return 1
         details = verify_from_raw_npz(repo_root, out_dir)
         comparisons = {
             "normal_persistence.csv": compare_csv_files(repo_root / "results" / "normal_persistence.csv", out_dir / "normal_persistence.csv"),
@@ -386,6 +416,7 @@ def main() -> int:
             "out_dir": out_rel,
             "provenance_mode": "full_raw_npz_replay",
             "raw_npz_status": npz_status,
+            "density_backend": density_info,
             "raw_npz_note": "Executed full raw observation reconstruction (EWMA, r_M, OLS refit, 144/144 trace array comparison), threshold sweep, normal persistence, and component crossing checks from all 48 .npz files.",
             "recomputed_from_raw_inputs": [
                 "recomputed_fit_params.json",
@@ -462,6 +493,7 @@ def main() -> int:
         "out_dir": out_rel,
         "provenance_mode": "archived_tables_only",
         "raw_npz_status": npz_status,
+        "density_backend": density_info,
         "raw_npz_note": (
             "Explicit --archived-tables-only run: primary 48 .npz files (PUB053_Manuscript_Package_R2.zip) are absent, "
             "so raw observation reconstruction and 144-array trace comparisons were NOT executed; only algebraic/tabular invariants "

@@ -1,6 +1,6 @@
 # Manuscript Figures Mapping (Figures 1–7)
 
-| Manuscript Figure | Repo File | Raw Asset & Upstream R2 Origin | Assembly / `render_figures_from_raw_npz` Spec (`v1.0.3-pub053-r2`) |
+| Manuscript Figure | Repo File | Raw Asset & Upstream R2 Origin | Assembly / `render_figures_from_raw_npz` Spec (`v1.0.4-pub053-r2`) |
 |---|---|---|---|
 | Figure 1 | `fig1_normal_overview.png` | `raw_source_assets/page1_img3_1261.jpeg` & `page1_img4_1265.jpeg` (R2 Supp Figs S2 & S3 from `E1_normal.npz`) | Stacked vertically (+30 px gap) by `manuscript_verification/combine_normal_figs.py`; raw `.npz` mode renders 2 stacked `E1_normal` panels over `[0, 6]` h (`Conditioned pressure (bar)` vs `7.0 bar`, `Conditioned drum level (m)` vs `0.85 m`, monitoring onset at `1,200 s`) |
 | Figure 2 | `fig2_e1_leak_trajectory.png` | `raw_source_assets/rId27.png` (R2 Main Fig 1 from `E1_tube_leak.npz` & `independent_fit.json`) | Bottom-padded +32 px white margin in `build_full_paper.py`; raw `.npz` mode renders 3 stacked `E1_tube_leak` panels over `[1200, min(t_end, T_confirm + 300)]` s (`0.333`–`3.109 h` = `1,200`–`11,194 s`, `set_xlim(1200/3600, end_e1/3600)`): `(a)` `Observed pressure` (`Pressure (bar abs.)` vs `7.0 bar`), `(b)` `Observed level` only (`Drum level (m)` vs `0.85 m` setpoint & `0.75 m` oracle criterion; `truth/drum_level` used solely to compute the `10,774`–`10,894 s` dwell annotation band, with no dashed plant-truth trace plotted), `(c)` `u_fw`/`u_fw_bar`/`u_ref` (`Feedwater command` vs `0.95`) |

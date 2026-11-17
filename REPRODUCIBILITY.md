@@ -1,4 +1,4 @@
-# Reproducibility Guide (`v1.0.3-pub053-r2`)
+# Reproducibility Guide (`v1.0.4-pub053-r2`)
 
 ## 1. Environment Setup
 ```bash
@@ -7,10 +7,10 @@ python -m venv .venv
 # Linux/macOS: source .venv/bin/activate
 pip install -r requirements-lock.txt
 ```
-`requirements-lock.txt` installs only MIT/BSD/PSF core packages (`numpy`, `scipy`, `pandas`, `matplotlib`, `pyarrow`, `PyYAML`, `pytest`, `python-dateutil`, `lxml`, `pillow`), which suffice for **all** `code/` reproduction/test scripts (`code/test_analysis.py` uses stdlib `unittest`), `verify_tables_from_archived_results.py`, and the `7` non-`iapws` simulator contract test modules. Optional extras (GPL-3.0 `iapws==1.5.5` for `core/ab4` physics tests via `pip install -e ".[thermo]"`, `python-docx` via `pip install -e ".[docx]"`, Windows `pywin32`, and external Poppler `pdftotext`/`pdfinfo`) are excluded from default installation; see `THIRD_PARTY_NOTICES.md`.
+`requirements-lock.txt` installs all verified R2 analysis and core simulator packages (`numpy==1.26.4`, `scipy==1.13.1`, `pandas==2.2.2`, `matplotlib==3.9.2`, `pyarrow==16.1.0`, `PyYAML==6.0.1`, `pytest==7.4.4`, `python-dateutil==2.9.0.post0`, `lxml==6.0.2`, `pillow==10.4.0`, and **`iapws==1.5.5`**). External PyPI **`iapws==1.5.5`** (GPL-3.0, not vendored in git; see `THIRD_PARTY_NOTICES.md`) IS **required** both for exact IAPWS-IF97 saturated-liquid density spline reconstruction in `code/verify_features.py` and `code/reproduce_analysis.py` against raw `.npz` files (its built-in IAPWS-95 fallback deviates by `~0.00079 kg/m^3` at `7 bar` and causes `144`-array verification to fail) and for `simulator_source` `core/ab4` physics tests. Optional local manuscript tools (`python-docx`, Windows `pywin32`, Poppler `pdftotext`/`pdfinfo`) are separate.
 
 ## 2. Mode A — Unit Tests & Strict Missing-Raw-NPZ Check (Standalone Clone)
-Default CLI invocations of `verify_features.py`, `reproduce_analysis.py`, and `make_figures_r2.py` **require all 48 primary `.npz` files** (`data/observations/*.npz` and `data/traces/*.npz` from `PUB053_Manuscript_Package_R2.zip`) and fail loudly (`exit 1`, `"all_passed": false`, `"provenance_mode": "missing_raw_npz_error"`) when those files are absent:
+Default CLI invocations of `verify_features.py`, `reproduce_analysis.py`, and `make_figures_r2.py` **require all 48 primary `.npz` files** (`data/observations/*.npz` and `data/traces/*.npz` from `PUB053_Manuscript_Package_R2.zip`) and fail loudly (`exit 1`, `"all_passed": false`, `"provenance_mode": "missing_raw_npz_error"`) when those files are absent (`"provenance_mode": "missing_iapws_error"` if `.npz` files are present without `iapws`):
 
 ```bash
 python -B code/test_analysis.py
@@ -19,7 +19,7 @@ python -B code/reproduce_analysis.py --out results_reproduced       # exits 1 wh
 python -B code/make_figures_r2.py --results results_reproduced --out figures_reproduced  # exits 1 when .npz absent
 ```
 
-`code/test_analysis.py` (`7/7` tests) validates sequential detector rules, signed EWLS residuals (`+`/`-` without `np.abs()`), quantile dominance vs. general counterexample, 24-episode Table 6 rounding (`51.3 min` / `115.5 min`), keyed CSV alignment (`cutoff_leads_by_block.csv`), full 24-episode (`144`-array) Supplement S3 raw reconstruction + negative mutation detection, and end-to-end synthetic raw-`.npz` replay (`tables_3_4_5_7_crosscheck.csv` 50-row cross-check including Table 7 `None`/`null` list matching + negative check, primary trip/feasibility event extraction, and `render_figures_from_raw_npz` Figures 1–7 panel/window specs matching `[1200, min(t_end, T_confirm + 300)]` s and panel (b) `Observed level`-only plotting) over an isolated temporary `.npz` fixture.
+`code/test_analysis.py` (`8/8` tests) validates sequential detector rules, signed EWLS residuals (`+`/`-` without `np.abs()`), IAPWS-97 (`iapws==1.5.5`) vs. fallback divergence + `missing_iapws_error` CLI guard, quantile dominance vs. general counterexample, 24-episode Table 6 rounding (`51.3 min` / `115.5 min`), keyed CSV alignment (`cutoff_leads_by_block.csv`), full 24-episode (`144`-array) Supplement S3 raw reconstruction + negative mutation detection, and end-to-end synthetic raw-`.npz` replay (`tables_3_4_5_7_crosscheck.csv` 50-row cross-check including Table 7 `None`/`null` list matching + negative check, primary trip/feasibility event extraction, and `render_figures_from_raw_npz` Figures 1–7 panel/window specs matching `[1200, min(t_end, T_confirm + 300)]` s and panel (b) `Observed level`-only plotting) over an isolated temporary `.npz` fixture.
 
 ## 3. Mode B — Explicit Standalone Verification (`--archived-tables-only` / `--archived-assets-only`)
 In a public clone without the 48 binary `.npz` files, pass the explicit opt-in flags to audit all algebraic/tabular invariants, derived delays/leads, Table 6 summaries, cutoff leads (`5/7/8`), delay-window identity (`32/32`), Figure 4 Matplotlib rendering, and archived graphic validation into separate output directories (`results_reproduced/`, `figures_reproduced/`) without overwriting `results/` or `figures/`:
@@ -43,10 +43,10 @@ python -B code/make_figures_r2.py --results results_reproduced --out figures_rep
 ```
 
 ## 5. Simulator Source Unit Tests (`simulator_source/`)
-Notice tests under `simulator_source/tests/` read YAML paths relative to `simulator_source/`. Tests not requiring optional GPL `iapws` run directly from `simulator_source/`:
+Notice tests under `simulator_source/tests/` read YAML paths relative to `simulator_source/`. With `iapws==1.5.5` (GPL-3.0, included in `requirements-lock.txt`) installed, the 7 core physics/props/protocol modules pass **`88/88` tests** and the full `simulator_source/tests/` suite yields `151 passed, 2 skipped, 1 deselected, 2 failed` (the 2 skipped are external-FMU tests; the 1 deselected item is `-m 'not slow'` for the 24 h gate; and the 2 failures reference upstream workspace files intentionally excluded from `simulator_source/`):
 
 ```bash
 cd simulator_source
-PYTHONPATH=src python -B -m pytest tests/test_ab4_geometry.py tests/test_ab4_lines.py tests/test_backend_protocol.py tests/test_fmu_contract.py tests/test_manifest_integrity.py tests/test_pipeline_contracts.py tests/test_simulator_run_to_file_smoke.py -q
+PYTHONPATH=src python -B -m pytest tests/test_ab4_geometry.py tests/test_ab4_lines.py tests/test_ab4_drum_model.py tests/test_ab4_furnace.py tests/test_props_if97.py tests/test_props_fuels_gas.py tests/test_backend_protocol.py -q
 ```
-When user-installed `iapws` (e.g., `iapws==1.5.5`, distributed separately under GPL-3.0) is present, the 7 core physics/props/protocol modules (`test_ab4_geometry.py`, `test_ab4_lines.py`, `test_ab4_drum_model.py`, `test_ab4_furnace.py`, `test_props_if97.py`, `test_props_fuels_gas.py`, `test_backend_protocol.py`) pass `88/88` tests, and the full `simulator_source/tests/` suite yields `151 passed, 2 skipped, 1 deselected, 2 failed` (the 2 skipped are external-FMU tests; the 1 deselected item is `-m 'not slow'` for the 24 h gate; and the 2 failures reference upstream workspace files intentionally excluded from `simulator_source/`).
+(Without `iapws`, the 7 non-`iapws` contract/smoke modules pass `45 passed, 1 skipped` while `ab4`/IF97 modules skip via `pytest.importorskip("iapws")`.)

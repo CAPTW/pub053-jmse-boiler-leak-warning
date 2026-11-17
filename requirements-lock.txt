@@ -1,18 +1,17 @@
-# Verified isolated Python 3.12 environment core packages (MIT/BSD/PSF/Apache-compatible PyPI wheels; no GPL/AGPL defaults)
-# Sufficient for code/ (unit tests, R2 verification/reproduction, Figure 1-7 rendering), archived manuscript checks, and 45+1 non-iapws simulator contract tests.
+# Verified isolated Python 3.12 environment packages for R2 analysis/reproduction, figure rendering, and ab4 simulator tests
 numpy==1.26.4
 scipy==1.13.1
 pandas==2.2.2
 matplotlib==3.9.2
 pyarrow==16.1.0
 PyYAML==6.0.1
-pytest==7.4.4       # Used only for simulator_source/tests/; code/test_analysis.py uses stdlib unittest
+pytest==7.4.4       # Used for simulator_source/tests/; code/test_analysis.py uses stdlib unittest
 python-dateutil==2.9.0.post0
 lxml==6.0.2
 pillow==10.4.0
+iapws==1.5.5        # Required external PyPI dependency (GPL-3.0, not vendored in git; needed for exact IAPWS-IF97 density spline in code/ raw replay and core/ab4 simulator tests; see THIRD_PARTY_NOTICES.md)
 
-# Optional extras (not installed by default; install separately when needed):
-# iapws==1.5.5      # External GPL-3.0 PyPI dependency required by simulator_source/props/if97.py & core/ab4 simulator tests (`pip install -e ".[thermo]"`; see THIRD_PARTY_NOTICES.md)
+# Optional extras (not installed by default; install separately only if needed):
 # python-docx>=1.1  # Needed only to rebuild the DOCX from scratch via manuscript_verification/build_full_paper.py (`pip install -e ".[docx]"`)
 # pywin32>=306      # Windows-only Microsoft Word COM automation in sync_citations_and_references.py / word_update_export_and_test.py
 # tables>=3.8       # Optional upstream simulator_source PyTables HDF5 writer extra (not used by R2 reproduction or core ab4 tests)

@@ -37,6 +37,7 @@ from _common import (
     detect_sequential_alarms,
     extract_observation_channels,
     extract_raw_trip_and_domain_exit,
+    get_density_backend_info,
     load_csv,
     reconstruct_features_from_observations,
     resolve_repo_root,
@@ -230,6 +231,7 @@ def reproduce_from_raw_npz(repo_root: Path, out_dir: Path) -> tuple[list[dict], 
     ]
     return ep_rows, thresholds, {
         "mode": "full_raw_npz_replay",
+        "density_backend": get_density_backend_info(),
         "fit_sample_n": recon["fit_sample_n"],
         "event_timing_provenance": event_prov_by_ep,
         "raw_event_fallback_used": bool(fallback_eps),
@@ -416,6 +418,11 @@ def main() -> int:
         action="store_true",
         help="Explicit opt-in to recompute derived metrics from archived results/ tables and data/ when primary .npz files are absent.",
     )
+    ap.add_argument(
+        "--allow-approx-density",
+        action="store_true",
+        help="Allow approximate IAPWS-95 density fallback during raw .npz replay when iapws is absent (not exact).",
+    )
     args = ap.parse_args()
 
     repo_root = resolve_repo_root()
@@ -424,12 +431,36 @@ def main() -> int:
     out_rel = out_dir.relative_to(repo_root).as_posix() if out_dir.is_relative_to(repo_root) else str(out_dir)
 
     npz_status = check_raw_npz_availability(repo_root)
+    density_info = get_density_backend_info()
     unexecuted_raw_items = [
         "Reconstruct detector scores and OLS/EWMA parameters from 24 data/observations/*.npz files",
         "Sweep candidate quantile thresholds and detect 24 x 4 sequential alarms directly from raw score traces",
         "Extract functional_start_s, functional_confirm_s, level-cutoff functional_start_s (0.70/0.75/0.80 m), process_trip_s, and domain_exit_s from raw trajectories",
         "Recompute Table 3/4/5/7 raw crosscheck rows (results/tables_3_4_5_7_crosscheck.csv is NOT re-executed without primary .npz files)",
     ]
+
+    if npz_status["all_raw_npz_present"] and not density_info["iapws_available"] and not args.allow_approx_density:
+        report = {
+            "script": "code/reproduce_analysis.py",
+            "out_dir": out_rel,
+            "provenance_mode": "missing_iapws_error",
+            "raw_npz_status": npz_status,
+            "density_backend": density_info,
+            "error": (
+                "iapws==1.5.5 is required for exact IAPWS-IF97 saturated-liquid density spline reconstruction "
+                "during full_raw_npz_replay (install via `pip install -r requirements-lock.txt`). "
+                "Built-in approximate fallback diverges from primary .npz traces."
+            ),
+            "recomputed_from_raw_inputs": [],
+            "compared_against_reference_results": {},
+            "archived_table_internal_checks": {},
+            "preserved_or_copied_artifacts": [],
+            "unexecuted_items": unexecuted_raw_items,
+            "all_passed": False,
+        }
+        write_json(out_dir / "reproduction_comparison_report.json", report)
+        print(json.dumps(report, indent=2, ensure_ascii=False))
+        return 1
 
     if not npz_status["all_raw_npz_present"] and not args.archived_tables_only:
         report = {
@@ -512,6 +543,7 @@ def main() -> int:
             "out_dir": out_rel,
             "provenance_mode": "full_raw_npz_replay",
             "raw_npz_status": npz_status,
+            "density_backend": density_info,
             "raw_npz_note": "Full raw observation replay executed from 48 primary .npz files without overwriting results/.",
             "recomputed_from_raw_inputs": csv_targets,
             "compared_against_reference_results": comparisons,
@@ -544,6 +576,7 @@ def main() -> int:
             "out_dir": out_rel,
             "provenance_mode": "archived_tables_only",
             "raw_npz_status": npz_status,
+            "density_backend": density_info,
             "raw_npz_note": (
                 "Explicit --archived-tables-only run: 48 primary .npz files (PUB053_Manuscript_Package_R2.zip) are absent; "
                 "derived delays, strict leads, Table 6 summary, cutoff lead differences (5/7/8), and 32/32 delay-window identities "
