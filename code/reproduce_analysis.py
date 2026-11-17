@@ -468,6 +468,7 @@ def main() -> int:
             "out_dir": out_rel,
             "provenance_mode": "missing_raw_npz_error",
             "raw_npz_status": npz_status,
+            "density_backend": density_info,
             "error": (
                 "Primary 48 .npz files (24 data/observations/*.npz and 24 data/traces/*.npz from PUB053_Manuscript_Package_R2.zip) "
                 "are absent. Raw analysis reproduction cannot run; pass --archived-tables-only only to recompute derived delays/leads/summaries from archived tables."

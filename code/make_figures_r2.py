@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """Regenerate / reproduce manuscript Figures 1-7 from --results into --out without overwriting figures/.
 
-By default requires all 48 primary .npz files from PUB053_Manuscript_Package_R2.zip and exits 1
-if they are missing. Pass --archived-assets-only (or --archived-tables-only) in standalone clones
-to render Figure 4 from CSV and composite/stage preserved R2 assets from figures/raw_source_assets/.
+By default requires both all 48 primary .npz files from PUB053_Manuscript_Package_R2.zip (missing_raw_npz_error)
+and iapws==1.5.5 for exact IAPWS-IF97 density reconstruction (missing_iapws_error, unless --allow-approx-density
+is explicitly passed) and exits 1 if required inputs or dependencies are missing. Pass --archived-assets-only
+(or --archived-tables-only) in standalone clones to render Figure 4 from CSV and composite/stage preserved R2
+assets from figures/raw_source_assets/.
 
 Usage:
     python -B code/make_figures_r2.py --results results_reproduced --out figures_reproduced
@@ -38,6 +40,7 @@ from _common import (
     detect_sequential_alarms,
     extract_observation_channels,
     extract_raw_trip_and_domain_exit,
+    get_density_backend_info,
     load_csv,
     max_exceedance_span_s,
     reconstruct_features_from_observations,
@@ -474,6 +477,11 @@ def main() -> int:
         action="store_true",
         help="Alias for --archived-assets-only for CLI consistency across analysis scripts.",
     )
+    ap.add_argument(
+        "--allow-approx-density",
+        action="store_true",
+        help="Allow approximate IAPWS-95 density fallback during raw .npz figure rendering when iapws is absent (not exact).",
+    )
     args = ap.parse_args()
 
     repo_root = resolve_repo_root()
@@ -486,6 +494,7 @@ def main() -> int:
     out_rel = out_dir.relative_to(repo_root).as_posix() if out_dir.is_relative_to(repo_root) else str(out_dir)
 
     npz_status = check_raw_npz_availability(repo_root)
+    density_info = get_density_backend_info()
     archived_opt_in = bool(args.archived_assets_only or args.archived_tables_only)
     unexecuted_raw_items = [
         "Plot Figures 1, 2, 3, 5, 6, 7 directly from 2 s primary .npz arrays (PUB053_Manuscript_Package_R2.zip is absent)"
@@ -498,6 +507,7 @@ def main() -> int:
             "out_dir": out_rel,
             "provenance_mode": "missing_raw_npz_error",
             "raw_npz_status": npz_status,
+            "density_backend": density_info,
             "error": (
                 "Primary 48 .npz files (PUB053_Manuscript_Package_R2.zip) are absent. Raw time-series figures (1, 2, 3, 5, 6, 7) "
                 "cannot be plotted; pass --archived-assets-only only to render Figure 4 from CSV and stage/composite preserved R2 visual assets."
@@ -508,6 +518,38 @@ def main() -> int:
             "copied_preserved_reference_assets": [],
             "unexecuted_items": unexecuted_raw_items,
             "all_files_valid": False,
+            "all_passed": False,
+        }
+        write_json(out_dir / "figure_generation_manifest.json", manifest)
+        print(json.dumps(manifest, indent=2, ensure_ascii=False))
+        return 1
+
+    if npz_status["all_raw_npz_present"] and not density_info["iapws_available"] and not args.allow_approx_density:
+        manifest = {
+            "script": "code/make_figures_r2.py",
+            "results_input": res_rel,
+            "out_dir": out_rel,
+            "provenance_mode": "missing_iapws_error",
+            "raw_npz_status": npz_status,
+            "density_backend": density_info,
+            "error": (
+                "iapws==1.5.5 is required for exact IAPWS-IF97 saturated-liquid density spline reconstruction "
+                "during raw .npz figure rendering (install via `pip install -r requirements-lock.txt`). "
+                "Built-in approximate fallback diverges from primary .npz traces and thresholds."
+            ),
+            "rendered_from_raw_npz": [],
+            "rendered_from_csv": [],
+            "composited_or_padded_from_preserved_assets": [],
+            "copied_preserved_reference_assets": [],
+            "unexecuted_items": [
+                "Plot Figures 1, 2, 3, 5, 6, 7 from primary .npz arrays with exact iapws.IAPWS97 density backend (missing iapws==1.5.5)"
+            ],
+            "all_files_valid": False,
+            "figure_spec_verified": {
+                "mode": "missing_iapws_error",
+                "all_specs_verified": False,
+                "note": "Aborted before plotting because primary .npz files are present without iapws==1.5.5 (pass --allow-approx-density only for non-exact diagnostics).",
+            },
             "all_passed": False,
         }
         write_json(out_dir / "figure_generation_manifest.json", manifest)
@@ -588,6 +630,8 @@ def main() -> int:
         spec_block: dict[str, Any] = {
             "mode": prov_mode,
             "all_specs_verified": all_specs_ok,
+            "raw_replay_exact_if97_backend": bool(density_info["iapws_available"]),
+            "allow_approx_density_override": bool(args.allow_approx_density and not density_info["iapws_available"]),
             "per_figure": fig_specs,
         }
         all_passed = all_valid and all_specs_ok
@@ -609,6 +653,7 @@ def main() -> int:
         "out_dir": out_rel,
         "provenance_mode": prov_mode,
         "raw_npz_status": npz_status,
+        "density_backend": density_info,
         "notes": notes,
         "rendered_from_raw_npz": rendered_raw,
         "rendered_from_csv": rendered_csv,

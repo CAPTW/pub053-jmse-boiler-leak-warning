@@ -232,7 +232,7 @@ def verify_all(
             and "tables_3_4_5_7_crosscheck.csv" in full_text
         ),
         "has_live_public_github_url": "https://github.com/CAPTW/pub053-jmse-boiler-leak-warning" in full_text,
-        "has_release_tag": "v1.0.4-pub053-r2" in full_text,
+        "has_release_tag": "v1.0.5-pub053-r2" in full_text,
         "has_v102_provenance_and_flags": (
             "REPRODUCIBILITY.md" in full_text
             and "DATA_PROVENANCE.md" in full_text

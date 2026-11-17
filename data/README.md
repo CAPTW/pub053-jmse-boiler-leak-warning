@@ -31,9 +31,9 @@ When all 48 primary `.npz` files from `PUB053_Manuscript_Package_R2.zip` (availa
 - `data/observations/<episode>.npz` (24 files)
 - `data/traces/<episode>.npz` (24 files)
 
-the scripts in `code/` (`verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`) detect all 48 `.npz` files via `_common.check_raw_npz_availability()` and execute **full raw `.npz` trajectory replay mode** (`mode = "full_raw_npz_replay"`).
+the scripts in `code/` (`verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`) detect all 48 `.npz` files via `_common.check_raw_npz_availability()`, verify `iapws==1.5.5` via `_common.get_density_backend_info()` (exiting `1` with `missing_iapws_error` if `iapws` is absent unless `--allow-approx-density`), and execute **full raw `.npz` trajectory replay mode** (`mode = "full_raw_npz_replay"`).
 
-When those 48 `.npz` files are absent (`mode = "missing_primary_raw_npz"`), default CLI invocations fail loudly with exit code `1` (`all_passed: false`) rather than substituting archived CSVs silently. To verify the bundled archived tables and preserved graphic assets on a standalone fresh clone without `.npz` files, pass the explicit opt-in flags `--archived-tables-only` (`verify_features.py`, `reproduce_analysis.py`) and `--archived-assets-only` (`make_figures_r2.py`). See `../REPRODUCIBILITY.md`, `../docs/DATA_PROVENANCE.md`, and `../docs/KNOWN_LIMITATIONS.md`.
+When those 48 `.npz` files are absent (`mode = "missing_primary_raw_npz"`), default CLI invocations fail loudly at the pre-flight file check (`exit 1`, `missing_raw_npz_error`, `"all_passed": false`) before checking `iapws`, rather than substituting archived CSVs silently. To verify the bundled archived tables and preserved graphic assets on a standalone fresh clone without `.npz` files, pass the explicit opt-in flags `--archived-tables-only` (`verify_features.py`, `reproduce_analysis.py`) and `--archived-assets-only` (`make_figures_r2.py`). See `../REPRODUCIBILITY.md`, `../docs/DATA_PROVENANCE.md`, `../docs/REPRODUCTION_GUIDE.md`, and `../docs/KNOWN_LIMITATIONS.md`.
 
 ### Expected 24 Observation Archives (`data/observations/`)
 - `data/observations/D1_normal.npz`

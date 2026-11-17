@@ -449,8 +449,9 @@ class TestPub053R2Analysis(unittest.TestCase):
             self.assertTrue(len(dup_cmp["duplicate_gen_keys"]) > 0 or len(dup_cmp["missing_keys"]) > 0)
 
     def test_iapws_density_backend_and_missing_iapws_guard(self) -> None:
-        """Verify IAPWS97 (iapws==1.5.5) vs fallback divergence and missing_iapws_error CLI guard."""
+        """Verify IAPWS97 (iapws==1.5.5) vs fallback divergence and missing_iapws_error CLI guards across all 3 scripts."""
         import _common
+        import make_figures_r2
         import reproduce_analysis
         import verify_features
 
@@ -479,33 +480,65 @@ class TestPub053R2Analysis(unittest.TestCase):
 
                     _common._sat_liquid_density_spline.cache_clear()
 
-                # Verify CLI guard refuses full_raw_npz_replay without iapws
+                fake_density = {
+                    "iapws_available": False,
+                    "iapws_version": None,
+                    "density_backend": "approx_if97_reg4_iapws95_fallback",
+                    "sat_liquid_rho_7bar_kg_m3": 750.56,
+                }
+                # Verify CLI guards refuse full_raw_npz_replay without iapws across verify_features, reproduce_analysis, and make_figures_r2
                 with (
-                    mock.patch.object(_common, "get_density_backend_info", return_value={"iapws_available": False, "iapws_version": None, "density_backend": "approx_if97_reg4_iapws95_fallback", "sat_liquid_rho_7bar_kg_m3": 750.56}),
-                    mock.patch.object(verify_features, "get_density_backend_info", return_value={"iapws_available": False, "iapws_version": None, "density_backend": "approx_if97_reg4_iapws95_fallback", "sat_liquid_rho_7bar_kg_m3": 750.56}),
-                    mock.patch.object(reproduce_analysis, "get_density_backend_info", return_value={"iapws_available": False, "iapws_version": None, "density_backend": "approx_if97_reg4_iapws95_fallback", "sat_liquid_rho_7bar_kg_m3": 750.56}),
+                    mock.patch.object(_common, "get_density_backend_info", return_value=fake_density),
+                    mock.patch.object(verify_features, "get_density_backend_info", return_value=fake_density),
+                    mock.patch.object(reproduce_analysis, "get_density_backend_info", return_value=fake_density),
+                    mock.patch.object(make_figures_r2, "get_density_backend_info", return_value=fake_density),
                     mock.patch.object(verify_features, "resolve_repo_root", return_value=tmp_root),
                     mock.patch.object(reproduce_analysis, "resolve_repo_root", return_value=tmp_root),
+                    mock.patch.object(make_figures_r2, "resolve_repo_root", return_value=tmp_root),
                     mock.patch.object(sys, "argv", ["verify_features.py", "--out", str(tmp_root / "cli_vf")]),
                 ):
-                    rc_vf = None
                     with contextlib.redirect_stdout(io.StringIO()):
                         rc_vf = verify_features.main()
                     self.assertEqual(rc_vf, 1)
                     rep_vf = json.loads((tmp_root / "cli_vf" / "feature_verification_report.json").read_text(encoding="utf-8"))
                     self.assertEqual(rep_vf["provenance_mode"], "missing_iapws_error")
+                    self.assertFalse(rep_vf["density_backend"]["iapws_available"])
+
                     with mock.patch.object(sys, "argv", ["reproduce_analysis.py", "--out", str(tmp_root / "cli_ra")]):
                         with contextlib.redirect_stdout(io.StringIO()):
                             rc_ra = reproduce_analysis.main()
                         self.assertEqual(rc_ra, 1)
                         rep_ra = json.loads((tmp_root / "cli_ra" / "reproduction_comparison_report.json").read_text(encoding="utf-8"))
                         self.assertEqual(rep_ra["provenance_mode"], "missing_iapws_error")
+                        self.assertFalse(rep_ra["density_backend"]["iapws_available"])
+
+                    with mock.patch.object(sys, "argv", ["make_figures_r2.py", "--results", str(tmp_root / "results"), "--out", str(tmp_root / "cli_mf")]):
+                        with contextlib.redirect_stdout(io.StringIO()):
+                            rc_mf = make_figures_r2.main()
+                        self.assertEqual(rc_mf, 1)
+                        rep_mf = json.loads((tmp_root / "cli_mf" / "figure_generation_manifest.json").read_text(encoding="utf-8"))
+                        self.assertEqual(rep_mf["provenance_mode"], "missing_iapws_error")
+                        self.assertFalse(rep_mf["all_files_valid"])
+                        self.assertFalse(rep_mf["all_passed"])
+                        self.assertFalse(rep_mf["density_backend"]["iapws_available"])
+
+                # Also verify make_figures_r2 reports density_backend in archived-assets and missing-npz modes
+                with tempfile.TemporaryDirectory() as td_arch:
+                    arch_out = Path(td_arch) / "figs_arch"
+                    with mock.patch.object(sys, "argv", ["make_figures_r2.py", "--archived-assets-only", "--results", "results", "--out", str(arch_out)]):
+                        with contextlib.redirect_stdout(io.StringIO()):
+                            rc_arch = make_figures_r2.main()
+                    self.assertEqual(rc_arch, 0)
+                    arch_man = json.loads((arch_out / "figure_generation_manifest.json").read_text(encoding="utf-8"))
+                    self.assertEqual(arch_man["provenance_mode"], "archived_assets_only")
+                    self.assertIn("density_backend", arch_man)
         finally:
             _common._sat_liquid_density_spline.cache_clear()
 
 
 def main() -> int:
     npz_status = check_raw_npz_availability(REPO_ROOT)
+    density_info = get_density_backend_info()
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(TestPub053R2Analysis)
     runner = unittest.TextTestRunner(verbosity=2)
     res = runner.run(suite)
@@ -513,7 +546,8 @@ def main() -> int:
         "script": "code/test_analysis.py",
         "provenance_mode": npz_status["mode"],
         "raw_npz_status": npz_status,
-        "density_backend": get_density_backend_info(),
+        "density_backend": density_info,
+        "synthetic_if97_vs_fallback_branch_executed": bool(density_info["iapws_available"]),
         "tests_run": res.testsRun,
         "failures": len(res.failures),
         "errors": len(res.errors),
