@@ -1,153 +1,244 @@
-# File Manifest (`CAPTW/pub053-jmse-boiler-leak-warning`)
+# File manifest
 
-- **Indexed files** (excluding self-referencing `docs/FILE_MANIFEST.*`): **279**
-- **Total indexed size**: **4,661,476 bytes**
+[Home](../README.md) · [Documentation](README.md) · [Machine-readable inventory](FILE_MANIFEST.json)
 
-## Summary by Top-Level Directory
-| Top-Level | File Count | Bytes |
+This inventory records the paths, byte sizes, and SHA-256 hashes of the files in this repository revision. The two manifest files are excluded to avoid self-reference.
+
+| Inventory | Value |
+|---|---:|
+| Indexed files | 280 |
+| Total indexed size | 4,611,843 bytes |
+
+Use the [JSON inventory](FILE_MANIFEST.json) for automated comparisons. A matching hash establishes file identity; it does not establish the validity of a scientific result.
+
+## Directory summary
+
+| Directory | Files | Bytes |
 |---|---:|---:|
-| `(root)` | 10 | 34,924 |
-| `code` | 6 | 166,335 |
-| `data` | 11 | 40,040 |
-| `docs` | 10 | 131,965 |
-| `figures` | 16 | 2,944,747 |
-| `manuscript_verification` | 20 | 419,646 |
+| `(root)` | 10 | 19,305 |
+| `code` | 6 | 163,703 |
+| `data` | 11 | 38,584 |
+| `docs` | 11 | 105,101 |
+| `figures` | 16 | 2,946,696 |
+| `manuscript_verification` | 20 | 413,449 |
 | `references` | 6 | 83,011 |
-| `results` | 13 | 32,936 |
-| `results_archived` | 31 | 129,403 |
+| `results` | 13 | 34,145 |
+| `results_archived` | 31 | 129,380 |
 | `simulator_source` | 156 | 678,469 |
 
-## Complete File Inventory
+## File identities
+
+Expand a directory to inspect its complete inventory. Hashes describe the current revision, not every historical release.
+
+<details>
+<summary>(root) — 10 files</summary>
+
 | Path | Bytes | SHA-256 |
 |---|---:|---|
 | `.gitattributes` | 151 | `3bce680ab62573be67ce8839b2a7f0cf43892e9fb253bb694e1562ff316781f0` |
 | `.gitignore` | 151 | `f640da066e9c62fe45b70fbffaf9f1f8836c52a0a1fe3299f69007c3a25d06ad` |
-| `CITATION.cff` | 1857 | `f263548de598e61068f14e1cc1531e5719e045fa123ba10c4c8f9b563c6e135c` |
-| `code/_common.py` | 40024 | `f645a492b5d3b34ffaeffcfbac2716fc93ddc6504afbdf16b6a237d62b5d4cd0` |
-| `code/make_figures_r2.py` | 31817 | `95117e576210eb7f5e28ab553f88607b7120ae108adceae88e9c91ebabb84ee0` |
-| `code/README.md` | 6320 | `0da546b346182327849954d5a3cf0a7ab7325346cd0af6860efe85e7f514b4c0` |
-| `code/reproduce_analysis.py` | 29925 | `5fb027ed574b135ab83496324d8c9880834df2e435e7c253083c03f0717306c1` |
-| `code/test_analysis.py` | 32463 | `f941644f7bdf8c23846712ce7e4cc53f8239fc7fb56fa7e07ef30d59d3dae6c2` |
-| `code/verify_features.py` | 25786 | `adfe97fc1c32337b6ac752145c8700c246e551fbf1bfb1bf604d937e75c8cb74` |
-| `data/block_design.json` | 6293 | `1fa8c3a481f037dda81baeccd32990527333bcfcb4addffa635acc2fcd9aaa74` |
-| `data/episode_metadata.csv` | 4118 | `b9f83a3ddb325bea8bbb0caaa96a7b6f5385684eab046f24462d35335e45267e` |
-| `data/original_configs/ab4_marine_aux.yaml` | 4503 | `2c6c330289008b27a3fc6cc3434900cb5642ee661241d4ff70a360ef1c6491df` |
-| `data/original_configs/README.md` | 1150 | `cbd3b2d985465018eff397bc0c861b670c782c78453c3a720c411ec07ce8cdc3` |
-| `data/README.md` | 6112 | `f26a5311d573fcff9d9166b3413c9aff7f367336214dfd1b7d89baef70cbfc24` |
-| `data/reconstructed_inputs/block_design_table3_reconstructed.json` | 3575 | `7a2ece172025984136ba8eae015ab37595abdb9b71cf0e406f06cdf73992796c` |
-| `data/reconstructed_inputs/episode_event_timings_table7_reconstructed.json` | 5152 | `505c7d85b868ba62d1a67f4ffe8a57c7e275ea5f32cab5834ffad5e69f7a9bb5` |
-| `data/reconstructed_inputs/ewls_fit_table4_reconstructed.json` | 2192 | `2e34a2c532e6eee69e1abf5c69906af3add0f2f6fc8ce230d790d6ece46c308c` |
-| `data/reconstructed_inputs/plant_parameters_table1_table2_from_source.json` | 1871 | `f1635b78ffc094e57f6ad9adcd679751a24281ce5076a4a2cbe8a39132d407f6` |
-| `data/reconstructed_inputs/README.md` | 1351 | `a89e8cac3623bc0e3b090b333ee7ffddd9c83f5cd1cdfddb7e79dfd90858fd67` |
-| `data/reconstructed_inputs/threshold_candidates_table5_reconstructed.json` | 3723 | `29ad01c048dd80db1b6f44edd21ab093348df2d9e1378406afcf82fcc1093e20` |
-| `docs/AI_USAGE_AUDIT.md` | 5922 | `c9ddd46f57e0f1f85add5c901075c89e9b52fcd8ed5f39d1111c23556cc6e0b3` |
-| `docs/DATA_PROVENANCE.md` | 7175 | `eba4c394049482fc8e2de2afc25de3bfdc7cf05a8e9ff4dacf02688b35d09638` |
-| `docs/execution_logs/fresh_clone_reproduction_log.json` | 41357 | `9107a9cfe900ac6d2017e44b6105224fd0e21d162c1bc3d19733939aa0363523` |
-| `docs/execution_logs/pytest_ab4_core_log.txt` | 7903 | `d3fe3044b6992a24139749a9e95b1394c39a95ed341e3f16db03d5b19330d940` |
-| `docs/execution_logs/pytest_ab4_integration_log.txt` | 19492 | `405dbe089fe67fff0bee041ccd11745c6bbaa291db114eccd10a2f5bfa0bc788` |
-| `docs/execution_logs/verify_citations_and_manuscript_log.json` | 980 | `028c089ba9dd233e871a4be628758ce0b4419f4cb6e9f5b51b6e0b2deced3f71` |
-| `docs/execution_logs/verify_tables_from_archived_results_log.json` | 2363 | `d5c8e43566fb037995d6c26d1825ec21518f398747841be2a5fd144ef63a0f52` |
-| `docs/KNOWN_LIMITATIONS.md` | 8727 | `857f030094a9f1aa779e05a0bf8dc76cac2045ef99d7f35c6281aa83ee0fca85` |
-| `docs/REPRODUCTION_GUIDE.md` | 15397 | `af925a8142504e5f556303d7285e9fd757961eb39631a7c146aa811a3f32ff6e` |
-| `docs/SOURCE_PROVENANCE.md` | 22649 | `6700afc52a8cbc39de0863b47de0cbc26a7e08fc95e6891243752c05913b5a0b` |
+| `CITATION.cff` | 1,875 | `fed59065d554764f14ee3ce51e1f7b2e99b821e6ad8b49811615248d771d2c4c` |
+| `LICENSE` | 1,097 | `5ddb8abfab962105d25a7883a62f36d21e92d0698c97721b2d2cc90f3e332ce5` |
+| `README.md` | 5,313 | `b537e6e968772f597734a1397bd60153d86b7c50048f80d38c650a858d95e7c7` |
+| `REPRODUCIBILITY.md` | 4,646 | `dfa021993358ea6794c49040719cdc82f2c03835dc302fa278f6fd316f191528` |
+| `THIRD_PARTY_NOTICES.md` | 3,615 | `c2add69d450f51be03d2752f1d7bd9beeb76c0d72f76caf30f4917aded529791` |
 | `environment.yml` | 306 | `d1a892cb2be58918f49e9e5cc58c5d6dfb460d69e1148ba6b0713cf22e0e82b3` |
-| `figures/fig1_normal_overview.png` | 1034473 | `7ecb3a6c9027701f0ea668e9ac918a738e9521fdb8498f2cd5a4ed3ef51b9bd0` |
-| `figures/fig2_e1_leak_trajectory.png` | 224850 | `30656bf2f24c002ddeae4ec5ebcd05572867ce1be3f886af8021509af3fbed22` |
-| `figures/fig3_e1_feature_responses.jpeg` | 184992 | `23239e769ede357c872b112c6115ecdb5e07eee5986c52d22f41af61f3f7edbb` |
-| `figures/fig4_method_summary_delay_lead.png` | 81624 | `5436148c5eaa4e4398a0b2cbf20b0d72209222bc483cfe5a1c3b6287eec12810` |
-| `figures/fig5_e1_score_traces.png` | 123429 | `a91411013f985a81f13ce5515a5701cde35ac98baf2bcde288ff7e6f3ca39b5f` |
-| `figures/fig6_all_eval_leak_panels.jpeg` | 87031 | `d0f0bff48a54178b8d490310a4827ea05aa2cddc7a90e08512bbadabb1ea8ba2` |
-| `figures/fig7_normal_score_traces.jpeg` | 95728 | `5d1d6063025506c5d3b8aec06df36006ce939e1fbdb8e5616014b40bd6e6a760` |
-| `figures/FIGURE_MAP.md` | 3296 | `f6c29ddf8f844cf71108d74676bddb85eecfc804961581272421fd76ac3ecc82` |
-| `figures/raw_source_assets/page1_img1_1103.jpeg` | 87031 | `d0f0bff48a54178b8d490310a4827ea05aa2cddc7a90e08512bbadabb1ea8ba2` |
-| `figures/raw_source_assets/page1_img2_1217.jpeg` | 95728 | `5d1d6063025506c5d3b8aec06df36006ce939e1fbdb8e5616014b40bd6e6a760` |
-| `figures/raw_source_assets/page1_img3_1261.jpeg` | 156544 | `d7291393e24c7e81467f986b68394b8476f1875921e6909b36c0b88fc2617790` |
-| `figures/raw_source_assets/page1_img4_1265.jpeg` | 149715 | `22d8c5953200f879696386da07469e444d38a9b9a77b89dc3d5f42530c5ec347` |
-| `figures/raw_source_assets/page1_img5_475.jpeg` | 184992 | `23239e769ede357c872b112c6115ecdb5e07eee5986c52d22f41af61f3f7edbb` |
-| `figures/raw_source_assets/rId27.png` | 230261 | `cba137c211344bad556be3b54ae62028b43fb9b9cc18709a2dcfa49f7882d62f` |
-| `figures/raw_source_assets/rId31.png` | 81624 | `5436148c5eaa4e4398a0b2cbf20b0d72209222bc483cfe5a1c3b6287eec12810` |
-| `figures/raw_source_assets/rId34.png` | 123429 | `a91411013f985a81f13ce5515a5701cde35ac98baf2bcde288ff7e6f3ca39b5f` |
-| `LICENSE` | 1097 | `5ddb8abfab962105d25a7883a62f36d21e92d0698c97721b2d2cc90f3e332ce5` |
-| `manuscript_verification/build_bibliography_and_mapping.py` | 36496 | `89b6f9452b9120de1f38cc1b305afec2b35a8e4ab13d1b8965cdf5131a809939` |
-| `manuscript_verification/build_full_paper.py` | 123682 | `2785ee5dcd323aef187a557be8a3a116740c9642bfdbe62bcbdbb346fe9d9b13` |
-| `manuscript_verification/check_cutoff_leads.py` | 3026 | `6b07d53ec3e1a050b1edd2ef56c2d73c45f74af515e46356719ed840e9e328cc` |
-| `manuscript_verification/check_delay_window.py` | 1492 | `09d75de38c12f7c5ce636e9aea964c7bc4821cd057bbc50eb7597c5b5a9876b4` |
-| `manuscript_verification/check_tables_and_scope.py` | 4786 | `8d32f989583b0b3981b0b24b2e8b276696e446d630816829e68fd8724dd639de` |
-| `manuscript_verification/citation_dynamic_update_test_log.json` | 28029 | `5b6fa446777210ab81b0abe468a633e616a1538d8d3eb2afa98c412fb79ee0b3` |
-| `manuscript_verification/citation_editing_and_reordering_test_log.json` | 28029 | `5b6fa446777210ab81b0abe468a633e616a1538d8d3eb2afa98c412fb79ee0b3` |
-| `manuscript_verification/CITATION_EDITING_TEST_REPORT.md` | 3302 | `5221f1e1179741941758c9428ab3dd72cf86d504f3076396d90b9c8d3c437089` |
-| `manuscript_verification/combine_normal_figs.py` | 475 | `d13a495d7a449e54f84c22b8c3f812c87f9e77100a07e6537091500f0449e9f1` |
-| `manuscript_verification/create_automated_citation_docx.py` | 27099 | `14c8a15b137d5cba857ae5f47f936ad8832a7e3f8e3ffd0a5c094beb322ae159` |
-| `manuscript_verification/independent_numeric_review.py` | 6993 | `649e40f8e4e51604737a13c0bcea302d21de8bddfe1fd3b3e61f5db7b72836e3` |
-| `manuscript_verification/LATEST_MANUSCRIPT_VERIFICATION_REPORT.md` | 5704 | `85d09be5ba81047fdbbb126bb222b9ab36e74e2966b2f182fc0c3f3559ac4852` |
-| `manuscript_verification/MANUSCRIPT_ARTIFACT_MAP.md` | 10559 | `4bdd012265211dbb2b41e5eceb5079de3cf5d463425721cc32a4acc39aaf4d78` |
-| `manuscript_verification/r2_text_archive/PUB053_Manuscript_R2.txt` | 23908 | `2dff531921560c615bc37be6b7ee3914727452434238778d00b60f6c4a12c60a` |
-| `manuscript_verification/r2_text_archive/PUB053_Supplement_R2.txt` | 32998 | `53dddac42a2cc268e670f7d5e67b8039851a34c50e37708a1cc185354d260532` |
-| `manuscript_verification/sync_citations_and_references.py` | 14892 | `f85e3c949d7fad8ffb006bb24db32c4f26294e460bacde8664b895abdab8a111` |
-| `manuscript_verification/verify_citations_and_manuscript.py` | 11231 | `57e3a1fb55badb1da95b5e423728b4f0f4d46c421adcc1e5b5a136379462cd14` |
-| `manuscript_verification/verify_revised_manuscript.py` | 15264 | `0b6d3f1a72377d6fe9d667a2103aab377c5ec3d5cf67cbd6aba0f2b358292710` |
-| `manuscript_verification/verify_tables_from_archived_results.py` | 12054 | `6015b94d637207217aee6da3ec40cac628593596562b5149fb8fa932404cacc4` |
-| `manuscript_verification/word_update_export_and_test.py` | 29627 | `9adc834cf4bcb8adf0bcb9adf45dba6246bd525d20f60521b35011e82db9cb6f` |
 | `pyproject.toml` | 883 | `d36f056c1a3e976d2c43842666d9e523a7cf7fe33dce6dc41bd8527054dba176` |
-| `README.md` | 16368 | `1c1a1fbc5acfebe0a5e5f42181cd95a9f29dade8bc4c73a3920cb6b93fbb77aa` |
-| `references/citation_mapping_table.csv` | 3624 | `3c6dbacefa25eb1784335c9baf8679d1ff22d581f95d989a15b9504057a907e6` |
-| `references/CITATION_MAPPING_TABLE.md` | 15009 | `4d8433cc799e4cd2fbb9c851ca162a8a2c69f30e43efa0d22d7f3524353f7926` |
-| `references/pub053_references.bib` | 9719 | `fb9d9576a96020ca49276fece26d2e2e4e2ea2ffb729a84577b35b1725e3a8b0` |
-| `references/pub053_references.json` | 18739 | `9395a3450304513f47d105e936ccdb82dc5e6e69c84d0c4f158892700bbb85c9` |
-| `references/pub053_references.ris` | 8597 | `492c27e62cfab8f899c48150677eb793682814ff551f83bcacb0961624987260` |
-| `references/word_sources.xml` | 27323 | `5f6dbd1fe41a05fd71b53eb62808d2bd72b667a0029c3b4a6b44e024a44614fd` |
-| `REPRODUCIBILITY.md` | 8141 | `36b91a5f81d1589dffcd66bf4dcfbaf94a359c94a3133f4da09d1df06d018748` |
-| `requirements-lock.txt` | 1325 | `a741576f4b1a8e49833bfa7346bf1745857a7b5bd09cee94084ef0e012e0bc56` |
+| `requirements-lock.txt` | 1,268 | `baa3e9212fa981fafecfc4fb30d28bd6a1e6b598a55e044a2cc35ae611c1d157` |
+
+</details>
+
+<details>
+<summary>code — 6 files</summary>
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| `code/README.md` | 3,688 | `1966d3f735438f1a702c4ea61c646f469ca9be528bb99938212bde20751e9685` |
+| `code/_common.py` | 40,024 | `f645a492b5d3b34ffaeffcfbac2716fc93ddc6504afbdf16b6a237d62b5d4cd0` |
+| `code/make_figures_r2.py` | 31,817 | `95117e576210eb7f5e28ab553f88607b7120ae108adceae88e9c91ebabb84ee0` |
+| `code/reproduce_analysis.py` | 29,925 | `5fb027ed574b135ab83496324d8c9880834df2e435e7c253083c03f0717306c1` |
+| `code/test_analysis.py` | 32,463 | `f941644f7bdf8c23846712ce7e4cc53f8239fc7fb56fa7e07ef30d59d3dae6c2` |
+| `code/verify_features.py` | 25,786 | `adfe97fc1c32337b6ac752145c8700c246e551fbf1bfb1bf604d937e75c8cb74` |
+
+</details>
+
+<details>
+<summary>data — 11 files</summary>
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| `data/README.md` | 3,551 | `e500dd3dc000c0745b763075ab22c54d473cf8729622bed3ac459740d19095ab` |
+| `data/block_design.json` | 6,293 | `1fa8c3a481f037dda81baeccd32990527333bcfcb4addffa635acc2fcd9aaa74` |
+| `data/episode_metadata.csv` | 4,118 | `b9f83a3ddb325bea8bbb0caaa96a7b6f5385684eab046f24462d35335e45267e` |
+| `data/original_configs/README.md` | 1,530 | `7833d9b665eb258df0c9a096b9a0f8f9d6698043f4569092c5cb9b49b0fe1c38` |
+| `data/original_configs/ab4_marine_aux.yaml` | 4,503 | `2c6c330289008b27a3fc6cc3434900cb5642ee661241d4ff70a360ef1c6491df` |
+| `data/reconstructed_inputs/README.md` | 2,076 | `093b72e0ed4e1898c8287990b8e71ec7abe11349895eafa5ad86753da673dc4b` |
+| `data/reconstructed_inputs/block_design_table3_reconstructed.json` | 3,575 | `7a2ece172025984136ba8eae015ab37595abdb9b71cf0e406f06cdf73992796c` |
+| `data/reconstructed_inputs/episode_event_timings_table7_reconstructed.json` | 5,152 | `505c7d85b868ba62d1a67f4ffe8a57c7e275ea5f32cab5834ffad5e69f7a9bb5` |
+| `data/reconstructed_inputs/ewls_fit_table4_reconstructed.json` | 2,192 | `2e34a2c532e6eee69e1abf5c69906af3add0f2f6fc8ce230d790d6ece46c308c` |
+| `data/reconstructed_inputs/plant_parameters_table1_table2_from_source.json` | 1,871 | `f1635b78ffc094e57f6ad9adcd679751a24281ce5076a4a2cbe8a39132d407f6` |
+| `data/reconstructed_inputs/threshold_candidates_table5_reconstructed.json` | 3,723 | `29ad01c048dd80db1b6f44edd21ab093348df2d9e1378406afcf82fcc1093e20` |
+
+</details>
+
+<details>
+<summary>docs — 11 files</summary>
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| `docs/AI_USAGE_AUDIT.md` | 4,616 | `9ed96f102085ff24a1bc4068f8f4371052a7a6a8b7f89a0c267df06fcd8bb975` |
+| `docs/DATA_PROVENANCE.md` | 5,030 | `475bee7dfe2787f60c671b14eee06268801ed6ae4a3c5ea5586f8363fbfc9e85` |
+| `docs/KNOWN_LIMITATIONS.md` | 5,102 | `6c72c23bc1f480b0c2d4d06e0a2322abdba44094d7061caaecfd7722740f50ee` |
+| `docs/README.md` | 2,561 | `90e2e546a8156f3bbe354d917cbbf57e4efc8651027a9a7437d00343d6c34e8b` |
+| `docs/REPRODUCTION_GUIDE.md` | 11,169 | `e47d9fac570bc0400bfd73fcd4267ddb2d1c209cab5ee7002c6f3f03b6362e6e` |
+| `docs/SOURCE_PROVENANCE.md` | 4,528 | `6143c4d995565547f0c51762cec184c8d264b06a4eb365ccae06bbc3890e0c57` |
+| `docs/execution_logs/fresh_clone_reproduction_log.json` | 41,357 | `9107a9cfe900ac6d2017e44b6105224fd0e21d162c1bc3d19733939aa0363523` |
+| `docs/execution_logs/pytest_ab4_core_log.txt` | 7,903 | `d3fe3044b6992a24139749a9e95b1394c39a95ed341e3f16db03d5b19330d940` |
+| `docs/execution_logs/pytest_ab4_integration_log.txt` | 19,492 | `405dbe089fe67fff0bee041ccd11745c6bbaa291db114eccd10a2f5bfa0bc788` |
+| `docs/execution_logs/verify_citations_and_manuscript_log.json` | 980 | `028c089ba9dd233e871a4be628758ce0b4419f4cb6e9f5b51b6e0b2deced3f71` |
+| `docs/execution_logs/verify_tables_from_archived_results_log.json` | 2,363 | `d5c8e43566fb037995d6c26d1825ec21518f398747841be2a5fd144ef63a0f52` |
+
+</details>
+
+<details>
+<summary>figures — 16 files</summary>
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| `figures/FIGURE_MAP.md` | 5,245 | `9dbee97be699fc937b982348805b36b17a4087673f1c18afa9a339aace18e141` |
+| `figures/fig1_normal_overview.png` | 1,034,473 | `7ecb3a6c9027701f0ea668e9ac918a738e9521fdb8498f2cd5a4ed3ef51b9bd0` |
+| `figures/fig2_e1_leak_trajectory.png` | 224,850 | `30656bf2f24c002ddeae4ec5ebcd05572867ce1be3f886af8021509af3fbed22` |
+| `figures/fig3_e1_feature_responses.jpeg` | 184,992 | `23239e769ede357c872b112c6115ecdb5e07eee5986c52d22f41af61f3f7edbb` |
+| `figures/fig4_method_summary_delay_lead.png` | 81,624 | `5436148c5eaa4e4398a0b2cbf20b0d72209222bc483cfe5a1c3b6287eec12810` |
+| `figures/fig5_e1_score_traces.png` | 123,429 | `a91411013f985a81f13ce5515a5701cde35ac98baf2bcde288ff7e6f3ca39b5f` |
+| `figures/fig6_all_eval_leak_panels.jpeg` | 87,031 | `d0f0bff48a54178b8d490310a4827ea05aa2cddc7a90e08512bbadabb1ea8ba2` |
+| `figures/fig7_normal_score_traces.jpeg` | 95,728 | `5d1d6063025506c5d3b8aec06df36006ce939e1fbdb8e5616014b40bd6e6a760` |
+| `figures/raw_source_assets/page1_img1_1103.jpeg` | 87,031 | `d0f0bff48a54178b8d490310a4827ea05aa2cddc7a90e08512bbadabb1ea8ba2` |
+| `figures/raw_source_assets/page1_img2_1217.jpeg` | 95,728 | `5d1d6063025506c5d3b8aec06df36006ce939e1fbdb8e5616014b40bd6e6a760` |
+| `figures/raw_source_assets/page1_img3_1261.jpeg` | 156,544 | `d7291393e24c7e81467f986b68394b8476f1875921e6909b36c0b88fc2617790` |
+| `figures/raw_source_assets/page1_img4_1265.jpeg` | 149,715 | `22d8c5953200f879696386da07469e444d38a9b9a77b89dc3d5f42530c5ec347` |
+| `figures/raw_source_assets/page1_img5_475.jpeg` | 184,992 | `23239e769ede357c872b112c6115ecdb5e07eee5986c52d22f41af61f3f7edbb` |
+| `figures/raw_source_assets/rId27.png` | 230,261 | `cba137c211344bad556be3b54ae62028b43fb9b9cc18709a2dcfa49f7882d62f` |
+| `figures/raw_source_assets/rId31.png` | 81,624 | `5436148c5eaa4e4398a0b2cbf20b0d72209222bc483cfe5a1c3b6287eec12810` |
+| `figures/raw_source_assets/rId34.png` | 123,429 | `a91411013f985a81f13ce5515a5701cde35ac98baf2bcde288ff7e6f3ca39b5f` |
+
+</details>
+
+<details>
+<summary>manuscript_verification — 20 files</summary>
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| `manuscript_verification/CITATION_EDITING_TEST_REPORT.md` | 3,691 | `080eb5206704a17d0dba1ac00d17f0ef2df81b5c2297e18501ff423f873866c7` |
+| `manuscript_verification/LATEST_MANUSCRIPT_VERIFICATION_REPORT.md` | 3,884 | `323e53ee1b2ebe5e25d25a96b4ec6756852ef7b4f8243cce23affb426ab99fea` |
+| `manuscript_verification/MANUSCRIPT_ARTIFACT_MAP.md` | 5,793 | `c9771bd88e8b719d3150e90270972c6d1403850aa0851309cde899c318712677` |
+| `manuscript_verification/build_bibliography_and_mapping.py` | 36,496 | `89b6f9452b9120de1f38cc1b305afec2b35a8e4ab13d1b8965cdf5131a809939` |
+| `manuscript_verification/build_full_paper.py` | 123,682 | `2785ee5dcd323aef187a557be8a3a116740c9642bfdbe62bcbdbb346fe9d9b13` |
+| `manuscript_verification/check_cutoff_leads.py` | 3,026 | `6b07d53ec3e1a050b1edd2ef56c2d73c45f74af515e46356719ed840e9e328cc` |
+| `manuscript_verification/check_delay_window.py` | 1,492 | `09d75de38c12f7c5ce636e9aea964c7bc4821cd057bbc50eb7597c5b5a9876b4` |
+| `manuscript_verification/check_tables_and_scope.py` | 4,786 | `8d32f989583b0b3981b0b24b2e8b276696e446d630816829e68fd8724dd639de` |
+| `manuscript_verification/citation_dynamic_update_test_log.json` | 28,029 | `5b6fa446777210ab81b0abe468a633e616a1538d8d3eb2afa98c412fb79ee0b3` |
+| `manuscript_verification/citation_editing_and_reordering_test_log.json` | 28,029 | `5b6fa446777210ab81b0abe468a633e616a1538d8d3eb2afa98c412fb79ee0b3` |
+| `manuscript_verification/combine_normal_figs.py` | 475 | `d13a495d7a449e54f84c22b8c3f812c87f9e77100a07e6537091500f0449e9f1` |
+| `manuscript_verification/create_automated_citation_docx.py` | 27,099 | `14c8a15b137d5cba857ae5f47f936ad8832a7e3f8e3ffd0a5c094beb322ae159` |
+| `manuscript_verification/independent_numeric_review.py` | 6,993 | `649e40f8e4e51604737a13c0bcea302d21de8bddfe1fd3b3e61f5db7b72836e3` |
+| `manuscript_verification/r2_text_archive/PUB053_Manuscript_R2.txt` | 23,908 | `2dff531921560c615bc37be6b7ee3914727452434238778d00b60f6c4a12c60a` |
+| `manuscript_verification/r2_text_archive/PUB053_Supplement_R2.txt` | 32,998 | `53dddac42a2cc268e670f7d5e67b8039851a34c50e37708a1cc185354d260532` |
+| `manuscript_verification/sync_citations_and_references.py` | 14,892 | `f85e3c949d7fad8ffb006bb24db32c4f26294e460bacde8664b895abdab8a111` |
+| `manuscript_verification/verify_citations_and_manuscript.py` | 11,231 | `57e3a1fb55badb1da95b5e423728b4f0f4d46c421adcc1e5b5a136379462cd14` |
+| `manuscript_verification/verify_revised_manuscript.py` | 15,264 | `0b6d3f1a72377d6fe9d667a2103aab377c5ec3d5cf67cbd6aba0f2b358292710` |
+| `manuscript_verification/verify_tables_from_archived_results.py` | 12,054 | `6015b94d637207217aee6da3ec40cac628593596562b5149fb8fa932404cacc4` |
+| `manuscript_verification/word_update_export_and_test.py` | 29,627 | `9adc834cf4bcb8adf0bcb9adf45dba6246bd525d20f60521b35011e82db9cb6f` |
+
+</details>
+
+<details>
+<summary>references — 6 files</summary>
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| `references/CITATION_MAPPING_TABLE.md` | 15,009 | `4d8433cc799e4cd2fbb9c851ca162a8a2c69f30e43efa0d22d7f3524353f7926` |
+| `references/citation_mapping_table.csv` | 3,624 | `3c6dbacefa25eb1784335c9baf8679d1ff22d581f95d989a15b9504057a907e6` |
+| `references/pub053_references.bib` | 9,719 | `fb9d9576a96020ca49276fece26d2e2e4e2ea2ffb729a84577b35b1725e3a8b0` |
+| `references/pub053_references.json` | 18,739 | `9395a3450304513f47d105e936ccdb82dc5e6e69c84d0c4f158892700bbb85c9` |
+| `references/pub053_references.ris` | 8,597 | `492c27e62cfab8f899c48150677eb793682814ff551f83bcacb0961624987260` |
+| `references/word_sources.xml` | 27,323 | `5f6dbd1fe41a05fd71b53eb62808d2bd72b667a0029c3b4a6b44e024a44614fd` |
+
+</details>
+
+<details>
+<summary>results — 13 files</summary>
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| `results/README.md` | 1,973 | `8e70a16c3047fb7a5fac1a2998eaa36482947bd69b008e53c5cb443c37043ecb` |
 | `results/component_crossing_timing.csv` | 790 | `61782d6a368964b695c230f78911f00578de3d4151f2ad76b0ef8a99a506f384` |
-| `results/cutoff_leads_by_block.csv` | 4192 | `6a172523e8ab49e8e1eaa0f2f7dbefb850439f87f41205bde523f8f34aa461d0` |
+| `results/cutoff_leads_by_block.csv` | 4,192 | `6a172523e8ab49e8e1eaa0f2f7dbefb850439f87f41205bde523f8f34aa461d0` |
 | `results/cutoff_leads_summary.csv` | 513 | `e50bd5299dc6030af66196c366d73297661741640917f9318cceac7839561561` |
-| `results/delay_window_check.csv` | 1958 | `51cc133f0f8c83addaa4d7b5dc1f4ec4ae38cf037b6813bd1cabe217a5c3fdfa` |
-| `results/episode_results.csv` | 8345 | `b9d1715bec1eb5f20a071ba5103a2070dc46eb57047e7264bd7d7524922432b0` |
-| `results/normal_persistence.csv` | 2119 | `387b49d35dde08c0c9a02620208e9122077b0a52f1b0c4b4cb5a8f59ce8e3801` |
+| `results/delay_window_check.csv` | 1,958 | `51cc133f0f8c83addaa4d7b5dc1f4ec4ae38cf037b6813bd1cabe217a5c3fdfa` |
+| `results/episode_results.csv` | 8,345 | `b9d1715bec1eb5f20a071ba5103a2070dc46eb57047e7264bd7d7524922432b0` |
+| `results/normal_persistence.csv` | 2,119 | `387b49d35dde08c0c9a02620208e9122077b0a52f1b0c4b4cb5a8f59ce8e3801` |
 | `results/quantile_claim_check.json` | 421 | `3987d8f41f0840c596cc33184b4251e2f530947df034b292dd995843b95b3aff` |
-| `results/r2_replay_summary.json` | 3894 | `dbfce502822fe585da7572dd6136ce58bb5a563993878a14974ba2de3cb089b9` |
-| `results/README.md` | 764 | `0df7ba05b76a672b9f8317a315e80bdc745d3dd2fa6dc61e259600e2e758c120` |
-| `results/recomputed_vs_archived.csv` | 2680 | `4ec87ed0d2ed9048ea236aae409507b0f3951cae053e7101c5331fe5b363b400` |
+| `results/r2_replay_summary.json` | 3,894 | `dbfce502822fe585da7572dd6136ce58bb5a563993878a14974ba2de3cb089b9` |
+| `results/recomputed_vs_archived.csv` | 2,680 | `4ec87ed0d2ed9048ea236aae409507b0f3951cae053e7101c5331fe5b363b400` |
 | `results/summary.csv` | 636 | `0784bfb12dbbffb4f024be2820d905122a97810f570bc6c46aa355aa5648eb3a` |
-| `results/tables_3_4_5_7_crosscheck.csv` | 6275 | `0879ee35609855f0aeb68fde17e9008a5c14b496aa7a0032420acc7fae09eee2` |
+| `results/tables_3_4_5_7_crosscheck.csv` | 6,275 | `0879ee35609855f0aeb68fde17e9008a5c14b496aa7a0032420acc7fae09eee2` |
 | `results/tables_and_rounding_summary.json` | 349 | `f6e40318018949cab3fedae6d841252ff7894609ca39dff6280e69ffc442d489` |
+
+</details>
+
+<details>
+<summary>results_archived — 31 files</summary>
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| `results_archived/README.md` | 1,755 | `7ff793d972e778e832dd0cfa5a3c907ddec54af973bb3d0102bf3a7e6f1b3c78` |
 | `results_archived/component_crossing_timing.csv` | 790 | `61782d6a368964b695c230f78911f00578de3d4151f2ad76b0ef8a99a506f384` |
-| `results_archived/current_manuscript_verification/citation_editing_and_reordering_test_log.json` | 28029 | `5b6fa446777210ab81b0abe468a633e616a1538d8d3eb2afa98c412fb79ee0b3` |
+| `results_archived/current_manuscript_verification/README.md` | 1,848 | `c8a0ef0e997d893f0464ec9abc238f4107d463aa1251dc45a8e544b8ffa56c2d` |
+| `results_archived/current_manuscript_verification/citation_editing_and_reordering_test_log.json` | 28,029 | `5b6fa446777210ab81b0abe468a633e616a1538d8d3eb2afa98c412fb79ee0b3` |
 | `results_archived/current_manuscript_verification/current_citations_and_manuscript_report.json` | 980 | `028c089ba9dd233e871a4be628758ce0b4419f4cb6e9f5b51b6e0b2deced3f71` |
-| `results_archived/current_manuscript_verification/current_docx_verification_report.json` | 1683 | `2ef7c4a6a4fac5875344f26861484953a3cbc9769a919c63c152e6a1c3ed1c1b` |
-| `results_archived/current_manuscript_verification/current_manuscript_table_checks.csv` | 5209 | `4f66a973501c5287f2d2a50cca87a0691a5bd22f1e6d30320b220058d74a0844` |
-| `results_archived/current_manuscript_verification/README.md` | 1138 | `05c9b531cdf520ef10677af51e3a24e8d330c0a6f60d64cbdf4d92d8727075a8` |
-| `results_archived/cutoff_leads_by_block.csv` | 4192 | `6a172523e8ab49e8e1eaa0f2f7dbefb850439f87f41205bde523f8f34aa461d0` |
+| `results_archived/current_manuscript_verification/current_docx_verification_report.json` | 1,683 | `2ef7c4a6a4fac5875344f26861484953a3cbc9769a919c63c152e6a1c3ed1c1b` |
+| `results_archived/current_manuscript_verification/current_manuscript_table_checks.csv` | 5,209 | `4f66a973501c5287f2d2a50cca87a0691a5bd22f1e6d30320b220058d74a0844` |
+| `results_archived/cutoff_leads_by_block.csv` | 4,192 | `6a172523e8ab49e8e1eaa0f2f7dbefb850439f87f41205bde523f8f34aa461d0` |
 | `results_archived/cutoff_leads_summary.csv` | 513 | `e50bd5299dc6030af66196c366d73297661741640917f9318cceac7839561561` |
-| `results_archived/delay_window_check.csv` | 1958 | `51cc133f0f8c83addaa4d7b5dc1f4ec4ae38cf037b6813bd1cabe217a5c3fdfa` |
-| `results_archived/episode_results.csv` | 8345 | `b9d1715bec1eb5f20a071ba5103a2070dc46eb57047e7264bd7d7524922432b0` |
-| `results_archived/normal_persistence.csv` | 2119 | `387b49d35dde08c0c9a02620208e9122077b0a52f1b0c4b4cb5a8f59ce8e3801` |
+| `results_archived/delay_window_check.csv` | 1,958 | `51cc133f0f8c83addaa4d7b5dc1f4ec4ae38cf037b6813bd1cabe217a5c3fdfa` |
+| `results_archived/episode_results.csv` | 8,345 | `b9d1715bec1eb5f20a071ba5103a2070dc46eb57047e7264bd7d7524922432b0` |
+| `results_archived/normal_persistence.csv` | 2,119 | `387b49d35dde08c0c9a02620208e9122077b0a52f1b0c4b4cb5a8f59ce8e3801` |
+| `results_archived/prior_draft_review_ce0e9a0e/QA_FINDINGS.csv` | 8,668 | `b2fa36bc660eeaa19d2668bbd35334f4bd052669b1448086562c353812115512` |
+| `results_archived/prior_draft_review_ce0e9a0e/QA_FINDINGS.json` | 11,539 | `f18d3cc839c47a121430c8ae5d5d40960a9a6389bac7b3ece45773b14e09b5fb` |
+| `results_archived/prior_draft_review_ce0e9a0e/README.md` | 832 | `6fe0f8eb18b082efdcd0af485b231e4a374e1f28c20f7a77467a7b2febc03889` |
+| `results_archived/prior_draft_review_ce0e9a0e/REFERENCE_AUDIT.csv` | 9,787 | `427d77e094283bbf74d7429d02a2e19e24e6dd436b83906bad3a739509915153` |
 | `results_archived/prior_draft_review_ce0e9a0e/manuscript_table_checks.csv` | 904 | `524db0b15ac720423bcc1a6170713ae77d1cbcb421da71505411a4f28d594098` |
-| `results_archived/prior_draft_review_ce0e9a0e/QA_FINDINGS.csv` | 8668 | `b2fa36bc660eeaa19d2668bbd35334f4bd052669b1448086562c353812115512` |
-| `results_archived/prior_draft_review_ce0e9a0e/QA_FINDINGS.json` | 11539 | `f18d3cc839c47a121430c8ae5d5d40960a9a6389bac7b3ece45773b14e09b5fb` |
-| `results_archived/prior_draft_review_ce0e9a0e/README.md` | 667 | `d7b50459bb73a9d1364b730124b7e49407bd0d3418bb2ef764b9dee55f1c46ba` |
-| `results_archived/prior_draft_review_ce0e9a0e/REFERENCE_AUDIT.csv` | 9787 | `427d77e094283bbf74d7429d02a2e19e24e6dd436b83906bad3a739509915153` |
-| `results_archived/prior_draft_review_ce0e9a0e/review_execution_summary.json` | 3830 | `d65ef243104021db2f68e8382fa3ceabea3b5ce2852d0303a0af81dcfb211651` |
-| `results_archived/prior_draft_review_ce0e9a0e/review_manifest.json` | 4370 | `15e889ef31d5be5243e85f93f91dce8195980e4d8bc9b28a0bd4da31512461d4` |
+| `results_archived/prior_draft_review_ce0e9a0e/review_execution_summary.json` | 3,830 | `d65ef243104021db2f68e8382fa3ceabea3b5ce2852d0303a0af81dcfb211651` |
+| `results_archived/prior_draft_review_ce0e9a0e/review_manifest.json` | 4,370 | `15e889ef31d5be5243e85f93f91dce8195980e4d8bc9b28a0bd4da31512461d4` |
 | `results_archived/quantile_claim_check.json` | 421 | `3987d8f41f0840c596cc33184b4251e2f530947df034b292dd995843b95b3aff` |
-| `results_archived/r2_replay_summary.json` | 3894 | `dbfce502822fe585da7572dd6136ce58bb5a563993878a14974ba2de3cb089b9` |
-| `results_archived/README.md` | 2563 | `2f6e14a7583c66cc6b6b75b4f5417cbf220ff09dd94f7f0b733b8477e4228dde` |
-| `results_archived/recomputed_vs_archived.csv` | 2680 | `4ec87ed0d2ed9048ea236aae409507b0f3951cae053e7101c5331fe5b363b400` |
-| `results_archived/reconstructed_inputs/block_design_table3_reconstructed.json` | 3575 | `7a2ece172025984136ba8eae015ab37595abdb9b71cf0e406f06cdf73992796c` |
-| `results_archived/reconstructed_inputs/episode_event_timings_table7_reconstructed.json` | 5152 | `505c7d85b868ba62d1a67f4ffe8a57c7e275ea5f32cab5834ffad5e69f7a9bb5` |
-| `results_archived/reconstructed_inputs/ewls_fit_table4_reconstructed.json` | 2192 | `2e34a2c532e6eee69e1abf5c69906af3add0f2f6fc8ce230d790d6ece46c308c` |
-| `results_archived/reconstructed_inputs/plant_parameters_table1_table2_from_source.json` | 1871 | `f1635b78ffc094e57f6ad9adcd679751a24281ce5076a4a2cbe8a39132d407f6` |
-| `results_archived/reconstructed_inputs/README.md` | 1351 | `a89e8cac3623bc0e3b090b333ee7ffddd9c83f5cd1cdfddb7e79dfd90858fd67` |
-| `results_archived/reconstructed_inputs/threshold_candidates_table5_reconstructed.json` | 3723 | `29ad01c048dd80db1b6f44edd21ab093348df2d9e1378406afcf82fcc1093e20` |
+| `results_archived/r2_replay_summary.json` | 3,894 | `dbfce502822fe585da7572dd6136ce58bb5a563993878a14974ba2de3cb089b9` |
+| `results_archived/recomputed_vs_archived.csv` | 2,680 | `4ec87ed0d2ed9048ea236aae409507b0f3951cae053e7101c5331fe5b363b400` |
+| `results_archived/reconstructed_inputs/README.md` | 1,261 | `acde11fb0071a45137d927a208ad3f938fa99fedc527bc305ddf410e727d4f32` |
+| `results_archived/reconstructed_inputs/block_design_table3_reconstructed.json` | 3,575 | `7a2ece172025984136ba8eae015ab37595abdb9b71cf0e406f06cdf73992796c` |
+| `results_archived/reconstructed_inputs/episode_event_timings_table7_reconstructed.json` | 5,152 | `505c7d85b868ba62d1a67f4ffe8a57c7e275ea5f32cab5834ffad5e69f7a9bb5` |
+| `results_archived/reconstructed_inputs/ewls_fit_table4_reconstructed.json` | 2,192 | `2e34a2c532e6eee69e1abf5c69906af3add0f2f6fc8ce230d790d6ece46c308c` |
+| `results_archived/reconstructed_inputs/plant_parameters_table1_table2_from_source.json` | 1,871 | `f1635b78ffc094e57f6ad9adcd679751a24281ce5076a4a2cbe8a39132d407f6` |
+| `results_archived/reconstructed_inputs/threshold_candidates_table5_reconstructed.json` | 3,723 | `29ad01c048dd80db1b6f44edd21ab093348df2d9e1378406afcf82fcc1093e20` |
 | `results_archived/summary.csv` | 636 | `0784bfb12dbbffb4f024be2820d905122a97810f570bc6c46aa355aa5648eb3a` |
-| `results_archived/tables_3_4_5_7_crosscheck.csv` | 6275 | `0879ee35609855f0aeb68fde17e9008a5c14b496aa7a0032420acc7fae09eee2` |
+| `results_archived/tables_3_4_5_7_crosscheck.csv` | 6,275 | `0879ee35609855f0aeb68fde17e9008a5c14b496aa7a0032420acc7fae09eee2` |
 | `results_archived/tables_and_rounding_summary.json` | 349 | `f6e40318018949cab3fedae6d841252ff7894609ca39dff6280e69ffc442d489` |
-| `simulator_source/configs/ab4_marine_aux.yaml` | 4503 | `2c6c330289008b27a3fc6cc3434900cb5642ee661241d4ff70a360ef1c6491df` |
-| `simulator_source/configs/base.yaml` | 5376 | `3b0fc3c4d539bcf4e076ced8978a232b5759ff051f4a2ea7b73732584771fd08` |
-| `simulator_source/configs/base_fmpy.yaml` | 3720 | `1687b919e165770c5f5e929029b36c16c9ef14b7cb7cc9818cf96e1009f8a445` |
-| `simulator_source/configs/base_fmpy_model_exchange.yaml` | 3215 | `c1a8436c4681f878acd0986fd747fb91c686a0cf08f8329c7e7d5f0eb44a7ddc` |
-| `simulator_source/configs/base_fmpy_template.yaml` | 5398 | `919ec90e7a33f1b7d660a40794de24b10f45215de85516f668df30726ef06128` |
-| `simulator_source/configs/dummy_fmpy.yaml` | 3199 | `7b8e4cafacc68b2c37e78d3f8adb2e2749aa9acc614bced3e8aa84a29fb8bdc8` |
+
+</details>
+
+<details>
+<summary>simulator_source — 156 files</summary>
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| `simulator_source/LICENSE` | 1,097 | `5ddb8abfab962105d25a7883a62f36d21e92d0698c97721b2d2cc90f3e332ce5` |
+| `simulator_source/README.md` | 14,525 | `cabe7255ddd71fd887f0b73d730b9d509929ee135176156b169c4084cdfad74e` |
+| `simulator_source/configs/ab4_marine_aux.yaml` | 4,503 | `2c6c330289008b27a3fc6cc3434900cb5642ee661241d4ff70a360ef1c6491df` |
+| `simulator_source/configs/base.yaml` | 5,376 | `3b0fc3c4d539bcf4e076ced8978a232b5759ff051f4a2ea7b73732584771fd08` |
+| `simulator_source/configs/base_fmpy.yaml` | 3,720 | `1687b919e165770c5f5e929029b36c16c9ef14b7cb7cc9818cf96e1009f8a445` |
+| `simulator_source/configs/base_fmpy_model_exchange.yaml` | 3,215 | `c1a8436c4681f878acd0986fd747fb91c686a0cf08f8329c7e7d5f0eb44a7ddc` |
+| `simulator_source/configs/base_fmpy_template.yaml` | 5,398 | `919ec90e7a33f1b7d660a40794de24b10f45215de85516f668df30726ef06128` |
+| `simulator_source/configs/dummy_fmpy.yaml` | 3,199 | `7b8e4cafacc68b2c37e78d3f8adb2e2749aa9acc614bced3e8aa84a29fb8bdc8` |
 | `simulator_source/configs/faults/burner_deg.yaml` | 171 | `4b129180f924dd89d9b384aba9e3f05c519266fd2fa735c39fc7bab76ffb1296` |
 | `simulator_source/configs/faults/fouling.yaml` | 164 | `cb38748c39f03394f4151cd780bd6e16d4dd579ae87fdfd4143397fcd8ad62bc` |
 | `simulator_source/configs/faults/pump_wear.yaml` | 145 | `d2382fe2c9039697868ccdf55602c7815e8b2ab471fce31652d897492d1e5bfa` |
@@ -155,15 +246,13 @@
 | `simulator_source/configs/faults/tube_leak.yaml` | 162 | `2c495a191d9ce82d3b66a64d1e441918291abe50021645d6114320ca55aaaf05` |
 | `simulator_source/configs/faults/valve_stiction.yaml` | 175 | `5668ca6c4e930435302315534169c766cf1d88e903c047dc04488c1f293c73b3` |
 | `simulator_source/configs/governance_policy.yaml` | 644 | `96883484dd1c3aa4054f8629263662f98e56977fbd59914a90cb74d0426df62f` |
-| `simulator_source/configs/local_pipeline.yaml` | 3475 | `5f7be0a93170cafd74736411026db2ca15399b3a52766bf902a72fb32be722a5` |
-| `simulator_source/configs/local_pipeline_step_tests.yaml` | 3050 | `9f07a2ea63cfdd27ec835d7475f984ad1461bf2522a1b01c5386d80e800b223d` |
+| `simulator_source/configs/local_pipeline.yaml` | 3,475 | `5f7be0a93170cafd74736411026db2ca15399b3a52766bf902a72fb32be722a5` |
+| `simulator_source/configs/local_pipeline_step_tests.yaml` | 3,050 | `9f07a2ea63cfdd27ec835d7475f984ad1461bf2522a1b01c5386d80e800b223d` |
 | `simulator_source/configs/scenarios/load_follow.yaml` | 113 | `b0d50fbcd2c933111290febf0f76cbec9f0b156f6d9cc10d4bb44175a980c5c5` |
 | `simulator_source/configs/scenarios/step_tests.yaml` | 237 | `ed6f6c1c59621af93a674564bac18bc39edcb57d29a7e99770722c75e9352120` |
-| `simulator_source/docs/phase_a_design.md` | 35975 | `a1e7efbdc5c33972a29f06573bbb10a1c4cf1fd542cd22483166ff682c091c8c` |
-| `simulator_source/docs/spec_boiler_pdm_sim.md` | 17852 | `a65857c997a236194baed1121367cf8ab9d220cddfe0db2e57f59de6c129447f` |
-| `simulator_source/LICENSE` | 1097 | `5ddb8abfab962105d25a7883a62f36d21e92d0698c97721b2d2cc90f3e332ce5` |
-| `simulator_source/pyproject.toml` | 1222 | `b19b181bb65a7cab2731c38af926fc1ae1287bf8db383eabe312a790d4659313` |
-| `simulator_source/README.md` | 14525 | `cabe7255ddd71fd887f0b73d730b9d509929ee135176156b169c4084cdfad74e` |
+| `simulator_source/docs/phase_a_design.md` | 35,975 | `a1e7efbdc5c33972a29f06573bbb10a1c4cf1fd542cd22483166ff682c091c8c` |
+| `simulator_source/docs/spec_boiler_pdm_sim.md` | 17,852 | `a65857c997a236194baed1121367cf8ab9d220cddfe0db2e57f59de6c129447f` |
+| `simulator_source/pyproject.toml` | 1,222 | `b19b181bb65a7cab2731c38af926fc1ae1287bf8db383eabe312a790d4659313` |
 | `simulator_source/src/boiler_pdm_sim/__init__.py` | 207 | `2e8f68fe8730c6dd30963a97e07bbb86759cdd53c55601f23588c7e402d56ca4` |
 | `simulator_source/src/boiler_pdm_sim/calibration/__init__.py` | 486 | `c6f8ecb88bdeaa77ed405ac4485eb29a6de981ce98eaf3319ce44a91001ffdd2` |
 | `simulator_source/src/boiler_pdm_sim/calibration/baseline.py` | 210 | `01df609f6ebb5810654df38ddf9473f0d63b425349a773381496fb68146991a4` |
@@ -171,32 +260,32 @@
 | `simulator_source/src/boiler_pdm_sim/calibration/sensitivity.py` | 246 | `f8dde5f477ae290d65e3b866dbcfea589d653f7d6ae633af79ca62990f3f0ea8` |
 | `simulator_source/src/boiler_pdm_sim/cli/main.py` | 986 | `0b3fbbf7b0d554495d25f7e3d543ac31ed06f02d7ff1aa5ab775c6f3a4b9ea36` |
 | `simulator_source/src/boiler_pdm_sim/control/__init__.py` | 304 | `646a816fc6d7f91d115f9089d0403b06ebcb513db13502c02d026d0dda899d6d` |
-| `simulator_source/src/boiler_pdm_sim/control/loops.py` | 3136 | `87fca53b0099024a19d880e187668d4029e1c2a06483b1aa943b315c0905aa14` |
-| `simulator_source/src/boiler_pdm_sim/control/pid.py` | 3044 | `c9d3e43570b22679150eb69c2cf6e82414ae5c26cf5ec821c2942b1f8f8e9913` |
-| `simulator_source/src/boiler_pdm_sim/control/three_element.py` | 13242 | `b891e95aaa0acc4389f7550f2c0ab95f9ae4d1851e759e893def19f9b407cef8` |
+| `simulator_source/src/boiler_pdm_sim/control/loops.py` | 3,136 | `87fca53b0099024a19d880e187668d4029e1c2a06483b1aa943b315c0905aa14` |
+| `simulator_source/src/boiler_pdm_sim/control/pid.py` | 3,044 | `c9d3e43570b22679150eb69c2cf6e82414ae5c26cf5ec821c2942b1f8f8e9913` |
+| `simulator_source/src/boiler_pdm_sim/control/three_element.py` | 13,242 | `b891e95aaa0acc4389f7550f2c0ab95f9ae4d1851e759e893def19f9b407cef8` |
 | `simulator_source/src/boiler_pdm_sim/core/__init__.py` | 172 | `8f2a0845fdead47a050dd144fccf41783de199d746fa34111ef48c55926a6fde` |
 | `simulator_source/src/boiler_pdm_sim/core/ab4/__init__.py` | 413 | `857d7e6bccb494e04378a8c87e957df8e60a50d95b3fa336f0125b4e8f2c7382` |
-| `simulator_source/src/boiler_pdm_sim/core/ab4/backend.py` | 15749 | `a3c5138aa271560cb2bbf842989fc38a6aa51542ba00f1a7e0d9e5d259b71ccd` |
-| `simulator_source/src/boiler_pdm_sim/core/ab4/drum_model.py` | 9372 | `9bad1fb0764dcd9f82d6aea817281b7d0b4e7e3ee598b55ce011b44bf8f86bd0` |
-| `simulator_source/src/boiler_pdm_sim/core/ab4/feedwater.py` | 3482 | `81c1134f168c75c776728a10183437f0988eb53bde5106f8ac196e8459d594d7` |
-| `simulator_source/src/boiler_pdm_sim/core/ab4/furnace.py` | 8929 | `78436839e24e768188fd7ceffe48c185109c84ff48d576c5581102881e40cef1` |
-| `simulator_source/src/boiler_pdm_sim/core/ab4/geometry.py` | 3037 | `a0d0bf53d2451ffc18a4a20868ee7c522f5ba69e247ee071de2facc0e92b3640` |
-| `simulator_source/src/boiler_pdm_sim/core/ab4/steam_line.py` | 3337 | `49d8f6001c191f2130d38205eaa67e2db913976e8493d7ca99016b0a4f0d1e3b` |
-| `simulator_source/src/boiler_pdm_sim/core/backend_factory.py` | 1008 | `ddbd0edbe7f3360e3fc9ee79959078bc7d51cb89c503082926430c0c83079f3a` |
-| `simulator_source/src/boiler_pdm_sim/core/backend_protocol.py` | 11746 | `23eff114b0f3cc8a6ba5fd0235a19775ab0832c673dd143d010e3b5ff766000c` |
-| `simulator_source/src/boiler_pdm_sim/core/boiler_system.py` | 32641 | `269f58779c8135567409fe01020b10bdc3e606f11529022be326a895ee6cab97` |
+| `simulator_source/src/boiler_pdm_sim/core/ab4/backend.py` | 15,749 | `a3c5138aa271560cb2bbf842989fc38a6aa51542ba00f1a7e0d9e5d259b71ccd` |
+| `simulator_source/src/boiler_pdm_sim/core/ab4/drum_model.py` | 9,372 | `9bad1fb0764dcd9f82d6aea817281b7d0b4e7e3ee598b55ce011b44bf8f86bd0` |
+| `simulator_source/src/boiler_pdm_sim/core/ab4/feedwater.py` | 3,482 | `81c1134f168c75c776728a10183437f0988eb53bde5106f8ac196e8459d594d7` |
+| `simulator_source/src/boiler_pdm_sim/core/ab4/furnace.py` | 8,929 | `78436839e24e768188fd7ceffe48c185109c84ff48d576c5581102881e40cef1` |
+| `simulator_source/src/boiler_pdm_sim/core/ab4/geometry.py` | 3,037 | `a0d0bf53d2451ffc18a4a20868ee7c522f5ba69e247ee071de2facc0e92b3640` |
+| `simulator_source/src/boiler_pdm_sim/core/ab4/steam_line.py` | 3,337 | `49d8f6001c191f2130d38205eaa67e2db913976e8493d7ca99016b0a4f0d1e3b` |
+| `simulator_source/src/boiler_pdm_sim/core/backend_factory.py` | 1,008 | `ddbd0edbe7f3360e3fc9ee79959078bc7d51cb89c503082926430c0c83079f3a` |
+| `simulator_source/src/boiler_pdm_sim/core/backend_protocol.py` | 11,746 | `23eff114b0f3cc8a6ba5fd0235a19775ab0832c673dd143d010e3b5ff766000c` |
+| `simulator_source/src/boiler_pdm_sim/core/boiler_system.py` | 32,641 | `269f58779c8135567409fe01020b10bdc3e606f11529022be326a895ee6cab97` |
 | `simulator_source/src/boiler_pdm_sim/core/components/__init__.py` | 71 | `f5363c62b36ac457b9c7356e51f0095ba0d91bd77db48e026b4bb876cf2b9313` |
 | `simulator_source/src/boiler_pdm_sim/core/components/combustion.py` | 214 | `c83b95b29655f109f28d7298d6b25c7321a15c15a3ebb05908a9ad0f4da6a07e` |
-| `simulator_source/src/boiler_pdm_sim/core/components/drum.py` | 1608 | `579442a17eb11a2636a52cff0789caa42ba689d9274b4bbd60ef1e5b8ec94c10` |
-| `simulator_source/src/boiler_pdm_sim/core/components/economizer.py` | 1256 | `37e202eb9d97156e9c1ea750e53397144e455749179ed1a1371053185897b3fc` |
+| `simulator_source/src/boiler_pdm_sim/core/components/drum.py` | 1,608 | `579442a17eb11a2636a52cff0789caa42ba689d9274b4bbd60ef1e5b8ec94c10` |
+| `simulator_source/src/boiler_pdm_sim/core/components/economizer.py` | 1,256 | `37e202eb9d97156e9c1ea750e53397144e455749179ed1a1371053185897b3fc` |
 | `simulator_source/src/boiler_pdm_sim/core/components/evaporator.py` | 249 | `2ebef520636b0ce2957c8c4a3c2021d791e2f322012065fdacb4e2c814d8da86` |
 | `simulator_source/src/boiler_pdm_sim/core/components/pump.py` | 212 | `87e2b24bc3dc609de170a70709a607313015d8a811db1e935af0c0ac8e4bfc8d` |
 | `simulator_source/src/boiler_pdm_sim/core/components/superheater.py` | 830 | `af8aa3b20572d6a609e4b644c93a68843cb260ff0ddecdcd69b351747268f1ab` |
 | `simulator_source/src/boiler_pdm_sim/core/components/valves.py` | 806 | `a3d916a0623312e8bf4f491d1b34a5ad8ba6a5ea46f26c0a6c28d6cbb6b09b50` |
-| `simulator_source/src/boiler_pdm_sim/core/fmu_adapter.py` | 36951 | `972f74ddc3586151e4c123533071514de2910245a6fb5909178b8fbffc0d8f65` |
-| `simulator_source/src/boiler_pdm_sim/core/media.py` | 5984 | `28426de19fd6f1b1d7d5c58e6e728c11755751a8d8eb367d41a82de846682ad0` |
-| `simulator_source/src/boiler_pdm_sim/core/solver.py` | 3621 | `22bcd4e933cd20479bd8508de0d1c3b3ea621729a0b2586ef9d589e34158a3ab` |
-| `simulator_source/src/boiler_pdm_sim/core/state.py` | 1040 | `3871647f1e14535465cd59055606b119fc41cdc57e9e051de996d526283abd0e` |
+| `simulator_source/src/boiler_pdm_sim/core/fmu_adapter.py` | 36,951 | `972f74ddc3586151e4c123533071514de2910245a6fb5909178b8fbffc0d8f65` |
+| `simulator_source/src/boiler_pdm_sim/core/media.py` | 5,984 | `28426de19fd6f1b1d7d5c58e6e728c11755751a8d8eb367d41a82de846682ad0` |
+| `simulator_source/src/boiler_pdm_sim/core/solver.py` | 3,621 | `22bcd4e933cd20479bd8508de0d1c3b3ea621729a0b2586ef9d589e34158a3ab` |
+| `simulator_source/src/boiler_pdm_sim/core/state.py` | 1,040 | `3871647f1e14535465cd59055606b119fc41cdc57e9e051de996d526283abd0e` |
 | `simulator_source/src/boiler_pdm_sim/core/thermo/__init__.py` | 203 | `81548fc0533e246f36184657fd5569d88012d406e077656cb14bbb4f9c263350` |
 | `simulator_source/src/boiler_pdm_sim/core/thermo/if97.py` | 197 | `dd55c41f344b99e75c7e558547d0cfe4d65cc9a2bb94803461caf767e1ba5f67` |
 | `simulator_source/src/boiler_pdm_sim/core/thermo/steam_props.py` | 291 | `05b6a81528438caa5d97a95aa52a1bc5631f7373b3749b16456f5286880f013c` |
@@ -204,98 +293,99 @@
 | `simulator_source/src/boiler_pdm_sim/dataset/generator.py` | 290 | `8aa2dff39c8879ba2b911fb674283979b0fc1cc61a5c26751bc314a407a58eb3` |
 | `simulator_source/src/boiler_pdm_sim/dataset/labeling.py` | 831 | `a4a4e1f1b45b08d5539f8409a9a65034b9d9ae70d71a1c39065cfd87e84458a1` |
 | `simulator_source/src/boiler_pdm_sim/dataset/splits.py` | 366 | `15ad350ae750b3010db6e50deaf4b4467ec1cc89f736625d8a9c828158f2ea74` |
-| `simulator_source/src/boiler_pdm_sim/dataset/writer.py` | 10618 | `e751cc46d3cc96e60a6ae1918a2d94a6010f8d8fb5338b4f4072c5d1e5b30067` |
+| `simulator_source/src/boiler_pdm_sim/dataset/writer.py` | 10,618 | `e751cc46d3cc96e60a6ae1918a2d94a6010f8d8fb5338b4f4072c5d1e5b30067` |
 | `simulator_source/src/boiler_pdm_sim/degradation/__init__.py` | 34 | `a870086c45855bb82afd0fcdb565e39fc2b37c4e5e5e2b961eea3f1e2dbbb984` |
 | `simulator_source/src/boiler_pdm_sim/degradation/base.py` | 291 | `e064ffb1ea6c7c6c39c9c963d14dfa88edb7120cd688da203214a272da4bd536` |
 | `simulator_source/src/boiler_pdm_sim/degradation/burner_deg.py` | 786 | `bdef2e30efda12c3b5d75cd6935bfc420f7bcec97b7c5da0d450b5d2efa3570c` |
-| `simulator_source/src/boiler_pdm_sim/degradation/fouling.py` | 1992 | `af6f0618d5b24f678ce2f321ce2cae19017477ca99ff9c762bbcb2097ea709df` |
+| `simulator_source/src/boiler_pdm_sim/degradation/fouling.py` | 1,992 | `af6f0618d5b24f678ce2f321ce2cae19017477ca99ff9c762bbcb2097ea709df` |
 | `simulator_source/src/boiler_pdm_sim/degradation/pump_wear.py` | 483 | `291d9ab0e2ee37432a9a7d45a891be51f4bc3202010270a73e3d9f18778a6632` |
-| `simulator_source/src/boiler_pdm_sim/degradation/scheduler.py` | 16190 | `542d11711cbda6d29a94cc16c7e332f1d0b20521d70762d5f47a74a912e17cad` |
-| `simulator_source/src/boiler_pdm_sim/degradation/sensor_faults.py` | 1801 | `3edce2d2e8bb737f072b8a977229361618e9e11379f416a33a04657961f29de7` |
+| `simulator_source/src/boiler_pdm_sim/degradation/scheduler.py` | 16,190 | `542d11711cbda6d29a94cc16c7e332f1d0b20521d70762d5f47a74a912e17cad` |
+| `simulator_source/src/boiler_pdm_sim/degradation/sensor_faults.py` | 1,801 | `3edce2d2e8bb737f072b8a977229361618e9e11379f416a33a04657961f29de7` |
 | `simulator_source/src/boiler_pdm_sim/degradation/tube_leak.py` | 289 | `2d3dc38fa1c987e44e1ef06d4e116f8d68079677a05ebbcb319b54a45aabdf79` |
 | `simulator_source/src/boiler_pdm_sim/degradation/valve_stiction.py` | 372 | `2fea504d1236c5899bb79be306382ee306ecb42d8d8be788918e4c437b2ceb36` |
-| `simulator_source/src/boiler_pdm_sim/interface/fmu.py` | 1144 | `5fea2326cd51f9c0334410e62a7311e6017f89e3ceb81ac00e742e04d0790449` |
+| `simulator_source/src/boiler_pdm_sim/interface/fmu.py` | 1,144 | `5fea2326cd51f9c0334410e62a7311e6017f89e3ceb81ac00e742e04d0790449` |
 | `simulator_source/src/boiler_pdm_sim/pipeline/__init__.py` | 70 | `2fe71c3bfa291a110900d456a3b7a8686d3a183308287d662fda776f703d6b29` |
-| `simulator_source/src/boiler_pdm_sim/pipeline/calibration.py` | 12258 | `42632ae67f5802ad773adb12e494e3198775aee8426c5668ff955a09a7226eda` |
-| `simulator_source/src/boiler_pdm_sim/pipeline/config_types.py` | 13684 | `e8fbb30cb87467a477e14bf380462d04edf672b6a4e1986219f4fdf8e49cb5bc` |
-| `simulator_source/src/boiler_pdm_sim/pipeline/governance.py` | 11916 | `0cace88a2cac5c6a4d3e80ae8234908e9e807e85532f4e0906e47c8679e2c04d` |
-| `simulator_source/src/boiler_pdm_sim/pipeline/performance.py` | 6066 | `8f246f449fe5d84ffb8814dd5ed2e0160d85cda4a8be119c0a8143cb73c75441` |
-| `simulator_source/src/boiler_pdm_sim/pipeline/postprocess.py` | 5574 | `287ccb066d5d84df459f2a69ed4af7dc972a28fa4e61c4e650ec6135d07ed475` |
-| `simulator_source/src/boiler_pdm_sim/pipeline/run_to_file.py` | 7777 | `18c3a83b1ac740ad291a2a2172bbe7e87d3abe80b6010b98afb1e925d08e5489` |
-| `simulator_source/src/boiler_pdm_sim/pipeline/runtime.py` | 6567 | `c1852e22d965b4a340b88e20d7bc2b53925c105e1698edc72be76b6ddc1bd3ac` |
-| `simulator_source/src/boiler_pdm_sim/pipeline/step_loop.py` | 11463 | `ee77c0636982ee45f2025f8875ddd31bb702a13ebeae1f1d42ecd4af8b87dc83` |
+| `simulator_source/src/boiler_pdm_sim/pipeline/calibration.py` | 12,258 | `42632ae67f5802ad773adb12e494e3198775aee8426c5668ff955a09a7226eda` |
+| `simulator_source/src/boiler_pdm_sim/pipeline/config_types.py` | 13,684 | `e8fbb30cb87467a477e14bf380462d04edf672b6a4e1986219f4fdf8e49cb5bc` |
+| `simulator_source/src/boiler_pdm_sim/pipeline/governance.py` | 11,916 | `0cace88a2cac5c6a4d3e80ae8234908e9e807e85532f4e0906e47c8679e2c04d` |
+| `simulator_source/src/boiler_pdm_sim/pipeline/performance.py` | 6,066 | `8f246f449fe5d84ffb8814dd5ed2e0160d85cda4a8be119c0a8143cb73c75441` |
+| `simulator_source/src/boiler_pdm_sim/pipeline/postprocess.py` | 5,574 | `287ccb066d5d84df459f2a69ed4af7dc972a28fa4e61c4e650ec6135d07ed475` |
+| `simulator_source/src/boiler_pdm_sim/pipeline/run_to_file.py` | 7,777 | `18c3a83b1ac740ad291a2a2172bbe7e87d3abe80b6010b98afb1e925d08e5489` |
+| `simulator_source/src/boiler_pdm_sim/pipeline/runtime.py` | 6,567 | `c1852e22d965b4a340b88e20d7bc2b53925c105e1698edc72be76b6ddc1bd3ac` |
+| `simulator_source/src/boiler_pdm_sim/pipeline/step_loop.py` | 11,463 | `ee77c0636982ee45f2025f8875ddd31bb702a13ebeae1f1d42ecd4af8b87dc83` |
 | `simulator_source/src/boiler_pdm_sim/props/__init__.py` | 915 | `3059f85147d407255259d17f9474e0c22a117ff5d698838805e5d1914f975a30` |
-| `simulator_source/src/boiler_pdm_sim/props/fuels.py` | 2063 | `9f8a61995b24d9a7b1ac075ea0c087380d1a0048b02a0cdde6e668b3c3afa91f` |
-| `simulator_source/src/boiler_pdm_sim/props/gas.py` | 3919 | `9d29cea4668695236d0b0e407ee814f4e1e5a3eaacf127a2862bf37f192e17bf` |
-| `simulator_source/src/boiler_pdm_sim/props/if97.py` | 5734 | `a6e58169036d6d93c342ff2fd17406aac6a3b96f9eccb47daf00d1566f746fb3` |
+| `simulator_source/src/boiler_pdm_sim/props/fuels.py` | 2,063 | `9f8a61995b24d9a7b1ac075ea0c087380d1a0048b02a0cdde6e668b3c3afa91f` |
+| `simulator_source/src/boiler_pdm_sim/props/gas.py` | 3,919 | `9d29cea4668695236d0b0e407ee814f4e1e5a3eaacf127a2862bf37f192e17bf` |
+| `simulator_source/src/boiler_pdm_sim/props/if97.py` | 5,734 | `a6e58169036d6d93c342ff2fd17406aac6a3b96f9eccb47daf00d1566f746fb3` |
 | `simulator_source/src/boiler_pdm_sim/research/__init__.py` | 806 | `dba4cd353f7c5e1bde1847a2fb50cb91f110f060d2d9698ee9dfeaab5e17b031` |
-| `simulator_source/src/boiler_pdm_sim/research/baseline.py` | 3183 | `98e027d954dabb7c9e991ec933b524fcecdb986c7593790640c5a305a7953709` |
-| `simulator_source/src/boiler_pdm_sim/research/benchmark.py` | 1781 | `0039468512b27ff2f578fc7bb057309063d771bbe3e125cab64f9fed293b9656` |
-| `simulator_source/src/boiler_pdm_sim/research/calibration.py` | 3206 | `58726a7f56bd97953dc6b6072a6077cd9dddbc2e10b5f79c1a377829fc19e921` |
-| `simulator_source/src/boiler_pdm_sim/research/features.py` | 1598 | `728cf667caf8f3c1697bf93181f7c140165d7ed7ba45b7d0c4f8e467f3d74bc7` |
-| `simulator_source/src/boiler_pdm_sim/research/identifiability.py` | 3789 | `acac480ee2cbeb294fec0677ad3939c34b5be0103f4418a1a5de582e5f8871f4` |
-| `simulator_source/src/boiler_pdm_sim/research/sensitivity.py` | 3495 | `8051c79177a0d5d1c38bd3c72242b566f096bec66704d969c4ed2a659b39cd0c` |
-| `simulator_source/src/boiler_pdm_sim/safety/__init__.py` | 1658 | `ec7b449eb9a780f0080ef5c8b85a3afb5562f4383e94f956cdb61d235587840c` |
-| `simulator_source/src/boiler_pdm_sim/safety/alarms.py` | 3627 | `06e58f303d28df089506eb4bfe11dfc42d1f8edaa9e0b72e3e11e3d19c59e8a2` |
-| `simulator_source/src/boiler_pdm_sim/safety/trips.py` | 4249 | `bdb7addb15bcc53d08f9543516258450af4bb53bcab78a72f5af4f0aa67d83df` |
+| `simulator_source/src/boiler_pdm_sim/research/baseline.py` | 3,183 | `98e027d954dabb7c9e991ec933b524fcecdb986c7593790640c5a305a7953709` |
+| `simulator_source/src/boiler_pdm_sim/research/benchmark.py` | 1,781 | `0039468512b27ff2f578fc7bb057309063d771bbe3e125cab64f9fed293b9656` |
+| `simulator_source/src/boiler_pdm_sim/research/calibration.py` | 3,206 | `58726a7f56bd97953dc6b6072a6077cd9dddbc2e10b5f79c1a377829fc19e921` |
+| `simulator_source/src/boiler_pdm_sim/research/features.py` | 1,598 | `728cf667caf8f3c1697bf93181f7c140165d7ed7ba45b7d0c4f8e467f3d74bc7` |
+| `simulator_source/src/boiler_pdm_sim/research/identifiability.py` | 3,789 | `acac480ee2cbeb294fec0677ad3939c34b5be0103f4418a1a5de582e5f8871f4` |
+| `simulator_source/src/boiler_pdm_sim/research/sensitivity.py` | 3,495 | `8051c79177a0d5d1c38bd3c72242b566f096bec66704d969c4ed2a659b39cd0c` |
+| `simulator_source/src/boiler_pdm_sim/safety/__init__.py` | 1,658 | `ec7b449eb9a780f0080ef5c8b85a3afb5562f4383e94f956cdb61d235587840c` |
+| `simulator_source/src/boiler_pdm_sim/safety/alarms.py` | 3,627 | `06e58f303d28df089506eb4bfe11dfc42d1f8edaa9e0b72e3e11e3d19c59e8a2` |
+| `simulator_source/src/boiler_pdm_sim/safety/trips.py` | 4,249 | `bdb7addb15bcc53d08f9543516258450af4bb53bcab78a72f5af4f0aa67d83df` |
 | `simulator_source/src/boiler_pdm_sim/scenarios/__init__.py` | 39 | `b035546efbede42740f56854297b884ac403d31344326e57f2e86322b8f3eef1` |
-| `simulator_source/src/boiler_pdm_sim/scenarios/profile.py` | 2809 | `8e43890cf3c29721683065845bd093f30ff2f261638adef1e935257c6ed0276d` |
-| `simulator_source/src/boiler_pdm_sim/scenarios/randomization.py` | 3776 | `8b59c93249cf6fc6cf710d0c3d455f9b9c2b5b8eca5d77ef53a908104f3c7457` |
+| `simulator_source/src/boiler_pdm_sim/scenarios/profile.py` | 2,809 | `8e43890cf3c29721683065845bd093f30ff2f261638adef1e935257c6ed0276d` |
+| `simulator_source/src/boiler_pdm_sim/scenarios/randomization.py` | 3,776 | `8b59c93249cf6fc6cf710d0c3d455f9b9c2b5b8eca5d77ef53a908104f3c7457` |
 | `simulator_source/src/boiler_pdm_sim/scenarios/scenario.py` | 487 | `07504509aa0ca878e72d8f8a907e9ba8170d440159f96f30c1649fa2be50a07b` |
-| `simulator_source/src/boiler_pdm_sim/schema.py` | 13026 | `0e901c8cf5a9b713cae83e56eb1256eeef7a6a21a029312adfb5ab45fc46dd8e` |
+| `simulator_source/src/boiler_pdm_sim/schema.py` | 13,026 | `0e901c8cf5a9b713cae83e56eb1256eeef7a6a21a029312adfb5ab45fc46dd8e` |
 | `simulator_source/src/boiler_pdm_sim/sensors/__init__.py` | 210 | `e9adaa98416e332d3dde8c957fa9a5a79ccce8039fff46a02a4bfa3ce69ac210` |
 | `simulator_source/src/boiler_pdm_sim/sensors/dropout.py` | 161 | `992471acae56479ee4ae6a66b9c3af2c390e105658d23b4b74364a6aa375c63c` |
-| `simulator_source/src/boiler_pdm_sim/sensors/drum_level_dp.py` | 7643 | `a11bcfd93e6cebdf21a25b9287d0bf15d63da9ad815059321adf4fd8d8b36a0b` |
+| `simulator_source/src/boiler_pdm_sim/sensors/drum_level_dp.py` | 7,643 | `a11bcfd93e6cebdf21a25b9287d0bf15d63da9ad815059321adf4fd8d8b36a0b` |
 | `simulator_source/src/boiler_pdm_sim/sensors/noise.py` | 177 | `18ac1f7cb2c5e021142af34e209780bde3a1a6e896dbd4440d048341c26a4b7a` |
-| `simulator_source/src/boiler_pdm_sim/sensors/sensor_model.py` | 10082 | `7458605ba9f403c3b5b1aef194bdf60c1744fa40185da8e230cc2d81469d9410` |
-| `simulator_source/src/boiler_pdm_sim/simulator.py` | 49137 | `e7677ef105e31662840df7d9f9b1f537b537d65dd793a223fe52d6fbf6cdc930` |
+| `simulator_source/src/boiler_pdm_sim/sensors/sensor_model.py` | 10,082 | `7458605ba9f403c3b5b1aef194bdf60c1744fa40185da8e230cc2d81469d9410` |
+| `simulator_source/src/boiler_pdm_sim/simulator.py` | 49,137 | `e7677ef105e31662840df7d9f9b1f537b537d65dd793a223fe52d6fbf6cdc930` |
 | `simulator_source/src/boiler_pdm_sim/validation/__init__.py` | 697 | `52a7f932a46a27695f935b3aad4ce7bf02ef4bf502d0aef3a39d72e03d1f092a` |
-| `simulator_source/src/boiler_pdm_sim/validation/control_mode_transition.py` | 1068 | `0cb2b06b770068477d71adc63588b51cdaba244ea7a9693348105da34869b49e` |
-| `simulator_source/src/boiler_pdm_sim/validation/fault_observability.py` | 1347 | `8702aa1debfb8743f6f8eabcad9d17f90ab151d82cb23b2d9952672ab29e846d` |
+| `simulator_source/src/boiler_pdm_sim/validation/control_mode_transition.py` | 1,068 | `0cb2b06b770068477d71adc63588b51cdaba244ea7a9693348105da34869b49e` |
+| `simulator_source/src/boiler_pdm_sim/validation/fault_observability.py` | 1,347 | `8702aa1debfb8743f6f8eabcad9d17f90ab151d82cb23b2d9952672ab29e846d` |
 | `simulator_source/src/boiler_pdm_sim/validation/invariants.py` | 307 | `c28e5d9e1dffdcc96cc44b0dc89f707e5878ebf76517fbb61bd2696fd19aa5ea` |
-| `simulator_source/src/boiler_pdm_sim/validation/level_instrumentation.py` | 1457 | `3889dcee833c1353ca7b221d4388c923267e9c7205d4047af0ea88dc80bc66a9` |
-| `simulator_source/src/boiler_pdm_sim/validation/phase6.py` | 5239 | `17a4c1e7620e67429968aac816f7a98d4bad69ffa04033ab7c1339348d622d41` |
-| `simulator_source/src/boiler_pdm_sim/validation/regression.py` | 6647 | `cf7ccbd8776009f2feb1e0b457786f15c586558f8f8d267a854f1019fed0e599` |
-| `simulator_source/src/boiler_pdm_sim/validation/steady_state_map.py` | 1744 | `25fe213600bca67e8c908fa060e3a38c377c508a6d575dbcc20269269ca2b4dc` |
-| `simulator_source/src/boiler_pdm_sim/validation/step_response.py` | 8349 | `48c238c5fe51a244dd6ceeab48fe143b73685bc7cddfbfe19d2633540b4c8ed2` |
-| `simulator_source/tests/fixtures/dummy_boiler_fmu.py` | 7280 | `e337ca40c6ed923cb3a1d727becb3c9a0c3d30df4984ac210f21069e47b74bf7` |
-| `simulator_source/tests/test_ab4_24h_gate.py` | 3081 | `3d81471eb395e016f13659180fa342215786e5ad15ac04fec94a5da18ff8a201` |
-| `simulator_source/tests/test_ab4_anchoring.py` | 3812 | `cab14965d584e65afb75885532e52622441e761d1063359854b0617011369592` |
-| `simulator_source/tests/test_ab4_backend.py` | 6208 | `6095f48e6b169924c5bab60fac136e3bcad75e46c4c40319a3e21ad6f871f886` |
-| `simulator_source/tests/test_ab4_cross_model.py` | 3066 | `32ea5fafbba3e2c779bfb08e948a5360fe2181a2dd835330979d2ace8eee4f1a` |
-| `simulator_source/tests/test_ab4_drum_model.py` | 5214 | `24cf2e24a22f3ce00d83f1ef21a7241e5c924fe64db89cde19a270257f1c9deb` |
-| `simulator_source/tests/test_ab4_furnace.py` | 3417 | `b6c63dace9d93cbc16bc8a28d909b83e7d66cb687550f3fbae41d738e55a45a3` |
-| `simulator_source/tests/test_ab4_geometry.py` | 2673 | `3933e6f1e75cfb4f172cdfb0ce19c8ad9c68068665de4974046bfc3b64a64844` |
-| `simulator_source/tests/test_ab4_lines.py` | 4581 | `0e513dc63d6ea3e08d15062f9f460eb5ebb6d124b534fe9f7cea2a6478cd30be` |
-| `simulator_source/tests/test_ab4_obs_closed_loop.py` | 3070 | `43c2f97bb2d283758b3403f90521d5bccb29ba041a76f719718581b631bbd1af` |
-| `simulator_source/tests/test_ab4_pipeline.py` | 2905 | `ccdba4a391f7d7d1374e2934cea8ed4c188477a90a5f4e47808378418a2fe1b5` |
-| `simulator_source/tests/test_backend_protocol.py` | 10389 | `2450f6c5e43f6d0a1c60879aa1dd678fea28420da617e069443077a2225e72cb` |
-| `simulator_source/tests/test_compatibility_modules.py` | 2482 | `bc1d80630a949a17634d0fbb86d990e1bcc132542dc045fd714f73e8accce375` |
-| `simulator_source/tests/test_control_mode_transition.py` | 1455 | `09b0e88df66aa75314b9f803333f606975eddf6bdbddbb861309be446c321772` |
-| `simulator_source/tests/test_core_fmu_parity.py` | 5066 | `3f4dba57ec241eb1d5ea45d65385af436426f7b761b9229d133f86deb831ed09` |
-| `simulator_source/tests/test_dae_closure.py` | 2588 | `6eb533ae2bd82438ed0cdb7c7e0427c31d830165c031bb807dd1b1e39b38384b` |
-| `simulator_source/tests/test_fault_injection.py` | 1579 | `2c7eddf25550a2d42308010aa927937e654b27770cf3c883f17ce6ca8fa1469c` |
+| `simulator_source/src/boiler_pdm_sim/validation/level_instrumentation.py` | 1,457 | `3889dcee833c1353ca7b221d4388c923267e9c7205d4047af0ea88dc80bc66a9` |
+| `simulator_source/src/boiler_pdm_sim/validation/phase6.py` | 5,239 | `17a4c1e7620e67429968aac816f7a98d4bad69ffa04033ab7c1339348d622d41` |
+| `simulator_source/src/boiler_pdm_sim/validation/regression.py` | 6,647 | `cf7ccbd8776009f2feb1e0b457786f15c586558f8f8d267a854f1019fed0e599` |
+| `simulator_source/src/boiler_pdm_sim/validation/steady_state_map.py` | 1,744 | `25fe213600bca67e8c908fa060e3a38c377c508a6d575dbcc20269269ca2b4dc` |
+| `simulator_source/src/boiler_pdm_sim/validation/step_response.py` | 8,349 | `48c238c5fe51a244dd6ceeab48fe143b73685bc7cddfbfe19d2633540b4c8ed2` |
+| `simulator_source/tests/fixtures/dummy_boiler_fmu.py` | 7,280 | `e337ca40c6ed923cb3a1d727becb3c9a0c3d30df4984ac210f21069e47b74bf7` |
+| `simulator_source/tests/test_ab4_24h_gate.py` | 3,081 | `3d81471eb395e016f13659180fa342215786e5ad15ac04fec94a5da18ff8a201` |
+| `simulator_source/tests/test_ab4_anchoring.py` | 3,812 | `cab14965d584e65afb75885532e52622441e761d1063359854b0617011369592` |
+| `simulator_source/tests/test_ab4_backend.py` | 6,208 | `6095f48e6b169924c5bab60fac136e3bcad75e46c4c40319a3e21ad6f871f886` |
+| `simulator_source/tests/test_ab4_cross_model.py` | 3,066 | `32ea5fafbba3e2c779bfb08e948a5360fe2181a2dd835330979d2ace8eee4f1a` |
+| `simulator_source/tests/test_ab4_drum_model.py` | 5,214 | `24cf2e24a22f3ce00d83f1ef21a7241e5c924fe64db89cde19a270257f1c9deb` |
+| `simulator_source/tests/test_ab4_furnace.py` | 3,417 | `b6c63dace9d93cbc16bc8a28d909b83e7d66cb687550f3fbae41d738e55a45a3` |
+| `simulator_source/tests/test_ab4_geometry.py` | 2,673 | `3933e6f1e75cfb4f172cdfb0ce19c8ad9c68068665de4974046bfc3b64a64844` |
+| `simulator_source/tests/test_ab4_lines.py` | 4,581 | `0e513dc63d6ea3e08d15062f9f460eb5ebb6d124b534fe9f7cea2a6478cd30be` |
+| `simulator_source/tests/test_ab4_obs_closed_loop.py` | 3,070 | `43c2f97bb2d283758b3403f90521d5bccb29ba041a76f719718581b631bbd1af` |
+| `simulator_source/tests/test_ab4_pipeline.py` | 2,905 | `ccdba4a391f7d7d1374e2934cea8ed4c188477a90a5f4e47808378418a2fe1b5` |
+| `simulator_source/tests/test_backend_protocol.py` | 10,389 | `2450f6c5e43f6d0a1c60879aa1dd678fea28420da617e069443077a2225e72cb` |
+| `simulator_source/tests/test_compatibility_modules.py` | 2,482 | `bc1d80630a949a17634d0fbb86d990e1bcc132542dc045fd714f73e8accce375` |
+| `simulator_source/tests/test_control_mode_transition.py` | 1,455 | `09b0e88df66aa75314b9f803333f606975eddf6bdbddbb861309be446c321772` |
+| `simulator_source/tests/test_core_fmu_parity.py` | 5,066 | `3f4dba57ec241eb1d5ea45d65385af436426f7b761b9229d133f86deb831ed09` |
+| `simulator_source/tests/test_dae_closure.py` | 2,588 | `6eb533ae2bd82438ed0cdb7c7e0427c31d830165c031bb807dd1b1e39b38384b` |
+| `simulator_source/tests/test_fault_injection.py` | 1,579 | `2c7eddf25550a2d42308010aa927937e654b27770cf3c883f17ce6ca8fa1469c` |
 | `simulator_source/tests/test_fault_observability.py` | 837 | `06ee71a12a05022b4e513a6c16fd45225f78d4979aec1986c944143d50d6e9f6` |
-| `simulator_source/tests/test_fmu_contract.py` | 4594 | `ea9ffc794541e7540618a17802bce4876c61a1c7dff059d0bb53cb34bb1d43d2` |
-| `simulator_source/tests/test_fmu_e2e.py` | 7210 | `54b4b713cd18db1870efcb3d43b5d074acfc67cf0f979cf7883226c5a3a8c608` |
-| `simulator_source/tests/test_governance_and_calibration_contracts.py` | 6639 | `328af97eb2648d0a4a68cd9c9eaacc36c13c23ef36d373a202c672725631fe35` |
-| `simulator_source/tests/test_governance_policy_contracts.py` | 2883 | `f2049b1d7c7b2bd891d82c1c9f1bf601763a1cdcadf4545ab8ea412f4400ef85` |
-| `simulator_source/tests/test_identifiability_contracts.py` | 2481 | `8c539d2e1db23791ef1560bd08e806a5eedc0481824d5cf2ad4ad5b8d04abf99` |
-| `simulator_source/tests/test_label_and_bottleneck_contracts.py` | 3356 | `89dd9334759ff363cc3b9d98b29583e9c7662e793ee7137e16b2c23189754dde` |
-| `simulator_source/tests/test_level_instrumentation.py` | 3428 | `7f84e9f3580eef33c05af4f38eaf8864ffcb39395cca1b83bb2c94e9469f5b0c` |
-| `simulator_source/tests/test_manifest_integrity.py` | 3091 | `ee00118da2b4b8a7675fc9bf9689a1b6179b0c139c9d14b729acf28e03290bb8` |
-| `simulator_source/tests/test_mass_energy_balance.py` | 1196 | `63618125d0e5e877b48c50e48b3d8a8ad8fd0ac25259fbac20fb5f3ac7d4eafc` |
-| `simulator_source/tests/test_multirate_and_process_safety.py` | 2614 | `d6c0eca73ad059ef15d06a06e33c67d7c9e88fd2faae52d856f338439dad6e32` |
-| `simulator_source/tests/test_pipeline_contracts.py` | 8963 | `ec28235bce065700cbe847f59c06047bd2d4467b380230b28bdaf50ed81906ab` |
-| `simulator_source/tests/test_props_fuels_gas.py` | 2489 | `1635a46ee7870774ea6c957ffda3ac1935564f717dba50509953243abf5af8ef` |
-| `simulator_source/tests/test_props_if97.py` | 4466 | `943b842f688fe1b6fcd0b70ce7c711450f34085f87a19a3f90375bf5427d0619` |
-| `simulator_source/tests/test_real_fmu_e2e.py` | 4122 | `c54d3736fed272ff2dd305ef2d19e00e8a454be133266280b4fb661a049c8a6b` |
-| `simulator_source/tests/test_real_fmu_parity.py` | 4175 | `14af86b135e27ff3a14c8cbbdd35e9a35717f7f545d541d934b3f9c4c3a6ef7a` |
+| `simulator_source/tests/test_fmu_contract.py` | 4,594 | `ea9ffc794541e7540618a17802bce4876c61a1c7dff059d0bb53cb34bb1d43d2` |
+| `simulator_source/tests/test_fmu_e2e.py` | 7,210 | `54b4b713cd18db1870efcb3d43b5d074acfc67cf0f979cf7883226c5a3a8c608` |
+| `simulator_source/tests/test_governance_and_calibration_contracts.py` | 6,639 | `328af97eb2648d0a4a68cd9c9eaacc36c13c23ef36d373a202c672725631fe35` |
+| `simulator_source/tests/test_governance_policy_contracts.py` | 2,883 | `f2049b1d7c7b2bd891d82c1c9f1bf601763a1cdcadf4545ab8ea412f4400ef85` |
+| `simulator_source/tests/test_identifiability_contracts.py` | 2,481 | `8c539d2e1db23791ef1560bd08e806a5eedc0481824d5cf2ad4ad5b8d04abf99` |
+| `simulator_source/tests/test_label_and_bottleneck_contracts.py` | 3,356 | `89dd9334759ff363cc3b9d98b29583e9c7662e793ee7137e16b2c23189754dde` |
+| `simulator_source/tests/test_level_instrumentation.py` | 3,428 | `7f84e9f3580eef33c05af4f38eaf8864ffcb39395cca1b83bb2c94e9469f5b0c` |
+| `simulator_source/tests/test_manifest_integrity.py` | 3,091 | `ee00118da2b4b8a7675fc9bf9689a1b6179b0c139c9d14b729acf28e03290bb8` |
+| `simulator_source/tests/test_mass_energy_balance.py` | 1,196 | `63618125d0e5e877b48c50e48b3d8a8ad8fd0ac25259fbac20fb5f3ac7d4eafc` |
+| `simulator_source/tests/test_multirate_and_process_safety.py` | 2,614 | `d6c0eca73ad059ef15d06a06e33c67d7c9e88fd2faae52d856f338439dad6e32` |
+| `simulator_source/tests/test_pipeline_contracts.py` | 8,963 | `ec28235bce065700cbe847f59c06047bd2d4467b380230b28bdaf50ed81906ab` |
+| `simulator_source/tests/test_props_fuels_gas.py` | 2,489 | `1635a46ee7870774ea6c957ffda3ac1935564f717dba50509953243abf5af8ef` |
+| `simulator_source/tests/test_props_if97.py` | 4,466 | `943b842f688fe1b6fcd0b70ce7c711450f34085f87a19a3f90375bf5427d0619` |
+| `simulator_source/tests/test_real_fmu_e2e.py` | 4,122 | `c54d3736fed272ff2dd305ef2d19e00e8a454be133266280b4fb661a049c8a6b` |
+| `simulator_source/tests/test_real_fmu_parity.py` | 4,175 | `14af86b135e27ff3a14c8cbbdd35e9a35717f7f545d541d934b3f9c4c3a6ef7a` |
 | `simulator_source/tests/test_reproducibility.py` | 535 | `567b9b547919169e83743e027f131738963baffb0f1365e9172c197c29e917ef` |
-| `simulator_source/tests/test_safety_hard_stop.py` | 2394 | `364522f951db38c14dcf05dfb1b19ee4e9978b95ba0f9bd0223c0b8f002cdc0b` |
-| `simulator_source/tests/test_schema_event_grammar.py` | 1263 | `2d99066f38d2d070878efbd691d63ef8627ac29b139afa2add04cab093b7f2bd` |
-| `simulator_source/tests/test_shrink_swell.py` | 1384 | `57ea3299c542ff17976e2ed62dae2ace516fd5d1ed0f5c13fc3e7390257d933e` |
-| `simulator_source/tests/test_simulator_run_to_file_smoke.py` | 2890 | `1363ff15d4c5a7a4e34b994bf6c82af96c44eab311c8d2efda4b0ecf7e5fd2c9` |
-| `simulator_source/tests/test_validation_battery.py` | 2777 | `7e3fee7695f3869f718e1786dbec26b276ff870b07c149da2ee4cc60f3206e23` |
+| `simulator_source/tests/test_safety_hard_stop.py` | 2,394 | `364522f951db38c14dcf05dfb1b19ee4e9978b95ba0f9bd0223c0b8f002cdc0b` |
+| `simulator_source/tests/test_schema_event_grammar.py` | 1,263 | `2d99066f38d2d070878efbd691d63ef8627ac29b139afa2add04cab093b7f2bd` |
+| `simulator_source/tests/test_shrink_swell.py` | 1,384 | `57ea3299c542ff17976e2ed62dae2ace516fd5d1ed0f5c13fc3e7390257d933e` |
+| `simulator_source/tests/test_simulator_run_to_file_smoke.py` | 2,890 | `1363ff15d4c5a7a4e34b994bf6c82af96c44eab311c8d2efda4b0ecf7e5fd2c9` |
+| `simulator_source/tests/test_validation_battery.py` | 2,777 | `7e3fee7695f3869f718e1786dbec26b276ff870b07c149da2ee4cc60f3206e23` |
 | `simulator_source/tests/test_workspace_structure.py` | 379 | `960714c1f1b3f7c8526d140dce9adac637114f2cd3a075c52f07d2ac2efa4770` |
-| `THIRD_PARTY_NOTICES.md` | 4645 | `31a5a5c307d654b36e09536837f123f04c00b5b4bef03d377ac739e7030cf017` |
+
+</details>

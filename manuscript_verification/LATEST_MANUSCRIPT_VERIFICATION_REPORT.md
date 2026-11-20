@@ -1,26 +1,67 @@
-# Latest Manuscript Verification Report (`PUB-053`, `v1.0.6-pub053-r2`)
+# Manuscript verification record
 
-This report summarizes direct verification checks executed against the latest revised JMSE manuscript DOCX/PDF synchronized with companion release **`v1.0.6-pub053-r2`**:
+[Home](../README.md) · [Quick start](../REPRODUCIBILITY.md) · [Documentation](../docs/README.md)
 
-- **Unmodified Source DOCX**: `JMSE-MDPI-보일러 논문 [김겸원].docx` (`SHA-256: 5471545c033549ed08fcbf4bea81957d6a35a7b76aad3e42fa4dfa4f8bf99309`, unchanged)
-- **Target Revised DOCX**: `JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.docx` / `JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본(8).docx` (`SHA-256: 7f021cf05764cc737ebed70e37896135e326bc9981d841e460bf2605525fdf0b`; supersedes `v1.0.5-pub053-r2` DOCX `571258f302c5fb1aa1316b1ba46d04536eaba640dfae3ec8bf6642700c910f06`, `v1.0.4-pub053-r2` DOCX `ccf586c7714388e761b3ea4163882a376a76d290a2741b2da849011bde763c6d`, `v1.0.3-pub053-r2` DOCX `94c1f12ac814d7ff1946df98603cb8cb73afceee8e61940f1990d68c8c6f88af`, `v1.0.2-pub053-r2` DOCX `275c4aff82e3e9ed3d11f331c8fe96560ca413dd2d5527de5d9b3eae47b98f91`, `v1.0.1-pub053-r2` DOCX `ed8da10299682a833e1dee942ca0099c359f962753620d529e9ac47963d59e9c`, and `v1.0.0-pub053-r2` DOCX `81d1e24f97c44b25f1a34c5197fb0d12ad6a0fb5582fcfec758aca4eec0c595d`)
-- **Exported PDF**: `JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.pdf` (`SHA-256: 854fc3d3fb6eab0550768eb2ee376e1b429eae6a91e274563dcd3fa03e7fbf13`; supersedes `v1.0.5-pub053-r2` PDF `70df9cf6c9be4a0ce23a2c0cec9cf3d762481b39136a54b3aaca5faadd355a56`, `v1.0.4-pub053-r2` PDF `dfbc6b78b0aa247b988a443ec3d51d01fd30475fa90a9b9c7537920aab1aeda7`, `v1.0.3-pub053-r2` PDF `dcd73eed9807787ec833e1ffda8424914d639a74dd4e6e2f217de89b1e19f6f2`, `v1.0.2-pub053-r2` PDF `0f0e7cfae0efd747495a9e164a10a710d508e94053fc007742084a39950fc78b`, `v1.0.1-pub053-r2` PDF `b5e5a3c296d013ae6661c18e7474a690f21371b58c824751bd73abfd43702345`, and `v1.0.0-pub053-r2` PDF `7797b66183acfbc405810731f037a6d8bfef7aea3df971e340d4d3a086cd1409`)
+This page summarizes the preserved verification records associated with manuscript release **`v1.0.6-pub053-r2`**. It identifies the inputs and separates static checks from historical Word COM tests.
 
-## Summary of Verified Results
+## Recorded manuscript inputs
 
-- **Layout & OOXML Integrity (`verify_revised_manuscript.py`)**:
-  - PDF pages: `26`, extracted characters (`verify_citations_and_manuscript.py`): `84,834`, Word field errors in exported PDF: `0`.
-  - Bidirectional layout elements: `bidi_elements_count = 0`, `section_bidi_present = false`.
-  - Abstract word count: `198` words (MDPI <= 200 words).
-- **Table & Numerical Cross-Checks (`current_manuscript_table_checks.csv`)**:
-  - `62/62` row-by-row matches across Tables 3–8 (`Table 3: 12/12`, `Table 4: 10/10`, `Table 5: 20/20`, `Table 6: 4/4`, `Table 7: 8/8`, `Table 8: 8/8`).
-  - `verify_tables_from_archived_results.py`: `all_passed: true` (`50/50` cross-checks, `96/96` episode-method rows, `32/32` delay-window checks, `8/8` Table 8 blocks, `7/7` figures + `8` raw assets).
-- **Text Disclosure Integrity (`21/21` assertions `true`)**:
-  - Updated Section 2.4 (`P466`), Data Availability Statement (`P691`), and Figure 2 caption (`P474`) to match the actual embedded `fig2_e1_leak_trajectory.png` (panel (b) plots only conditioned observation $l^{\text{obs}}$, with $0.75\,\text{m}$ criterion evaluated on plant truth solely for dwell-band annotation, and Figs 2, 3, and 5 plotted over $t = 1{,}200$ to $T_{\text{confirm}} + 300\,\text{s} = 11{,}194\,\text{s}$).
-  - Preserves OpenAI Codex's primary `boiler_pdm_sim`/`ab4` coding role (`0.104.0`–`0.142.3`, `gpt-5.3-codex-spark`, `gpt-5.4`, `gpt-5.5`), upstream `PR_BODY.md` `Claude Code` footer, unverified external-workstation boundary, and full script/commit inventory pointer to `docs/AI_USAGE_AUDIT.md`.
-  - Live companion repository `https://github.com/CAPTW/pub053-jmse-boiler-leak-warning` citing release tag `v1.0.6-pub053-r2`, required external PyPI dependency `iapws==1.5.5` (GPL-3.0, documented in `requirements-lock.txt` and `THIRD_PARTY_NOTICES.md`) across raw feature, analysis, AND figure replay (`verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`), strict nonzero defaults (`missing_raw_npz_error` / `missing_iapws_error`), explicit `--archived-tables-only` / `--archived-assets-only` flags (effective when `.npz` files are absent), separation between `observable_baseline_study_20260915T215200Z_be142b32.zip` and `PUB053_Manuscript_Package_R2.zip`, and closed interval notation (`[0, 1]`, `[−1, 1]`, `[0, 0.999]`), with `"automatic full_raw_npz_replay"` absent (`no_auto_fallback_overclaim: true`).
-  - Self-test suite (`code/test_analysis.py`): `8/8` tests pass on both Python 3.12 (`iapws==1.5.5`, `synthetic_if97_vs_fallback_branch_executed: true`, explicitly asserting `132/144` array pass and `max_trace_array_abs_diff > 1e-4` under forced fallback) and Python 3.14 (without `iapws`, `synthetic_if97_vs_fallback_branch_executed: false`; checks fallback warning, self-consistent synthetic fixture, mocked CLI `missing_iapws_error` guards across all 3 scripts, and isolated `.npz`-free `arch_repo` checks for `missing_raw_npz_error` and `--archived-assets-only` `density_backend` reporting).
-- **Live Citations & 4-Operation Word COM Editing Suite (`word_update_export_and_test.py`, `verify_citations_and_manuscript.py`)**:
-  - `27` bookmarked References (`Ref01`..`Ref27`), `27` CustomXML bibliography sources, `26` `<w:sdt>` controls carrying `54` expanded member IDs, `44` live `REF` fields (`REF RefXX \n \t \h`), and `first_citation_order_matches_references: true`.
-  - Microsoft Word COM dynamic operations passed (`ADD` Scenarios `1A`/`1B`, `MOVE` Scenario `2`, `REORDER` Scenario `3`, `DELETE` Scenario `4`), archived in `citation_editing_and_reordering_test_log.json` and `CITATION_EDITING_TEST_REPORT.md`.
-  - Release repository hygiene check: `release_repo_forbidden_files: []`, `all_passed: true`.
+The [DOCX report](../results_archived/current_manuscript_verification/current_docx_verification_report.json) and [citation report](../results_archived/current_manuscript_verification/current_citations_and_manuscript_report.json) identify these SHA-256 digests:
+
+~~~text
+DOCX
+7f021cf05764cc737ebed70e37896135e326bc9981d841e460bf2605525fdf0b
+
+PDF
+854fc3d3fb6eab0550768eb2ee376e1b429eae6a91e274563dcd3fa03e7fbf13
+~~~
+
+The revised file is named `JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.docx`. The formatted DOCX and PDF are author-held submission files and are not bundled in this repository.
+
+The citation report separately records that its original source DOCX, digest `5471545c033549ed08fcbf4bea81957d6a35a7b76aad3e42fa4dfa4f8bf99309`, was unchanged.
+
+## Static document and citation checks
+
+| Check | Recorded result |
+|---|---|
+| Exported PDF | 26 pages; zero reported Word field errors |
+| Abstract | 198 words |
+| Reference bookmarks and CustomXML sources | 27 of each |
+| Content-control citation groups | 26 groups, 54 expanded member IDs |
+| Live Word REF fields | 44 |
+| First-citation order | Matches reference order |
+| Bidirectional layout elements | Zero reported |
+| Required text assertions | 21 of 21 true |
+
+These results come from the preserved reports. They do not imply that Word field updates or rendering were rerun during this documentation change.
+
+## Table checks
+
+The [row-level table record](../results_archived/current_manuscript_verification/current_manuscript_table_checks.csv) reports **62 matching rows out of 62**.
+
+| Table | Subject | Matching rows |
+|---|---|---:|
+| 3 | Development and evaluation design | 12/12 |
+| 4 | Fitted coefficients and scales | 10/10 |
+| 5 | Threshold candidates | 20/20 |
+| 6 | Detector performance | 4/4 |
+| 7 | Evaluation event timings | 8/8 |
+| 8 | Normal persistence | 8/8 |
+
+The separate [archived-result check log](../docs/execution_logs/verify_tables_from_archived_results_log.json) reports 50 table cross-checks, 96 episode–detector matches, 32 delay-window comparisons and checks of the seven figures and eight source assets. These checks compare the manuscript and reference records; they do not, by themselves, demonstrate a new replay from the external NPZ inputs.
+
+## Disclosures and figure definitions
+
+The static text checks cover the release reference, the Codex/Antigravity role disclosure, the distinction between original simulation and R2 stored-data analysis, and the raw-data/dependency requirements.
+
+They also cover the Figure 2 distinction between the plotted observed level and plant truth used for endpoint-dwell annotation. The detailed [figure map](../figures/FIGURE_MAP.md) gives the **1,200–11,194 s** interval for Figures 2, 3 and 5.
+
+## Historical Word COM operations
+
+The preserved [editing log](citation_editing_and_reordering_test_log.json) records successful ADD, MOVE, REORDER and DELETE scenarios. It has no input hash or execution timestamp, so it cannot establish that these operations were newly executed on the DOCX identified above.
+
+The current citation report imports those scenario assertions. See the [editing test record](CITATION_EDITING_TEST_REPORT.md) for the operation details and this evidence limitation.
+
+## Repeating the checks
+
+Use the [detailed reproduction guide](../docs/REPRODUCTION_GUIDE.md) for the optional author-local DOCX/PDF checks and their dependencies. Use the [artifact map](MANUSCRIPT_ARTIFACT_MAP.md) to trace each table and figure to its public source.

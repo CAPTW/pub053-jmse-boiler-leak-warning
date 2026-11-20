@@ -1,21 +1,42 @@
-# Third-Party Notices and Licensing Boundaries
+# Third-party notices and reuse
 
-## 1. Code License vs. Required External `iapws==1.5.5` Dependency (GPL-3.0)
-- The `boiler_pdm_sim` source snapshot in `simulator_source/` (`LICENSE`, Copyright (c) 2026 The Boiler PdM Simulator Contributors) and the companion verification/reproduction Python scripts in `code/` and `manuscript_verification/` carry the **MIT License** where permitted by upstream author notice.
-- The external thermodynamic lookup package **`iapws==1.5.5`** is distributed under the **GNU General Public License v3.0 (GPL-3.0)** and IS **explicitly required** in `requirements-lock.txt`, `pyproject.toml`, and `environment.yml` for the paper reproduction environment:
-  - In `simulator_source/src/boiler_pdm_sim/props/if97.py` (used by `core/ab4/drum_model.py` and `core/ab4/backend.py`), `iapws` (`IAPWS97`) is a **hard import** used at module load to build 1,000-knot IAPWS-IF97 saturation cubic splines (no fallback inside `props/if97.py`; `simulator_source/tests/` skips `ab4`/`props` IF97 tests via `pytest.importorskip("iapws")` when absent). Separately, `core/media.py` and `core/thermo/if97.py` provide lightweight 9-point approximate fallbacks unless `BOILER_STRICT_PROPS=1` is set.
-  - In `code/_common.py`, exact Supplement S3 feature verification (`verify_features.py`), raw `.npz` analysis reproduction (`reproduce_analysis.py`), and raw `.npz` figure rendering (`make_figures_r2.py`) likewise require **`iapws==1.5.5`** (`IAPWS97(P=..., x=0).rho`) to match the frozen `.npz` traces and thresholds. Without `iapws==1.5.5`, the built-in IAPWS-95 fallback deviates by `~0.00079 kg/m^3` at `7 bar` (and up to `0.20 kg/m^3` across `0.5`–`120 bar`), and all three CLI scripts abort pre-flight (`rc=1`, `missing_iapws_error`) when `.npz` files are present unless `--allow-approx-density` is explicitly supplied.
-  - Because combined or binary redistribution of works bundling GPL-3.0 libraries carries copyleft obligations, **no binary wheels, virtual environments, or vendored `iapws` sources are bundled** in this Git repository. Users install `iapws==1.5.5` externally from PyPI (`pip install -r requirements-lock.txt`) and comply with its GPL-3.0 license.
+[Home](README.md) · [Documentation](docs/README.md) · [Environment setup](REPRODUCIBILITY.md)
 
-## 2. Scientific Data, Figures, and Excluded Journal Assets
-- **Excluded Journal Template & Formatted Manuscript Files**: The MDPI JMSE Microsoft Word template (`jmse-template.dot`) and formatted manuscript `.docx`/`.pdf` files are **intentionally excluded** from this public GitHub repository (`.gitignore`), as redistribution rights belong to MDPI / author submission agreements.
-- **Data (`data/`, `results/`, `results_archived/`) and Author-Generated Figures (`figures/`)**: Reconstructed structured tables, archived verification CSV/JSON files, and author-created figures are published strictly for scholarly review, peer verification, and non-commercial academic reproducibility unless superseded by final MDPI JMSE open-access publication terms. No blanket MIT license is claimed over third-party dependencies or publisher-formatted assets.
+This page separates the source-code license, the existing conditions for research materials, and external dependencies. It does not extend one component's license to another.
 
-## 3. Core vs. Optional Dependencies (Installed via PyPI or System Tools)
-- **Core Python runtime (`requirements-lock.txt` / `pyproject.toml` dependencies)**: `numpy`, `scipy`, `pandas`, `matplotlib`, `pyarrow`, `PyYAML`, `python-dateutil`, `Pillow`, `lxml`, plus `pytest` (`[dev]`, used only for `simulator_source/tests/`; `code/test_analysis.py` uses stdlib `unittest`) — BSD / MIT / PSF / HPND / Apache-2.0 permissive or standard Python ecosystem licenses.
-- **Optional simulator extras (`simulator_source/pyproject.toml` / `[sim-extras]`)**: `tables>=3.8` (BSD, PyTables HDF5 output) and `fmpy>=0.3` (BSD-2-Clause, external FMU co-simulation); neither is required by `code/` or the `88/88` `ab4` core/props physics tests.
-- **Optional local manuscript/DOCX/PDF tooling (not needed for headless `code/` or `simulator_source/`)**:
-  - `python-docx>=1.1` (`[docx]`, MIT) — needed only to re-run `manuscript_verification/build_full_paper.py` from scratch (XML inspection and citation syncing use stdlib `zipfile` + `lxml`).
-  - `pywin32>=306` (`[word-com]`, PSF, Windows-only) — optional Word COM automation (`--update-word`, `word_update_export_and_test.py`).
-  - External Poppler CLI binaries (`pdftotext`, `pdfinfo`, GPL-2.0/3.0 system tools not bundled) — invoked as subprocesses only by `manuscript_verification/verify_revised_manuscript.py` and `verify_citations_and_manuscript.py` when checking exported PDFs.
-  - **`PyMuPDF` (`fitz`, AGPL-3.0)** is **not** required or imported anywhere in this repository (mentioned only in preserved upstream R2 Supplement S8 archival prose).
+## Source code
+
+The companion Python scripts in `code/` and `manuscript_verification/` carry the [MIT license](LICENSE). The preserved `boiler_pdm_sim` snapshot carries its [upstream MIT notice](simulator_source/LICENSE), Copyright (c) 2026 The Boiler PdM Simulator Contributors.
+
+## Research materials
+
+The existing reuse conditions for this repository are:
+
+> Reconstructed structured tables, archived verification CSV/JSON files, and author-created figures are published strictly for scholarly review, peer verification, and non-commercial academic reproducibility unless superseded by final MDPI JMSE open-access publication terms.
+
+These conditions concern the materials in `data/`, `results/`, `results_archived/`, and `figures/`. They are separate from the source-code MIT license. This documentation update does not select a new data or figure license.
+
+The journal template and formatted submission DOCX/PDF are excluded from the public repository. No blanket MIT license is claimed over third-party dependencies or publisher-formatted assets.
+
+## Required thermodynamic dependency
+
+The pinned reproduction environment uses **`iapws==1.5.5`**, an external GPL-3.0 package. It is declared in [requirements-lock.txt](requirements-lock.txt), [environment.yml](environment.yml), and [project metadata](pyproject.toml).
+
+Install it through the pinned requirements. No `iapws` source, wheel, or virtual environment is bundled in this repository; the package retains its own license.
+
+The analysis scripts use `iapws.IAPWS97` for the reference density calculation. Their backend helper reports availability and installed version; it does not reject a different installed version merely because its version string differs from `1.5.5`. If the backend is unavailable, full raw-data execution stops unless the approximate-density option is explicitly selected. See [reproduction behavior and limits](docs/REPRODUCTION_GUIDE.md).
+
+The simulator's `props/if97.py` imports `iapws` directly. Other preserved simulator modules have separate approximation behavior; their presence does not establish that an approximate run reproduces the paper.
+
+## Other dependencies
+
+| Use | Packages or tools | Where to look |
+|---|---|---|
+| Analysis and plots | NumPy, SciPy, pandas, Matplotlib, PyArrow, PyYAML, python-dateutil, Pillow, lxml | [Pinned requirements](requirements-lock.txt) |
+| Simulator tests | pytest | [Detailed guide](docs/REPRODUCTION_GUIDE.md) |
+| Optional manuscript assembly | python-docx | [Manuscript tools](manuscript_verification/MANUSCRIPT_ARTIFACT_MAP.md) |
+| Optional Microsoft Word automation | pywin32, Windows, and installed Microsoft Word | [Citation editing evidence](manuscript_verification/CITATION_EDITING_TEST_REPORT.md) |
+| Optional PDF inspection | Poppler `pdftotext` and `pdfinfo` system commands | [Manuscript verification](manuscript_verification/LATEST_MANUSCRIPT_VERIFICATION_REPORT.md) |
+| Optional upstream simulator integrations | PyTables and FMPy | [Upstream project metadata](simulator_source/pyproject.toml) |
+
+Each dependency is distributed under its own license and notices. Optional manuscript and simulator tools are not required for the public archive-verification commands. Use the documented requirements installation, rather than root-level editable installation.

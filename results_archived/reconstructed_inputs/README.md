@@ -1,11 +1,15 @@
-# Reconstructed Structured Inputs (`results_archived/reconstructed_inputs/`)
+# Archived reconstructed inputs
 
-These five JSON files preserve the machine-readable inputs and parameters behind Tables 1–7, extracted programmatically from archived R2 cross-checks (`tables_3_4_5_7_crosscheck.csv`, `r2_replay_summary.json`), `simulator_source/configs/ab4_marine_aux.yaml`, `simulator_source/src/boiler_pdm_sim/core/ab4/drum_model.py`, and `manuscript_verification/r2_text_archive/PUB053_Supplement_R2.txt`.
+[Home](../../README.md) · [Quick start](../../REPRODUCIBILITY.md) · [Documentation](../../docs/README.md)
 
-- `plant_parameters_table1_table2_from_source.json` — Table 1 plant/control constants and Table 2 sensor conditioning specifications.
-- `block_design_table3_reconstructed.json` — Table 3 block schedule (D1–D4, E1–E8, seeds, leak timing/severity, D4 seed `3004 -> 3104` note).
-- `ewls_fit_table4_reconstructed.json` — Table 4 full-precision OLS regression constants (`N = 40,804`).
-- `threshold_candidates_table5_reconstructed.json` — Table 5 empirical quantile candidates and D1–D4 alarm counts.
-- `episode_event_timings_table7_reconstructed.json` — Table 7 evaluation event/alarm timestamps for E1–E8.
+These five preserved JSON records cover **Tables 1–5 and 7**. The matching [data-directory guide](../../data/reconstructed_inputs/README.md) explains their derivation and use in archive-mode checks.
 
-**External Workstation Boundary**: Raw binary episode `.npz` trajectories (`observable_baseline_study_20260915T215200Z_be142b32.zip`) and `PUB053_Manuscript_Package_R2.zip` remain on the primary research workstation and are excluded from this repository.
+| File | Coverage |
+|---|---|
+| [plant_parameters_table1_table2_from_source.json](plant_parameters_table1_table2_from_source.json) | Plant/control constants and sensor conditioning |
+| [block_design_table3_reconstructed.json](block_design_table3_reconstructed.json) | Development/evaluation blocks and leak schedule |
+| [ewls_fit_table4_reconstructed.json](ewls_fit_table4_reconstructed.json) | Fitted coefficients and scales |
+| [threshold_candidates_table5_reconstructed.json](threshold_candidates_table5_reconstructed.json) | Threshold candidates and normal-episode alarm counts |
+| [episode_event_timings_table7_reconstructed.json](episode_event_timings_table7_reconstructed.json) | Evaluation event and alarm timings |
+
+These records are reconstructed table inputs. They do not include the original NPZ arrays or complete per-episode runtime configurations. See [data provenance](../../docs/DATA_PROVENANCE.md).

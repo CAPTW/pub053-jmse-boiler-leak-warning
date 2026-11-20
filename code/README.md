@@ -1,9 +1,43 @@
-# R2 Analysis & Figure Reproduction Scripts (`code/`)
+# Analysis and figure scripts
 
-These scripts provide a clean, standalone CLI execution path compatible with the R2 workflow and independent of any private `.docx`/`.pdf` submission files:
+[Home](../README.md) · [Quick start](../REPRODUCIBILITY.md) · [Documentation](../docs/README.md)
 
-- `_common.py` — Shared NumPy detector/EWLS equations (signed `r_m` residuals preserving signs for `z_f` and `z_d`), Supplement S3 raw `.npz` feature/EWMA/threshold reconstruction (`reconstruct_features_from_observations`, `calibrate_thresholds_from_traces`, `extract_raw_trip_and_domain_exit`, `detect_functional_event`), `iapws.IAPWS97` vs. fallback diagnostics (`get_density_backend_info`, noting `iapws==1.5.5` is required for exact raw `.npz` replay because the IAPWS-95 fallback deviates by `0.00079`–`0.20 kg/m^3`), keyed CSV comparison (`compare_csv_files(..., key_cols=..., provenance_cols=..., display_rounded_cols=...)`), JSON helpers, and primary `.npz` availability detection (`full_raw_npz_replay` vs. `missing_primary_raw_npz`).
-- `test_analysis.py` — `8/8` unit and integrity tests (stdlib `unittest`) covering sequential persistence confirmation (`score > theta` for `elapsed >= 600` s, `1800` s cooldown), signed `+`/`-` EWLS `r_m` residual formulas, IAPWS-97 (`iapws==1.5.5`) vs. fallback divergence (exercised when `iapws` is installed: `synthetic_if97_vs_fallback_branch_executed: true`, explicitly asserting `132/144` array failure and `max_trace_array_abs_diff > 1e-4` on a synthetic IF97 fixture under forced fallback; skipped cleanly without `iapws` where synthetic generation shares fallback) + mocked `missing_iapws_error` CLI guards across all 3 scripts (`verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`) + isolated `.npz`-free `arch_repo` checks (`missing_raw_npz_error` and `--archived-assets-only` `density_backend` manifest reporting independent of `REPO_ROOT`), empirical quantile upper-tail condition vs. counterexample, Table 6 rounding (`51.3 min`, `115.5 min`), canonical keyed CSV alignment (`cutoff_leads_by_block.csv`), synthetic 24-episode Supplement S3 raw `.npz` reconstruction + 144-array verification + negative mutation failure test (`D1_normal.npz` perturbation), and end-to-end synthetic raw-`.npz` replay (`reproduce_analysis.py` 50-row `tables_3_4_5_7_crosscheck.csv` with `provenance_cols=("kind",)`, `display_rounded_cols=("actual",)`, and Table 7 `None`/`null` list matching + negative check, plus `make_figures_r2.py::render_figures_from_raw_npz`).
-- `verify_features.py` — Default CLI execution requires both all 48 primary `.npz` files (`missing_raw_npz_error`, exit `1` when absent) and `iapws==1.5.5` (`missing_iapws_error`, exit `1` if missing during raw replay unless `--allow-approx-density`); reports `"density_backend"` in every mode (`missing_raw_npz_error`, `missing_iapws_error`, `archived_tables_only`, `full_raw_npz_replay`). When 48 `.npz` files are supplied (taking precedence over `--archived-tables-only`), reconstructs raw observation features and verifies all 144 trace arrays, `recomputed_fit_params.json`, `normal_persistence.csv`, and `component_crossing_timing.csv`. Only when primary `.npz` files are absent, explicit `--archived-tables-only --out results_reproduced` verifies `data/reconstructed_inputs/ewls_fit_table4_reconstructed.json` (zero-residual probe), `threshold_candidates_table5_reconstructed.json`, `normal_persistence.csv` (`48/48`), `component_crossing_timing.csv` (`8/8`), and quantile dominance into `results_reproduced/` without overwriting `results/`, reporting 5 explicit provenance buckets (`recomputed_from_raw_inputs` empty in archived mode).
-- `reproduce_analysis.py` — Default CLI execution requires both all 48 primary `.npz` files (`missing_raw_npz_error`, exit `1` when absent) and `iapws==1.5.5` (`missing_iapws_error`, exit `1` if missing during raw replay unless `--allow-approx-density`); reports `"density_backend"` in every mode. When 48 `.npz` files are supplied (taking precedence over `--archived-tables-only`), extracts primary `meta/safety_state` (`label/safety_state`) trips and `truth/state_feasible` domain exits (tracking `event_timing_provenance` and failing `all_passed` if `raw_event_fallback_used`), calibrates empirical thresholds, recomputes `96/96` episode-method rows, `32/32` delay-window checks, and the `50`-row `tables_3_4_5_7_crosscheck.csv` (matching `"kind"` provenance diffs, `"actual"` 12-sig-fig display-rounded floats, and Table 7 `None`/`null` list elements without false mismatches). Only when `.npz` files are absent, explicit `--archived-tables-only --out results_reproduced` verifies the archived outputs and writes `archived_tables_3_4_5_7_internal_checks.json` (`50/50`) without copying `results/tables_3_4_5_7_crosscheck.csv` as newly executed output.
-- `make_figures_r2.py` — Default CLI execution requires both all 48 primary `.npz` files (`missing_raw_npz_error`, exit `1`, `all_files_valid: false`, `all_passed: false` when absent) and `iapws==1.5.5` (`missing_iapws_error`, exit `1`, `all_files_valid: false`, `all_passed: false` if missing when `.npz` files are present unless `--allow-approx-density`), and reports `"density_backend"` in `figure_generation_manifest.json` across every execution mode; when 48 `.npz` files are supplied (taking precedence over `--archived-assets-only`), `render_figures_from_raw_npz` renders all seven figures (Figures 1–7) matching the manuscript panel definitions and `[1200, min(t_end, T_confirm + 300)]` s (`1,200`–`11,194 s`) window on Figs 2, 3, and 5 (with Fig 2 panel (b) plotting `Observed level` only, using `truth/drum_level` strictly for dwell-band computation), recording `figure_spec_verified` (`all_specs_verified: true`, `raw_replay_exact_if97_backend`, `allow_approx_density_override`) alongside `all_files_valid` (performing no trace/CSV comparison under `--allow-approx-density`). Only when `.npz` files are absent, explicit `--archived-assets-only` (or alias `--archived-tables-only`) `--results results_reproduced --out figures_reproduced` freshly plots Figure 4 from `results_reproduced/episode_results.csv`, deterministically recomposes Figures 1 and 2 from `figures/raw_source_assets/`, stages preserved R2 panels for Figures 3, 5, 6, and 7, and sets `figure_spec_verified.all_specs_verified: false` (raw `.npz` trace plots not regenerated in archived mode).
+These scripts verify and reanalyse stored boiler trajectories. They do not run a new boiler simulation.
+
+## Script guide
+
+| Script | Purpose | Main output |
+|---|---|---|
+| [_common.py](_common.py) | Shared detector equations, reconstruction, event extraction and comparison helpers | Functions used by the scripts below |
+| [test_analysis.py](test_analysis.py) | Unit tests using isolated synthetic and temporary fixtures | Test summary |
+| [verify_features.py](verify_features.py) | Check reconstructed features, fitted parameters and reference traces | `feature_verification_report.json` |
+| [reproduce_analysis.py](reproduce_analysis.py) | Recompute detector results and compare keyed tables | `reproduction_comparison_report.json` |
+| [make_figures_r2.py](make_figures_r2.py) | Generate or assemble Figures 1–7 | `figure_generation_manifest.json` |
+
+Use the [reproduction guide](../docs/REPRODUCTION_GUIDE.md) for installation, commands, output interpretation and recorded test results.
+
+## Choose the input mode
+
+A complete raw input set contains the 24 observation files and 24 trace files named in [episode_metadata.csv](../data/episode_metadata.csv).
+
+- **Complete raw inputs:** the scripts select `full_raw_npz_replay`, including when an archive flag is present. Use the pinned `iapws==1.5.5` environment for the IF97 reference calculations.
+- **Incomplete or missing raw inputs:** default execution returns `missing_raw_npz_error` and exit code `1`. Explicit `--archived-tables-only` or `--archived-assets-only` permits checks using the public tables and assets.
+- **Unavailable IF97 backend with complete raw inputs:** default execution returns `missing_iapws_error`. The explicit `--allow-approx-density` option is described in the reproduction guide.
+
+Each CLI collects backend metadata before reporting an input error. The helper reports the installed `iapws` version; it does not enforce equality with version `1.5.5`.
+
+## What each mode checks
+
+In raw mode, feature verification reconstructs 144 score and availability arrays and writes `recomputed_fit_params.json`. Analysis compares episode results, summaries, cutoff leads, delay-window checks and the 50-row table cross-check against [preserved results](../results/README.md).
+
+In archive mode, feature checks use [reconstructed table inputs](../data/reconstructed_inputs/README.md). Analysis writes `archived_tables_3_4_5_7_internal_checks.json`; it does not present the preserved 50-row cross-check as a new raw calculation.
+
+Figure 4 is rendered from an episode-results CSV in both modes. The other six figures are regenerated from raw inputs in raw mode; archive mode assembles Figures 1–2 and copies Figures 3 and 5–7 from preserved assets. See the [figure map](../figures/FIGURE_MAP.md).
+
+## Test and comparison boundaries
+
+The eight unit tests use isolated fixtures. With `iapws` installed, the forced-fallback test checks **132 passing and 12 failing arrays out of 144**, causing the overall synthetic comparison to fail as expected. Without `iapws`, that IF97-versus-fallback branch is skipped.
+
+CSV comparisons use defined keys, numeric tolerances and explicit allowances for provenance text or display rounding. A successful comparison does not mean byte-identical files. Likewise, successful figure generation under approximate density does not establish numerical agreement with IF97.
+
+Write new outputs to separate directories such as `results_reproduced/` and `figures_reproduced/`. Keep [results/](../results/) and [figures/](../figures/) as preserved references.

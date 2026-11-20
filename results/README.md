@@ -1,7 +1,27 @@
-# Preserved R2 Reference Results (`results/`)
+# Preserved R2 results
 
-This directory holds the immutable preserved reference outputs from the R2 stored-data reanalysis (`24` paired 6 h episodes, `259,224` total samples, `96` episode–detector evaluations), mirrored from `results_archived/`.
+[Home](../README.md) · [Quick start](../REPRODUCIBILITY.md) · [Documentation](../docs/README.md)
 
-- **Do not overwrite `results/` during reproduction runs.**
-- When running `code/verify_features.py --out results_reproduced` and `code/reproduce_analysis.py --out results_reproduced`, outputs are written to `results_reproduced/` and numerically diffed against this directory.
-- Historical prior-draft QA records (`ce0e9a0e...`) and manuscript-specific table checks live separately under `results_archived/prior_draft_review_ce0e9a0e/` and `results_archived/current_manuscript_verification/`.
+These 12 CSV and JSON files are reference outputs from the R2 stored-data reanalysis. They cover 24 episodes and 96 episode–detector evaluations.
+
+## Result files
+
+| Files | Contents |
+|---|---|
+| [episode_results.csv](episode_results.csv), [summary.csv](summary.csv) | Episode-level alarms, delays and leads; detector summaries |
+| [normal_persistence.csv](normal_persistence.csv) | Normal-episode exceedance spans and peak scores |
+| [cutoff_leads_by_block.csv](cutoff_leads_by_block.csv), [cutoff_leads_summary.csv](cutoff_leads_summary.csv) | Lead times for the three functional-level criteria |
+| [delay_window_check.csv](delay_window_check.csv) | 32 comparisons of alarm-window definitions |
+| [component_crossing_timing.csv](component_crossing_timing.csv) | Flow and demand threshold-crossing order |
+| [tables_3_4_5_7_crosscheck.csv](tables_3_4_5_7_crosscheck.csv) | 50 table cross-check rows |
+| [recomputed_vs_archived.csv](recomputed_vs_archived.csv) | 96 episode–detector comparison rows |
+| [r2_replay_summary.json](r2_replay_summary.json), [tables_and_rounding_summary.json](tables_and_rounding_summary.json) | Stored replay and reporting summaries |
+| [quantile_claim_check.json](quantile_claim_check.json) | Empirical quantile checks and general counterexamples |
+
+## Reproduction and preservation
+
+Keep this directory unchanged. Write new outputs to `results_reproduced/` or another separate directory, then compare them with these references.
+
+The [reproduction guide](../docs/REPRODUCTION_GUIDE.md) distinguishes raw calculations from archive-table checks. Successful numeric comparisons can allow specified provenance-text or display-rounding differences; they do not establish byte identity.
+
+Copies of these records and separate manuscript-review records are retained in [results_archived/](../results_archived/README.md).

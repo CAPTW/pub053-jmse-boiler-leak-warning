@@ -1,88 +1,50 @@
-# Study Metadata, Structured Inputs, and Archive Boundary (`data/`)
+# Data and input files
 
-## 1. Accurate Provenance Separation of Primary Study Archives
-To prevent conflating the original simulation archive with the R2 reanalysis archive:
+[Home](../README.md) · [Quick start](../REPRODUCIBILITY.md) · [Documentation](../docs/README.md)
 
-1. **`observable_baseline_study_20260915T215200Z_be142b32.zip` (Original Study Execution Archive — Not Mounted on Packaging Workstation)**
-   Contains the original study execution working tree and raw run outputs:
-   - `source_copy/` (study-time simulator working copy built on local base HEAD `4fea4646723f04db41583cb682bac8b62c44bc05` with working-tree edits and already-applied pilot/study patches)
-   - `analysis/`, `configs/`, `exogenous/`, `runs/`
+The public repository provides episode metadata, reconstructed table inputs and a base simulator configuration. The original trajectory files and study-specific applied configurations are supplied separately by the corresponding author upon reasonable request.
 
-2. **`PUB053_Manuscript_Package_R2.zip` (R2 Stored-Data Reanalysis Package — Not Mounted on Packaging Workstation)**
-   Contains the 2 s downsampled trajectory and score archives used by the R2 scripts:
-   - `data/observations/*.npz` (24 episode observation archives, 10,801 samples each, 259,224 total rows)
-   - `data/traces/*.npz` (24 detector score trace archives)
-   - `data/block_design.json` and `data/original_configs/*_config_applied.json`
-   - `data/episode_metadata.csv`
-   - R2 reanalysis scripts (`code/test_analysis.py`, `code/verify_features.py`, `code/reproduce_analysis.py`, `code/make_figures_r2.py`) and reference `results/`
+## Included here
 
-Neither primary ZIP archive (nor the 48 raw `.npz` binary files) was mounted on the packaging workstation.
+| File or directory | Contents |
+|---|---|
+| [episode_metadata.csv](episode_metadata.csv) | Names, design fields and event timings for 24 episodes |
+| [block_design.json](block_design.json) | Four development blocks, eight evaluation blocks and the recorded seed correction |
+| [original_configs/](original_configs/README.md) | Base simulator YAML and its relation to the study configurations |
+| [reconstructed_inputs/](reconstructed_inputs/README.md) | Five JSON files covering Tables 1–5 and 7 |
 
-## 2. Files Provided Directly in This Public Repository (`data/`)
-All structured tabular metadata, block schedules, EWLS parameters, threshold candidates, and evaluation timings recovered from preserved R2 replay artifacts (`results/episode_results.csv`, `results/summary.csv`, `results/r2_replay_summary.json`, `results/tables_3_4_5_7_crosscheck.csv`, `results/normal_persistence.csv`, and `simulator_source/configs/ab4_marine_aux.yaml`) are bundled directly so readers can run verification scripts in standalone mode without access to private folders:
+The study has 12 paired blocks: one normal and one tube-leak episode per block. Each episode lasts six hours and has 10,801 samples at two-second intervals, for 259,224 timestamps across 24 episodes.
 
-- `data/episode_metadata.csv`: Complete 24-episode manifest (`D1_normal`..`E8_tube_leak`, `21,600 s`, `dt = 2.0 s`, `10,801` samples/episode, `259,224` total timestamps, leak onset/severity, functional start/confirm, process trip, domain exit).
-- `data/block_design.json`: Reconstructed 12-block design (D1–D4 development, E1–E8 evaluation) matching Table 3, plus D4 `3004 -> 3104` seed-replacement note and safety policy (`process_protection_without_schedule_severity_oracle`).
-- `data/original_configs/ab4_marine_aux.yaml`: Base marine auxiliary boiler YAML recovered from local upstream HEAD `4fea4646723f04db41583cb682bac8b62c44bc05`.
-- `data/reconstructed_inputs/`: Five verified JSON reconstructions covering Tables 1–5 and Table 7 (`plant_parameters_table1_table2_from_source.json`, `block_design_table3_reconstructed.json`, `ewls_fit_table4_reconstructed.json`, `threshold_candidates_table5_reconstructed.json`, `episode_event_timings_table7_reconstructed.json`).
+The reconstructed JSON files preserve table inputs recovered from reference records. They are not replacements for the original observation arrays or the complete study runtime configurations.
 
-## 3. Running Full Raw `.npz` Replay vs. Explicit Archived Opt-In
-When all 48 primary `.npz` files from `PUB053_Manuscript_Package_R2.zip` (available from the corresponding author upon reasonable request) are extracted into:
-- `data/observations/<episode>.npz` (24 files)
-- `data/traces/<episode>.npz` (24 files)
+## External source packages
 
-the scripts in `code/` (`verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`) detect all 48 `.npz` files via `_common.check_raw_npz_availability()`, verify `iapws==1.5.5` via `_common.get_density_backend_info()` (exiting `1` with `missing_iapws_error` if `iapws` is absent unless `--allow-approx-density`), and execute **full raw `.npz` trajectory replay mode** (`mode = "full_raw_npz_replay"`, taking precedence even if `--archived-*-only` is passed).
+| Package | Role | Material not included in this repository |
+|---|---|---|
+| `PUB053_Manuscript_Package_R2.zip` | Stored-data reanalysis | 24 observation NPZ files, 24 trace NPZ files and per-episode applied configurations |
+| `observable_baseline_study_20260915T215200Z_be142b32.zip` | Original simulation execution | Study-patched `source_copy/`, execution configurations, exogenous inputs and run outputs |
 
-When those 48 `.npz` files are absent (`mode = "missing_primary_raw_npz"`), default CLI invocations fail loudly at the pre-flight file check (`exit 1`, `missing_raw_npz_error`, `"all_passed": false`) before checking `iapws`, rather than substituting archived CSVs silently. Only when the `.npz` files are absent, pass the explicit opt-in flags `--archived-tables-only` (`verify_features.py`, `reproduce_analysis.py`) and `--archived-assets-only` (`make_figures_r2.py`). See `../REPRODUCIBILITY.md`, `../docs/DATA_PROVENANCE.md`, `../docs/REPRODUCTION_GUIDE.md`, and `../docs/KNOWN_LIMITATIONS.md`.
+The R2 analysis reads stored trajectories. Recreating the original simulation execution additionally requires the study-time source and inputs. The public [simulator snapshot](../docs/SOURCE_PROVENANCE.md) is the development base, not the exact study-patched working tree.
 
-### Expected 24 Observation Archives (`data/observations/`)
-- `data/observations/D1_normal.npz`
-- `data/observations/D1_tube_leak.npz`
-- `data/observations/D2_normal.npz`
-- `data/observations/D2_tube_leak.npz`
-- `data/observations/D3_normal.npz`
-- `data/observations/D3_tube_leak.npz`
-- `data/observations/D4_normal.npz`
-- `data/observations/D4_tube_leak.npz`
-- `data/observations/E1_normal.npz`
-- `data/observations/E1_tube_leak.npz`
-- `data/observations/E2_normal.npz`
-- `data/observations/E2_tube_leak.npz`
-- `data/observations/E3_normal.npz`
-- `data/observations/E3_tube_leak.npz`
-- `data/observations/E4_normal.npz`
-- `data/observations/E4_tube_leak.npz`
-- `data/observations/E5_normal.npz`
-- `data/observations/E5_tube_leak.npz`
-- `data/observations/E6_normal.npz`
-- `data/observations/E6_tube_leak.npz`
-- `data/observations/E7_normal.npz`
-- `data/observations/E7_tube_leak.npz`
-- `data/observations/E8_normal.npz`
-- `data/observations/E8_tube_leak.npz`
+## Raw input layout
 
-### Expected 24 Trace Archives (`data/traces/`)
-- `data/traces/D1_normal.npz`
-- `data/traces/D1_tube_leak.npz`
-- `data/traces/D2_normal.npz`
-- `data/traces/D2_tube_leak.npz`
-- `data/traces/D3_normal.npz`
-- `data/traces/D3_tube_leak.npz`
-- `data/traces/D4_normal.npz`
-- `data/traces/D4_tube_leak.npz`
-- `data/traces/E1_normal.npz`
-- `data/traces/E1_tube_leak.npz`
-- `data/traces/E2_normal.npz`
-- `data/traces/E2_tube_leak.npz`
-- `data/traces/E3_normal.npz`
-- `data/traces/E3_tube_leak.npz`
-- `data/traces/E4_normal.npz`
-- `data/traces/E4_tube_leak.npz`
-- `data/traces/E5_normal.npz`
-- `data/traces/E5_tube_leak.npz`
-- `data/traces/E6_normal.npz`
-- `data/traces/E6_tube_leak.npz`
-- `data/traces/E7_normal.npz`
-- `data/traces/E7_tube_leak.npz`
-- `data/traces/E8_normal.npz`
-- `data/traces/E8_tube_leak.npz`
+For full raw replay, place the original files at these repository-relative paths:
+
+~~~text
+data/observations/<episode>.npz
+data/traces/<episode>.npz
+~~~
+
+Use every episode name in [episode_metadata.csv](episode_metadata.csv): `D1_normal` through `D4_tube_leak` for development and `E1_normal` through `E8_tube_leak` for evaluation. Each of the 24 episode names must have both files, giving **48 required NPZ files**.
+
+Do not rename reconstructed JSON files to stand in for missing raw inputs. The [analysis scripts](../code/README.md) check the required episode paths.
+
+## Run the appropriate checks
+
+Follow the [quick start](../REPRODUCIBILITY.md) for the public clone. It uses explicit archive options because the raw files are not bundled.
+
+When all required NPZ files are supplied, the scripts select raw replay even if an archive option was also passed. A missing or incomplete raw set stops default execution with exit code `1`; explicit archive options permit checks of the public tables and figures.
+
+The [locked dependencies](../requirements-lock.txt) pin `iapws==1.5.5`. The runtime helper checks whether the backend is usable and reports its installed version; it does not enforce a strict version match. Backend metadata is collected before a missing-input error is returned.
+
+For exact commands, report fields and approximate-density limitations, use the [detailed reproduction guide](../docs/REPRODUCTION_GUIDE.md). For the origin of each material, use [data provenance](../docs/DATA_PROVENANCE.md).

@@ -1,26 +1,99 @@
-# Known Limitations and Verification Boundaries (`v1.0.6-pub053-r2`)
+[Home](../README.md) · [Quick start](../REPRODUCIBILITY.md) · [Documentation](README.md)
 
-This document states the exact boundaries of what can and cannot be verified in a standalone clone of `CAPTW/pub053-jmse-boiler-leak-warning`.
+# Known limitations
 
-1. **Primary Binary `.npz` Archives & Study `source_copy/` Are Not Bundled**
-   - The 48 `.npz` files (`24` in `data/observations/`, `24` in `data/traces/` from `PUB053_Manuscript_Package_R2.zip`), per-episode `data/original_configs/<episode>_config_applied.json`, and the full study execution package `observable_baseline_study_20260915T215200Z_be142b32.zip` (containing the patched runtime `source_copy/`, `analysis/`, `configs/`, `exogenous/`, `runs/`) are not included in this public repository and were verified absent across all mounted drives (`C:\`, `G:\`, `O:\`), local caches, and GitHub `CAPTW` remotes on the release workstation.
-   - Without `--archived-tables-only` (or `--archived-assets-only` for `make_figures_r2.py`), default execution of `code/verify_features.py`, `code/reproduce_analysis.py`, and `code/make_figures_r2.py` **fails with exit code `1`** at `missing_raw_npz_error` before `iapws` checks or raw replay (note: when all 48 `.npz` files ARE present, `full_raw_npz_replay` takes precedence even if `--archived-*-only` is passed).
+This page states the limits of the public companion and its recorded evidence.
+Use the [reproduction guide](REPRODUCTION_GUIDE.md) for commands and detailed
+report interpretation.
 
-2. **Real-Data vs. Synthetic-Test Failure Boundary (`code/test_analysis.py`)**
-   - `code/_common.py::reconstruct_features_from_observations` implements Supplement S3 mathematically (horizontal-cylinder volume $V(h)$, 1,000-knot geometric $\rho_l(p)$ spline via `iapws.IAPWS97(P=..., x=0).rho` with `[0.5, 30.0]` bar detector clipping, 600 s trapezoidal mass-balance residual $r_M$, `ddof=0` OLS/EWMA scale fits on `D1_normal`–`D4_normal` $t \ge 1200\,\text{s}$, and signed `flow_z`, `command_z`, `combined_score = max(flow_z, command_z)`), and `code/reproduce_analysis.py` + `code/make_figures_r2.py::render_figures_from_raw_npz` implement full raw threshold calibration, primary `meta/safety_state` (`label/safety_state`) / `truth/state_feasible` event extraction, 50-row Table 3/4/5/7 cross-checking (including element-wise list comparison across Table 7 `None` and JSON `null`), and manuscript-matched Figures 1–7 rendering.
-   - Because the real 48 `.npz` files are absent, raw replay has **not** been executed on the real study `.npz` trajectories here. In CI/unit testing (`code/test_analysis.py`, `8/8` tests), `test_raw_feature_reconstruction_and_negative_mutation`, `test_raw_reproduce_crosscheck_and_figures`, and `test_iapws_density_backend_and_missing_iapws_guard` run on isolated `TemporaryDirectory` fixtures (independent of whether `.npz` files exist in `REPO_ROOT`):
-     - When **`iapws==1.5.5`** is installed (`Python 3.12`), `test_iapws_density_backend_and_missing_iapws_guard` generates a synthetic `IAPWS97` fixture, mocks `sys.modules["iapws"] = None`, and explicitly asserts that `verify_from_raw_npz` fails inside 144-array comparison (`trace_array_checks_total == 144`, `trace_array_checks_passed == 132`, `max_trace_array_abs_diff > 1e-4` [measured `0.0001328`], `all_passed == False`), while mocked CLI invocations of all 3 scripts (`verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`) abort pre-flight with `rc=1` (`missing_iapws_error`) and an isolated `.npz`-free `arch_repo` verifies `missing_raw_npz_error` and `--archived-assets-only` `density_backend` manifest reporting (`synthetic_if97_vs_fallback_branch_executed: true`).
-     - When **`iapws` is absent** (`Python 3.14`), `code/test_analysis.py` still passes `8/8` (`rc=0`), **only because** the IF97-vs-fallback branch (`if find_spec("iapws") is not None:`) is skipped (`synthetic_if97_vs_fallback_branch_executed: false`) and the synthetic fixture generator uses the same fallback as the verifier, while CLI guards are mocked. Passing `test_analysis.py` without `iapws` does not establish IF97 replay on real `.npz` files.
+## Public data coverage
 
-3. **Archived-Mode Boundary for `episode_results.csv`, `cutoff_leads_by_block.csv`, and `tables_3_4_5_7_crosscheck.csv`**
-   - Under `--archived-tables-only`, `code/reproduce_analysis.py` recomputes delays, strict leads, Table 6 aggregations, cutoff lead differences (`strict_lead_s = functional_start_s - alarm_s`), `delay_window_check.csv`, and internal JSON consistency checks.
-   - However, upstream primary alarm timestamps (`all_alarm_times_s`), cutoff `functional_start_s`, `process_trip_s`, `domain_exit_s`, `progression_duration_s`, and Table 4 regression coefficients are read from `results/` and `data/`, not freshly re-extracted from `.npz` traces. `results/tables_3_4_5_7_crosscheck.csv` is explicitly treated as a preserved reference artifact (`preserved_or_copied_artifacts`), never copied as a newly executed check.
+The public clone contains no original NPZ files. The 48 observation/trace
+archives, per-episode applied configurations and study-patched source tree are
+external inputs. Public-only checks can verify preserved tables and synthetic
+fixtures; they cannot refit or independently regenerate the original trajectories.
+See [data provenance](DATA_PROVENANCE.md).
 
-4. **Figure Regeneration Boundary (`--archived-assets-only` vs. `full_raw_npz_replay`)**
-   - Under `--archived-assets-only`, only `fig4_method_summary_delay_lead.png` is freshly rendered via Matplotlib from CSV; Figures 1–2 are composited/padded from preserved `figures/raw_source_assets/`, Figures 3, 5, 6, and 7 copy preserved R2 panels (`copied_preserved_reference_assets`), and `figure_generation_manifest.json` explicitly reports `all_files_valid: true` alongside `figure_spec_verified.all_specs_verified: false`.
-   - Under `full_raw_npz_replay` (with `.npz` files present), `render_figures_from_raw_npz` renders all seven manuscript-matched panels: Fig 1 (`E1_normal` `p_obs` in bar and `l_obs` in m over `[0, 6]` h), Figs 2, 3, and 5 (`E1_tube_leak` plotted over `[1200, min(t_end, T_confirm + 300)]` s = `1,200`–`11,194 s` in the original `E1_tube_leak` trace; Fig 2 panel (b) plotting conditioned `Observed level` only against `0.85 m` setpoint and `0.75 m` oracle criterion with `truth/drum_level` used solely to compute the functional-dwell annotation band; Fig 5 plotting `Score / own threshold` against `1.0` with confirmed post-onset alarm markers), Fig 6 (`E1`–`E8` milestone timeline over `[0, 6]` h with `Horizon censoring` `>` markers), and Fig 7 (categorical `E1`–`E8` normal `max_exceedance_span_s` vs `600 s`), reporting `figure_spec_verified.all_specs_verified: true`.
+The included simulator is a base snapshot, with different time-step and feedback
+settings from the study. It is not a drop-in copy of the complete execution
+archive. See [source provenance](SOURCE_PROVENANCE.md).
 
-5. **Required External `iapws==1.5.5` (GPL-3.0) & Manuscript/Simulator Dependency Split**
-   - `iapws==1.5.5` (GPL-3.0, installed from PyPI via `requirements-lock.txt` / `pyproject.toml` / `environment.yml`, not vendored in git) IS **required** both for `simulator_source/props/if97.py` (`core/ab4`) and for exact IAPWS-IF97 density-spline reconstruction across all three raw-`.npz` CLI scripts (`code/verify_features.py`, `code/reproduce_analysis.py`, `code/make_figures_r2.py`). When `iapws` is absent, `code/_common.py` falls back with a `RuntimeWarning` to IAPWS-95 Eq. (2.6) $\rho_l(T_{\text{sat}})$ (which differs from `IAPWS97(P=..., x=0).rho` by `~0.00079 kg/m^3` at `7 bar` and up to `0.20 kg/m^3` over `0.5`–`120 bar`); when `.npz` files are supplied without `iapws`, all three CLI scripts abort pre-flight with `rc=1` and `"provenance_mode": "missing_iapws_error"` unless `--allow-approx-density` is explicitly passed (under `--allow-approx-density`, `verify_features.py` and `reproduce_analysis.py` compare against traces/CSV tables whereas `make_figures_r2.py` performs no trace/CSV comparison and exits `0` while marking `raw_replay_exact_if97_backend: false` and `allow_approx_density_override: true`). All three CLI scripts also report active `"density_backend"` across every mode (`missing_raw_npz_error`, `missing_iapws_error`, `archived_*`, `full_raw_npz_replay`). With `iapws==1.5.5`, the 7 core `simulator_source/tests/` modules pass `88/88` tests and running `PYTHONPATH=src python -B -m pytest -p no:cacheprovider -m "not slow" -q` returns `151 passed, 2 skipped, 1 deselected, 2 failed` (confirmed in `docs/execution_logs/pytest_ab4_integration_log.txt`; the 2 failures target excluded upstream non-core files per `docs/SOURCE_PROVENANCE.md`). Without `iapws`, `ab4`/IF97 modules skip via `pytest.importorskip("iapws")` while the 7 non-`iapws` modules pass `45 passed, 1 skipped`.
-   - Optional local DOCX/PDF scripts in `manuscript_verification/` additionally use `python-docx` (`build_full_paper.py`), Windows-only `pywin32` (`--update-word` / `word_update_export_and_test.py`), or external Poppler CLI binaries (`pdftotext`, `pdfinfo`), while upstream `simulator_source/pyproject.toml` lists optional HDF5 (`tables>=3.8`) and external-FMU (`fmpy>=0.3`) extras not needed by `code/` or the `ab4` core tests.
-   - `simulator_source/` reflects clean local base commit `4fea4646723f04db41583cb682bac8b62c44bc05` rather than the pilot/study-patched `source_copy/` (`observable_baseline_study_20260915T215200Z_be142b32.zip`); see `docs/SOURCE_PROVENANCE.md`.
+## Numerical and figure checks
+
+- Use the pinned Python 3.12 environment, including `iapws==1.5.5`, for the
+  documented IF97 calculations. The runtime reports backend availability and
+  version; it does not enforce version equality by itself.
+- An explicit `--allow-approx-density` run is diagnostic. It can produce different
+  scores, thresholds and numerical comparisons.
+- Figure generation can succeed with the approximate backend. Read the backend
+  and override fields; successful plotting does not establish IF97 equivalence.
+- Archive figure mode regenerates Figure 4 from CSV, recomposes Figures 1–2 and
+  copies Figures 3 and 5–7. It does not regenerate the missing raw curves.
+- CSV comparison success is based on numerical, key and display-format rules.
+  It does not imply byte identity. Image metadata and rendering can also differ
+  across plotting environments.
+
+Without an archive opt-in, missing raw inputs produce an error before
+reconstruction and plotting, after backend metadata has been collected.
+Archive flags do not force archive mode when all 48 raw files are present. See the
+[mode and exit-code table](REPRODUCTION_GUIDE.md#4-read-the-reports-and-exit-codes).
+
+## Synthetic-test scope
+
+The eight companion tests use isolated synthetic fixtures. With `iapws` available,
+the forced-fallback test expects 132 array comparisons to pass and 12 to fail.
+When it is unavailable, that IF97 comparison branch is skipped. A passing
+synthetic suite alone does not prove reproduction of the external study data.
+
+## Simulator-test scope
+
+These are historical results retained with the v1.0.6 release:
+
+| Test selection | Recorded outcome |
+|---|---|
+| Seven core physics/property/protocol modules, with `iapws==1.5.5` | 88 passed |
+| Non-slow suite: `pytest -m "not slow"` | 151 passed, two skipped, one deselected, two failed |
+| Seven non-`iapws` contract/smoke modules | 45 passed, one skipped |
+
+The two non-slow failures are
+`test_governance_policy_enforces_classification_and_retention` and
+`test_workspace_compatibility_paths_exist`. They require excluded upstream
+workspace/governance files. The two skipped items are external-FMU tests; the
+deselected item is the slow 24 h gate. These results do not establish that the
+entire simulator suite passes or that the slow gate was rerun.
+
+Evidence: [fresh-clone log](execution_logs/fresh_clone_reproduction_log.json)
+and [non-slow integration log](execution_logs/pytest_ab4_integration_log.txt).
+
+## Manuscript and citation evidence
+
+Formatted manuscript files and the journal template are not distributed here.
+Static reports identify their DOCX/PDF inputs by SHA-256. Historical Word COM
+logs record citation editing operations but do not contain an input hash or
+execution timestamp sufficient to bind those operations to the latest DOCX.
+
+Do not treat a reused dynamic log as a new Word COM execution. The
+[manuscript verification report](../manuscript_verification/LATEST_MANUSCRIPT_VERIFICATION_REPORT.md)
+separates the evidence. Local Microsoft Word checks require Word and Windows;
+static or LibreOffice checks do not substitute for a fresh Word COM run.
+
+## Installation and inherited source examples
+
+The supported companion setup is `python -m pip install -r requirements-lock.txt`
+in an isolated Python 3.12 environment. Editable installation of the repository
+root is not a supported workflow: the current flat layout contains multiple
+top-level packages. Optional manuscript tools can be installed directly as
+described in [third-party notices](../THIRD_PARTY_NOTICES.md).
+
+Preserved upstream documents may refer to files excluded from this snapshot.
+The current companion guide, rather than those historical workspace examples,
+defines the supported reproduction procedure.
+
+## Evidence and publication status
+
+The v1.0.6 tag remains the manuscript's frozen cited version. Later documentation
+maintenance on `main` does not modify the tag or create new scientific evidence.
+Private development-session details in the [AI disclosure](AI_USAGE_AUDIT.md)
+are author-reported history; the underlying private session database is not
+published here. This repository does not establish journal acceptance or a
+publication DOI.

@@ -1,4 +1,25 @@
-# Original Simulator & Study Configuration Reference (`data/original_configs/`)
+# Base simulator configuration
 
-- `ab4_marine_aux.yaml`: Copied directly from `simulator_source/configs/ab4_marine_aux.yaml` (upstream local base HEAD `4fea4646723f04db41583cb682bac8b62c44bc05`). It preserves the marine auxiliary boiler physical geometry, nominal operating point, three-element PID parameters, actuator saturation/rate limits, sensor noise/dropout specs, and safety alarm/trip limits.
-- **Study-Time Per-Episode Configs**: Per-episode applied JSON configurations (`*_config_applied.json`, with `sim.dt = 2.0`, `horizon_s = 21600`, `closed_loop_source = "obs"`, `safety.scheduler_intervention_policy = "process_protection_without_schedule_severity_oracle"`, and economizer leak schedule parameters per Table 3) belong in `PUB053_Manuscript_Package_R2.zip::data/original_configs/` (derived from `observable_baseline_study_20260915T215200Z_be142b32.zip::configs/`), which were not mounted on this workstation. Machine-readable Table 1–3 parameter reconstructions are provided in `data/block_design.json` and `data/reconstructed_inputs/plant_parameters_table1_table2_from_source.json`.
+[Home](../../README.md) · [Quick start](../../REPRODUCIBILITY.md) · [Documentation](../../docs/README.md)
+
+[ab4_marine_aux.yaml](ab4_marine_aux.yaml) is a reference copy of the [public simulator configuration](../../simulator_source/configs/ab4_marine_aux.yaml). It preserves the base model's geometry, operating point, control settings, actuator limits, sensor specifications and protection settings.
+
+## Base and study configurations
+
+| Setting | Public base YAML | Study-time configuration |
+|---|---|---|
+| Time step | `1.0 s` | `2.0 s` |
+| Closed-loop source | `truth` | `obs` |
+| Study horizon | See base YAML | `21,600 s` |
+| Intervention policy | See base YAML | `process_protection_without_schedule_severity_oracle` |
+
+The study used pilot and economizer-leak patches in addition to its runtime settings. This YAML therefore does not, by itself, recreate the 24 study episodes.
+
+Per-episode `*_config_applied.json` files belong to the external R2 package's `data/original_configs/` directory. They are not bundled here.
+
+## Related inputs
+
+- [Block design](../block_design.json) records the development and evaluation schedule.
+- [Reconstructed plant and sensor parameters](../reconstructed_inputs/plant_parameters_table1_table2_from_source.json) support Tables 1–2.
+- [Source provenance](../../docs/SOURCE_PROVENANCE.md) explains the development snapshot and study-patched source.
+- [Data provenance](../../docs/DATA_PROVENANCE.md) identifies the original simulation and R2 packages.

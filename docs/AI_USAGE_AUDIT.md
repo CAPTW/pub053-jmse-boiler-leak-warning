@@ -1,25 +1,70 @@
-# AI Tooling & Provenance Audit (`PUB-053`)
+[Home](../README.md) · [Quick start](../REPRODUCIBILITY.md) · [Documentation](README.md)
 
-This document provides an evidence-backed audit of generative AI / coding-agent tooling used across the `boiler_pdm_sim` upstream simulator repository and preparation of the JMSE manuscript (`PUB-053`), matching **Section 2.4** and **Acknowledgments**.
+# AI use and author responsibility
 
-## 1. Upstream Simulator Development (`boiler_pdm_sim` & `ab4` Core)
-- **Upstream Private Repository**: `https://github.com/CAPTW/boiler-pdm-sim.git` (public mirror/snapshot published here with local development base commit `4fea4646723f04db41583cb682bac8b62c44bc05`, 5 commits ahead of private `origin/phase-a/revive-kickoff` `497db42`; note `4fea4646...` returns HTTP `422` when queried on the private upstream remote).
-- **Principal AI Coding Tool**: **OpenAI Codex** served as the principal AI-assisted coding tool during development of `boiler_pdm_sim` / `ab4` (software engineering, boilerplate structuring, spline IAPWS-IF97 refactoring, closed-loop wiring, and pytest authoring) under author physical specification and verification.
-- **Verified Local Codex CLI Records (`state_5.sqlite`)**:
-  - `2026-03-07` to `2026-04-16`: 46 Codex CLI threads on `Boiler` using `cli_version` `0.104.0` (5x `gpt-5.3-codex-spark`), `0.108.0-alpha.8` (20x `gpt-5.3-codex-spark`, 4x `gpt-5.4`), `0.115.0-alpha.27` (14x `gpt-5.3-codex-spark`), `0.118.0-alpha.2` (1x `gpt-5.3-codex-spark`, 1x `gpt-5.4`), and `0.119.0-alpha.28` (1x `gpt-5.3-codex-spark`), all at `reasoning_effort = xhigh`.
-  - `2026-06-29`: Codex CLI `0.142.3` (`gpt-5.5`, `reasoning_effort = xhigh`) recorded workspace migration (`019f12bc`) prior to final Phase A commits.
-- **Recorded Phase A Git Commits (`2026-06-11` to `2026-06-30`)**:
-  - `bb0c2d54`..`e9414e01` (`2026-06-11`–`2026-06-12`): Baseline snapshot, opaque backend contract (`WP A1`), review hardening.
-  - `4ac933b1` (`2026-06-30 15:56`): `WP A2` (`props/if97.py`, `props/fuels.py`, `props/gas.py`).
-  - `228d927c`, `83687240`, `25cc6379`, `5c25dcca` (`2026-06-30 16:05`–`16:42`): `WP A3` (`core/ab4/drum_model.py`, `geometry.py`, `feedwater.py`, `steam_line.py`, hydraulics, configs, pipeline tests).
-  - `0ac3e249`, `3f14b0d0` (`2026-06-30 17:26`–`17:44`): `WP A4` (`core/ab4/furnace.py`, combustion/flue-gas modules).
-  - `e2fc455d`, `4fea4646` (`2026-06-30 18:27`–`20:23`): `WP A5` (`pipeline/step_loop.py` closed-loop `obs` wiring, 24 h conservation & cross-model gates).
-- **Verified Database Boundary (Unconfirmed / External Records) & Claude Code PR Summary**: Per-session Codex CLI model logs for the separate-workstation `2026-06-30` commits and later R2 reanalysis sessions are **unverified** (not stored in the local CLI SQLite database); only locally logged CLI versions/models (`0.104.0`–`0.142.3`; `gpt-5.3-codex-spark`, `gpt-5.4`, `gpt-5.5`) are claimed. In addition, upstream `PR_BODY.md` documenting the `ab4` Phase A deliverable (A2–A5, 159 tests) carries a `Generated with Claude Code` footer dated `2026-06-30`.
+This disclosure describes AI-assisted software development and manuscript
+preparation for PUB-053. It follows the roles stated in manuscript Section 2.4
+and Acknowledgments. It distinguishes the author's development history from
+evidence a reader can inspect in the public repository.
 
-## 2. Boundary Between Simulation Generation, R2 Reanalysis, and Manuscript Assembly
-- **Stage 1 — Original Deterministic Simulation**: The 24 paired 6 h episode trajectories (`12` normal + `12` tube-leak episodes) were generated once by executing the deterministic `boiler_pdm_sim` / `ab4` closed-loop simulator preserved in `observable_baseline_study_20260915T215200Z_be142b32.zip` (`source_copy/` with pilot and study patches applied over base `4fea4646...`, `analysis/`, `configs/`, `exogenous/`, `runs/`).
-- **Stage 2 — R2 Stored-Data Reanalysis**: The R2 reanalysis package (`PUB053_Manuscript_Package_R2.zip`, containing `data/observations/*.npz` [24 files], `data/traces/*.npz` [24 files], `data/block_design.json`, `data/original_configs/`, R2 `code/` scripts, and baseline `results/`) read frozen `.npz` trajectories only; R2 scripts **did not generate new simulation trajectories or alter physical states**. (Any separate AI coding-agent session logs for Stage 2 on external workstations are `Unverified`.)
-- **Stage 3/4 — JMSE Template Assembly, Citation Automation & Release Packaging (`Google Antigravity`)**: Google Antigravity and deterministic Python automation scripts prepared the JMSE template conversion, figure compositing, structured `<w:sdt>` + live Word `REF` citation synchronization, independent numeric cross-checks, and this public GitHub companion release (`v1.0.6-pub053-r2`) without generating new trajectories or altering numerical study outputs:
-  - **R2 Standalone Reproduction & Figure Suite (`code/`)**: `_common.py`, `test_analysis.py` (`8/8` tests), `verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`.
-  - **Manuscript Assembly, Citation Automation & Verification (`manuscript_verification/`)**: `build_full_paper.py`, `combine_normal_figs.py`, `create_automated_citation_docx.py`, `sync_citations_and_references.py`, `word_update_export_and_test.py`, `verify_revised_manuscript.py`, `verify_tables_from_archived_results.py`, `verify_citations_and_manuscript.py`, `check_cutoff_leads.py`, `check_delay_window.py`, and `independent_numeric_review.py`.
-- **Author Supervision & Verification Scope**: Authors specified physical equations, scenarios, detector rules, and acceptance gates; reviewed and ran `simulator_source` physics/unit tests (`88/88` core physics/props/protocol tests passed and `PYTHONPATH=src python -B -m pytest -p no:cacheprovider -m "not slow" -q` returned `151 passed, 2 skipped, 1 deselected, 2 failed` with `iapws==1.5.5`, where the 2 failures reflect excluded upstream workspace/governance files); verified full-precision R2 and current-manuscript numerical cross-checks (`96/96` episode-method rows, `50/50` Table 3/4/5/7 checks, `62/62` Tables 3–8 rows, `32/32` delay-window checks); and verified Word COM citation editing/reordering tests (`ADD` `1A`/`1B`, `MOVE` `2`, `REORDER` `3`, `DELETE` `4`). Authors retain full responsibility for all scientific claims.
+## Roles
+
+| Stage | Recorded tool role | Human responsibility |
+|---|---|---|
+| Boiler simulator development | **OpenAI Codex** was the principal AI-assisted coding tool for `boiler_pdm_sim` and the `ab4` core. | Authors specified the physical model, scenarios and acceptance criteria, and reviewed the implementation. |
+| Original simulation | The deterministic simulator generated the paired study episodes. | Authors controlled the study settings and evaluated the outputs. |
+| R2 reanalysis | Scripts read the frozen trajectories; separate AI-session attribution for this stage is unverified. | Authors selected and checked the analysis and reported results. |
+| Manuscript and companion preparation | **Google Antigravity** and Python scripts supported template assembly, citations, numerical checks and public-repository packaging. | Authors reviewed the manuscript, data statements and final scientific claims. |
+
+The reported Codex work includes software structure, IF97 property integration,
+closed-loop wiring and test development. This assistance does not transfer
+responsibility for model assumptions, interpretation or scientific claims to an
+AI tool.
+
+R2 analysis and manuscript preparation did not generate new boiler trajectories
+or change the simulated physical states. The boundary between original simulation
+and stored-output reanalysis is described in [data provenance](DATA_PROVENANCE.md).
+
+## Evidence available to readers
+
+| Evidence | What it supports | What it does not establish |
+|---|---|---|
+| Public source snapshot and analysis scripts | The code distributed with the companion and its implemented calculations. | Authorship of each line or the exact model used in every development session. |
+| Published numerical and test logs | The recorded inputs, checks and outcomes within each log's scope. | Unrecorded tests, new runs after publication, or complete study-data availability. |
+| Input-hashed manuscript reports | Static checks against identified DOCX/PDF files. | A new Word COM run when only an older dynamic log is reused. |
+| Author's local session-history summary | The author's reported CLI versions, models and development chronology. | Publicly verifiable access to the private session database. |
+
+See the [reproduction evidence](REPRODUCTION_GUIDE.md#7-published-verification-evidence),
+[manuscript verification report](../manuscript_verification/LATEST_MANUSCRIPT_VERIFICATION_REPORT.md)
+and [source provenance](SOURCE_PROVENANCE.md) for these boundaries.
+
+## Author-reported development history
+
+The original disclosure reports locally inspected Codex CLI records spanning
+versions `0.104.0` to `0.142.3`, with model identifiers `gpt-5.3-codex-spark`,
+`gpt-5.4` and `gpt-5.5`. These are retained as an author-reported historical
+summary. The private session database and complete transcripts are not part of
+the public companion, and this documentation update has not independently
+authenticated those private records.
+
+Per-session model attribution for development on a separate workstation and for
+later R2 sessions remains unverified. A local base commit or a public source hash
+does not supply that missing session evidence.
+
+The original disclosure also records a **Claude Code attribution footer** in the
+upstream Phase A pull-request body. That footer supports the stated attribution
+of the PR text; it does not by itself establish additional model-design or code
+authorship. No further Claude contribution is inferred from it.
+
+The fuller historical chronology is retained in the
+[frozen v1.0.6 disclosure](https://github.com/CAPTW/pub053-jmse-boiler-leak-warning/blob/v1.0.6-pub053-r2/docs/AI_USAGE_AUDIT.md).
+Later edits to the explanatory pages on `main` do not change the scientific
+release or turn these historical records into new verification evidence.
+
+## Author review and accountability
+
+The authors retain responsibility for the physical assumptions, study design,
+implementation decisions, citations, numerical results and manuscript.
+Reported verification covers the checks identified in the linked records;
+it is not a claim that every possible simulator test passes or that the public
+clone alone reproduces the original study.

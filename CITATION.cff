@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this companion repository, ab4 physics snapshot, or R2 reproduction scripts, please cite the software repository below. Publication venue details remain omitted until peer review and editorial assignment conclude."
+message: "If you use this companion repository, ab4 physics snapshot, or R2 reproduction scripts, please cite this repository and the associated manuscript. Journal publication metadata and a DOI are not recorded here."
 title: "PUB-053 JMSE Release Package: Closed-Loop Tube-Leak Early Warning in a Four-State Marine Auxiliary Steam Boiler"
 type: software
 license: MIT
@@ -19,16 +19,14 @@ keywords:
   - digital twin simulation
   - boiler_pdm_sim
 preferred-citation:
-  type: article
+  type: unpublished
   title: "Closed-Loop Tube-Leak Early Warning in a Four-State Marine Auxiliary Steam Boiler: Demand-Versus-Flow Residuals, Functional Lead Times, and Component Attribution"
   authors:
     - family-names: "Kim"
       given-names: "Gyeomwon"
       affiliation: "Department of Naval Architecture and Ocean Engineering, Inha University, Incheon 22212, Republic of Korea"
-  journal: "Journal of Marine Science and Engineering (submitted; under review — volume, pages, and DOI unassigned)"
-references:
-  - type: software
-    title: "boiler-pdm-sim (local base HEAD snapshot for ab4 four-state drum-boiler core)"
-    notes: "Local development base commit 4fea4646723f04db41583cb682bac8b62c44bc05 in unpushed upstream working tree; study execution used preserved source_copy/ with pilot and study patches applied."
-    commit: "4fea4646723f04db41583cb682bac8b62c44bc05"
-    license: MIT
+  notes: "Manuscript prepared for Journal of Marine Science and Engineering. Submission, review, and acceptance status are not established by this repository; volume, pages, and DOI are not assigned here."
+# Upstream component: boiler-pdm-sim (MIT), local base snapshot for the ab4 core.
+# Local base commit: 4fea4646723f04db41583cb682bac8b62c44bc05.
+# Study execution used a separately patched source_copy/. See docs/SOURCE_PROVENANCE.md.
+# A separate bibliographic reference is omitted because no complete upstream author record is supplied.

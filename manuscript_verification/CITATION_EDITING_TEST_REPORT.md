@@ -1,33 +1,63 @@
-# PUB053 Citation Architecture & 4-Operation Dynamic Editing Report
+# Citation editing test record
 
-- **Target Revised DOCX**: `JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.docx`
-- **Exported PDF**: `JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.pdf` (26 pages, 0 Word field errors)
-- **Inline Content Controls (`<w:sdt>`)**: **26** controls carrying all **54** expanded `RefXX` member IDs (`PUB053_CIT:id=GXX;refs=...`), preserved across Microsoft Word COM `Fields.Update()` + `Save()`
-- **Live Cross-Reference Fields (`REF RefXX \n \t \h`)**: **44** active fields verified with 0 errors
+[Home](../README.md) · [Quick start](../REPRODUCIBILITY.md) · [Documentation](../docs/README.md)
 
-## Operation 1A (ADD): Insert New Reference Above `[1]` (Word COM Only)
-- Inserted dummy reference above `[1] Tajiri, T.` and ran `doc.Fields.Update()` in Microsoft Word.
-- **Result**: `44/44` live `REF` fields shifted automatically by `+1`, `0` errors.
+This page explains the preserved Microsoft Word COM tests for the manuscript's citation system. The [operation log](citation_editing_and_reordering_test_log.json) reports successful ADD, MOVE, REORDER and DELETE scenarios.
 
-## Operation 1B (ADD): Add New `<w:sdt>` Group `G27` (`Ref28`) + Reference (`--reorder-refs`)
-- Added `G27` (`Ref28`) immediately after `G01` and appended bookmarked `Ref28` in References, then ran `sync_docx(reorder_refs=True)` + Word COM `Fields.Update()`.
-- **Result**: **27** `<w:sdt>` controls (**55** member IDs), **28** References ordered cleanly (`G27` = **`[3]`**, `G02` = **`[4,5]`**, `G03` = **`[2,6–9]`**, `G24` = **`[28]`**), **0 errors**.
+## Evidence scope
 
-## Operation 2 (MOVE): Move Interior Range Member `Ref06` (`Åström & Bell`) to `#27` (`--no-reorder-refs`)
-- Moved `Ref06` to bottom `#27` and ran `sync_citations_and_references.py --no-reorder-refs` + Word COM `Fields.Update()`.
-- **Result**: All 54 member IDs remained intact in `<w:sdt>` tags, Word updated to **47** live `REF` fields with **0 errors**, and MDPI range compression automatically split around `#27`:
-  - `G03` (`Ref02,Ref05,Ref06,Ref07,Ref08`): **`[2,5–7,27]`**
-  - `G04` (`Ref05,Ref06,Ref07,Ref08`): **`[5–7,27]`**
-  - `G05` (`Ref05,Ref06`): **`[5,27]`**
-  - `G06` (`Ref06,Ref07,Ref08`): **`[6,7,27]`**
-  - `G19`, `G21`, `G22` (`Ref06`): **`[27]`**
-  - `G07` (`Ref09..Ref14`): **`[8–13]`**
+The operation log names the revised DOCX and PDF, but contains **no input digest or execution timestamp**. It is historical evidence of the editing scenarios. It does not establish a new COM run against the manuscript hash in the [static verification record](LATEST_MANUSCRIPT_VERIFICATION_REPORT.md).
 
-## Operation 3 (REORDER): Move In-Text Citation `G23` (`[25,26]`) to Early Introduction (`--reorder-refs`)
-- Moved `G23` (`Ref25,Ref26`) into Paragraph 10 right after `G01 [1,2]` and ran `sync_citations_and_references.py --reorder-refs` + Word COM `Fields.Update()`.
-- **Result**: `References` physically reordered to match first in-text appearance (`Ref25 -> #3`, `Ref26 -> #4`, `Ref03 -> #5`, `Ref04 -> #6`, `Ref05 -> #7`, ..., `Ref27 -> #27`), **0 errors** in Word COM, and MDPI bracket displays updated cleanly:
-  - `G01`: **`[1,2]`**, moved `G23`: **`[3,4]`**, `G02`: **`[5,6]`**, `G03`: **`[2,7–10]`**, `G04`: **`[7–10]`**, `G07`: **`[11–16]`**, `G25` (still in §2.3 `P045`, citing `Ref26`): **`[4]`**, `G24`: **`[27]`**.
+The [current citation report](../results_archived/current_manuscript_verification/current_citations_and_manuscript_report.json) imports these scenario results alongside current static checks. Keep those two evidence types separate.
 
-## Operation 4 (DELETE): Remove Citation Group `G02` (`Ref03,Ref04`) & Prune Uncited (`--reorder-refs --prune-uncited`)
-- Removed `<w:sdt>` `G02` (sole citation site of `Ref03,Ref04`), then ran `sync_citations_and_references.py --reorder-refs --prune-uncited` + Word COM `Fields.Update()`.
-- **Result**: `Ref03` and `Ref04` pruned cleanly (**25** `<w:sdt>` groups, **52** member IDs, **25** References renumbered `1..25`), `G03` compressed to **`[2–6]`**, `G04` = **`[3–6]`**, `G07` = **`[7–12]`**, `G24` = **`[25]`**, **0 errors**.
+## Citation architecture
+
+The logged baseline contains:
+
+- 27 reference bookmarks, `Ref01` through `Ref27`.
+- 26 content controls (`w:sdt`), carrying 54 expanded reference-member IDs.
+- 44 live Word `REF` fields.
+
+Content-control tags preserve each citation group's members. [sync_citations_and_references.py](sync_citations_and_references.py) synchronizes groups and reference order; Word updates the displayed REF field values. See the [citation mapping](../references/CITATION_MAPPING_TABLE.md) for the reference and group identities.
+
+## Recorded operations
+
+| Scenario | Operation | Recorded outcome |
+|---|---|---|
+| 1A | Insert a reference above reference 1, then update Word fields | All 44 REF fields shift by `+1`; no field errors |
+| 1B | Add citation group `G27` with `Ref28`, then reorder | 27 groups, 55 member IDs and 28 references; no field errors |
+| 2 | Move the interior range member `Ref06` to reference 27 without reordering | 54 member IDs preserved; 47 live fields; ranges split correctly |
+| 3 | Move group `G23` early in the text, then reorder | References follow first appearance; no field errors |
+| 4 | Delete group `G02` and prune uncited references | 25 groups, 52 member IDs and 25 references; no field errors |
+
+### ADD: scenarios 1A and 1B
+
+Scenario 1A inserts a dummy reference above the first reference and calls Word `Fields.Update()`. It checks automatic numbering changes without replacing the 44 REF fields.
+
+Scenario 1B adds `G27` immediately after `G01` and appends `Ref28`. After synchronization and a Word update, `G27` displays `[3]`, `G02` displays `[4,5]` and `G24` displays `[28]`.
+
+### MOVE: scenario 2
+
+Moving `Ref06` to position 27 splits ranges without losing citation members. Examples recorded in the log are:
+
+- `G03`: `[2,5–7,27]`.
+- `G04`: `[5–7,27]`.
+- `G05`: `[5,27]`.
+- `G06`: `[6,7,27]`.
+
+### REORDER: scenario 3
+
+Moving `G23`, containing `Ref25` and `Ref26`, after the first citation group makes those references numbers 3 and 4. The log records `G23 = [3,4]`, `G02 = [5,6]` and the subsequent groups in the new first-appearance order.
+
+### DELETE: scenario 4
+
+Deleting `G02` removes the only citation group using `Ref03` and `Ref04`. Synchronization with pruning removes those references and renumbers the remaining list from 1 to 25. Recorded examples include `G03 = [2–6]` and `G24 = [25]`.
+
+## Source records
+
+- [Editing and reordering log](citation_editing_and_reordering_test_log.json)
+- [Dynamic update log](citation_dynamic_update_test_log.json)
+- [Word automation script](word_update_export_and_test.py)
+- [Current manuscript record set](../results_archived/current_manuscript_verification/README.md)
+
+The logs are retained as recorded. No new Word COM execution is claimed by this documentation update.

@@ -1,68 +1,69 @@
-# PUB-053 Companion Repository: Closed-Loop Tube-Leak Early Warning in a Four-State Marine Auxiliary Steam Boiler
+# Closed-Loop Tube-Leak Early Warning
 
-This dedicated public companion repository (`https://github.com/CAPTW/pub053-jmse-boiler-leak-warning`) preserves the **`boiler_pdm_sim` (`ab4`) simulator source snapshot**, **structured metadata and reconstructed inputs**, **baseline R2 results and runnable verification/reproduction scripts**, **publication figures and raw assets**, **machine-readable bibliography mappings**, and **auditable provenance/execution logs** for JMSE manuscript `PUB-053`:
+**Research companion for PUB-053 · Marine auxiliary boiler simulation**
+
+[Quick start](REPRODUCIBILITY.md) · [Documentation](docs/README.md) · [Figures](figures/FIGURE_MAP.md) · [Cite this work](CITATION.cff)
+
+This repository supports the manuscript:
 
 > **Closed-Loop Tube-Leak Early Warning in a Four-State Marine Auxiliary Steam Boiler: Demand-Versus-Flow Residuals, Functional Lead Times, and Component Attribution**
 
-## Study Purpose & Scope
-- Evaluates closed-loop tube-leak masking and early-warning performance across **12 evaluation/development blocks** (`D1`–`D4`, `E1`–`E8`; **24 paired 6 h episodes**, `259,224` total samples at `dt = 2.0 s`), comparing state-only (`B0_state`), flow-only (`Flow_only`), demand-only (`Command_only`), and max-combined (`B1_combined`) EWMA/sequential detectors (`elapsed >= 600 s`, strict `> threshold`, `1800 s` cooldown).
-- Separates **Stage 1** (single deterministic simulation generation), **Stage 2** (R2 stored-data statistical reanalysis without re-running trajectories), and **Stage 3/4** (JMSE manuscript preparation, `<w:sdt>` + live Word `REF` citation automation, and independent verification).
+The study examines how closed-loop boiler control can mask a tube leak and compares four warning methods: state-only, flow-only, demand-only, and combined detection. It uses 24 deterministic six-hour episodes arranged in four development blocks and eight evaluation blocks. R2 is a reanalysis of stored simulation outputs.
 
-## Repository Layout
-- `code/` — Runnable R2 verification, raw `.npz` Supplement S3 reconstruction (`reconstruct_features_from_observations`), keyed tabular reproduction, and figure-generation suite (`_common.py`, `test_analysis.py`, `verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`). Default CLI runs require all 48 primary `.npz` files (`data/observations/*.npz`, `data/traces/*.npz`) and fail loudly (`rc=1`) if absent; explicit `--archived-tables-only` / `--archived-assets-only` flags verify bundled R2 tables and preserved assets into separate output folders without modifying `results/`.
-- `data/` — Episode design and metadata (`episode_metadata.csv` [24 episodes], `block_design.json` [12 blocks]), `original_configs/ab4_marine_aux.yaml`, `reconstructed_inputs/` (5 structured JSON files for Tables 1–5 & 7), and README documenting upstream archives (`observable_baseline_study_20260915T215200Z_be142b32.zip` vs. `PUB053_Manuscript_Package_R2.zip`). See [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) and [`docs/DATA_PROVENANCE.md`](docs/DATA_PROVENANCE.md).
-- `results/` — Preserved baseline R2 reference outputs (12 CSV/JSON files, including `episode_results.csv`, `summary.csv`, `normal_persistence.csv`, `delay_window_check.csv`, `cutoff_leads_by_block.csv`, `cutoff_leads_summary.csv`, `component_crossing_timing.csv`, `tables_3_4_5_7_crosscheck.csv`, `r2_replay_summary.json`, `quantile_claim_check.json`). Never overwritten by `--out results_reproduced`.
-- `results_archived/` — Provenance-separated audit archive: R2 replay tables (`results_archived/*.csv|json`), `reconstructed_inputs/`, historical pre-revision draft QA logs (`prior_draft_review_ce0e9a0e/`, strictly for original draft `SHA-256: ce0e9a0e...`), and latest revised-manuscript table checks (`current_manuscript_verification/`).
-- `simulator_source/` — Self-contained snapshot of `boiler_pdm_sim` extracted from local development base commit `4fea4646723f04db41583cb682bac8b62c44bc05` (5 commits ahead of private `CAPTW/boiler-pdm-sim` `origin/phase-a/revive-kickoff` `497db42`; `4fea4646...` returns HTTP `422` upstream). See `docs/SOURCE_PROVENANCE.md` for exact differences against the patched study `source_copy/`.
-- `figures/` — Manuscript Figures 1–7 (`fig1_normal_overview.png` through `fig7_normal_score_traces.jpeg`), `raw_source_assets/` (upstream uncomposited plots), and `FIGURE_MAP.md`.
-- `manuscript_verification/` — JMSE manuscript assembly, `<w:sdt>` + live Word `REF` citation synchronization (`ADD`, `MOVE`, `DELETE`, `REORDER`), table cross-check scripts, `MANUSCRIPT_ARTIFACT_MAP.md`, and `r2_text_archive/`.
-- `references/` — All 27 bibliography entries and 26 in-text citation groups (`pub053_references.json`, `.bib`, `.ris`, `word_sources.xml`, `citation_mapping_table.csv`, `CITATION_MAPPING_TABLE.md`).
-- `docs/` — [`REPRODUCTION_GUIDE.md`](docs/REPRODUCTION_GUIDE.md), [`DATA_PROVENANCE.md`](docs/DATA_PROVENANCE.md), [`KNOWN_LIMITATIONS.md`](docs/KNOWN_LIMITATIONS.md), [`SOURCE_PROVENANCE.md`](docs/SOURCE_PROVENANCE.md), [`AI_USAGE_AUDIT.md`](docs/AI_USAGE_AUDIT.md), `FILE_MANIFEST.json`, `FILE_MANIFEST.md`, and `execution_logs/`.
-- [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) — Top-level reproduction contract distinguishing `full_raw_npz_replay` vs. `--archived-tables-only` / `--archived-assets-only` provenance buckets and real-data vs. synthetic-test failure points (`v1.0.6-pub053-r2`).
+The manuscript cites the frozen [v1.0.6-pub053-r2 research release](https://github.com/CAPTW/pub053-jmse-boiler-leak-warning/releases/tag/v1.0.6-pub053-r2). The default branch carries maintained documentation. Use the release tag to identify the research version and these guides for current instructions.
 
-## Environment Setup & Reproduction Commands
-Recommended isolated Python 3.12 setup (includes required external PyPI `iapws==1.5.5` [GPL-3.0] needed for exact IAPWS-IF97 density reconstruction in `code/` raw replay and `core/ab4` simulator physics tests; not vendored in git):
+## What is available?
+
+| Included in this repository | Not bundled in this repository |
+|---|---|
+| R2 analysis and verification scripts | 24 observation and 24 score-trace NPZ files |
+| Episode metadata and reconstructed table inputs | Per-episode applied configurations |
+| Reference results, manuscript figures, and bibliography | Study-time patched simulator and original run archive |
+| Base simulator source snapshot and verification records | Formatted submission DOCX/PDF |
+
+**A public clone can verify the bundled tables and figure assets. Full reconstruction from the original trajectories requires the 48 external NPZ files.** The public base simulator snapshot also differs from the patched copy used for the original study. See [data provenance](docs/DATA_PROVENANCE.md) and [source provenance](docs/SOURCE_PROVENANCE.md) before interpreting a reproduction result.
+
+## Start with the public files
+
+Use the [Python 3.12 setup instructions](REPRODUCIBILITY.md), then run these commands from the repository root:
+
 ```bash
-python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements-lock.txt
-```
-(Alternatively use `conda env create -f environment.yml` or `pip install -e .`; optional local manuscript extras `.[docx]` / Windows `.[word-com]` plus external Poppler `pdftotext`/`pdfinfo`, and simulator extras `.[sim-extras]`, are separate per [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).)
-
-By default (without all 48 primary `.npz` archives in `data/observations/` and `data/traces/`), `code/verify_features.py`, `code/reproduce_analysis.py`, and `code/make_figures_r2.py` exit immediately at the pre-flight file check (`exit 1`, `missing_raw_npz_error` / `all_passed: false`) before touching `iapws`. When all 48 `.npz` files are supplied locally in an `iapws==1.5.5` environment, the same commands execute `full_raw_npz_replay`; if the 48 `.npz` files are supplied **without `iapws==1.5.5`**, all three CLI scripts (`verify_features.py`, `reproduce_analysis.py`, `make_figures_r2.py`) abort pre-flight with `exit 1` / `missing_iapws_error` unless `--allow-approx-density` is passed (note: real `.npz` files are unbundled here, whereas `code/test_analysis.py` tests a synthetic 24-episode fixture and exits `0` in both Python 3.12 and Python 3.14; see [`docs/REPRODUCTION_GUIDE.md`](docs/REPRODUCTION_GUIDE.md) for the exact failure-point matrix).
-
-To verify the bundled standalone repository assets without the unbundled `.npz` archives into separate output folders (`results_reproduced/`, `figures_reproduced/`) so `results/` remains untouched, pass the explicit archived opt-in flags:
-```bash
-python -B code/test_analysis.py
 python -B code/verify_features.py --archived-tables-only --out results_reproduced
 python -B code/reproduce_analysis.py --archived-tables-only --out results_reproduced
 python -B code/make_figures_r2.py --archived-assets-only --results results_reproduced --out figures_reproduced
-python -B manuscript_verification/verify_tables_from_archived_results.py
-```
-To run the core `ab4` physics/props/protocol unit tests (`88 passed` with `iapws==1.5.5`; or 7 non-`iapws` modules `45 passed, 1 skipped` without `iapws`) from `simulator_source/` so relative `configs/base.yaml` paths resolve cleanly:
-```bash
-cd simulator_source
-PYTHONPATH=src python -B -m pytest tests/test_ab4_geometry.py tests/test_ab4_lines.py tests/test_ab4_drum_model.py tests/test_ab4_furnace.py tests/test_props_if97.py tests/test_props_fuels_gas.py tests/test_backend_protocol.py -q
 ```
 
-## Expected Results & Known Limitations / Archive Boundaries (`v1.0.6-pub053-r2`)
-- **Verified Standalone Outputs**:
-  - `code/test_analysis.py`: `8/8` unit and synthetic raw-replay tests pass (stdlib `unittest`; always exits `0` on isolated temp fixtures — with `iapws==1.5.5`, `synthetic_if97_vs_fallback_branch_executed: true` explicitly asserts `verify_from_raw_npz` fails `132/144` trace arrays and `max_trace_array_abs_diff > 1e-4` under forced fallback against an `IAPWS97` fixture and checks mocked `missing_iapws_error` CLI guards across all 3 scripts; without `iapws`, that IF97-vs-fallback branch is skipped cleanly (`synthetic_if97_vs_fallback_branch_executed: false`) because the synthetic generator shares fallback). Also checks `missing_raw_npz_error` and `--archived-assets-only` `density_backend` manifest reporting inside an isolated `.npz`-free `arch_repo` regardless of `REPO_ROOT`, signed `r_m`, canonical keyed CSVs, 50-row cross-checks + Table 7 `None`/`null`, and raw Figures 1–7 specs.
-  - `code/verify_features.py`, `code/reproduce_analysis.py`, `code/make_figures_r2.py` (default without `.npz`): exit with code `1` (`all_passed: false`, explicit `missing_raw_npz_error`, including active `density_backend` metadata); if all 48 `.npz` files are supplied without `iapws`, all three scripts exit `1` (`missing_iapws_error` unless `--allow-approx-density`, and note `full_raw_npz_replay` takes precedence over `--archived-*-only` whenever all 48 `.npz` files are present).
-  - `code/verify_features.py --archived-tables-only`: when `.npz` files are absent, verifies archived `normal_persistence.csv` (`48/48`, `max_abs_diff = 0.0`), `component_crossing_timing.csv` (`8/8`, `max_abs_diff = 0.0`, `Flow_only` crossed first in `8/8` evaluation blocks), `data/reconstructed_inputs/ewls_fit_table4_reconstructed.json` (zero-residual probe), and `threshold_candidates_table5_reconstructed.json`, reporting 5 explicit provenance buckets and active `density_backend` (`recomputed_fit_params.json` is written only in `full_raw_npz_replay`).
-  - `code/reproduce_analysis.py --archived-tables-only`: when `.npz` files are absent, reproduces `96/96` episode-method records using keyed comparison (`("episode", "level_cutoff_m", "method")` on `cutoff_leads_by_block.csv`; `("episode", "method")` on `episode_results.csv` and `delay_window_check.csv`), Table 6 (`B1_combined` & `Command_only` median delay `75.9 min`, max `115.5 min`, `B0_state` median `127.3 min`, `51.3 min` median reduction, `5/7/8` cutoffs at `0.70/0.75/0.80 m`), `32/32` delay-window checks, and writes `archived_tables_3_4_5_7_internal_checks.json` (`50/50` archived internal checks) instead of copying `results/tables_3_4_5_7_crosscheck.csv` as newly executed output. In `full_raw_npz_replay` (with 48 `.npz` files and `iapws==1.5.5`), `tables_3_4_5_7_crosscheck.csv` is freshly compared (`50` unique rows with `"kind"` provenance diffs, `"actual"` 12-sig-fig display formatting, and Table 7 `None`/`null` list comparison handled cleanly) and raw event timing enforces primary `meta/safety_state` (`label/safety_state`) and `truth/state_feasible` extraction (`raw_event_fallback_used == false`).
-  - `code/make_figures_r2.py --archived-assets-only`: when `.npz` files are absent, freshly renders `fig4_method_summary_delay_lead.png` (`1136x896`) via matplotlib from `results_reproduced/episode_results.csv`, validates preserved R2 graphic assets for `fig1`–`fig3` and `fig5`–`fig7` with explicit asset-provenance buckets and `density_backend` metadata, and sets `figure_spec_verified.all_specs_verified: false` (distinct from `all_files_valid: true`). In `full_raw_npz_replay` (requiring `iapws==1.5.5` unless `--allow-approx-density`), `render_figures_from_raw_npz` renders all 7 manuscript-matched panels (`fig1`–`fig7`, with Figs 2, 3, and 5 matched to `[1200, min(t_end, T_confirm + 300)]` s and Fig 2 panel (b) plotting `Observed level` only) directly from `.npz` arrays with `figure_spec_verified.all_specs_verified: true`.
-  - `simulator_source/tests/`: with `iapws==1.5.5` (installed by `requirements-lock.txt`), the 7 core physics/props/protocol modules (`test_ab4_geometry.py`, `test_ab4_lines.py`, `test_ab4_drum_model.py`, `test_ab4_furnace.py`, `test_props_if97.py`, `test_props_fuels_gas.py`, `test_backend_protocol.py`) pass `88 passed`, and running `PYTHONPATH=src python -B -m pytest -p no:cacheprovider -m "not slow" -q` across `simulator_source/tests/` reports `151 passed, 2 skipped, 1 deselected, 2 failed` (confirmed in `docs/execution_logs/pytest_ab4_integration_log.txt`; the 2 failures are `test_governance_policy_enforces_classification_and_retention` and `test_workspace_compatibility_paths_exist`, which reference excluded upstream non-core files; without `iapws`, the 7 non-`iapws` contract/smoke modules pass `45 passed, 1 skipped`; see `docs/SOURCE_PROVENANCE.md` and `docs/KNOWN_LIMITATIONS.md`).
-- **Known Limitations (Primary Workstation Binary Archives & Study `source_copy/` Not Bundled)**:
-  - `observable_baseline_study_20260915T215200Z_be142b32.zip` (study-time execution archive: `source_copy/` with pilot/study patches applied, `analysis/`, `configs/`, `exogenous/`, `runs/`) and `PUB053_Manuscript_Package_R2.zip` (`data/observations/*.npz` [24 files], `data/traces/*.npz` [24 files], `data/block_design.json`, `data/original_configs/`, R2 `code/`, baseline `results/`) reside on the study owner's external workstation and were verified absent across all mounted drives and accessible remotes on the release machine; they are not bundled in this release. See [`docs/DATA_PROVENANCE.md`](docs/DATA_PROVENANCE.md) and [`docs/KNOWN_LIMITATIONS.md`](docs/KNOWN_LIMITATIONS.md).
-  - Consequently, standalone fresh clones cannot execute real-data `full_raw_npz_replay` (to recompute `fit_params.json`, the `144` trace arrays in `data/traces/*.npz`, or raw `.npz` figure curves) or inspect `data/original_configs/*_config_applied.json` / patched `source_copy/` diffs unless those primary files are supplied. Tracked text files are normalized to LF and governed by `.gitattributes` so fresh clones match `docs/FILE_MANIFEST.json` across operating systems.
-  - Clean `4fea4646...` snapshot configs (`dt = 1.0 s`, `closed_loop_source = "truth"`) differ from the patched study `source_copy/` (`dt = 2.0 s`, `horizon_s = 21600`, `closed_loop_source = "obs"`, `safety.scheduler_intervention_policy = "process_protection_without_schedule_severity_oracle"`); see `docs/SOURCE_PROVENANCE.md`.
+These commands write to new output directories. Archive mode checks stored results and reconstructs Figure 4 from the episode-result table; the other figures use preserved assets. It does not reconstruct the original time series.
 
-## Licensing, Third-Party Dependencies & Citation
-- **Code License**: The `boiler_pdm_sim` snapshot (`simulator_source/`) and companion Python verification/reproduction code (`code/`, `manuscript_verification/`) are licensed under the **MIT License** (`LICENSE`).
-- **External Dependencies (Not Bundled / Required via PyPI)**: **`iapws==1.5.5`** is distributed separately on PyPI under **GPL-3.0** and IS explicitly included in `requirements-lock.txt`, `pyproject.toml`, and `environment.yml` (not vendored in git) because both `code/` raw `.npz` replay (`IAPWS97` density spline) and `simulator_source/props/if97.py` (`core/ab4`) require it. Optional local manuscript tooling (`python-docx`, Windows `pywin32`, Poppler `pdftotext`/`pdfinfo`) and optional simulator extras (`tables`, `fmpy`) are documented in `THIRD_PARTY_NOTICES.md` (`PyMuPDF` is **not** required or imported anywhere). See `THIRD_PARTY_NOTICES.md`.
-- **Journal Template & Manuscript Files**: The MDPI JMSE template (`jmse-template.dot`) and formatted `.docx`/`.pdf` manuscript files are excluded (`.gitignore`). Data artifacts and author-generated figures are shared strictly for scholarly peer review and academic reproducibility unless superseded by JMSE publication terms.
-- **Citation**: See `CITATION.cff` (`repository-code: https://github.com/CAPTW/pub053-jmse-boiler-leak-warning`; publication DOI/volume remain unassigned pending peer review).
+Run the isolated unit tests with `python -B code/test_analysis.py`. Tests use synthetic fixtures, so their success is separate from reproducing the original study data.
 
-## GenAI Disclosure Summary
-As declared in the manuscript (**Section 2.4** and **Acknowledgments**), **OpenAI Codex** served as the principal AI-assisted coding tool during development of `boiler_pdm_sim` / `ab4` under author physical specification and verification (verified local CLI versions `0.104.0`–`0.142.3`; models `gpt-5.3-codex-spark`, `gpt-5.4`, `gpt-5.5`; Phase A `ab4` commits through `2026-06-30`; upstream `PR_BODY.md` also carries a Claude Code footer on `2026-06-30`; external-workstation R2 session logs remain unverified). Google Antigravity and deterministic scripts handled Stage 3/4 JMSE assembly, citation automation, verification, and public packaging. See `docs/AI_USAGE_AUDIT.md`.
+For raw-data reconstruction, expected exit codes, numerical comparisons, and optional checks, follow the [detailed reproduction guide](docs/REPRODUCTION_GUIDE.md). Default raw commands return an error when required inputs are missing.
+
+## Explore the repository
+
+| Area | Contents |
+|---|---|
+| [Analysis code](code/README.md) | Script purposes, inputs, and output reports |
+| [Data](data/README.md) | Episode registry, table inputs, and external-file layout |
+| [Reference results](results/README.md) | Frozen CSV/JSON results and their meanings |
+| [Figures](figures/FIGURE_MAP.md) | Figures 1–7, source assets, and rendering definitions |
+| [Simulator source](docs/SOURCE_PROVENANCE.md) | Base snapshot, study-time differences, and exclusions |
+| [Manuscript verification](manuscript_verification/MANUSCRIPT_ARTIFACT_MAP.md) | Table checks, citation tools, and document evidence |
+| [Bibliography](references/CITATION_MAPPING_TABLE.md) | 27 references and their in-text citation groups |
+| [Verification archive](results_archived/README.md) | R2 records, current manuscript checks, and earlier draft checks |
+
+## Evidence and limits
+
+The [reproduction guide](docs/REPRODUCTION_GUIDE.md) explains what each check establishes. The [known limitations](docs/KNOWN_LIMITATIONS.md) distinguish archive checks, original-data reconstruction, and simulation regeneration. The [file manifest](docs/FILE_MANIFEST.md) records the current public file identities.
+
+Preserved execution records describe the inputs and environments used for those runs. They are not an unconditional guarantee that every test or every environment passes.
+
+## AI assistance
+
+OpenAI Codex was the principal AI coding tool for the boiler simulator and `ab4` physical model under author specification and review. Antigravity assisted with manuscript preparation, citation automation, and companion-repository assembly. The [AI usage statement](docs/AI_USAGE_AUDIT.md) separates these roles from unverified private session details. The authors retain responsibility for the work.
+
+## Citation and reuse
+
+Use [CITATION.cff](CITATION.cff) for software and manuscript attribution. No journal acceptance, publication date, or DOI is asserted here.
+
+Repository source code is covered by the [MIT license](LICENSE). Data, figures, third-party libraries, and publisher assets have separate conditions described in [Third-party notices and reuse](THIRD_PARTY_NOTICES.md). In particular, `iapws` is an external dependency with its own license.

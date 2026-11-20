@@ -1,39 +1,66 @@
-# Full Paper Table, Figure, Script, and Provenance Mapping (`PUB-053`)
+# Manuscript artifact map
 
-This manifest maps every numbered table (**Tables 1–8**) and figure (**Figures 1–7**) in the revised submission manuscript (`JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.docx` / `.pdf`) to its exact upstream origin, archived verification artifact, and release-repository script.
+[Home](../README.md) · [Quick start](../REPRODUCIBILITY.md) · [Documentation](../docs/README.md)
 
-## 1. Execution-Layer Separation
-1. **Original Simulator Execution**: The 24 paired six-hour simulation trajectories (`12` normal + `12` tube-leak episodes; `259,224` timestamps at `dt = 2.0 s`) were generated once by executing the deterministic `boiler_pdm_sim` / `ab4` closed-loop simulator. The original study-time execution archive (`observable_baseline_study_20260915T215200Z_be142b32.zip`, retained on the study owner's workstation) contains `source_copy/` (with pilot and study patches applied over local base HEAD `4fea4646723f04db41583cb682bac8b62c44bc05`), `analysis/`, `configs/`, `exogenous/`, and `runs/`.
-2. **R2 Reanalysis Package & Public Release Layout (`PUB053_Manuscript_Package_R2.zip` -> `code/`, `data/`, `results/`)**: The R2 reanalysis package (`PUB053_Manuscript_Package_R2.zip`, external workstation) bundles the 48 frozen episode `.npz` arrays (`data/observations/<episode>.npz` [24 files], `data/traces/<episode>.npz` [24 files]), `data/block_design.json`, `data/original_configs/`, R2 analysis scripts, and baseline `results/`. Those R2 scripts **did not generate new simulation trajectories or modify physical states**; they read frozen `.npz` outputs to verify EWLS fits, recompute empirical quantile thresholds and sequential vs. interval alarms, and render R2 plot panels. In this public repository (`v1.0.6-pub053-r2`), `data/`, `results/`, and `code/` preserve all structured metadata, original/reconstructed configurations, reference outputs, and runnable standalone reproduction scripts: default CLI runs require both the 48 primary `.npz` files (`missing_raw_npz_error`, `rc=1` when absent) and `iapws==1.5.5` (`missing_iapws_error`, `rc=1` when `.npz` files are supplied without `iapws` across `verify_features.py`, `reproduce_analysis.py`, and `make_figures_r2.py`), and execute Supplement S3 raw `.npz` reconstruction, full 50-row cross-checking (including `None`/`null` list matching for Table 7), and raw Figure 1–7 rendering (`code/make_figures_r2.py::render_figures_from_raw_npz`, with Figs 2, 3, and 5 matched to `[1200, T_confirm + 300]` s) if supplied (taking precedence over `--archived-*-only`), while explicit `--archived-tables-only` / `--archived-assets-only` opt-in flags verify the bundled archived tables and graphic assets cleanly when `.npz` files are absent without overclaiming raw replay.
-3. **Full Paper Preparation, Citation Automation, and Release Verification**: Deterministic scripts in `manuscript_verification/` assembled the JMSE template (`build_full_paper.py`, `combine_normal_figs.py`), added structured inline Content Control citations (`<w:sdt>`) + live Word `REF` cross-references (`create_automated_citation_docx.py`, `sync_citations_and_references.py`, `word_update_export_and_test.py`), and cross-checked Tables 1–8 and Figures 1–7 against `results/` and `results_archived/` (`verify_revised_manuscript.py`, `verify_tables_from_archived_results.py`, `verify_citations_and_manuscript.py`) without altering any underlying simulation numbers.
+Use this map to trace the manuscript's figures, tables and citation system to public files. The original trajectory arrays, study-patched execution source and formatted submission files are external.
 
-## 2. Figures Mapping (Figures 1–7)
+## Research and preparation stages
 
-| Manuscript Figure | Release Repo File | Upstream R2 Asset Origin & Public Raw Replay Renderer | Full Paper Assembly & Plotted Scope |
-|---|---|---|---|
-| **Figure 1** | `figures/fig1_normal_overview.png` | R2 Supplement Figs S2 & S3 (`figures/raw_source_assets/page1_img3_1261.jpeg`, `page1_img4_1265.jpeg` from `E1_normal.npz`); raw replay: `code/make_figures_r2.py::render_figures_from_raw_npz` | Vertically stacked (+30 px separator) by `combine_normal_figs.py` (`width=4.65 in`); `E1_normal` `p_obs` (bar) & `l_obs` (m) over `[0, 6]` h |
-| **Figure 2** | `figures/fig2_e1_leak_trajectory.png` | R2 Main Fig 1 (`figures/raw_source_assets/rId27.png` from `E1_tube_leak.npz` & `independent_fit.json`); raw replay: `code/make_figures_r2.py::render_figures_from_raw_npz` | Bottom-padded +32 px white margin by `build_full_paper.py` (`ensure_padded_fig2`, `width=4.15 in`); `E1_tube_leak` `1,200`–`11,194 s` (`T_confirm + 300 s`); panel (b) plots `Observed level` (`l_obs`) only against `0.85 m` setpoint & `0.75 m` oracle criterion (no dashed plant-truth trace) |
-| **Figure 3** | `figures/fig3_e1_feature_responses.jpeg` | R2 Supplement Fig S5 (`figures/raw_source_assets/page1_img5_475.jpeg` from `E1_tube_leak.npz`); raw replay: `code/make_figures_r2.py::render_figures_from_raw_npz` | Embedded in `build_full_paper.py` (`width=4.65 in`, `keep_together=True`); `E1_tube_leak` `Observed feedwater` (`q_f`) & `Observed steam` (`q_s`) (`kg/s`) over `1,200`–`11,194 s` |
-| **Figure 4** | `figures/fig4_method_summary_delay_lead.png` | R2 Main Fig 2 (`figures/raw_source_assets/rId31.png` from `episode_method_results.csv`); raw & archived modes: `code/make_figures_r2.py::render_figure_4_from_csv` | Embedded in `build_full_paper.py` (`width=4.95 in`); `E1`–`E8` post-onset confirmed alarm delay (min) from `episode_results.csv` |
-| **Figure 5** | `figures/fig5_e1_score_traces.png` | R2 Main Fig 3 (`figures/raw_source_assets/rId34.png` from `E1_tube_leak.npz`); raw replay: `code/make_figures_r2.py::render_figures_from_raw_npz` | Embedded in `build_full_paper.py` (`width=4.95 in`); `E1_tube_leak` normalized `Score / own threshold` & alarm markers over `1,200`–`11,194 s` (`T_confirm + 300 s`) |
-| **Figure 6** | `figures/fig6_all_eval_leak_panels.jpeg` | Upstream R1-retained Supp Fig S1 (`figures/raw_source_assets/page1_img1_1103.jpeg`, legacy `make_figures.py` per Supplement §S8; not bundled); raw replay: `code/make_figures_r2.py::render_figures_from_raw_npz` | Embedded in `build_full_paper.py` (`width=5.15 in`; onset/alarm table in Table 7); `E1`–`E8` milestone timeline over `[0, 6]` h |
-| **Figure 7** | `figures/fig7_normal_score_traces.jpeg` | R2 Supplement Fig S4 (`figures/raw_source_assets/page1_img2_1217.jpeg` from `E*_normal.npz`); raw replay: `code/make_figures_r2.py::render_figures_from_raw_npz` | Embedded in `build_full_paper.py` (`width=5.15 in`); `E1`–`E8` normal `max_exceedance_span_s` vs. `600 s` persistence line |
+| Stage | Material | Public reference |
+|---|---|---|
+| Original simulation | 12 normal/leak pairs (24 episodes) generated by the study-time boiler simulator | [Source provenance](../docs/SOURCE_PROVENANCE.md) |
+| R2 reanalysis | Analysis of frozen observations and traces; no new trajectories | [Data provenance](../docs/DATA_PROVENANCE.md), [preserved results](../results/README.md) |
+| Manuscript preparation | Template assembly, figures, citation automation and numerical checks | Scripts and records in this directory |
 
-## 3. Tables Mapping (Tables 1–8) and Provenance Layers
+The public simulator is a development-base snapshot. The study's `source_copy/` included additional patches and runtime configurations. The public analysis scripts can replay the stored outputs when the original NPZ files are supplied; they do not recreate the original simulation execution from the base snapshot alone.
 
-| Table | Release Repo Verification Source | External Workstation Origin (Not Bundled) | Verification Scope |
-|---|---|---|---|
-| **Table 1** | `simulator_source/configs/ab4_marine_aux.yaml`, `simulator_source/src/boiler_pdm_sim/core/ab4/` (`drum_model.py`, `backend.py`), `results_archived/reconstructed_inputs/plant_parameters_table1_table2_from_source.json`, `manuscript_verification/r2_text_archive/PUB053_Supplement_R2.txt` | `data/original_configs/*.json` (`Ab4Backend.from_config`) | Physical constants & `ab4` config verified directly from repo source; Supplement S2 sizing notes documented in JSON |
-| **Table 2** | `results_archived/reconstructed_inputs/plant_parameters_table1_table2_from_source.json`, `manuscript_verification/r2_text_archive/PUB053_Supplement_R2.txt` (§S2) | `data/original_configs/*.json` (sensor conditioner settings) | Conditioning policy/noise/dropout specs verified against R2 Supplement S2 & manuscript text |
-| **Table 3** | `results_archived/tables_3_4_5_7_crosscheck.csv` (12 rows), `results_archived/reconstructed_inputs/block_design_table3_reconstructed.json` | `data/block_design.json` & `data/original_configs/*_normal_config_applied.json` | 12/12 rows verified (`current_manuscript_table_checks.csv`) |
-| **Table 4** | `results_archived/tables_3_4_5_7_crosscheck.csv` (10 rows), `results_archived/reconstructed_inputs/ewls_fit_table4_reconstructed.json` | `results/independent_fit.json` (`N=40,804` development-normal rows) | 10/10 full-precision coefficients/scales verified (`current_manuscript_table_checks.csv`) |
-| **Table 5** | `results_archived/r2_replay_summary.json`, `results_archived/tables_3_4_5_7_crosscheck.csv` (20 rows), `results_archived/reconstructed_inputs/threshold_candidates_table5_reconstructed.json` | `data/traces/D1..D4_normal.npz` via `code/reproduce_analysis.py` | 20/20 thresholds & D1–D4 counts verified (`current_manuscript_table_checks.csv`) |
-| **Table 6** | `results_archived/episode_results.csv` (96 rows), `results_archived/summary.csv` (4 rows) | `results/episode_method_results.csv` | 4/4 detector rows (incl. `115.5 min` max delay, `51.3 min` median diff, `5/7/8` cutoffs) verified (`current_manuscript_table_checks.csv`) |
-| **Table 7** | `results_archived/tables_3_4_5_7_crosscheck.csv` (8 rows), `results_archived/reconstructed_inputs/episode_event_timings_table7_reconstructed.json`, `results_archived/delay_window_check.csv` (`32/32`) | `results/episode_method_results.csv` & `data/observations/E*_tube_leak.npz` | 8/8 evaluation block timings verified (`current_manuscript_table_checks.csv`) |
-| **Table 8** | `results_archived/normal_persistence.csv` (48 rows) | `data/traces/E*_normal.npz` | 8/8 evaluation blocks (`E1..E8`) max exceedance spans verified (`current_manuscript_table_checks.csv`) |
+## Figures
 
-## 4. Provenance Separation in `results_archived/`
-- `results_archived/` (root): R2-derived trace replay & sensitivity summaries (`r2_replay_summary.json`, `episode_results.csv`, `summary.csv`, `normal_persistence.csv`, `recomputed_vs_archived.csv`, `quantile_claim_check.json`, `tables_3_4_5_7_crosscheck.csv`, `tables_and_rounding_summary.json`, `cutoff_leads_by_block.csv`, `cutoff_leads_summary.csv`, `component_crossing_timing.csv`, `delay_window_check.csv`).
-- `results_archived/reconstructed_inputs/`: Machine-readable JSON inputs reconstructed from verified cross-checks, `simulator_source/`, and R2 Supplement S1–S2 so all verification scripts run self-contained inside this repository without external `.npz` archives.
-- `results_archived/prior_draft_review_ce0e9a0e/`: Historical QA outputs auditing the pre-revision draft `PUB053_Manuscript_JMSE_Submission.docx` (`SHA-256: ce0e9a0e3c6c6332942d7ef99ae464832c3c3b57eaa0172130a220312103d4e5`), retained explicitly for audit traceability.
-- `results_archived/current_manuscript_verification/`: Fresh verification tables and JSON report (`current_manuscript_table_checks.csv`, `current_docx_verification_report.json`) generated directly against the current revised DOCX (`JMSE-MDPI-보일러 논문 [김겸원]_인용자동화_개정본.docx`).
+The [figure map](../figures/FIGURE_MAP.md) is the detailed reference for all seven image files, source assets, panels, units and time intervals.
+
+| Figures | Manuscript role | Preparation or reproduction |
+|---|---|---|
+| 1 | Normal pressure and level | [combine_normal_figs.py](combine_normal_figs.py); raw replay plots the original inputs |
+| 2 | Leak pressure, observed level and feedwater command | [build_full_paper.py](build_full_paper.py) adds a bottom margin to the preserved image |
+| 3 and 5 | Flow response and normalized detector scores | Preserved R2 images or raw-input rendering |
+| 4 | Evaluation-block alarm delays | CSV rendering in both raw and archive modes |
+| 6 and 7 | Event milestones and normal persistence | Preserved supplement images or raw-input rendering |
+
+The public renderer is [make_figures_r2.py](../code/make_figures_r2.py). Archive mode recomposes Figures 1–2, copies Figures 3 and 5–7, and freshly plots Figure 4. Raw mode regenerates the six trajectory-based figures and plots Figure 4 from the selected episode-results CSV. That CSV is newly calculated when the analysis step is run first; if the file is absent from `--results`, the renderer uses the bundled reference CSV.
+
+## Tables
+
+| Table | Public verification source | Scope |
+|---|---|---|
+| 1 | [Plant parameters](../data/reconstructed_inputs/plant_parameters_table1_table2_from_source.json), [base YAML](../simulator_source/configs/ab4_marine_aux.yaml) | Physical and control constants |
+| 2 | [Conditioning parameters](../data/reconstructed_inputs/plant_parameters_table1_table2_from_source.json), [R2 supplement](r2_text_archive/PUB053_Supplement_R2.txt) | Sensor conditioning specifications |
+| 3 | [Block design](../data/reconstructed_inputs/block_design_table3_reconstructed.json) | 12 design rows |
+| 4 | [Fitted parameters](../data/reconstructed_inputs/ewls_fit_table4_reconstructed.json) | 10 coefficient/scale rows; `N = 40,804` |
+| 5 | [Threshold candidates](../data/reconstructed_inputs/threshold_candidates_table5_reconstructed.json) | 20 candidate rows |
+| 6 | [Episode results](../results/episode_results.csv), [summary](../results/summary.csv) | Four detector rows |
+| 7 | [Event timings](../data/reconstructed_inputs/episode_event_timings_table7_reconstructed.json), [delay-window check](../results/delay_window_check.csv) | Eight evaluation blocks |
+| 8 | [Normal persistence](../results/normal_persistence.csv) | Eight normal evaluation blocks |
+
+[verify_tables_from_archived_results.py](verify_tables_from_archived_results.py) checks the public sources and [50-row cross-check](../results/tables_3_4_5_7_crosscheck.csv). [verify_revised_manuscript.py](verify_revised_manuscript.py) compares an author-supplied DOCX/PDF with the manuscript table records. The [recorded 62-row result](../results_archived/current_manuscript_verification/current_manuscript_table_checks.csv) covers Tables 3–8.
+
+The reconstructed table inputs do not include the complete study-time applied configurations or original observations. See [data availability](../data/README.md) before choosing a reproduction mode.
+
+## References and citation editing
+
+| File or tool | Purpose |
+|---|---|
+| [Bibliography JSON](../references/pub053_references.json) | 27 reference records |
+| [BibTeX](../references/pub053_references.bib) and [RIS](../references/pub053_references.ris) | Reference-manager exports |
+| [Word sources](../references/word_sources.xml) | Word bibliography source records |
+| [Citation mapping](../references/CITATION_MAPPING_TABLE.md) | Reference identities and the 26 in-text groups |
+| [Citation synchronization](sync_citations_and_references.py) | Update citation groups and reference order |
+| [Word automation](word_update_export_and_test.py) | Word field update, PDF export and editing scenarios |
+
+The [citation editing report](CITATION_EDITING_TEST_REPORT.md) describes preserved dynamic tests. Its historical operation logs are not bound to a current input hash or execution timestamp.
+
+## Verification records
+
+- [Manuscript verification summary](LATEST_MANUSCRIPT_VERIFICATION_REPORT.md): static checks tied to the v1.0.6 manuscript hashes.
+- [Manuscript record set](../results_archived/current_manuscript_verification/README.md): current static reports and separately retained historical dynamic results.
+- [Earlier-draft review](../results_archived/prior_draft_review_ce0e9a0e/README.md): findings against the earlier `ce0e9a0e…` input.
+- [Reproduction guide](../docs/REPRODUCTION_GUIDE.md): execution commands and the limits of each check.
